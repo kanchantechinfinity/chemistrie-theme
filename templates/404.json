@@ -108,7 +108,7 @@
         "heading": "Six formulas.<br><em>Zero shortcuts.</em>",
         "lede": "A complete pharmacist-built ritual. Begin with one, build to all six.",
         "foot_link_label": "Explore the full apothecary",
-        "collection": ""
+        "collection": "home-page-products"
       }
     },
     "founders_cch8nz": {
@@ -117,6 +117,9 @@
       "settings": {
         "caption": "The founding pharmacists, photographed in the compounding lab — Houston, 2026.",
         "heading": "Two compounding<br>pharmacists.<br><em>One promise.</em>",
+        "founder1_name": "Dr. A —",
+        "founder2_name": "Dr. M —",
+        "founder3_name": "Dr. S —",
         "lede": "They met behind the same bench in Houston, weighing actives by the milligram for women who had been failed by everything on the shelf.",
         "paragraph1": "Wives wanted retinol that didn't burn. Mothers wanted vitamin C that didn't oxidise in a week. Best friends wanted a moisturiser they could hand down. So they started making it — quietly, by hand, in concentrations the industry deemed too expensive to mass-produce.",
         "paragraph2": "Chemistrie is what happened when their patient list became a waiting list.",
@@ -470,7 +473,8 @@
         "heading": "Find us <em>between</em><br>the bottles.",
         "instagram_url": "",
         "handle": "@chemistrie.co",
-        "follower_count": "21.4k"
+        "follower_count": "21.4k",
+        "feed_embed": ""
       }
     },
     "newsletter_cta_bQgTWH": {
