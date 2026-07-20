@@ -1,6 +1,499 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main-404": { "type": "main-404" }
+    "hero_YGMYfA": {
+      "type": "hero",
+      "name": "Hero",
+      "settings": {
+        "live_text": "A pharmacist is on the line",
+        "meta_location": "Houston · 29.76°N",
+        "meta_volume": "Vol. III · 2026",
+        "eyebrow": "A Pharmacist's Quiet Luxury",
+        "title_aria": "Made by pharmacists. Made for the women they love.",
+        "title_word_1": "Made",
+        "title_em_1": "by pharmacists.",
+        "title_row_2": "Made <em class=\"hero__title-em\">for</em> the women",
+        "title_em_accent": "they love.",
+        "deck": "Compounded by hand in Houston. Twelve formulas, two hundred bottles a batch, retired the moment the batch is poured. Welcome to the bench.",
+        "cta_primary_label": "Begin the consultation",
+        "cta_primary_link": "#shop",
+        "cta_secondary_label": "Watch the bench film · 2:14",
+        "cta_secondary_link": "#instagram",
+        "trust1_num": "2,400+",
+        "trust1_label": "Women on the list",
+        "trust2_num": "28",
+        "trust2_label": "Clinical-grade actives",
+        "trust3_num": "★ 4.96",
+        "trust3_label": "Verified buyer rating",
+        "spec_top_label": "Tonight's batch",
+        "spec_top_value": "N°027",
+        "spec_top_meta": "of 200 · poured at 4:42pm CT",
+        "pill_1": "Retinaldehyde 0.05%",
+        "pill_2": "Niacinamide 4%",
+        "pill_3": "Ferulic · Hyaluronic",
+        "spec_bottom_mini": "Hand-numbered · pharmacist-signed",
+        "spec_bottom_rx": "Rx",
+        "deco_01": "— 01",
+        "deco_ed": "N°II · ED",
+        "marquee_1": "Compounded in Houston",
+        "marquee_2": "Made for the women we love",
+        "marquee_3": "Hand-numbered batches",
+        "marquee_4": "Pharmaceutical-grade actives",
+        "scroll_label": "Scroll"
+      }
+    },
+    "pillars_tmq87Y": {
+      "type": "pillars",
+      "blocks": {
+        "pillar_yC8hAg": {
+          "type": "pillar",
+          "settings": {
+            "title": "Trust.",
+            "lede": "Pharmacist credibility that feels warm, not clinical.",
+            "item1": "— Credentials are the proof. Love is the reason.",
+            "item2": "— Every active ingredient cleared by a licensed pharmacist.",
+            "item3": "— Transparency on dose, on source, on shelf-life.",
+            "crest_mono": "Rx",
+            "crest_sub": "Pharmacist seal · since 2026"
+          }
+        },
+        "pillar_d6dit9": {
+          "type": "pillar",
+          "settings": {
+            "title": "Luxury.",
+            "lede": "Aspirational, never arrogant. Every touchpoint signals prestige.",
+            "item1": "— Heavy weighted glass. Hand-numbered batches.",
+            "item2": "— Vellum inserts, gold-foil ritual cards.",
+            "item3": "— A box you keep, not unbox.",
+            "crest_mono": "C.",
+            "crest_sub": "Maison Chemistrie · N° 001"
+          }
+        },
+        "pillar_XacNet": {
+          "type": "pillar",
+          "settings": {
+            "title": "Warmth.",
+            "lede": "Luxury with a heartbeat. The founder story makes Chemistrie unlike anything in the category.",
+            "item1": "— Two pharmacists. Husbands and fathers first.",
+            "item2": "— Formulas tested on the women they love.",
+            "item3": "— Personal letters in every order.",
+            "crest_mono": "for her",
+            "crest_sub": "written by hand · in every box"
+          }
+        }
+      },
+      "block_order": [
+        "pillar_yC8hAg",
+        "pillar_d6dit9",
+        "pillar_XacNet"
+      ],
+      "name": "Pillars",
+      "settings": {
+        "eyebrow": "— Brand Pillars —",
+        "intro_heading": "Three things we<br><em>refuse</em> to compromise."
+      }
+    },
+    "shop_jAJymM": {
+      "type": "shop",
+      "name": "Shop",
+      "settings": {
+        "heading": "Six formulas.<br><em>Zero shortcuts.</em>",
+        "lede": "A complete pharmacist-built ritual. Begin with one, build to all six.",
+        "foot_link_label": "Explore the full apothecary",
+        "collection": ""
+      }
+    },
+    "founders_cch8nz": {
+      "type": "founders",
+      "name": "Founders",
+      "settings": {
+        "caption": "The founding pharmacists, photographed in the compounding lab — Houston, 2026.",
+        "heading": "Two compounding<br>pharmacists.<br><em>One promise.</em>",
+        "lede": "They met behind the same bench in Houston, weighing actives by the milligram for women who had been failed by everything on the shelf.",
+        "paragraph1": "Wives wanted retinol that didn't burn. Mothers wanted vitamin C that didn't oxidise in a week. Best friends wanted a moisturiser they could hand down. So they started making it — quietly, by hand, in concentrations the industry deemed too expensive to mass-produce.",
+        "paragraph2": "Chemistrie is what happened when their patient list became a waiting list.",
+        "sig": "— Dr. A & Dr. M",
+        "sig_sub": "Compounding Pharmacists · Founders"
+      }
+    },
+    "actives_WHF8yt": {
+      "type": "actives",
+      "blocks": {
+        "active_g3fm7B": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 1,
+            "tier": "— Hero active",
+            "name": "Retinaldehyde",
+            "dose": "0.05%",
+            "description": "Eleven times faster than retinol. Half the irritation. The dose only a pharmacist would risk.",
+            "source": "Switzerland · USP",
+            "half_life": "12 mo · sealed",
+            "found_in": "N°01 Renewal"
+          }
+        },
+        "active_wx8cBB": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 2,
+            "tier": "— Hero active",
+            "name": "L-Ascorbic Acid",
+            "dose": "15%",
+            "description": "Stabilised with ferulic and tocopherol. The pharmacist's gold standard for brightening.",
+            "source": "Scotland · USP",
+            "half_life": "8 mo · amber",
+            "found_in": "N°02 Vit-C"
+          }
+        },
+        "active_qjyXf6": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 3,
+            "tier": "— Hero active",
+            "name": "Niacinamide",
+            "dose": "4%",
+            "description": "Refines pore visibility, reinforces barrier. Universally well-tolerated.",
+            "source": "USP · pH 5.4",
+            "half_life": "36 months",
+            "found_in": "N°01 · 04 · 06"
+          }
+        },
+        "active_neLYBe": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 4,
+            "tier": "— Hero active",
+            "name": "Bakuchiol",
+            "dose": "1%",
+            "description": "Botanical retinol-alternative for pregnancy and the most sensitive nights.",
+            "source": "India · botanical",
+            "half_life": "24 months",
+            "found_in": "N°03 Golden Oil"
+          }
+        },
+        "active_ketUa9": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 5,
+            "tier": "— Supporting",
+            "name": "Mandelic Acid",
+            "dose": "8%",
+            "description": "The kindest AHA. Large molecule, slow penetration, dignified results.",
+            "source": "Almond · USP",
+            "half_life": "18 months",
+            "found_in": "N°05 Tonic"
+          }
+        },
+        "active_iyzFyA": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 6,
+            "tier": "— Supporting",
+            "name": "Peptide-5",
+            "dose": "2%",
+            "description": "Signals collagen synthesis. Daily, undramatic improvement.",
+            "source": "Switzerland",
+            "half_life": "24 months",
+            "found_in": "N°04 Cream"
+          }
+        },
+        "active_QqUaA7": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 7,
+            "tier": "— Hero active",
+            "name": "Ceramide Complex",
+            "dose": "NP·AP·EOP",
+            "description": "Three ceramides mirroring the lipid ratio of healthy young skin.",
+            "source": "Japan · bio-id",
+            "half_life": "30 months",
+            "found_in": "N°04 Velvet"
+          }
+        },
+        "active_GjCRee": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 8,
+            "tier": "— Supporting",
+            "name": "Squalane",
+            "dose": "100%",
+            "description": "Plant-derived. Pharmaceutical-grade. Closes the ritual, never clogs.",
+            "source": "Spain · olive",
+            "half_life": "36 months",
+            "found_in": "N°03 Oil"
+          }
+        },
+        "active_XpPJEQ": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 9,
+            "tier": "— Supporting",
+            "name": "Calendula",
+            "dose": "3%",
+            "description": "Anti-inflammatory infusion. The reason redness softens, not just hides.",
+            "source": "Houston · fresh",
+            "half_life": "9 months",
+            "found_in": "N°04b Balm"
+          }
+        },
+        "active_yDMUqk": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 10,
+            "tier": "— Hero active",
+            "name": "Hyaluronic, 3-MW",
+            "dose": "2%",
+            "description": "Low, mid and high molecular weights — together. Hydration at every layer.",
+            "source": "Bio-fermented",
+            "half_life": "24 months",
+            "found_in": "Whole ritual"
+          }
+        },
+        "active_irkpni": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 11,
+            "tier": "— Supporting",
+            "name": "Allantoin",
+            "dose": "1%",
+            "description": "Soothes, smooths, accelerates barrier repair after every active.",
+            "source": "USP-grade",
+            "half_life": "36 months",
+            "found_in": "N°01 · 04"
+          }
+        },
+        "active_eWaXcR": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 12,
+            "tier": "— Supporting",
+            "name": "Centella Asiatica",
+            "dose": "5%",
+            "description": "Madecassoside-rich. The bench's favourite calming active.",
+            "source": "Korea · USP",
+            "half_life": "24 months",
+            "found_in": "N°05 Tonic"
+          }
+        }
+      },
+      "block_order": [
+        "active_g3fm7B",
+        "active_wx8cBB",
+        "active_qjyXf6",
+        "active_neLYBe",
+        "active_ketUa9",
+        "active_iyzFyA",
+        "active_QqUaA7",
+        "active_GjCRee",
+        "active_XpPJEQ",
+        "active_yDMUqk",
+        "active_irkpni",
+        "active_eWaXcR"
+      ],
+      "name": "Active Index",
+      "settings": {
+        "eyebrow": "— The Active Index —",
+        "heading": "Twelve ingredients,<br>scroll-by-<em>scroll.</em>",
+        "lede": "Each active, one at a time. Concentration, source, half-life, the formula it lives in. Scroll horizontally — the pharmacist will hand you the next."
+      }
+    },
+    "proof_iDTz9Y": {
+      "type": "proof",
+      "name": "Proof stats",
+      "settings": {
+        "eyebrow": "— The Pharmacy Standard —",
+        "heading": "Numbers, not <em>noise.</em>",
+        "stat1_count": 0,
+        "stat1_suffix": "",
+        "stat1_label": "Fillers, fragrance, fluff.",
+        "stat2_count": 100,
+        "stat2_suffix": "%",
+        "stat2_label": "Pharmacist-formulated. Every batch.",
+        "stat3_count": 28,
+        "stat3_suffix": "",
+        "stat3_label": "Clinically respected actives.",
+        "stat4_count": 14,
+        "stat4_unit": "days",
+        "stat4_label": "Money-back, no-questions ritual trial."
+      }
+    },
+    "ritual_raGNG4": {
+      "type": "ritual",
+      "blocks": {
+        "step_gmjaAk": {
+          "type": "step",
+          "settings": {
+            "num": "i.",
+            "name": "Cleanse",
+            "time": "90 seconds",
+            "description": "A milk that lifts without stripping. Worked into dry skin with both hands, eyes closed, breath slow.",
+            "chip": "Velvet Milk · No. 00"
+          }
+        },
+        "step_9LXN7A": {
+          "type": "step",
+          "settings": {
+            "num": "ii.",
+            "name": "Tone",
+            "time": "A pause",
+            "description": "Mandelic acid at 8%, low and weekly. Sweep across the T-zone with a cotton round. Then wait, dignified, for sixty seconds.",
+            "chip": "Clarifying Tonic · No. 05"
+          }
+        },
+        "step_TxY76t": {
+          "type": "step",
+          "settings": {
+            "num": "iii.",
+            "name": "Treat",
+            "time": "2 drops",
+            "description": "Retinaldehyde at night. L-Ascorbic in morning. Press, do not rub. The face is not a counter to be wiped down.",
+            "chip": "Renewal Serum · No. 01"
+          }
+        },
+        "step_nkpb7w": {
+          "type": "step",
+          "settings": {
+            "num": "iv.",
+            "name": "Seal",
+            "time": "One pearl",
+            "description": "The Velvet Cream, warmed between the palms. Pressed upward along the jaw, the cheekbones, the brow. A small ceremony, every night.",
+            "chip": "Velvet Cream · No. 04"
+          }
+        }
+      },
+      "block_order": [
+        "step_gmjaAk",
+        "step_9LXN7A",
+        "step_TxY76t",
+        "step_nkpb7w"
+      ],
+      "name": "The Ritual",
+      "settings": {
+        "eyebrow": "— The Ritual —",
+        "heading": "Four<br><em>quiet</em> steps.",
+        "lede": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down. Layer thin. Wait for the skin to ask."
+      }
+    },
+    "testimonials_dVdUH3": {
+      "type": "testimonials",
+      "blocks": {
+        "quote_nbUbAa": {
+          "type": "quote",
+          "settings": {
+            "quote": "I have been a dermatology nurse for nineteen years. This is the first brand I trust on my own daughter's face.",
+            "attribution": "— Marisol R., Houston, TX · Verified Buyer"
+          }
+        },
+        "quote_PBKRJM": {
+          "type": "quote",
+          "settings": {
+            "quote": "The pharmacist wrote me back personally about my redness. I bought three more bottles that afternoon.",
+            "attribution": "— Priya S., Austin, TX · Verified Buyer"
+          }
+        },
+        "quote_fQqrmq": {
+          "type": "quote",
+          "settings": {
+            "quote": "Heavy glass. Numbered batch. A handwritten card. I keep the box on my dresser.",
+            "attribution": "— Linnea H., Dallas, TX · Verified Buyer"
+          }
+        },
+        "quote_xeN8zh": {
+          "type": "quote",
+          "settings": {
+            "quote": "Made by pharmacists, made for the women they love — finally a tagline that delivers on the bottle, too.",
+            "attribution": "— Camille D., New Orleans, LA · Verified Buyer"
+          }
+        }
+      },
+      "block_order": [
+        "quote_nbUbAa",
+        "quote_PBKRJM",
+        "quote_fQqrmq",
+        "quote_xeN8zh"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "eyebrow": "— In Her Words —",
+        "heading": "Women who <em>knew</em> better.<br>And chose us anyway."
+      }
+    },
+    "story_88GJLB": {
+      "type": "story",
+      "name": "Brand Story",
+      "settings": {
+        "eyebrow": "— The Brand Story —",
+        "heading": "Five quiet chapters.<br><em>One bench.</em>",
+        "lede": "Chemistrie was not founded in a boardroom. It was founded one milligram at a time, over a decade, on a single compounding bench in Houston.",
+        "chapter_1_year": "2014",
+        "chapter_1_heading": "The bench, on Heights Boulevard.",
+        "chapter_1_body": "Dr. A and Dr. M meet across the same compounding bench in Houston. A decade of weighing actives by the milligram begins — for patients, for partners, for the women they go home to.",
+        "chapter_2_year": "2018",
+        "chapter_2_heading": "The first wife. The first formula.",
+        "chapter_2_body": "Dr. M's wife asks for a retinol that does not burn. He compounds 0.05% retinaldehyde with niacinamide in a backroom mortar. Within four weeks, six other patients are asking for the same bottle.",
+        "chapter_3_year": "2022",
+        "chapter_3_heading": "The patient list becomes a waiting list.",
+        "chapter_3_body": "Friends of friends. A dermatology nurse's daughter. A schoolteacher in Austin. The bench cannot pour fast enough. The pharmacists begin labelling batches by hand, numbering each bottle as it leaves.",
+        "chapter_4_year": "2025",
+        "chapter_4_heading": "The maison takes a name.",
+        "chapter_4_body": "A glassblower three blocks away. A letterpress in the same city. A photographer who shoots only in west afternoon light. The house is named on a Tuesday — Chemistrie, for the chemistry of patience, hands, and a woman's nightly ritual.",
+        "chapter_5_year": "2026",
+        "chapter_5_heading": "Today. And the women, still.",
+        "chapter_5_body": "Twelve formulas. Two hundred bottles a batch. A pharmacist on the phone, always. Chemistrie is the same bench it always was — only now, with a door open to you."
+      }
+    },
+    "instagram_GV7ThA": {
+      "type": "instagram",
+      "name": "Instagram",
+      "settings": {
+        "eyebrow": "— The Bench, on Instagram —",
+        "heading": "Find us <em>between</em><br>the bottles.",
+        "instagram_url": "",
+        "handle": "@chemistrie.co",
+        "follower_count": "21.4k"
+      }
+    },
+    "newsletter_cta_bQgTWH": {
+      "type": "newsletter-cta",
+      "name": "Newsletter CTA",
+      "settings": {
+        "eyebrow": "— Letters from the Bench —",
+        "heading": "Receive the first<br>pharmacist's <em>letter.</em>",
+        "sub": "A quiet, monthly note from Dr. A & Dr. M — new formulations, ritual edits, and the occasional invitation. Never marketing."
+      }
+    }
   },
-  "order": ["main-404"]
+  "order": [
+    "hero_YGMYfA",
+    "pillars_tmq87Y",
+    "shop_jAJymM",
+    "founders_cch8nz",
+    "actives_WHF8yt",
+    "proof_iDTz9Y",
+    "ritual_raGNG4",
+    "testimonials_dVdUH3",
+    "story_88GJLB",
+    "instagram_GV7ThA",
+    "newsletter_cta_bQgTWH"
+  ]
 }
