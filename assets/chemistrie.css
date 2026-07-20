@@ -2114,9 +2114,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .story__chapter > .story__chapter-body { order: 1; padding-right: clamp(0px, 2vw, 24px); text-align: right; }
 .story__chapter > .story__chapter-meta { order: 2; }
-.story__chapter > .story__chapter-photo { order: 3; padding-left: clamp(0px, 2vw, 24px); }
+.story__chapter > .story__chapter-photo { order: 3; padding-left: 0; }
 .story__chapter--reverse > .story__chapter-body { order: 3; padding-right: 0; padding-left: clamp(0px, 2vw, 24px); text-align: left; }
-.story__chapter--reverse > .story__chapter-photo { order: 1; padding-left: 0; padding-right: clamp(0px, 2vw, 24px); }
+.story__chapter--reverse > .story__chapter-photo { order: 1; padding-left: 0; padding-right: 0; }
 
 /* ── Story reveal — JS-driven, no CSS transitions ── */
 .story__chapter-body,
@@ -2203,7 +2203,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .story__chapter-photo {
   aspect-ratio: 4/5;
-  max-width: 440px;
+  max-width: none;
   width: 100%;
   border-radius: 14px;
   overflow: hidden;
