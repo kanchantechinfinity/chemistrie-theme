@@ -326,6 +326,71 @@
         "stat4_unit": "days",
         "stat4_label": "Money-back, no-questions ritual trial."
       }
+    },
+    "ritual_steps_NPrGUd": {
+      "type": "ritual-steps",
+      "blocks": {
+        "step_C8f64k": {
+          "type": "step",
+          "settings": {
+            "roman": "i.",
+            "step_name": "Cleanse",
+            "product_name": "Velvet",
+            "product_url": "",
+            "description": "Begin with Velvet, our foaming facial cleanser, worked into damp skin for ninety seconds. It lifts the night away without stripping — the face wakes, it does not flinch.",
+            "product_name_pm": "",
+            "description_pm": ""
+          }
+        },
+        "step_KJXBWw": {
+          "type": "step",
+          "settings": {
+            "roman": "ii.",
+            "step_name": "Treat",
+            "product_name": "Lumina",
+            "product_url": "",
+            "description": "Two drops of Lumina, our vitamin C serum, pressed — never rubbed — over the face. Brightness and antioxidant defence for the hours of daylight ahead.",
+            "product_name_pm": "Renewal",
+            "description_pm": "Two drops of Renewal, our night serum, pressed — never rubbed — over the face. Repair and resurfacing for the hours the skin rebuilds."
+          }
+        },
+        "step_WQw7M3": {
+          "type": "step",
+          "settings": {
+            "roman": "iii.",
+            "step_name": "Hydrate",
+            "product_name": "Cashmere",
+            "product_url": "",
+            "description": "One pearl of Cashmere, our daily moisturiser, warmed between the palms and pressed upward along the jaw, cheekbones and brow. This sealing step before the day.",
+            "product_name_pm": "",
+            "description_pm": ""
+          }
+        },
+        "step_TAcW3M": {
+          "type": "step",
+          "settings": {
+            "roman": "iv.",
+            "step_name": "Restore",
+            "product_name": "Peptide Cream",
+            "product_url": "",
+            "description": "Reserved for the evening. Restore is where the ritual does its quietest, most important work — see the Evening ritual for this final step.",
+            "product_name_pm": "",
+            "description_pm": ""
+          }
+        }
+      },
+      "block_order": [
+        "step_C8f64k",
+        "step_KJXBWw",
+        "step_WQw7M3",
+        "step_TAcW3M"
+      ],
+      "name": "Ritual Steps",
+      "settings": {
+        "eyebrow": "— The ritual, step by step —",
+        "heading": "Four steps,<br><em>morning and night.</em>",
+        "sub": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down, layer thin, and let the skin ask for the next. Switch between morning and evening to see how each step changes."
+      }
     }
   },
   "order": [
@@ -333,6 +398,7 @@
     "pillars_tmq87Y",
     "founders_cch8nz",
     "actives_WHF8yt",
-    "proof_iDTz9Y"
+    "proof_iDTz9Y",
+    "ritual_steps_NPrGUd"
   ]
 }
