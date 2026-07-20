@@ -177,47 +177,234 @@
 {
   "name": "Hero",
   "settings": [
-    { "type": "text", "id": "live_text", "label": "Live indicator text", "default": "A pharmacist is on the line" },
-    { "type": "text", "id": "meta_location", "label": "Meta location", "default": "Houston · 29.76°N" },
-    { "type": "text", "id": "meta_volume", "label": "Meta volume", "default": "Vol. III · 2026" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A Pharmacist's Quiet Luxury" },
-    { "type": "text", "id": "title_aria", "label": "Title (accessibility label)", "default": "Made by pharmacists. Made for the women they love." },
-    { "type": "text", "id": "title_word_1", "label": "Title row 1 word", "default": "Made" },
-    { "type": "text", "id": "title_em_1", "label": "Title row 1 emphasis", "default": "by pharmacists." },
-    { "type": "html", "id": "title_row_2", "label": "Title row 2 (inline HTML)", "default": "Made <em class='hero__title-em'>for</em> the women" },
-    { "type": "text", "id": "title_em_accent", "label": "Title row 3 accent", "default": "they love." },
-    { "type": "textarea", "id": "deck", "label": "Deck paragraph", "default": "Compounded by hand in Houston. Twelve formulas, two hundred bottles a batch, retired the moment the batch is poured. Welcome to the bench." },
-    { "type": "text", "id": "cta_primary_label", "label": "Primary CTA label", "default": "Begin the consultation" },
-    { "type": "url", "id": "cta_primary_link", "label": "Primary CTA link", "default": "#shop" },
-    { "type": "text", "id": "cta_secondary_label", "label": "Secondary CTA label", "default": "Watch the bench film · 2:14" },
-    { "type": "url", "id": "cta_secondary_link", "label": "Secondary CTA link", "default": "#instagram" },
-    { "type": "text", "id": "trust1_num", "label": "Trust stat 1 number", "default": "2,400+" },
-    { "type": "text", "id": "trust1_label", "label": "Trust stat 1 label", "default": "Women on the list" },
-    { "type": "text", "id": "trust2_num", "label": "Trust stat 2 number", "default": "28" },
-    { "type": "text", "id": "trust2_label", "label": "Trust stat 2 label", "default": "Clinical-grade actives" },
-    { "type": "text", "id": "trust3_num", "label": "Trust stat 3 number", "default": "★ 4.96" },
-    { "type": "text", "id": "trust3_label", "label": "Trust stat 3 label", "default": "Verified buyer rating" },
-    { "type": "header", "content": "Visual stage" },
-    { "type": "image_picker", "id": "bottle_image", "label": "Bottle image (optional — replaces inline SVG)" },
-    { "type": "text", "id": "spec_top_label", "label": "Top spec label", "default": "Tonight's batch" },
-    { "type": "text", "id": "spec_top_value", "label": "Top spec value", "default": "N°027" },
-    { "type": "text", "id": "spec_top_meta", "label": "Top spec meta", "default": "of 200 · poured at 4:42pm CT" },
-    { "type": "text", "id": "pill_1", "label": "Pill 1", "default": "Retinaldehyde 0.05%" },
-    { "type": "text", "id": "pill_2", "label": "Pill 2", "default": "Niacinamide 4%" },
-    { "type": "text", "id": "pill_3", "label": "Pill 3", "default": "Ferulic · Hyaluronic" },
-    { "type": "text", "id": "spec_bottom_mini", "label": "Bottom spec text", "default": "Hand-numbered · pharmacist-signed" },
-    { "type": "text", "id": "spec_bottom_rx", "label": "Bottom spec badge", "default": "Rx" },
-    { "type": "text", "id": "deco_01", "label": "Decorative number (left)", "default": "— 01" },
-    { "type": "text", "id": "deco_ed", "label": "Decorative number (right)", "default": "N°II · ED" },
-    { "type": "header", "content": "Marquee & scroll" },
-    { "type": "text", "id": "marquee_1", "label": "Marquee item 1", "default": "Compounded in Houston" },
-    { "type": "text", "id": "marquee_2", "label": "Marquee item 2", "default": "Made for the women we love" },
-    { "type": "text", "id": "marquee_3", "label": "Marquee item 3", "default": "Hand-numbered batches" },
-    { "type": "text", "id": "marquee_4", "label": "Marquee item 4", "default": "Pharmaceutical-grade actives" },
-    { "type": "text", "id": "scroll_label", "label": "Scroll cue label", "default": "Scroll" }
+    {
+      "type": "text",
+      "id": "live_text",
+      "label": "Live indicator text",
+      "default": "A pharmacist is on the line"
+    },
+    {
+      "type": "text",
+      "id": "meta_location",
+      "label": "Meta location",
+      "default": "Houston · 29.76°N"
+    },
+    {
+      "type": "text",
+      "id": "meta_volume",
+      "label": "Meta volume",
+      "default": "Vol. III · 2026"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "A Pharmacist's Quiet Luxury"
+    },
+    {
+      "type": "text",
+      "id": "title_aria",
+      "label": "Title (accessibility label)",
+      "default": "Made by pharmacists. Made for the women they love."
+    },
+    {
+      "type": "text",
+      "id": "title_word_1",
+      "label": "Title row 1 word",
+      "default": "Made"
+    },
+    {
+      "type": "text",
+      "id": "title_em_1",
+      "label": "Title row 1 emphasis",
+      "default": "by pharmacists."
+    },
+    {
+      "type": "html",
+      "id": "title_row_2",
+      "label": "Title row 2 (inline HTML)",
+      "default": "Made <em class='hero__title-em'>for</em> the women"
+    },
+    {
+      "type": "text",
+      "id": "title_em_accent",
+      "label": "Title row 3 accent",
+      "default": "they love."
+    },
+    {
+      "type": "textarea",
+      "id": "deck",
+      "label": "Deck paragraph",
+      "default": "Compounded by hand in Houston. Twelve formulas, two hundred bottles a batch, retired the moment the batch is poured. Welcome to the bench."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Primary CTA label",
+      "default": "Begin the consultation"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_link",
+      "label": "Primary CTA link",
+      "default": "#shop"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Secondary CTA label",
+      "default": "Watch the bench film · 2:14"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_link",
+      "label": "Secondary CTA link",
+      "default": "#instagram"
+    },
+    {
+      "type": "text",
+      "id": "trust1_num",
+      "label": "Trust stat 1 number",
+      "default": "2,400+"
+    },
+    {
+      "type": "text",
+      "id": "trust1_label",
+      "label": "Trust stat 1 label",
+      "default": "Women on the list"
+    },
+    {
+      "type": "text",
+      "id": "trust2_num",
+      "label": "Trust stat 2 number",
+      "default": "28"
+    },
+    {
+      "type": "text",
+      "id": "trust2_label",
+      "label": "Trust stat 2 label",
+      "default": "Clinical-grade actives"
+    },
+    {
+      "type": "text",
+      "id": "trust3_num",
+      "label": "Trust stat 3 number",
+      "default": "★ 4.96"
+    },
+    {
+      "type": "text",
+      "id": "trust3_label",
+      "label": "Trust stat 3 label",
+      "default": "Verified buyer rating"
+    },
+    {
+      "type": "header",
+      "content": "Visual stage"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottle_image",
+      "label": "Bottle image (optional — replaces inline SVG)"
+    },
+    {
+      "type": "text",
+      "id": "spec_top_label",
+      "label": "Top spec label",
+      "default": "Tonight's batch"
+    },
+    {
+      "type": "text",
+      "id": "spec_top_value",
+      "label": "Top spec value",
+      "default": "N°027"
+    },
+    {
+      "type": "text",
+      "id": "spec_top_meta",
+      "label": "Top spec meta",
+      "default": "of 200 · poured at 4:42pm CT"
+    },
+    {
+      "type": "text",
+      "id": "pill_1",
+      "label": "Pill 1",
+      "default": "Retinaldehyde 0.05%"
+    },
+    {
+      "type": "text",
+      "id": "pill_2",
+      "label": "Pill 2",
+      "default": "Niacinamide 4%"
+    },
+    {
+      "type": "text",
+      "id": "pill_3",
+      "label": "Pill 3",
+      "default": "Ferulic · Hyaluronic"
+    },
+    {
+      "type": "text",
+      "id": "spec_bottom_mini",
+      "label": "Bottom spec text",
+      "default": "Hand-numbered · pharmacist-signed"
+    },
+    {
+      "type": "text",
+      "id": "spec_bottom_rx",
+      "label": "Bottom spec badge",
+      "default": "Rx"
+    },
+    {
+      "type": "text",
+      "id": "deco_01",
+      "label": "Decorative number (left)",
+      "default": "— 01"
+    },
+    {
+      "type": "text",
+      "id": "deco_ed",
+      "label": "Decorative number (right)",
+      "default": "N°II · ED"
+    },
+    {
+      "type": "header",
+      "content": "Marquee & scroll"
+    },
+    {
+      "type": "text",
+      "id": "marquee_1",
+      "label": "Marquee item 1",
+      "default": "Compounded in Houston"
+    },
+    {
+      "type": "text",
+      "id": "marquee_2",
+      "label": "Marquee item 2",
+      "default": "Made for the women we love"
+    },
+    {
+      "type": "text",
+      "id": "marquee_3",
+      "label": "Marquee item 3",
+      "default": "Hand-numbered batches"
+    },
+    {
+      "type": "text",
+      "id": "marquee_4",
+      "label": "Marquee item 4",
+      "default": "Pharmaceutical-grade actives"
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scroll cue label",
+      "default": "Scroll"
+    }
   ],
   "presets": [
-    { "name": "Hero" }
+    {
+      "name": "Hero"
+    }
   ]
 }
 {% endschema %}
