@@ -113,11 +113,205 @@
         "sig": "— Dr. A & Dr. M",
         "sig_sub": "Compounding Pharmacists · Founders"
       }
+    },
+    "actives_WHF8yt": {
+      "type": "actives",
+      "blocks": {
+        "active_g3fm7B": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 1,
+            "tier": "— Hero active",
+            "name": "Retinaldehyde",
+            "dose": "0.05%",
+            "description": "Eleven times faster than retinol. Half the irritation. The dose only a pharmacist would risk.",
+            "source": "Switzerland · USP",
+            "half_life": "12 mo · sealed",
+            "found_in": "N°01 Renewal"
+          }
+        },
+        "active_wx8cBB": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 2,
+            "tier": "— Hero active",
+            "name": "L-Ascorbic Acid",
+            "dose": "15%",
+            "description": "Stabilised with ferulic and tocopherol. The pharmacist's gold standard for brightening.",
+            "source": "Scotland · USP",
+            "half_life": "8 mo · amber",
+            "found_in": "N°02 Vit-C"
+          }
+        },
+        "active_qjyXf6": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 3,
+            "tier": "— Hero active",
+            "name": "Niacinamide",
+            "dose": "4%",
+            "description": "Refines pore visibility, reinforces barrier. Universally well-tolerated.",
+            "source": "USP · pH 5.4",
+            "half_life": "36 months",
+            "found_in": "N°01 · 04 · 06"
+          }
+        },
+        "active_neLYBe": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 4,
+            "tier": "— Hero active",
+            "name": "Bakuchiol",
+            "dose": "1%",
+            "description": "Botanical retinol-alternative for pregnancy and the most sensitive nights.",
+            "source": "India · botanical",
+            "half_life": "24 months",
+            "found_in": "N°03 Golden Oil"
+          }
+        },
+        "active_ketUa9": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 5,
+            "tier": "— Supporting",
+            "name": "Mandelic Acid",
+            "dose": "8%",
+            "description": "The kindest AHA. Large molecule, slow penetration, dignified results.",
+            "source": "Almond · USP",
+            "half_life": "18 months",
+            "found_in": "N°05 Tonic"
+          }
+        },
+        "active_iyzFyA": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 6,
+            "tier": "— Supporting",
+            "name": "Peptide-5",
+            "dose": "2%",
+            "description": "Signals collagen synthesis. Daily, undramatic improvement.",
+            "source": "Switzerland",
+            "half_life": "24 months",
+            "found_in": "N°04 Cream"
+          }
+        },
+        "active_QqUaA7": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 7,
+            "tier": "— Hero active",
+            "name": "Ceramide Complex",
+            "dose": "NP·AP·EOP",
+            "description": "Three ceramides mirroring the lipid ratio of healthy young skin.",
+            "source": "Japan · bio-id",
+            "half_life": "30 months",
+            "found_in": "N°04 Velvet"
+          }
+        },
+        "active_GjCRee": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 8,
+            "tier": "— Supporting",
+            "name": "Squalane",
+            "dose": "100%",
+            "description": "Plant-derived. Pharmaceutical-grade. Closes the ritual, never clogs.",
+            "source": "Spain · olive",
+            "half_life": "36 months",
+            "found_in": "N°03 Oil"
+          }
+        },
+        "active_XpPJEQ": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 9,
+            "tier": "— Supporting",
+            "name": "Calendula",
+            "dose": "3%",
+            "description": "Anti-inflammatory infusion. The reason redness softens, not just hides.",
+            "source": "Houston · fresh",
+            "half_life": "9 months",
+            "found_in": "N°04b Balm"
+          }
+        },
+        "active_yDMUqk": {
+          "type": "active",
+          "settings": {
+            "is_hero": true,
+            "molecule": 10,
+            "tier": "— Hero active",
+            "name": "Hyaluronic, 3-MW",
+            "dose": "2%",
+            "description": "Low, mid and high molecular weights — together. Hydration at every layer.",
+            "source": "Bio-fermented",
+            "half_life": "24 months",
+            "found_in": "Whole ritual"
+          }
+        },
+        "active_irkpni": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 11,
+            "tier": "— Supporting",
+            "name": "Allantoin",
+            "dose": "1%",
+            "description": "Soothes, smooths, accelerates barrier repair after every active.",
+            "source": "USP-grade",
+            "half_life": "36 months",
+            "found_in": "N°01 · 04"
+          }
+        },
+        "active_eWaXcR": {
+          "type": "active",
+          "settings": {
+            "is_hero": false,
+            "molecule": 12,
+            "tier": "— Supporting",
+            "name": "Centella Asiatica",
+            "dose": "5%",
+            "description": "Madecassoside-rich. The bench's favourite calming active.",
+            "source": "Korea · USP",
+            "half_life": "24 months",
+            "found_in": "N°05 Tonic"
+          }
+        }
+      },
+      "block_order": [
+        "active_g3fm7B",
+        "active_wx8cBB",
+        "active_qjyXf6",
+        "active_neLYBe",
+        "active_ketUa9",
+        "active_iyzFyA",
+        "active_QqUaA7",
+        "active_GjCRee",
+        "active_XpPJEQ",
+        "active_yDMUqk",
+        "active_irkpni",
+        "active_eWaXcR"
+      ],
+      "name": "Active Index",
+      "settings": {
+        "eyebrow": "— The Active Index —",
+        "heading": "Twelve ingredients,<br>scroll-by-<em>scroll.</em>",
+        "lede": "Each active, one at a time. Concentration, source, half-life, the formula it lives in. Scroll horizontally — the pharmacist will hand you the next."
+      }
     }
   },
   "order": [
     "hero_YGMYfA",
     "pillars_tmq87Y",
-    "founders_cch8nz"
+    "founders_cch8nz",
+    "actives_WHF8yt"
   ]
 }
