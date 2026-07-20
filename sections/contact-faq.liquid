@@ -46,6 +46,8 @@
 .faq-item__a-inner { padding: 0 4px 28px; max-width: 68ch; font-size: 15px; line-height: 1.75; color: rgba(26,58,45,.82); }
 .faq-item__a-inner p { margin: 0 0 12px; }
 .faq-item__a-inner p:last-child { margin-bottom: 0; }
+/* Narrow screens wrap longer answers taller — avoid clipping the open panel */
+@media (max-width: 640px) { .faq-item__a.is-open { max-height: 900px; } }
 {% endstylesheet %}
 
 {% javascript %}

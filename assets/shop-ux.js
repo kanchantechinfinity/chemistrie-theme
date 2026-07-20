@@ -81,6 +81,18 @@
 
     if (cartSubtotalEl) cartSubtotalEl.textContent = money(cart.total_price);
 
+    // discount / savings display (Shopify automatic + code discounts)
+    var discEl = document.getElementById("cartDrawerDiscount");
+    if (discEl) {
+      if (cart.total_discount && cart.total_discount > 0) {
+        var titles = (cart.cart_level_discount_applications || []).map(function (d) { return d.title; }).join(", ");
+        discEl.innerHTML = "◆ " + (titles ? titles + " " : "Discount ") + "−" + money(cart.total_discount);
+        discEl.hidden = false;
+      } else {
+        discEl.hidden = true;
+      }
+    }
+
     if (cartShippingEl) {
       var subtotalDollars = cart.total_price / 100;
       if (subtotalDollars >= freeShip) {

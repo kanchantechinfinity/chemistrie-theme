@@ -45,13 +45,23 @@
                     <span class="cart__variant">{{ item.variant.title }}</span>
                   {%- endunless -%}
                   <span class="cart__unit">{{ item.original_price | money }} each</span>
+                  {%- if item.line_level_discount_allocations != empty -%}
+                    {%- for alloc in item.line_level_discount_allocations -%}
+                      <span class="cart__discount">◆ {{ alloc.discount_application.title }} (−{{ alloc.amount | money }})</span>
+                    {%- endfor -%}
+                  {%- endif -%}
                   <a class="cart__remove" href="{{ item.url_to_remove }}">Remove</a>
                 </div>
                 <div class="cart__qty">
                   <label class="visually-hidden" for="updates_{{ item.key }}">Quantity for {{ item.title }}</label>
                   <input class="cart__qty-input" id="updates_{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric">
                 </div>
-                <div class="cart__line-price">{{ item.final_line_price | money }}</div>
+                <div class="cart__line-price">
+                  {%- if item.original_line_price != item.final_line_price -%}
+                    <s class="cart__line-was">{{ item.original_line_price | money }}</s>
+                  {%- endif -%}
+                  {{ item.final_line_price | money }}
+                </div>
               </div>
             {%- endfor -%}
             <div class="cart__actions">
@@ -62,10 +72,18 @@
 
           <aside class="cart__summary">
             <h2 class="cart__summary-title">Order summary</h2>
-            <div class="cart__row"><span>Subtotal</span><span>{{ cart.total_price | money }}</span></div>
-            {%- if cart.total_discounts > 0 -%}
+            <div class="cart__row"><span>Subtotal</span><span>{{ cart.original_total_price | money }}</span></div>
+            {%- if cart.cart_level_discount_applications != empty -%}
+              {%- for d in cart.cart_level_discount_applications -%}
+                <div class="cart__row cart__row--disc"><span>◆ {{ d.title }}</span><span>−{{ d.total_allocated_amount | money }}</span></div>
+              {%- endfor -%}
+            {%- elsif cart.total_discounts > 0 -%}
               <div class="cart__row cart__row--disc"><span>Discounts</span><span>−{{ cart.total_discounts | money }}</span></div>
             {%- endif -%}
+            {%- if cart.total_discounts > 0 -%}
+              <div class="cart__row cart__row--total"><span>Estimated total</span><span>{{ cart.total_price | money }}</span></div>
+            {%- endif -%}
+            <p class="cart__disc-hint">Have a code? Apply it at checkout.</p>
             <div class="cart__row cart__row--note"><span>Shipping</span><span>Calculated at checkout</span></div>
             <label class="cart__note-label" for="cart-note">Order note</label>
             <textarea id="cart-note" name="note" class="cart__note" rows="2" placeholder="Add a note (gift message, delivery instructions)">{{ cart.note }}</textarea>
@@ -118,6 +136,10 @@
 .cart__summary-title { font-family: var(--ff-display); font-size: 24px; color: var(--c-forest); margin: 0 0 20px; }
 .cart__row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 15px; color: var(--c-ink-soft); }
 .cart__row--disc { color: var(--c-sage); }
+.cart__row--total { font-family: var(--ff-display); font-size: 19px; color: var(--c-forest); border-top: 1px solid var(--c-line-soft); margin-top: 4px; padding-top: 14px; }
+.cart__disc-hint { font-size: 12px; color: var(--c-ink-mute); margin: 8px 0 0; }
+.cart__discount { font-size: 12px; color: var(--c-sage); letter-spacing: .02em; }
+.cart__line-was { color: var(--c-ink-mute); text-decoration: line-through; margin-right: 8px; font-size: 13px; }
 .cart__row--note { border-bottom: 1px solid var(--c-line-soft); }
 .cart__note-label { display: block; margin: 18px 0 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); }
 .cart__note { width: 100%; padding: 12px 14px; border: 1px solid var(--c-line); border-radius: 10px; background: var(--c-paper); font-family: var(--ff-body); font-size: 14px; color: var(--c-forest); resize: vertical; }

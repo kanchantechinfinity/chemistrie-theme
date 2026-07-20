@@ -18,11 +18,13 @@
 
   <div class="drawer__foot" id="cartDrawerFoot">
     <p class="drawer__shipping" id="cartDrawerShipping"></p>
+    <p class="drawer__discount" id="cartDrawerDiscount" hidden></p>
     <div class="drawer__subtotal">
       <span>Subtotal</span>
       <span id="cartDrawerSubtotal">$0.00</span>
     </div>
     <a class="btn btn--primary drawer__checkout" id="cartDrawerCheckout" href="{{ routes.cart_url }}">Checkout</a>
     <a class="drawer__viewbag" href="{{ routes.cart_url }}">View bag</a>
+    <span class="drawer__code-hint">Discount codes apply at checkout</span>
   </div>
 </aside>

@@ -27,9 +27,13 @@
 .mpage__body ul, .mpage__body ol { padding-left: 1.4em; }
 .mpage__body li { margin: .5em 0; }
 .mpage__body blockquote { margin: 1.6em 0; padding-left: 24px; border-left: 3px solid var(--c-tan); font-family: var(--ff-display); font-size: 24px; font-style: italic; color: var(--c-forest); }
-.mpage__body img { border-radius: 12px; }
+.mpage__body img { border-radius: 12px; max-width: 100%; height: auto; }
+.mpage__body iframe, .mpage__body video, .mpage__body embed { max-width: 100%; }
+.mpage__body pre { overflow-x: auto; }
 .mpage__body table { width: 100%; border-collapse: collapse; }
 .mpage__body th, .mpage__body td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--c-line-soft); }
+/* Wide tables scroll instead of forcing page overflow on mobile */
+@media (max-width: 640px) { .mpage__body table { display: block; overflow-x: auto; white-space: nowrap; } }
 {% endstylesheet %}
 
 {% schema %}

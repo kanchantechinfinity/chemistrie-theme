@@ -72,6 +72,29 @@
   .statbar__inner { grid-template-columns: 1fr 1fr; }
   .statbar__cell:nth-child(odd) { border-left: 0; padding-left: 0; }
 }
+@media (max-width: 480px) {
+  .statbar__inner { grid-template-columns: 1fr; }
+  .statbar__cell { border-left: 0; padding-left: 0; }
+}
+
+/* ---- Defensive inner-page hardening (additive; no layout change) ---- */
+/* Media never forces horizontal overflow */
+.page-section img, .page-section svg, .page-section video, .page-section iframe,
+.page-hero img, .page-hero svg, .page-hero video, .page-hero iframe {
+  max-width: 100%;
+}
+/* Every shared inner-page wrapper stays centered, padded and inside the viewport */
+.page-section, .page-hero, .statbar { box-sizing: border-box; max-width: 100%; }
+.page-section__inner, .page-hero__inner, .statbar__inner {
+  box-sizing: border-box;
+  max-width: var(--maxw);
+  margin-inline: auto;
+}
+/* Mobile: scale the shared hero padding down a touch and keep copy inside */
+@media (max-width: 640px) {
+  .page-hero { padding-left: var(--pad-x); padding-right: var(--pad-x); }
+  .page-hero__title, .page-hero__deck { max-width: 100%; }
+}
 
 /* ───────── Mobile navigation (additive — desktop unchanged, matches Vercel) ───────── */
 .nav__toggle { display: none; }
