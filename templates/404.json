@@ -101,6 +101,16 @@
         "intro_heading": "Three things we<br><em>refuse</em> to compromise."
       }
     },
+    "shop_jAJymM": {
+      "type": "shop",
+      "name": "Shop",
+      "settings": {
+        "heading": "Six formulas.<br><em>Zero shortcuts.</em>",
+        "lede": "A complete pharmacist-built ritual. Begin with one, build to all six.",
+        "foot_link_label": "Explore the full apothecary",
+        "collection": ""
+      }
+    },
     "founders_cch8nz": {
       "type": "founders",
       "name": "Founders",
@@ -327,78 +337,163 @@
         "stat4_label": "Money-back, no-questions ritual trial."
       }
     },
-    "ritual_steps_NPrGUd": {
-      "type": "ritual-steps",
+    "ritual_raGNG4": {
+      "type": "ritual",
       "blocks": {
-        "step_C8f64k": {
+        "step_gmjaAk": {
           "type": "step",
           "settings": {
-            "roman": "i.",
-            "step_name": "Cleanse",
-            "product_name": "Velvet",
-            "product_url": "",
-            "description": "Begin with Velvet, our foaming facial cleanser, worked into damp skin for ninety seconds. It lifts the night away without stripping — the face wakes, it does not flinch.",
-            "product_name_pm": "",
-            "description_pm": ""
+            "num": "i.",
+            "name": "Cleanse",
+            "time": "90 seconds",
+            "description": "A milk that lifts without stripping. Worked into dry skin with both hands, eyes closed, breath slow.",
+            "chip": "Velvet Milk · No. 00"
           }
         },
-        "step_KJXBWw": {
+        "step_9LXN7A": {
           "type": "step",
           "settings": {
-            "roman": "ii.",
-            "step_name": "Treat",
-            "product_name": "Lumina",
-            "product_url": "",
-            "description": "Two drops of Lumina, our vitamin C serum, pressed — never rubbed — over the face. Brightness and antioxidant defence for the hours of daylight ahead.",
-            "product_name_pm": "Renewal",
-            "description_pm": "Two drops of Renewal, our night serum, pressed — never rubbed — over the face. Repair and resurfacing for the hours the skin rebuilds."
+            "num": "ii.",
+            "name": "Tone",
+            "time": "A pause",
+            "description": "Mandelic acid at 8%, low and weekly. Sweep across the T-zone with a cotton round. Then wait, dignified, for sixty seconds.",
+            "chip": "Clarifying Tonic · No. 05"
           }
         },
-        "step_WQw7M3": {
+        "step_TxY76t": {
           "type": "step",
           "settings": {
-            "roman": "iii.",
-            "step_name": "Hydrate",
-            "product_name": "Cashmere",
-            "product_url": "",
-            "description": "One pearl of Cashmere, our daily moisturiser, warmed between the palms and pressed upward along the jaw, cheekbones and brow. This sealing step before the day.",
-            "product_name_pm": "",
-            "description_pm": ""
+            "num": "iii.",
+            "name": "Treat",
+            "time": "2 drops",
+            "description": "Retinaldehyde at night. L-Ascorbic in morning. Press, do not rub. The face is not a counter to be wiped down.",
+            "chip": "Renewal Serum · No. 01"
           }
         },
-        "step_TAcW3M": {
+        "step_nkpb7w": {
           "type": "step",
           "settings": {
-            "roman": "iv.",
-            "step_name": "Restore",
-            "product_name": "Peptide Cream",
-            "product_url": "",
-            "description": "Reserved for the evening. Restore is where the ritual does its quietest, most important work — see the Evening ritual for this final step.",
-            "product_name_pm": "",
-            "description_pm": ""
+            "num": "iv.",
+            "name": "Seal",
+            "time": "One pearl",
+            "description": "The Velvet Cream, warmed between the palms. Pressed upward along the jaw, the cheekbones, the brow. A small ceremony, every night.",
+            "chip": "Velvet Cream · No. 04"
           }
         }
       },
       "block_order": [
-        "step_C8f64k",
-        "step_KJXBWw",
-        "step_WQw7M3",
-        "step_TAcW3M"
+        "step_gmjaAk",
+        "step_9LXN7A",
+        "step_TxY76t",
+        "step_nkpb7w"
       ],
-      "name": "Ritual Steps",
+      "name": "The Ritual",
       "settings": {
-        "eyebrow": "— The ritual, step by step —",
-        "heading": "Four steps,<br><em>morning and night.</em>",
-        "sub": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down, layer thin, and let the skin ask for the next. Switch between morning and evening to see how each step changes."
+        "eyebrow": "— The Ritual —",
+        "heading": "Four<br><em>quiet</em> steps.",
+        "lede": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down. Layer thin. Wait for the skin to ask."
+      }
+    },
+    "testimonials_dVdUH3": {
+      "type": "testimonials",
+      "blocks": {
+        "quote_nbUbAa": {
+          "type": "quote",
+          "settings": {
+            "quote": "I have been a dermatology nurse for nineteen years. This is the first brand I trust on my own daughter's face.",
+            "attribution": "— Marisol R., Houston, TX · Verified Buyer"
+          }
+        },
+        "quote_PBKRJM": {
+          "type": "quote",
+          "settings": {
+            "quote": "The pharmacist wrote me back personally about my redness. I bought three more bottles that afternoon.",
+            "attribution": "— Priya S., Austin, TX · Verified Buyer"
+          }
+        },
+        "quote_fQqrmq": {
+          "type": "quote",
+          "settings": {
+            "quote": "Heavy glass. Numbered batch. A handwritten card. I keep the box on my dresser.",
+            "attribution": "— Linnea H., Dallas, TX · Verified Buyer"
+          }
+        },
+        "quote_xeN8zh": {
+          "type": "quote",
+          "settings": {
+            "quote": "Made by pharmacists, made for the women they love — finally a tagline that delivers on the bottle, too.",
+            "attribution": "— Camille D., New Orleans, LA · Verified Buyer"
+          }
+        }
+      },
+      "block_order": [
+        "quote_nbUbAa",
+        "quote_PBKRJM",
+        "quote_fQqrmq",
+        "quote_xeN8zh"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "eyebrow": "— In Her Words —",
+        "heading": "Women who <em>knew</em> better.<br>And chose us anyway."
+      }
+    },
+    "story_88GJLB": {
+      "type": "story",
+      "name": "Brand Story",
+      "settings": {
+        "eyebrow": "— The Brand Story —",
+        "heading": "Five quiet chapters.<br><em>One bench.</em>",
+        "lede": "Chemistrie was not founded in a boardroom. It was founded one milligram at a time, over a decade, on a single compounding bench in Houston.",
+        "chapter_1_year": "2014",
+        "chapter_1_heading": "The bench, on Heights Boulevard.",
+        "chapter_1_body": "Dr. A and Dr. M meet across the same compounding bench in Houston. A decade of weighing actives by the milligram begins — for patients, for partners, for the women they go home to.",
+        "chapter_2_year": "2018",
+        "chapter_2_heading": "The first wife. The first formula.",
+        "chapter_2_body": "Dr. M's wife asks for a retinol that does not burn. He compounds 0.05% retinaldehyde with niacinamide in a backroom mortar. Within four weeks, six other patients are asking for the same bottle.",
+        "chapter_3_year": "2022",
+        "chapter_3_heading": "The patient list becomes a waiting list.",
+        "chapter_3_body": "Friends of friends. A dermatology nurse's daughter. A schoolteacher in Austin. The bench cannot pour fast enough. The pharmacists begin labelling batches by hand, numbering each bottle as it leaves.",
+        "chapter_4_year": "2025",
+        "chapter_4_heading": "The maison takes a name.",
+        "chapter_4_body": "A glassblower three blocks away. A letterpress in the same city. A photographer who shoots only in west afternoon light. The house is named on a Tuesday — Chemistrie, for the chemistry of patience, hands, and a woman's nightly ritual.",
+        "chapter_5_year": "2026",
+        "chapter_5_heading": "Today. And the women, still.",
+        "chapter_5_body": "Twelve formulas. Two hundred bottles a batch. A pharmacist on the phone, always. Chemistrie is the same bench it always was — only now, with a door open to you."
+      }
+    },
+    "instagram_GV7ThA": {
+      "type": "instagram",
+      "name": "Instagram",
+      "settings": {
+        "eyebrow": "— The Bench, on Instagram —",
+        "heading": "Find us <em>between</em><br>the bottles.",
+        "instagram_url": "",
+        "handle": "@chemistrie.co",
+        "follower_count": "21.4k"
+      }
+    },
+    "newsletter_cta_bQgTWH": {
+      "type": "newsletter-cta",
+      "name": "Newsletter CTA",
+      "settings": {
+        "eyebrow": "— Letters from the Bench —",
+        "heading": "Receive the first<br>pharmacist's <em>letter.</em>",
+        "sub": "A quiet, monthly note from Dr. A & Dr. M — new formulations, ritual edits, and the occasional invitation. Never marketing."
       }
     }
   },
   "order": [
     "hero_YGMYfA",
     "pillars_tmq87Y",
+    "shop_jAJymM",
     "founders_cch8nz",
     "actives_WHF8yt",
     "proof_iDTz9Y",
-    "ritual_steps_NPrGUd"
+    "ritual_raGNG4",
+    "testimonials_dVdUH3",
+    "story_88GJLB",
+    "instagram_GV7ThA",
+    "newsletter_cta_bQgTWH"
   ]
 }
