@@ -1,6 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main-404": { "type": "main-404" }
+    "main-404": {
+      "type": "main-404",
+      "settings": {}
+    },
+    "hero_YGMYfA": {
+      "type": "hero",
+      "name": "Hero",
+      "settings": {
+        "live_text": "A pharmacist is on the line",
+        "meta_location": "Houston · 29.76°N",
+        "meta_volume": "Vol. III · 2026",
+        "eyebrow": "A Pharmacist's Quiet Luxury",
+        "title_aria": "Made by pharmacists. Made for the women they love.",
+        "title_word_1": "Made",
+        "title_em_1": "by pharmacists.",
+        "title_row_2": "Made <em class=\"hero__title-em\">for</em> the women",
+        "title_em_accent": "they love.",
+        "deck": "Compounded by hand in Houston. Twelve formulas, two hundred bottles a batch, retired the moment the batch is poured. Welcome to the bench.",
+        "cta_primary_label": "Begin the consultation",
+        "cta_primary_link": "#shop",
+        "cta_secondary_label": "Watch the bench film · 2:14",
+        "cta_secondary_link": "#instagram",
+        "trust1_num": "2,400+",
+        "trust1_label": "Women on the list",
+        "trust2_num": "28",
+        "trust2_label": "Clinical-grade actives",
+        "trust3_num": "★ 4.96",
+        "trust3_label": "Verified buyer rating",
+        "spec_top_label": "Tonight's batch",
+        "spec_top_value": "N°027",
+        "spec_top_meta": "of 200 · poured at 4:42pm CT",
+        "pill_1": "Retinaldehyde 0.05%",
+        "pill_2": "Niacinamide 4%",
+        "pill_3": "Ferulic · Hyaluronic",
+        "spec_bottom_mini": "Hand-numbered · pharmacist-signed",
+        "spec_bottom_rx": "Rx",
+        "deco_01": "— 01",
+        "deco_ed": "N°II · ED",
+        "marquee_1": "Compounded in Houston",
+        "marquee_2": "Made for the women we love",
+        "marquee_3": "Hand-numbered batches",
+        "marquee_4": "Pharmaceutical-grade actives",
+        "scroll_label": "Scroll"
+      }
+    }
   },
-  "order": ["main-404"]
+  "order": [
+    "main-404",
+    "hero_YGMYfA"
+  ]
 }
