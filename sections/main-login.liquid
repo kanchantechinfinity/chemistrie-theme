@@ -1,0 +1,65 @@
+<section class="page-hero page-hero--short" data-screen-label="Login">
+  <div class="page-hero__inner cust__hero-inner">
+    <span class="eyebrow eyebrow--light">— Your account —</span>
+    <h1 class="display-h display-h--light page-hero__title">Welcome back</h1>
+  </div>
+</section>
+
+<section class="page-section page-section--paper cust">
+  <div class="page-section__inner cust__wrap">
+
+    <div class="cust__card" id="login-panel">
+      {%- form 'customer_login', class: 'cust__form' -%}
+        {%- if form.errors -%}<p class="cust__error">{{ form.errors | default_errors }}</p>{%- endif -%}
+        <label class="cust__label" for="c-email">Email</label>
+        <input class="cust__input" id="c-email" type="email" name="customer[email]" autocomplete="email" required>
+        <label class="cust__label" for="c-pass">Password</label>
+        <input class="cust__input" id="c-pass" type="password" name="customer[password]" autocomplete="current-password" required>
+        <button type="submit" class="btn btn--primary cust__submit">Sign in</button>
+        <div class="cust__links">
+          <a href="#recover">Forgot your password?</a>
+          <a href="{{ routes.account_register_url }}">Create account</a>
+        </div>
+      {%- endform -%}
+    </div>
+
+    <div class="cust__card" id="recover">
+      {%- form 'recover_customer_password', class: 'cust__form' -%}
+        <h2 class="cust__card-title">Reset your password</h2>
+        {%- if form.posted_successfully? -%}
+          <p class="cust__ok">We've sent you an email with a reset link.</p>
+        {%- endif -%}
+        <label class="cust__label" for="r-email">Email</label>
+        <input class="cust__input" id="r-email" type="email" name="email" autocomplete="email" required>
+        <button type="submit" class="btn btn--primary cust__submit">Send reset link</button>
+        <div class="cust__links"><a href="#login-panel">&larr; Back to sign in</a></div>
+      {%- endform -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+.page-hero--short { padding-top: clamp(110px, 13vw, 170px); padding-bottom: clamp(40px, 5vw, 64px); }
+.cust__hero-inner { text-align: center; }
+.cust__wrap { max-width: 460px; margin: 0 auto; }
+.cust__card { background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 16px; padding: clamp(28px, 4vw, 44px); }
+#recover { display: none; margin-top: 24px; }
+#recover:target { display: block; }
+.cust__wrap:has(#recover:target) #login-panel { display: none; }
+.cust__card-title { font-family: var(--ff-display); font-size: 26px; color: var(--c-forest); margin: 0 0 20px; }
+.cust__form { display: flex; flex-direction: column; }
+.cust__label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); margin: 16px 0 8px; }
+.cust__label:first-of-type { margin-top: 0; }
+.cust__input { padding: 13px 16px; border: 1px solid var(--c-line); border-radius: 10px; background: var(--c-paper); font-family: var(--ff-body); font-size: 15px; color: var(--c-forest); }
+.cust__submit { margin-top: 24px; justify-content: center; }
+.cust__links { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 18px; font-size: 13px; }
+.cust__links a { color: var(--c-ink-soft); text-decoration: underline; text-underline-offset: 3px; }
+.cust__links a:hover { color: var(--c-forest); }
+.cust__error { color: #a0402f; margin: 0 0 16px; font-size: 14px; }
+.cust__ok { color: var(--c-sage); margin: 0 0 16px; font-style: italic; }
+{% endstylesheet %}
+
+{% schema %}
+{ "name": "Login", "settings": [] }
+{% endschema %}

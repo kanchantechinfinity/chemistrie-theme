@@ -1,0 +1,81 @@
+<!-- ───── Vision ───── -->
+<section class="vision" id="story" data-screen-label="02 Vision">
+  <div class="section__head">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+  </div>
+
+  <blockquote class="vision__quote">
+    <p class="vision__words">
+      <em>"</em>{% assign words = section.settings.quote | split: ' ' %}{% for w in words %}<span>{{ w }}</span> {% endfor %}<em>"</em>
+    </p>
+    <footer class="vision__attribution">
+      <span class="vision__rule"></span>
+      <span>{{ section.settings.attribution }}</span>
+    </footer>
+  </blockquote>
+
+  <div class="vision__grid">
+    {% for block in section.blocks %}
+    <div class="vision__cell{% if forloop.index == 2 %} vision__cell--accent{% endif %}"{{ block.shopify_attributes }}>
+      <div class="vision__cell-top">
+        <span class="vision__num">— 0{{ forloop.index }}</span>
+        <span class="vision__icon">
+          {% case forloop.index %}
+          {% when 1 %}<svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M16 8h16M18 8v6c0 4-6 6-6 16 0 7 5 10 12 10s12-3 12-10c0-10-6-12-6-16V8"/>
+            <circle cx="24" cy="34" r="3" fill="currentColor"/>
+            <path d="M20 28h8" stroke-width="0.8"/>
+          </svg>
+          {% when 2 %}<svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="14" y="6" width="20" height="6" rx="1"/>
+            <path d="M16 12h16v30c0 2-2 4-4 4H20c-2 0-4-2-4-4z"/>
+            <circle cx="24" cy="28" r="5"/>
+            <path d="M21 28h6" stroke-width="0.8"/>
+          </svg>
+          {% else %}<svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M24 42s-12-7-12-18a7 7 0 0 1 12-5 7 7 0 0 1 12 5c0 11-12 18-12 18z"/>
+            <path d="M19 21c0-2 2-4 5-4M29 21c0-2-2-4-5-4" stroke-width="0.8"/>
+          </svg>
+          {% endcase %}
+        </span>
+      </div>
+      <h3>{{ block.settings.heading }}</h3>
+      <p>{{ block.settings.body }}</p>
+      <span class="vision__tag">{{ block.settings.tag }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vision",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Vision —" },
+    { "type": "text", "id": "quote", "label": "Quote", "default": "Luxury skincare rooted in trust, warmth, and pharmacist expertise — built for the women we love." },
+    { "type": "text", "id": "attribution", "label": "Attribution", "default": "Dr. A & Dr. M, Founding Pharmacists" }
+  ],
+  "blocks": [
+    {
+      "type": "cell",
+      "name": "Vision cell",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Compounded, never copied" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Every formula begins on a pharmacist's bench — not in a marketing room. Active concentrations are calibrated to skin physiology, then double-checked in lab." },
+        { "type": "text", "id": "tag", "label": "Tag", "default": "— Lab-verified, every batch" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Vision",
+      "blocks": [
+        { "type": "cell", "settings": { "heading": "Compounded, never copied", "body": "Every formula begins on a pharmacist's bench — not in a marketing room. Active concentrations are calibrated to skin physiology, then double-checked in lab.", "tag": "— Lab-verified, every batch" } },
+        { "type": "cell", "settings": { "heading": "Heirloom luxury", "body": "Heavy glass. Hand-poured. Numbered batches. Objects you keep on the counter, not under the sink. The kind of bottle a daughter inherits.", "tag": "— Hand-numbered, 200 / batch" } },
+        { "type": "cell", "settings": { "heading": "For the women we love", "body": "Made first for wives, mothers, daughters and best friends — then offered to you. The standard never wavered because the audience never did.", "tag": "— Letters in every parcel" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

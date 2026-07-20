@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "hero": { "type": "hero" },
+    "vision": { "type": "vision" },
+    "pillars": { "type": "pillars" },
+    "shop": { "type": "shop", "settings": {} },
+    "founders": { "type": "founders" },
+    "actives": { "type": "actives" },
+    "proof": { "type": "proof" },
+    "ritual": { "type": "ritual" },
+    "testimonials": { "type": "testimonials" },
+    "story": { "type": "story" },
+    "instagram": { "type": "instagram" },
+    "newsletter-cta": { "type": "newsletter-cta" }
+  },
+  "order": ["hero","vision","pillars","shop","founders","actives","proof","ritual","testimonials","story","instagram","newsletter-cta"]
+}

@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "page-hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "— The Ritual —",
+        "heading": "Four quiet steps,<br/><em>morning and night.</em>",
+        "deck": "A Chemistrie ritual is deliberately small. Four steps, layered thin, in the order the skin asks for them.",
+        "deck2": "The ritual was designed the way a pharmacist designs anything — for the outcome, not the shelf. Each step exists because the one before it earned it, and nothing is added for the sake of a longer routine. Slow it down, let it become the two minutes of the day that belong only to you."
+      }
+    },
+    "ritual-steps": { "type": "ritual-steps" },
+    "ritual-shop": { "type": "ritual-shop" },
+    "page-cta": {
+      "type": "page-cta",
+      "settings": {
+        "eyebrow": "— Begin tonight —",
+        "heading": "Build your <em>ritual.</em>",
+        "sub": "Every step, every bottle, compounded by pharmacists. Start with the collection.",
+        "button_label": "Shop the Collection"
+      }
+    }
+  },
+  "order": ["page-hero", "ritual-steps", "ritual-shop", "page-cta"]
+}

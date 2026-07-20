@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "page-hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "— Get in touch —",
+        "heading": "The pharmacist<br/><em>is on the line.</em>",
+        "deck": "Questions about actives, a skin concern, or an order — a real compounding pharmacist reads every message, and picks up the phone Monday through Friday."
+      }
+    },
+    "contact-main": { "type": "contact-main" },
+    "contact-steps": { "type": "contact-steps" },
+    "contact-faq": { "type": "contact-faq" },
+    "page-cta": {
+      "type": "page-cta",
+      "settings": {
+        "eyebrow": "— Ready when you are —",
+        "heading": "Begin your <em>ritual.</em>",
+        "sub": "Questions answered, formula matched, bottle numbered. Start with the collection.",
+        "button_label": "Shop the Collection"
+      }
+    }
+  },
+  "order": ["page-hero", "contact-main", "contact-steps", "contact-faq", "page-cta"]
+}

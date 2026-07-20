@@ -1,0 +1,25 @@
+<section class="page-hero" data-screen-label="{{ section.settings.eyebrow | strip }}">
+  <div class="page-hero__inner">
+    <span class="eyebrow eyebrow--light">{{ section.settings.eyebrow }}</span>
+    <h1 class="display-h display-h--light page-hero__title">{{ section.settings.heading }}</h1>
+    {%- if section.settings.deck != blank -%}
+      <p class="page-hero__deck">{{ section.settings.deck }}</p>
+    {%- endif -%}
+    {%- if section.settings.deck2 != blank -%}
+      <p class="page-hero__deck">{{ section.settings.deck2 }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Collection —" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "Six formulas.<br/><em>Zero shortcuts.</em>" },
+    { "type": "textarea", "id": "deck", "label": "Deck paragraph", "default": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend." },
+    { "type": "textarea", "id": "deck2", "label": "Deck paragraph 2 (optional)" }
+  ],
+  "presets": [{ "name": "Page Hero" }]
+}
+{% endschema %}

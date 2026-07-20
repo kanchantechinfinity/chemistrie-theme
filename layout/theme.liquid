@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{{ page_title }}</title>
+
+{{ content_for_header }}
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+{{ 'chemistrie.css' | asset_url | stylesheet_tag }}
+{{ 'pages.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} Theme-editor overrides — defaults are the exact reference values, so no visual change unless a merchant edits them. {%- endcomment -%}
+<style>
+  :root {
+    --c-forest: {{ settings.c_forest | default: '#1a3a2d' }};
+    --c-forest-2: {{ settings.c_forest_2 | default: '#0e2118' }};
+    --c-sage: {{ settings.c_sage | default: '#6c8f7b' }};
+    --c-tan: {{ settings.c_tan | default: '#c8aa7a' }};
+    --c-tan-2: {{ settings.c_tan_2 | default: '#a78a5e' }};
+    --c-cream: {{ settings.c_cream | default: '#f0e8db' }};
+    --c-paper: {{ settings.c_paper | default: '#f5edd9' }};
+    --c-ink: {{ settings.c_forest | default: '#1a3a2d' }};
+    --maxw: {{ settings.page_width | default: 1440 }}px;
+  }
+  {%- if settings.base_font_size and settings.base_font_size != 16 -%}
+  body { font-size: {{ settings.base_font_size }}px; }
+  {%- endif -%}
+</style>
+
+<script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body>
+
+{% section 'header' %}
+
+<main>{{ content_for_layout }}</main>
+
+{% section 'footer' %}
+
+<script src="{{ 'chemistrie.js' | asset_url }}"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!-- ───── The Ritual — horizontal ───── -->
+<section class="ritual" id="ritual" data-screen-label="08 Ritual">
+  <div class="ritual__intro">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-h">{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.lede }}</p>
+  </div>
+
+  <div class="ritual__pin">
+    <div class="ritual__track" id="ritualTrack">
+{% for block in section.blocks %}
+      <div class="ritual-step" {{ block.shopify_attributes }}>
+        <span class="ritual-step__num">{{ block.settings.num }}</span>
+        <h3>{{ block.settings.name }}</h3>
+        <p class="ritual-step__time">{{ block.settings.time }}</p>
+        <p>{{ block.settings.description }}</p>
+        <div class="ritual-step__chip">{{ block.settings.chip }}</div>
+      </div>
+{% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "The Ritual",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Ritual —" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Four<br/><em>quiet</em> steps." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down. Layer thin. Wait for the skin to ask." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "num", "label": "Step numeral", "default": "i." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Cleanse" },
+        { "type": "text", "id": "time", "label": "Time", "default": "90 seconds" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "A milk that lifts without stripping. Worked into dry skin with both hands, eyes closed, breath slow." },
+        { "type": "text", "id": "chip", "label": "Product chip", "default": "Velvet Milk · No. 00" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Ritual",
+      "blocks": [
+        { "type": "step", "settings": { "num": "i.", "name": "Cleanse", "time": "90 seconds", "description": "A milk that lifts without stripping. Worked into dry skin with both hands, eyes closed, breath slow.", "chip": "Velvet Milk · No. 00" } },
+        { "type": "step", "settings": { "num": "ii.", "name": "Tone", "time": "A pause", "description": "Mandelic acid at 8%, low and weekly. Sweep across the T-zone with a cotton round. Then wait, dignified, for sixty seconds.", "chip": "Clarifying Tonic · No. 05" } },
+        { "type": "step", "settings": { "num": "iii.", "name": "Treat", "time": "2 drops", "description": "Retinaldehyde at night. L-Ascorbic in morning. Press, do not rub. The face is not a counter to be wiped down.", "chip": "Renewal Serum · No. 01" } },
+        { "type": "step", "settings": { "num": "iv.", "name": "Seal", "time": "One pearl", "description": "The Velvet Cream, warmed between the palms. Pressed upward along the jaw, the cheekbones, the brow. A small ceremony, every night.", "chip": "Velvet Cream · No. 04" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,70 @@
+<section class="page-section page-section--paper pphilo">
+  <div class="page-section__inner">
+    <div class="page-section__head">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="display-h">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="pphilo__grid">
+      {%- for block in section.blocks -%}
+        <div class="pphilo__card" {{ block.shopify_attributes }}>
+          <span class="pphilo__icon" aria-hidden="true">
+            {%- case forloop.index -%}
+              {%- when 1 -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
+              {%- when 2 -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3v6M3 6h6M18 4v4M16 6h4"/><circle cx="9" cy="16" r="5"/><path d="M9 13v6M6 16h6"/></svg>
+              {%- when 3 -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 3h8M9 3v5l-4 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-4-9V3"/><path d="M6 15h12"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M8 10h.01M16 10h.01M8 15c1 1.2 2.4 2 4 2s3-.8 4-2"/></svg>
+            {%- endcase -%}
+          </span>
+          <h3 class="pphilo__title">{{ block.settings.title }}</h3>
+          <p class="pphilo__body">{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.pphilo__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 2.2vw, 32px); }
+.pphilo__card { background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px; padding: 30px 26px 32px; display: flex; flex-direction: column; }
+.pphilo__icon { display: inline-flex; width: 42px; height: 42px; color: var(--c-forest); }
+.pphilo__icon svg { width: 100%; height: 100%; }
+.pphilo__title { margin: 20px 0 0; font-family: var(--ff-display); font-size: clamp(20px, 2vw, 24px); font-weight: 500; color: var(--c-forest); line-height: 1.25; }
+.pphilo__body { margin: 12px 0 0; color: var(--c-ink-soft); line-height: 1.7; font-size: 15px; }
+@media (max-width: 1050px) { .pphilo__grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .pphilo__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Pharmacists Philosophy",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The philosophy —" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "The bench decides<br/><em>every bottle.</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Efficacy before fashion" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "We choose the active that works at the concentration that works — not the one trending this season." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pharmacists Philosophy",
+      "blocks": [
+        { "type": "value", "settings": { "title": "Efficacy before fashion", "body": "We choose the active that works at the concentration that works — not the one trending this season. Pharmacy asks a single question: will it do what the label says?" } },
+        { "type": "value", "settings": { "title": "Honest to the milligram", "body": "Every concentration is printed exactly as compounded. A pharmacist would never round a dose for a patient, so we never round one for you." } },
+        { "type": "value", "settings": { "title": "Small batches, always fresh", "body": "Actives degrade on a shelf. We compound in runs capped at 200 bottles so nothing you receive has sat waiting — the pharmacist's habit of dispensing fresh, kept intact." } },
+        { "type": "value", "settings": { "title": "Formulated for a real face", "body": "Each formula began as a request from someone the founders knew. Nothing ships until it earns a place in a ritual they would hand to the people they love." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

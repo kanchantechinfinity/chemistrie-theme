@@ -1,0 +1,62 @@
+{%- assign feat = blog.articles.first -%}
+<section class="jhero">
+  <div class="jhero__inner">
+    {%- if blog.articles.size > 0 -%}
+      <a class="jhero__media" href="{{ feat.url }}" aria-label="{{ feat.title | escape }}">
+        {%- if feat.image -%}
+          {{ feat.image | image_url: width: 1600 | image_tag: loading: 'eager', widths: '600,900,1200,1600', alt: feat.image.alt | default: feat.title, class: 'jhero__img' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'jhero__img jhero__ph' }}
+        {%- endif -%}
+      </a>
+      <div class="jhero__copy">
+        <span class="eyebrow eyebrow--light">— The Journal —</span>
+        {%- if feat.tags.size > 0 -%}
+          <span class="jhero__cat">{{ feat.tags.first }}</span>
+        {%- endif -%}
+        <h1 class="display-h display-h--light jhero__title">
+          <a href="{{ feat.url }}">{{ feat.title }}</a>
+        </h1>
+        {%- if feat.excerpt_or_content != blank -%}
+          <p class="jhero__excerpt">{{ feat.excerpt_or_content | strip_html | truncatewords: 42 }}</p>
+        {%- endif -%}
+        <a class="jhero__read" href="{{ feat.url }}">Read the article &rarr;</a>
+      </div>
+    {%- else -%}
+      <div class="jhero__empty">
+        <span class="eyebrow eyebrow--light">— The Journal —</span>
+        <h1 class="display-h display-h--light jhero__title">Letters from<br/><em>the bench.</em></h1>
+        <p class="jhero__excerpt">Our first entries are being compounded. Ingredient education, ritual notes, and perspectives from the founders are on their way.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.jhero { background: var(--grad-deep); color: var(--c-cream); padding: clamp(120px, 15vw, 200px) var(--pad-x) clamp(60px, 8vw, 110px); overflow: clip; }
+.jhero__inner { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: center; }
+.jhero__media { display: block; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; background: var(--c-forest-2); }
+.jhero__img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease-out); }
+.jhero__media:hover .jhero__img { transform: scale(1.04); }
+.jhero__cat { display: inline-block; margin: 20px 0 0; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-tan); }
+.jhero__title { margin: 12px 0 0; max-width: 16ch; }
+.jhero__title a { transition: color .3s; }
+.jhero__title a:hover { color: var(--c-tan); }
+.jhero__excerpt { margin: 24px 0 0; max-width: 52ch; color: rgba(240,232,219,.72); font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7; }
+.jhero__read { display: inline-block; margin-top: 28px; font-size: 12.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--c-tan); border-bottom: 1px solid var(--c-tan); padding-bottom: 6px; transition: color .3s, border-color .3s; }
+.jhero__read:hover { color: var(--c-cream); border-color: var(--c-cream); }
+.jhero__empty { max-width: 720px; }
+.jhero__empty .jhero__title { margin-top: 18px; }
+@media (max-width: 900px) {
+  .jhero__inner { grid-template-columns: 1fr; }
+  .jhero__media { order: -1; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Journal Hero",
+  "settings": [],
+  "presets": [{ "name": "Journal Hero" }]
+}
+{% endschema %}

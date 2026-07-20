@@ -1,0 +1,53 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Chemistrie",
+    "theme_version": "1.1.0",
+    "theme_author": "Chemistrie",
+    "theme_documentation_url": "https://chemistrie.com",
+    "theme_support_email": "developers@techinfinity.io"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "header", "content": "Brand palette" },
+      { "type": "color", "id": "c_forest", "label": "Forest (primary dark)", "default": "#1a3a2d" },
+      { "type": "color", "id": "c_forest_2", "label": "Forest deep", "default": "#0e2118" },
+      { "type": "color", "id": "c_sage", "label": "Sage", "default": "#6c8f7b" },
+      { "type": "color", "id": "c_tan", "label": "Tan (accent)", "default": "#c8aa7a" },
+      { "type": "color", "id": "c_tan_2", "label": "Tan deep", "default": "#a78a5e" },
+      { "type": "color", "id": "c_cream", "label": "Cream (background)", "default": "#f0e8db" },
+      { "type": "color", "id": "c_paper", "label": "Paper", "default": "#f5edd9" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "header", "content": "Fonts" },
+      { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "assistant_n4" },
+      { "type": "paragraph", "content": "The display serif (Cormorant Garamond) and body sans (Inter) are loaded from Google Fonts to match the brand exactly. Use this only to override the body font." },
+      { "type": "range", "id": "base_font_size", "label": "Base font size", "min": 14, "max": 18, "step": 1, "unit": "px", "default": 16 }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "Max content width", "min": 1200, "max": 1600, "step": 20, "unit": "px", "default": 1440 }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      { "type": "range", "id": "free_shipping_threshold", "label": "Free shipping threshold", "min": 0, "max": 300, "step": 5, "unit": "$", "default": 120 }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_pinterest", "label": "Pinterest" },
+      { "type": "text", "id": "social_email", "label": "Contact email", "default": "hello@chemistrie.com" }
+    ]
+  }
+]

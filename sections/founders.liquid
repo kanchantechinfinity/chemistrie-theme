@@ -1,0 +1,69 @@
+<!-- ───── Founder story ───── -->
+<section class="founders" id="founders" data-screen-label="05 Founders">
+  <div class="founders__media">
+    <div class="founders__photo founders__photo--a">
+      <svg viewBox="0 0 400 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="px1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a3a2d"/><stop offset="1" stop-color="#6c8f7b"/></linearGradient>
+        </defs>
+        <rect width="400" height="520" fill="url(#px1)"/>
+        <!-- abstract portrait silhouette -->
+        <circle cx="200" cy="200" r="80" fill="#f9f4ed" opacity=".18"/>
+        <path d="M80 520 Q80 360 200 360 Q320 360 320 520 Z" fill="#f9f4ed" opacity=".18"/>
+        <text x="20" y="500" font-family="Cormorant Garamond" font-style="italic" font-size="24" fill="#f9f4ed" opacity=".75">Dr. A —</text>
+      </svg>
+    </div>
+    <div class="founders__photo founders__photo--b">
+      <svg viewBox="0 0 400 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="px2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8aa7a"/><stop offset="1" stop-color="#8a6f48"/></linearGradient>
+        </defs>
+        <rect width="400" height="520" fill="url(#px2)"/>
+        <circle cx="200" cy="200" r="80" fill="#1a3a2d" opacity=".22"/>
+        <path d="M80 520 Q80 360 200 360 Q320 360 320 520 Z" fill="#1a3a2d" opacity=".22"/>
+        <text x="20" y="500" font-family="Cormorant Garamond" font-style="italic" font-size="24" fill="#1a3a2d" opacity=".8">Dr. M —</text>
+      </svg>
+    </div>
+    <div class="founders__caption">
+      <span class="founders__caption-mark">✦</span>
+      <span>{{ section.settings.caption }}</span>
+    </div>
+  </div>
+
+  <div class="founders__copy">
+    <span class="eyebrow">— The Pharmacists —</span>
+    <h2 class="display-h">{{ section.settings.heading }}</h2>
+    <p class="founders__lede">
+      {{ section.settings.lede }}
+    </p>
+    <p>
+      {{ section.settings.paragraph1 }}
+    </p>
+    <p>
+      {{ section.settings.paragraph2 }}
+    </p>
+
+    <div class="founders__signoff">
+      <span class="founders__sig">{{ section.settings.sig }}</span>
+      <span class="founders__sig-sub">{{ section.settings.sig_sub }}</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Founders",
+  "settings": [
+    { "type": "text", "id": "caption", "label": "Photo caption", "default": "The founding pharmacists, photographed in the compounding lab — Houston, 2026." },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Two compounding<br/>pharmacists.<br/><em>One promise.</em>" },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "They met behind the same bench in Houston, weighing actives by the milligram for women who had been failed by everything on the shelf." },
+    { "type": "textarea", "id": "paragraph1", "label": "Paragraph 1", "default": "Wives wanted retinol that didn't burn. Mothers wanted vitamin C that didn't oxidise in a week. Best friends wanted a moisturiser they could hand down. So they started making it — quietly, by hand, in concentrations the industry deemed too expensive to mass-produce." },
+    { "type": "textarea", "id": "paragraph2", "label": "Paragraph 2", "default": "Chemistrie is what happened when their patient list became a waiting list." },
+    { "type": "text", "id": "sig", "label": "Signature", "default": "— Dr. A & Dr. M" },
+    { "type": "text", "id": "sig_sub", "label": "Signature subtitle", "default": "Compounding Pharmacists · Founders" }
+  ],
+  "presets": [
+    { "name": "Founders" }
+  ]
+}
+{% endschema %}

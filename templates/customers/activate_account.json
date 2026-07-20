@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main-activate-account": { "type": "main-activate-account" }
+  },
+  "order": ["main-activate-account"]
+}

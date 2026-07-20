@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "page-hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "— The Full Apothecary —",
+        "heading": "Six formulas.<br/><em>Zero shortcuts.</em>",
+        "deck": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend."
+      }
+    },
+    "stat-bar": {
+      "type": "stat-bar",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "6,000+", "label": "Women served" } },
+        "s2": { "type": "stat", "settings": { "number": "1–2 Days", "label": "Average ship time" } },
+        "s3": { "type": "stat", "settings": { "number": "★ 4.96", "label": "Verified buyer rating" } },
+        "s4": { "type": "stat", "settings": { "number": "200", "label": "Bottles per hand-numbered batch" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "settings": {}
+    },
+    "collection-notes": {
+      "type": "collection-notes"
+    },
+    "page-cta": {
+      "type": "page-cta",
+      "settings": {
+        "eyebrow": "— Ready when you are —",
+        "heading": "Begin your <em>ritual.</em>",
+        "sub": "Six formulas, hand-numbered in Houston. Find the one your skin has been waiting for.",
+        "button_label": "Shop the Collection"
+      }
+    }
+  },
+  "order": ["page-hero", "stat-bar", "main-collection", "collection-notes", "page-cta"]
+}

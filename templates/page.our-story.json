@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "page-hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "— Our Story —",
+        "heading": "It started at a<br/><em>compounding bench.</em>",
+        "deck": "Chemistrie was not founded in a boardroom. It was founded one milligram at a time, on a pharmacist's bench in Houston, for the women the founders came home to."
+      }
+    },
+    "story-opening": { "type": "story-opening" },
+    "story-journey": { "type": "story-journey" },
+    "page-cta": {
+      "type": "page-cta",
+      "settings": {
+        "eyebrow": "— Now you know the house —",
+        "heading": "Explore the <em>collection.</em>",
+        "sub": "Six formulas, compounded by hand and numbered before they ship.",
+        "button_label": "Explore the Collection"
+      }
+    }
+  },
+  "order": ["page-hero", "story-opening", "story-journey", "page-cta"]
+}

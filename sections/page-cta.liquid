@@ -1,0 +1,21 @@
+{% render 'page-cta',
+  eyebrow: section.settings.eyebrow,
+  heading: section.settings.heading,
+  sub: section.settings.sub,
+  button_label: section.settings.button_label,
+  button_url: section.settings.button_url
+%}
+
+{% schema %}
+{
+  "name": "Page CTA",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Ready when you are —" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "Begin your <em>ritual.</em>" },
+    { "type": "textarea", "id": "sub", "label": "Subtext", "default": "Six formulas, hand-numbered in Houston. Find the one your skin has been waiting for." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the Collection" },
+    { "type": "url", "id": "button_url", "label": "Button URL" }
+  ],
+  "presets": [{ "name": "Page CTA" }]
+}
+{% endschema %}

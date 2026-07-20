@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main-product": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "product-details": {
+      "type": "product-details",
+      "settings": {}
+    },
+    "page-cta": {
+      "type": "page-cta",
+      "settings": {
+        "eyebrow": "— The complete ritual —",
+        "heading": "Build the <em>whole ritual.</em>",
+        "sub": "This formula is one of four steps. See how they work together.",
+        "button_label": "Shop the Collection"
+      }
+    }
+  },
+  "order": ["main-product", "product-details", "page-cta"]
+}

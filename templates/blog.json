@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "journal-hero": { "type": "journal-hero" },
+    "journal-grid": { "type": "journal-grid" }
+  },
+  "order": ["journal-hero", "journal-grid"]
+}

@@ -1,0 +1,42 @@
+<section class="page-hero e404" data-screen-label="404">
+  <div class="page-hero__inner e404__inner">
+    <span class="eyebrow eyebrow--light">— Error 404 —</span>
+    <h1 class="display-h display-h--light e404__title">This page slipped<br/><em>off the bench.</em></h1>
+    <p class="e404__body">The page you're after isn't here — it may have been moved, renamed, or never compounded at all. Let's get you back to something good.</p>
+    <div class="e404__btns">
+      <a href="{{ routes.root_url }}" class="btn btn--primary btn--light">Home</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--ghost btn--dark e404__ghost">The Collection</a>
+      <a href="/pages/contact" class="btn btn--ghost btn--dark e404__ghost">Contact</a>
+    </div>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="e404__form">
+      <label class="visually-hidden" for="e404-q">Search</label>
+      <input class="e404__input" id="e404-q" type="search" name="q" placeholder="Search the site…" autocomplete="off">
+      <button type="submit" class="e404__go">Search &rarr;</button>
+    </form>
+  </div>
+</section>
+
+{% stylesheet %}
+.e404 { text-align: center; }
+.e404__inner { max-width: 720px; margin: 0 auto; }
+.e404__title { margin: 16px auto 0; max-width: 18ch; }
+.e404__body { margin: 26px auto 0; max-width: 48ch; color: rgba(240,232,219,.72); line-height: 1.7; }
+.e404__btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 36px; }
+.e404__ghost { color: var(--c-cream); border-color: rgba(240,232,219,.4); }
+.e404__ghost:hover { background: var(--c-cream); color: var(--c-forest); border-color: var(--c-cream); }
+.e404__form { display: flex; gap: 10px; justify-content: center; margin-top: 40px; max-width: 460px; margin-left: auto; margin-right: auto; }
+.e404__input { flex: 1; padding: 14px 18px; border-radius: 999px; border: 1px solid rgba(240,232,219,.28); background: rgba(240,232,219,.06); color: var(--c-cream); font-size: 14px; }
+.e404__input::placeholder { color: rgba(240,232,219,.5); }
+.e404__go { font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-tan); white-space: nowrap; }
+.e404__go:hover { color: var(--c-cream); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 480px) { .e404__form { flex-direction: column; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "404",
+  "settings": [],
+  "presets": [{ "name": "404" }]
+}
+{% endschema %}

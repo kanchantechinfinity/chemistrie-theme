@@ -1,0 +1,76 @@
+<!-- ───── Pillars — sticky stack ───── -->
+<section class="pillars" data-screen-label="03 Pillars">
+  <div class="pillars__intro">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-h">{{ section.settings.intro_heading }}</h2>
+  </div>
+
+  <div class="pillars__stack" id="pillarsStack">
+
+    {% for block in section.blocks %}
+    {%- case forloop.index -%}
+    {%- when 1 -%}{%- assign pillar_mod = 'pillar--trust' -%}{%- assign crest_mod = '' -%}{%- assign mono_mod = '' -%}
+    {%- when 2 -%}{%- assign pillar_mod = 'pillar--luxury' -%}{%- assign crest_mod = ' pillar__crest--alt' -%}{%- assign mono_mod = ' pillar__mono--serif' -%}
+    {%- else -%}{%- assign pillar_mod = 'pillar--warmth' -%}{%- assign crest_mod = ' pillar__crest--warm' -%}{%- assign mono_mod = ' pillar__mono--script' -%}
+    {%- endcase -%}
+    <article class="pillar {{ pillar_mod }}" data-pillar="0{{ forloop.index }}"{{ block.shopify_attributes }}>
+      <div class="pillar__index">
+        <span class="pillar__num">0{{ forloop.index }}</span>
+        <span class="pillar__count">/ 03</span>
+      </div>
+      <div class="pillar__body">
+        <h3 class="pillar__title">{{ block.settings.title }}</h3>
+        <p class="pillar__lede">{{ block.settings.lede }}</p>
+        <ul class="pillar__list">
+          <li>{{ block.settings.item1 }}</li>
+          <li>{{ block.settings.item2 }}</li>
+          <li>{{ block.settings.item3 }}</li>
+        </ul>
+      </div>
+      <div class="pillar__visual">
+        <div class="pillar__crest{{ crest_mod }}">
+          <span class="pillar__mono{{ mono_mod }}">{{ block.settings.crest_mono }}</span>
+          <span class="pillar__crest-sub">{{ block.settings.crest_sub }}</span>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pillars",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Brand Pillars —" },
+    { "type": "html", "id": "intro_heading", "label": "Intro heading", "default": "Three things we<br/><em>refuse</em> to compromise." }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Trust." },
+        { "type": "text", "id": "lede", "label": "Lede", "default": "Pharmacist credibility that feels warm, not clinical." },
+        { "type": "text", "id": "item1", "label": "List item 1", "default": "— Credentials are the proof. Love is the reason." },
+        { "type": "text", "id": "item2", "label": "List item 2", "default": "— Every active ingredient cleared by a licensed pharmacist." },
+        { "type": "text", "id": "item3", "label": "List item 3", "default": "— Transparency on dose, on source, on shelf-life." },
+        { "type": "text", "id": "crest_mono", "label": "Crest mono", "default": "Rx" },
+        { "type": "text", "id": "crest_sub", "label": "Crest sub", "default": "Pharmacist seal · since 2026" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Pillars",
+      "blocks": [
+        { "type": "pillar", "settings": { "title": "Trust.", "lede": "Pharmacist credibility that feels warm, not clinical.", "item1": "— Credentials are the proof. Love is the reason.", "item2": "— Every active ingredient cleared by a licensed pharmacist.", "item3": "— Transparency on dose, on source, on shelf-life.", "crest_mono": "Rx", "crest_sub": "Pharmacist seal · since 2026" } },
+        { "type": "pillar", "settings": { "title": "Luxury.", "lede": "Aspirational, never arrogant. Every touchpoint signals prestige.", "item1": "— Heavy weighted glass. Hand-numbered batches.", "item2": "— Vellum inserts, gold-foil ritual cards.", "item3": "— A box you keep, not unbox.", "crest_mono": "C.", "crest_sub": "Maison Chemistrie · N° 001" } },
+        { "type": "pillar", "settings": { "title": "Warmth.", "lede": "Luxury with a heartbeat. The founder story makes Chemistrie unlike anything in the category.", "item1": "— Two pharmacists. Husbands and fathers first.", "item2": "— Formulas tested on the women they love.", "item3": "— Personal letters in every order.", "crest_mono": "for her", "crest_sub": "written by hand · in every box" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

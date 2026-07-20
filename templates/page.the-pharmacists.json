@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "page-hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "— The Pharmacists —",
+        "heading": "The two people<br/><em>behind the bench.</em>",
+        "deck": "Chemistrie is not a brand that hired a chemist. It is two compounding pharmacists who could not stop formulating for the people they love.",
+        "deck2": "Before there was a logo, there was a bench in Houston and a short list of requests — a retinol that did not burn, a vitamin C that did not oxidise in a week. The founders answered them one bottle at a time. This page is simply who they are."
+      }
+    },
+    "stat-bar": {
+      "type": "stat-bar",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "2", "label": "Founding pharmacists" } },
+        "s2": { "type": "stat", "settings": { "number": "6+ Yrs", "label": "Behind the bench" } },
+        "s3": { "type": "stat", "settings": { "number": "12", "label": "Formulas brought to life" } }
+      },
+      "block_order": ["s1", "s2", "s3"]
+    },
+    "pharmacists-profiles": { "type": "pharmacists-profiles" },
+    "pharmacists-credentials": { "type": "pharmacists-credentials" },
+    "pharmacists-philosophy": { "type": "pharmacists-philosophy" },
+    "page-cta": {
+      "type": "page-cta",
+      "settings": {
+        "eyebrow": "— What they made —",
+        "heading": "Read the<br/><em>whole story.</em>",
+        "sub": "Now that you know the pharmacists, see where the house began — or go straight to the collection.",
+        "button_label": "Read Our Story",
+        "button_url": "/pages/our-story"
+      }
+    }
+  },
+  "order": ["page-hero", "stat-bar", "pharmacists-profiles", "pharmacists-credentials", "pharmacists-philosophy", "page-cta"]
+}

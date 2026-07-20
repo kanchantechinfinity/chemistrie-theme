@@ -1,0 +1,37 @@
+<section class="statbar" style="--statbar-cols: {{ section.blocks.size }};">
+  <div class="statbar__inner">
+    {%- for block in section.blocks -%}
+      <div class="statbar__cell" {{ block.shopify_attributes }}>
+        <span class="statbar__num">{{ block.settings.number }}</span>
+        <span class="statbar__label">{{ block.settings.label }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stat Bar",
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "html", "id": "number", "label": "Number (supports <em>)", "default": "6,000+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Women served" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stat Bar",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "6,000+", "label": "Women served" } },
+        { "type": "stat", "settings": { "number": "1–2 Days", "label": "Average ship time" } },
+        { "type": "stat", "settings": { "number": "★ 4.96", "label": "Verified buyer rating" } },
+        { "type": "stat", "settings": { "number": "200", "label": "Bottles per hand-numbered batch" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

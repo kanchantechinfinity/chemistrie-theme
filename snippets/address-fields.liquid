@@ -1,0 +1,56 @@
+{%- comment -%}
+  Reusable address form fields for the customer_address form.
+  Usage: {% render 'address-fields', form: form %}
+{%- endcomment -%}
+{%- assign fid = form.id | default: 'new' -%}
+<div>
+  <label for="adr-first-{{ fid }}">First name</label>
+  <input type="text" id="adr-first-{{ fid }}" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name">
+</div>
+<div>
+  <label for="adr-last-{{ fid }}">Last name</label>
+  <input type="text" id="adr-last-{{ fid }}" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name">
+</div>
+<div class="adr__full">
+  <label for="adr-company-{{ fid }}">Company</label>
+  <input type="text" id="adr-company-{{ fid }}" name="address[company]" value="{{ form.company }}" autocomplete="organization">
+</div>
+<div class="adr__full">
+  <label for="adr-a1-{{ fid }}">Address</label>
+  <input type="text" id="adr-a1-{{ fid }}" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1">
+</div>
+<div class="adr__full">
+  <label for="adr-a2-{{ fid }}">Apartment, suite, etc.</label>
+  <input type="text" id="adr-a2-{{ fid }}" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2">
+</div>
+<div>
+  <label for="adr-city-{{ fid }}">City</label>
+  <input type="text" id="adr-city-{{ fid }}" name="address[city]" value="{{ form.city }}" autocomplete="address-level2">
+</div>
+<div>
+  <label for="adr-zip-{{ fid }}">Postal / ZIP code</label>
+  <input type="text" id="adr-zip-{{ fid }}" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code">
+</div>
+<div>
+  <label for="adr-country-{{ fid }}">Country / region</label>
+  <select id="adr-country-{{ fid }}" name="address[country]" data-default="{{ form.country }}">{{ all_country_option_tags }}</select>
+</div>
+<div>
+  <label for="adr-province-{{ fid }}">Province / state</label>
+  <select id="adr-province-{{ fid }}" name="address[province]" data-default="{{ form.province }}"></select>
+</div>
+<div>
+  <label for="adr-phone-{{ fid }}">Phone</label>
+  <input type="tel" id="adr-phone-{{ fid }}" name="address[phone]" value="{{ form.phone }}" autocomplete="tel">
+</div>
+<div class="adr__check">
+  {{ form.set_as_default_checkbox }}
+  <label for="address_default_address_{{ fid }}">Set as default address</label>
+</div>
+
+<script>
+  window.addEventListener('load', function () {
+    if (typeof Shopify === 'undefined' || !Shopify.CountryProvinceSelector) return;
+    new Shopify.CountryProvinceSelector('adr-country-{{ fid }}', 'adr-province-{{ fid }}', { hideElement: null });
+  });
+</script>

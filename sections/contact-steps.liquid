@@ -1,0 +1,70 @@
+<section class="page-section contact-steps" data-screen-label="How it works">
+  <div class="page-section__inner">
+    <div class="page-section__head">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="display-h">{{ section.settings.heading }}</h2>
+    </div>
+
+    <div class="csteps__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+        <article class="cstep" {{ block.shopify_attributes }}>
+          <span class="cstep__num">{{ forloop.index }}</span>
+          <h3 class="cstep__title">{{ block.settings.title }}</h3>
+          <p class="cstep__body">{{ block.settings.body }}</p>
+        </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.contact-steps { background: var(--c-tan); color: var(--c-forest); }
+.csteps__grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(24px, 3vw, 40px);
+}
+.cstep { display: flex; flex-direction: column; gap: 14px; }
+.cstep__num {
+  width: 40px; height: 40px; border-radius: 999px;
+  display: grid; place-items: center;
+  background: var(--c-forest); color: var(--c-cream);
+  font-family: var(--ff-display); font-size: 18px; font-weight: 500;
+}
+.cstep__title { font-family: var(--ff-display); font-size: clamp(20px, 2vw, 24px); font-weight: 500; line-height: 1.2; }
+.cstep__body { font-size: 15px; line-height: 1.7; color: rgba(26,58,45,.8); }
+@media (max-width: 900px) { .csteps__grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 540px) { .csteps__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact Steps",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— How it works —" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "From consultation<br/><em>to your door.</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Step title" },
+        { "type": "textarea", "id": "body", "label": "Description", "default": "Step description." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Steps",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Take the skin consultation", "body": "A short questionnaire on your skin type, concerns, and any actives you've tried before." } },
+        { "type": "step", "settings": { "title": "A pharmacist reviews your answers", "body": "A licensed compounding pharmacist matches you to the right formulas and concentrations." } },
+        { "type": "step", "settings": { "title": "Your formula is compounded & numbered", "body": "Hand-poured in Houston, in batches capped at 200, and numbered before it ships." } },
+        { "type": "step", "settings": { "title": "Shipped to your door", "body": "Out within 1–2 business days, with complimentary shipping on orders over $120." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

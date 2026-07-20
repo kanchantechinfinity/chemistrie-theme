@@ -1,0 +1,179 @@
+{%- assign mf = product.metafields.custom -%}
+<section class="page-section page-section--paper pdet">
+  <div class="page-section__inner">
+
+    {%- comment -%} ───── The Feeling ───── {%- endcomment -%}
+    <div class="pdet__block pdet__feeling">
+      <span class="eyebrow">— The feeling —</span>
+      <p class="pdet__feeling-copy">
+        {%- if mf.feeling != blank -%}
+          {{ mf.feeling }}
+        {%- else -%}
+          A quiet ritual of care. {{ product.title }} is compounded by hand in small batches so every application feels deliberate, clean, and calm — never rushed, never generic.
+        {%- endif -%}
+      </p>
+    </div>
+
+    <div class="pdet__cols">
+      {%- comment -%} ───── Key Benefits ───── {%- endcomment -%}
+      <div class="pdet__block">
+        <h2 class="pdet__h">Key Benefits</h2>
+        {%- if mf.benefits != blank -%}
+          <div class="rte pdet__rte">{{ mf.benefits }}</div>
+        {%- else -%}
+          <ul class="pdet__list">
+            <li>Built around a single clinical-grade active — no filler blends.</li>
+            <li>Compounded by hand in Houston, hand-numbered in batches of 200.</li>
+            <li>Pharmacist-formulated for real, visible skin results.</li>
+            <li>Gentle enough for daily use in your complete ritual.</li>
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ───── How to Use ───── {%- endcomment -%}
+      <div class="pdet__block">
+        <h2 class="pdet__h">How to Use</h2>
+        {%- if mf.how_to_use != blank -%}
+          <div class="rte pdet__rte">{{ mf.how_to_use }}</div>
+        {%- else -%}
+          <p>Apply a small amount to clean skin, morning and evening. Follow with your next ritual step. Introduce gradually if your skin is new to active formulas.</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} ───── Founder's Note ───── {%- endcomment -%}
+    <div class="pdet__block pdet__founder">
+      <span class="eyebrow">— Founder's note —</span>
+      <blockquote class="pdet__founder-quote">
+        {%- if mf.founder_note != blank -%}
+          {{ mf.founder_note }}
+        {%- else -%}
+          We built {{ product.title }} the way a pharmacist would — one active, done properly, at a concentration that actually works. No marketing blends, no shortcuts. Just the formula your skin has been waiting for.
+        {%- endif -%}
+      </blockquote>
+    </div>
+
+    <div class="pdet__cols">
+      {%- comment -%} ───── What's Inside ───── {%- endcomment -%}
+      <div class="pdet__block">
+        <h2 class="pdet__h">What's Inside</h2>
+        {%- if mf.whats_inside != blank -%}
+          <div class="rte pdet__rte">{{ mf.whats_inside }}</div>
+        {%- else -%}
+          <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ───── Full Ingredient List (INCI) ───── {%- endcomment -%}
+      <div class="pdet__block">
+        <h2 class="pdet__h">Full Ingredient List</h2>
+        {%- if mf.inci != blank -%}
+          <p class="pdet__inci">{{ mf.inci }}</p>
+        {%- else -%}
+          <p class="pdet__inci">Full INCI ingredient list is printed on every hand-numbered bottle. Contact us for a complete breakdown before purchase.</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} ───── Long-form description ───── {%- endcomment -%}
+    {%- if product.description != blank -%}
+      <div class="pdet__block pdet__desc">
+        <h2 class="pdet__h">The Full Story</h2>
+        <div class="rte pdet__rte">{{ product.description }}</div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ───── Customer Reviews ───── {%- endcomment -%}
+    <div class="pdet__block pdet__reviews">
+      <h2 class="pdet__h">Customer Reviews</h2>
+      {%- if product.metafields.reviews.rating != blank -%}
+        <div class="pdet__rating">
+          <span class="pdet__rating-stars">★★★★★</span>
+          <span class="pdet__rating-val">{{ product.metafields.reviews.rating.value }} / 5</span>
+          {%- if product.metafields.reviews.rating_count != blank -%}
+            <span class="pdet__rating-count">({{ product.metafields.reviews.rating_count }} reviews)</span>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <p class="pdet__empty">Verified reviews for this formula are on the way. Every note we publish comes from a real, hand-numbered order.</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ───── You May Also Love ───── {%- endcomment -%}
+    {%- assign related = product.collections.first.products -%}
+    {%- if related.size > 1 -%}
+      <div class="pdet__block pdet__related">
+        <h2 class="pdet__h pdet__h--center">You May Also Love</h2>
+        <div class="pdet__related-grid">
+          {%- assign shown = 0 -%}
+          {%- for p in related -%}
+            {%- if p.id != product.id and shown < 3 -%}
+              {%- assign shown = shown | plus: 1 -%}
+              <article class="pcard">
+                <a class="pcard__media" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+                  {%- if p.featured_image -%}
+                    {{ p.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: p.title }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'pcard__ph' }}
+                  {%- endif -%}
+                </a>
+                <div class="pcard__body">
+                  <div class="pcard__row">
+                    <a class="pcard__name" href="{{ p.url }}">{{ p.title }}</a>
+                    <span class="pcard__price">{{ p.price | money }}</span>
+                  </div>
+                  {%- if p.type != blank -%}<span class="pcard__type">{{ p.type }}</span>{%- endif -%}
+                  {%- if p.available -%}
+                    <button class="pcard__btn product__cta" type="button" data-product-id="{{ p.selected_or_first_available_variant.id }}">Add to Cart</button>
+                  {%- else -%}
+                    <span class="pcard__btn pcard__btn--soldout">Sold Out</span>
+                  {%- endif -%}
+                </div>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+.pdet__block { margin-bottom: clamp(48px, 6vw, 88px); }
+.pdet__block:last-child { margin-bottom: 0; }
+.pdet__cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 72px); }
+.pdet__h { font-family: var(--ff-display); font-size: clamp(24px, 3vw, 32px); font-weight: 500; color: var(--c-forest); margin: 0 0 20px; }
+.pdet__h--center { text-align: center; margin-bottom: 40px; }
+.pdet__rte, .pdet p, .pdet__list { color: var(--c-ink-soft); font-size: 16px; line-height: 1.7; }
+.pdet__list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+
+.pdet__feeling { text-align: center; max-width: 760px; margin-left: auto; margin-right: auto; }
+.pdet__feeling .eyebrow { display: inline-block; margin-bottom: 20px; }
+.pdet__feeling-copy { font-family: var(--ff-display); font-size: clamp(24px, 3.4vw, 38px); line-height: 1.35; color: var(--c-forest); }
+
+.pdet__founder { background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px; padding: clamp(32px, 4vw, 56px); text-align: center; }
+.pdet__founder .eyebrow { display: inline-block; margin-bottom: 18px; color: var(--c-tan); }
+.pdet__founder-quote { margin: 0; font-family: var(--ff-display); font-style: italic; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.5; color: var(--c-forest); max-width: 42ch; margin-left: auto; margin-right: auto; }
+
+.pdet__inci { font-size: 13px; line-height: 1.8; color: var(--c-ink-mute); }
+
+.pdet__rating { display: flex; align-items: baseline; gap: 12px; }
+.pdet__rating-stars { color: var(--c-tan); font-size: 18px; letter-spacing: .1em; }
+.pdet__rating-val { font-family: var(--ff-display); font-size: 22px; color: var(--c-forest); }
+.pdet__rating-count { font-size: 13px; color: var(--c-ink-mute); }
+.pdet__empty { font-style: italic; color: var(--c-ink-mute); }
+
+.pdet__related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
+
+@media (max-width: 860px) { .pdet__cols { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .pdet__related-grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product Details",
+  "settings": [],
+  "presets": [{ "name": "Product Details" }]
+}
+{% endschema %}

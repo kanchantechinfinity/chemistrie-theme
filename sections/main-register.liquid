@@ -1,0 +1,53 @@
+<section class="page-hero page-hero--short" data-screen-label="Register">
+  <div class="page-hero__inner cust__hero-inner">
+    <span class="eyebrow eyebrow--light">— Your account —</span>
+    <h1 class="display-h display-h--light page-hero__title">Create account</h1>
+  </div>
+</section>
+
+<section class="page-section page-section--paper cust">
+  <div class="page-section__inner cust__wrap">
+    <div class="cust__card">
+      {%- form 'create_customer', class: 'cust__form' -%}
+        {%- if form.errors -%}<p class="cust__error">{{ form.errors | default_errors }}</p>{%- endif -%}
+        <div class="cust__row2">
+          <div>
+            <label class="cust__label" for="r-first">First name</label>
+            <input class="cust__input" id="r-first" type="text" name="customer[first_name]" autocomplete="given-name">
+          </div>
+          <div>
+            <label class="cust__label" for="r-last">Last name</label>
+            <input class="cust__input" id="r-last" type="text" name="customer[last_name]" autocomplete="family-name">
+          </div>
+        </div>
+        <label class="cust__label" for="r-email">Email</label>
+        <input class="cust__input" id="r-email" type="email" name="customer[email]" autocomplete="email" required>
+        <label class="cust__label" for="r-pass">Password</label>
+        <input class="cust__input" id="r-pass" type="password" name="customer[password]" autocomplete="new-password" required>
+        <button type="submit" class="btn btn--primary cust__submit">Create account</button>
+        <div class="cust__links"><span>Already have an account?</span><a href="{{ routes.account_login_url }}">Sign in</a></div>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.page-hero--short { padding-top: clamp(110px, 13vw, 170px); padding-bottom: clamp(40px, 5vw, 64px); }
+.cust__hero-inner { text-align: center; }
+.cust__wrap { max-width: 460px; margin: 0 auto; }
+.cust__card { background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 16px; padding: clamp(28px, 4vw, 44px); }
+.cust__form { display: flex; flex-direction: column; }
+.cust__row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cust__label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); margin: 16px 0 8px; display: block; }
+.cust__row2 .cust__label { margin-top: 0; }
+.cust__input { width: 100%; padding: 13px 16px; border: 1px solid var(--c-line); border-radius: 10px; background: var(--c-paper); font-family: var(--ff-body); font-size: 15px; color: var(--c-forest); }
+.cust__submit { margin-top: 24px; justify-content: center; }
+.cust__links { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 18px; font-size: 13px; color: var(--c-ink-mute); }
+.cust__links a { color: var(--c-ink-soft); text-decoration: underline; text-underline-offset: 3px; }
+.cust__links a:hover { color: var(--c-forest); }
+.cust__error { color: #a0402f; margin: 0 0 16px; font-size: 14px; }
+{% endstylesheet %}
+
+{% schema %}
+{ "name": "Register", "settings": [] }
+{% endschema %}

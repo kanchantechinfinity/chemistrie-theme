@@ -1,0 +1,115 @@
+<section class="page-hero page-hero--short" data-screen-label="Search">
+  <div class="page-hero__inner srch__hero-inner">
+    <span class="eyebrow eyebrow--light">— {{ section.settings.eyebrow | default: 'Search' }} —</span>
+    <h1 class="display-h display-h--light page-hero__title">{{ section.settings.heading | default: 'Find your formula' }}</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="srch__form">
+      <input type="hidden" name="type" value="product,article,page">
+      <input type="hidden" name="options[prefix]" value="last">
+      <label class="visually-hidden" for="srch-input">Search</label>
+      <input class="srch__input" id="srch-input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.placeholder | default: 'Search products, articles, ingredients…' }}" autocomplete="off">
+      <button type="submit" class="btn btn--primary btn--light">Search</button>
+    </form>
+  </div>
+</section>
+
+<section class="page-section page-section--paper srch">
+  <div class="page-section__inner">
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="srch__count">{{ search.results_count }} {{ search.results_count | pluralize: 'result', 'results' }} for &ldquo;{{ search.terms }}&rdquo;</p>
+        {%- paginate search.results by 12 -%}
+          <div class="srch__grid">
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}
+                <article class="pcard">
+                  <a class="pcard__media" href="{{ item.url }}" aria-label="{{ item.title | escape }}">
+                    {%- if item.featured_image -%}
+                      {{ item.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: item.title }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'pcard__ph' }}
+                    {%- endif -%}
+                  </a>
+                  <div class="pcard__body">
+                    <div class="pcard__row">
+                      <a class="pcard__name" href="{{ item.url }}">{{ item.title }}</a>
+                      <span class="pcard__price">{{ item.price | money }}</span>
+                    </div>
+                    {%- if item.type != blank -%}<span class="pcard__type">{{ item.type }}</span>{%- endif -%}
+                    <a href="{{ item.url }}" class="pcard__btn">View</a>
+                  </div>
+                </article>
+              {%- else -%}
+                <a class="srch__card" href="{{ item.url }}">
+                  <span class="srch__card-kind">{{ item.object_type }}</span>
+                  <span class="srch__card-title">{{ item.title }}</span>
+                  {%- if item.content or item.excerpt -%}
+                    <span class="srch__card-excerpt">{{ item.excerpt | default: item.content | strip_html | truncatewords: 26 }}</span>
+                  {%- endif -%}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="srch__pager" role="navigation" aria-label="Pagination">
+              {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="srch__plink">&larr; Prev</a>{%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}<a href="{{ part.url }}" class="srch__plink">{{ part.title }}</a>
+                {%- else -%}<span class="srch__plink srch__plink--current">{{ part.title }}</span>{%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="srch__plink">Next &rarr;</a>{%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- else -%}
+        <div class="srch__empty">
+          <p class="srch__empty-title">No results for &ldquo;{{ search.terms }}&rdquo;.</p>
+          <p class="srch__empty-sub">Try a broader term, or browse the full collection.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Shop the Collection</a>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="srch__empty">
+        <p class="srch__empty-title">What are you looking for?</p>
+        <p class="srch__empty-sub">Search across formulas, ingredients, and Journal entries.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.page-hero--short { padding-top: clamp(110px, 13vw, 170px); padding-bottom: clamp(40px, 5vw, 64px); }
+.srch__hero-inner { text-align: center; }
+.srch__form { display: flex; gap: 12px; justify-content: center; margin: 32px auto 0; max-width: 620px; flex-wrap: wrap; }
+.srch__input { flex: 1; min-width: 240px; padding: 15px 20px; border-radius: 999px; border: 1px solid rgba(240,232,219,.28); background: rgba(240,232,219,.06); color: var(--c-cream); font-size: 15px; }
+.srch__input::placeholder { color: rgba(240,232,219,.5); }
+.srch__count { font-size: 14px; letter-spacing: .04em; color: var(--c-ink-mute); margin: 0 0 32px; }
+.srch__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
+.srch__card { display: flex; flex-direction: column; gap: 8px; padding: 26px; background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 14px; transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out); }
+.srch__card:hover { transform: translateY(-4px); box-shadow: 0 24px 60px -30px rgba(26,58,45,.4); }
+.srch__card-kind { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); }
+.srch__card-title { font-family: var(--ff-display); font-size: 22px; color: var(--c-forest); }
+.srch__card-excerpt { font-size: 14px; line-height: 1.6; color: var(--c-ink-soft); }
+.srch__pager { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 48px; }
+.srch__plink { min-width: 40px; padding: 10px 14px; text-align: center; border: 1px solid var(--c-line-soft); border-radius: 8px; font-size: 13px; color: var(--c-ink-soft); transition: background .3s, color .3s; }
+.srch__plink:hover, .srch__plink--current { background: var(--c-forest); color: var(--c-cream); }
+.srch__empty { text-align: center; padding: 40px 0 60px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.srch__empty-title { font-family: var(--ff-display); font-size: clamp(26px, 3.4vw, 36px); color: var(--c-forest); margin: 0; }
+.srch__empty-sub { color: var(--c-ink-soft); margin: 0; }
+.srch__empty .btn { margin-top: 12px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 900px) { .srch__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .srch__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Search" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your formula" },
+    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "Search products, articles, ingredients…" }
+  ],
+  "presets": [{ "name": "Search" }]
+}
+{% endschema %}

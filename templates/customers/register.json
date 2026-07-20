@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main-register": { "type": "main-register" }
+  },
+  "order": ["main-register"]
+}

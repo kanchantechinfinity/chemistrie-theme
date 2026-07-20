@@ -1,0 +1,13 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content"
+    },
+    "search": {
+      "search": "Search"
+    },
+    "cart": {
+      "cart": "Bag"
+    }
+  }
+}

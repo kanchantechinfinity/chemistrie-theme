@@ -1,0 +1,180 @@
+{%- assign cv = product.selected_or_first_available_variant -%}
+{%- comment -%} one-line benefit: metafield else first sentence of description {%- endcomment -%}
+{%- if product.metafields.custom.benefit != blank -%}
+  {%- assign benefit = product.metafields.custom.benefit -%}
+{%- else -%}
+  {%- assign benefit = product.description | strip_html | split: '. ' | first -%}
+  {%- if benefit != blank -%}{%- assign benefit = benefit | append: '.' -%}{%- endif -%}
+{%- endif -%}
+
+<section class="page-section mprod">
+  <div class="page-section__inner">
+    <div class="mprod__layout">
+
+      {%- comment -%} ───── LEFT: gallery ───── {%- endcomment -%}
+      <div class="mprod__gallery">
+        <div class="mprod__main">
+          {%- if product.featured_image -%}
+            <img
+              id="mprod-main-image"
+              src="{{ product.featured_image | image_url: width: 1000 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              width="1000" height="1000">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'mprod__ph' }}
+          {%- endif -%}
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="mprod__thumbs">
+            {%- for image in product.images -%}
+              <button
+                type="button"
+                class="mprod__thumb {% if forloop.first %}is-active{% endif %}"
+                data-full="{{ image | image_url: width: 1000 }}"
+                aria-label="View image {{ forloop.index }}">
+                <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" width="160" height="160" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ───── RIGHT: buy box ───── {%- endcomment -%}
+      <div class="mprod__buy">
+        {%- if product.type != blank -%}
+          <span class="eyebrow mprod__eyebrow">{{ product.type }}</span>
+        {%- endif -%}
+        <h1 class="display-h mprod__title">{{ product.title }}</h1>
+
+        {%- if benefit != blank -%}
+          <p class="mprod__benefit">{{ benefit }}</p>
+        {%- endif -%}
+
+        <div class="mprod__price">
+          <span class="mprod__price-now">{{ cv.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <s class="mprod__price-was">{{ product.compare_at_price | money }}</s>
+          {%- endif -%}
+        </div>
+
+        {%- form 'product', product, id: 'mprod-form', class: 'mprod__form' -%}
+          {%- if product.variants.size > 1 -%}
+            <div class="mprod__variants">
+              <label for="mprod-variant" class="mprod__field-label">Option</label>
+              <select id="mprod-variant" name="id" class="mprod__select">
+                {%- for variant in product.variants -%}
+                  <option
+                    value="{{ variant.id }}"
+                    {% if variant == cv %}selected{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}>
+                    {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ cv.id }}">
+          {%- endif -%}
+
+          <div class="mprod__qty">
+            <label for="mprod-quantity" class="mprod__field-label">Quantity</label>
+            <input type="number" id="mprod-quantity" name="quantity" value="1" min="1" class="mprod__qty-input">
+          </div>
+
+          {%- if product.available -%}
+            <button type="submit" name="add" class="btn btn--primary mprod__add">Add to Bag</button>
+          {%- else -%}
+            <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
+          {%- endif -%}
+        {%- endform -%}
+
+        <ul class="mprod__trust">
+          <li>Pharmacist-formulated</li>
+          <li>Hand-numbered</li>
+          <li>Made in Houston</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.mprod__layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
+.mprod__main { border-radius: 16px; overflow: hidden; background: var(--grad-cream); aspect-ratio: 1/1; }
+.mprod__main img, .mprod__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mprod__thumbs { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+.mprod__thumb {
+  width: 76px; height: 76px; border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--c-line-soft); cursor: pointer; padding: 0; background: none;
+  transition: border-color .3s;
+}
+.mprod__thumb.is-active { border-color: var(--c-forest); }
+.mprod__thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.mprod__buy { position: sticky; top: 100px; }
+.mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
+.mprod__title { margin: 0 0 16px; }
+.mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: 40ch; }
+.mprod__price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; }
+.mprod__price-now { font-size: 24px; color: var(--c-forest); font-weight: 500; }
+.mprod__price-was { font-size: 17px; color: var(--c-ink-mute); }
+
+.mprod__form { display: flex; flex-direction: column; gap: 18px; }
+.mprod__field-label { display: block; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-ink-mute); margin-bottom: 8px; }
+.mprod__select, .mprod__qty-input {
+  padding: 12px 14px; border: 1px solid var(--c-line-soft); border-radius: 8px;
+  background: var(--c-cream); font-size: 15px; color: var(--c-forest); font-family: var(--ff-body);
+}
+.mprod__select { width: 100%; appearance: none; }
+.mprod__qty-input { width: 100px; }
+.mprod__add { width: 100%; margin-top: 6px; }
+.mprod__add[disabled] { opacity: .5; cursor: default; }
+
+.mprod__trust {
+  list-style: none; margin: 26px 0 0; padding: 22px 0 0; border-top: 1px solid var(--c-line-soft);
+  display: flex; flex-wrap: wrap; gap: 8px 20px;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute);
+}
+.mprod__trust li { position: relative; padding-left: 18px; }
+.mprod__trust li::before { content: '·'; position: absolute; left: 4px; color: var(--c-tan); font-size: 18px; line-height: .9; }
+
+@media (max-width: 860px) {
+  .mprod__layout { grid-template-columns: 1fr; }
+  .mprod__buy { position: static; }
+}
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  var main = document.getElementById('mprod-main-image');
+  var thumbs = document.querySelectorAll('.mprod__thumb');
+  thumbs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var full = t.getAttribute('data-full');
+      if (main && full) main.src = full;
+      thumbs.forEach(function (x) { x.classList.remove('is-active'); });
+      t.classList.add('is-active');
+    });
+  });
+
+  // Keep hidden/select variant id in sync with price display (single-select variant case)
+  var select = document.getElementById('mprod-variant');
+  if (select) {
+    select.addEventListener('change', function () {
+      var opt = select.options[select.selectedIndex];
+      var priceEl = document.querySelector('.mprod__price-now');
+      var match = opt.textContent.match(/—\s*(.+?)(?:\s*\(|$)/);
+      if (priceEl && match) priceEl.textContent = match[1].trim();
+    });
+  }
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Product Main",
+  "settings": [],
+  "presets": [{ "name": "Product Main" }]
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+<section class="page-section page-section--paper story-journey">
+  <div class="page-section__inner">
+    <div class="page-section__head">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="display-h">{{ section.settings.heading }}</h2>
+    </div>
+    <ol class="sjourney__rail">
+      {%- for block in section.blocks -%}
+        <li class="sjourney__item" {{ block.shopify_attributes }}>
+          <span class="sjourney__dot" aria-hidden="true"></span>
+          <span class="sjourney__year">{{ block.settings.year }}</span>
+          <div class="sjourney__content">
+            <h3 class="sjourney__title">{{ block.settings.title }}</h3>
+            <p class="sjourney__body">{{ block.settings.body }}</p>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% stylesheet %}
+.sjourney__rail { list-style: none; margin: 0; padding: 0; position: relative; }
+.sjourney__rail::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--c-line); }
+.sjourney__item { position: relative; display: grid; grid-template-columns: 120px 1fr; gap: clamp(20px, 4vw, 56px); padding: 0 0 clamp(34px, 5vw, 56px) 40px; }
+.sjourney__item:last-child { padding-bottom: 0; }
+.sjourney__dot { position: absolute; left: 0; top: 6px; width: 15px; height: 15px; border-radius: 50%; background: var(--c-cream); border: 2px solid var(--c-tan); }
+.sjourney__year { font-family: var(--ff-display); font-style: italic; font-size: clamp(22px, 2.4vw, 30px); color: var(--c-tan); line-height: 1; }
+.sjourney__title { margin: 0; font-family: var(--ff-display); font-size: clamp(21px, 2.2vw, 28px); font-weight: 500; color: var(--c-forest); line-height: 1.25; }
+.sjourney__body { margin: 12px 0 0; max-width: 56ch; color: var(--c-ink-soft); line-height: 1.75; }
+@media (max-width: 700px) {
+  .sjourney__item { grid-template-columns: 1fr; gap: 8px; }
+  .sjourney__body { max-width: none; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Story Journey",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The journey —" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "A house, built<br/><em>one batch at a time.</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "milestone",
+      "name": "Milestone",
+      "settings": [
+        { "type": "text", "id": "year", "label": "Year", "default": "2019" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The bench" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Two compounding pharmacists in Houston begin formulating after hours for the people they love." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story Journey",
+      "blocks": [
+        { "type": "milestone", "settings": { "year": "2019", "title": "The bench", "body": "Two compounding pharmacists in Houston start formulating after hours — a retinol that would not burn, a vitamin C that would not brown by Friday — for the wives, mothers and daughters they came home to." } },
+        { "type": "milestone", "settings": { "year": "2021", "title": "The first hand-poured batch", "body": "The retinaldehyde serum finally passes the only test that matters: someone they love keeps reaching for it. The first small batch is poured and labelled by hand at the bench." } },
+        { "type": "milestone", "settings": { "year": "2023", "title": "The waiting list", "body": "Word travels the way it does among women who trust each other. Requests outrun the bench, and Chemistrie begins keeping a quiet list of names waiting for the next run." } },
+        { "type": "milestone", "settings": { "year": "2025", "title": "The first numbered 200", "body": "The house formalises its promise: runs capped at 200 bottles, each hand-numbered and traceable to the pharmacist who compounded it, dispensed fresh rather than stockpiled." } },
+        { "type": "milestone", "settings": { "year": "2026", "title": "The sixth formula, and today", "body": "Six formulas now carry the Chemistrie name. The bench has not moved and a pharmacist still answers every message — the same standard, only with a door open to you." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

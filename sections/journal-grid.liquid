@@ -1,0 +1,144 @@
+{%- assign cats = 'Ingredient Education,The Ritual,Founder Perspective,Skincare Advice,Behind the Bench' | split: ',' -%}
+<section class="jgrid page-section page-section--paper">
+  <div class="page-section__inner">
+
+    <nav class="jgrid__filters" aria-label="Article categories">
+      <a class="jgrid__filter {% if current_tags == empty %}is-active{% endif %}" href="{{ blog.url }}">All</a>
+      {%- for cat in cats -%}
+        <a class="jgrid__filter {% if current_tags contains cat %}is-active{% endif %}"
+           href="{{ blog.url }}/tagged/{{ cat | handle }}">{{ cat }}</a>
+      {%- endfor -%}
+    </nav>
+
+    {%- paginate blog.articles by 9 -%}
+      {%- if blog.articles.size > 0 -%}
+        <div class="jgrid__grid">
+          {%- for article in blog.articles -%}
+            {%- assign words = article.content | strip_html | split: ' ' | size -%}
+            {%- assign rt = words | divided_by: 200 | at_least: 1 -%}
+            <article class="jcard">
+              <a class="jcard__media" href="{{ article.url }}" aria-label="{{ article.title | escape }}">
+                {%- if article.image -%}
+                  {{ article.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,800', alt: article.image.alt | default: article.title, class: 'jcard__img' }}
+                {%- else -%}
+                  {{ 'lifestyle-2' | placeholder_svg_tag: 'jcard__img jcard__ph' }}
+                {%- endif -%}
+                {%- if article.tags.size > 0 -%}
+                  <span class="jcard__cat">{{ article.tags.first }}</span>
+                {%- endif -%}
+              </a>
+              <div class="jcard__body">
+                <a class="jcard__title" href="{{ article.url }}">{{ article.title }}</a>
+                <div class="jcard__meta">
+                  <span>{{ article.published_at | date: '%b %-d, %Y' }}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{{ rt }} min read</span>
+                </div>
+                {%- if article.excerpt_or_content != blank -%}
+                  <p class="jcard__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+                {%- endif -%}
+                <a class="jcard__read" href="{{ article.url }}">Read &rarr;</a>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="jgrid__pager" role="navigation" aria-label="Pagination">
+            {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="jgrid__plink">&larr; Prev</a>{%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}" class="jgrid__plink">{{ part.title }}</a>
+              {%- else -%}
+                <span class="jgrid__plink jgrid__plink--current">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="jgrid__plink">Next &rarr;</a>{%- endif -%}
+          </nav>
+          <div class="jgrid__pager-native" hidden>{{ paginate }}</div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="jgrid__empty">
+          <p class="jgrid__empty-t">No entries in this category yet.</p>
+          <a href="{{ blog.url }}" class="btn btn--ghost btn--dark">View all articles</a>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+
+    <div class="jgrid__capture">
+      <div class="jgrid__capture-copy">
+        <span class="eyebrow">— Letters from the bench —</span>
+        <h2 class="display-h jgrid__capture-title">Notes from <em>the lab.</em></h2>
+        <p class="jgrid__capture-sub">Ingredient breakdowns, ritual guidance, and the occasional letter from the founders. No noise.</p>
+      </div>
+      {%- form 'customer', class: 'jgrid__form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="jgrid__form-ok">Thank you — you're on the list.</p>
+        {%- endif -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="jgrid-email">Email address</label>
+        <input class="jgrid__input" id="jgrid-email" type="email" name="contact[email]" placeholder="Your email address" required>
+        <button type="submit" class="btn btn--primary">Subscribe</button>
+      {%- endform -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+.jgrid__filters { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-bottom: clamp(40px, 6vw, 64px); }
+.jgrid__filter { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--c-ink-soft); padding: 9px 18px; border: 1px solid var(--c-line); border-radius: 999px; transition: all .3s var(--ease-out); }
+.jgrid__filter:hover { border-color: var(--c-forest); color: var(--c-forest); }
+.jgrid__filter.is-active { background: var(--c-forest); color: var(--c-cream); border-color: var(--c-forest); }
+
+.jgrid__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 44px); }
+.jcard { display: flex; flex-direction: column; }
+.jcard__media { display: block; position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: var(--grad-cream); }
+.jcard__img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease-out); }
+.jcard__media:hover .jcard__img { transform: scale(1.05); }
+.jcard__cat { position: absolute; top: 14px; left: 14px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; background: var(--c-cream); color: var(--c-forest); padding: 6px 12px; border-radius: 999px; }
+.jcard__body { padding: 20px 2px 0; display: flex; flex-direction: column; gap: 10px; }
+.jcard__title { font-family: var(--ff-display); font-size: clamp(21px, 2vw, 26px); line-height: 1.15; color: var(--c-forest); transition: color .3s; }
+.jcard__title:hover { color: var(--c-tan-2); }
+.jcard__meta { display: flex; gap: 8px; font-size: 12px; letter-spacing: .04em; color: var(--c-ink-mute); }
+.jcard__excerpt { color: var(--c-ink-soft); font-size: 15px; line-height: 1.6; }
+.jcard__read { margin-top: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-line); padding-bottom: 4px; align-self: flex-start; transition: color .3s, border-color .3s; }
+.jcard__read:hover { color: var(--c-tan-2); border-color: var(--c-tan-2); }
+
+.jgrid__pager { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 56px; }
+.jgrid__pager-native { display: none; }
+.jgrid__plink { min-width: 40px; padding: 10px 14px; text-align: center; border: 1px solid var(--c-line-soft); border-radius: 8px; font-size: 13px; color: var(--c-ink-soft); transition: background .3s, color .3s; }
+.jgrid__plink:hover, .jgrid__plink--current { background: var(--c-forest); color: var(--c-cream); }
+
+.jgrid__empty { text-align: center; padding: 60px 0; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.jgrid__empty-t { font-family: var(--ff-display); font-size: 24px; color: var(--c-forest); }
+
+.jgrid__capture { margin-top: clamp(64px, 9vw, 120px); padding: clamp(40px, 6vw, 72px); background: var(--grad-deep); color: var(--c-cream); border-radius: 18px; display: grid; grid-template-columns: 1fr auto; gap: clamp(28px, 4vw, 56px); align-items: center; }
+.jgrid__capture .eyebrow { color: var(--c-tan); }
+.jgrid__capture-title { color: var(--c-cream); margin-top: 12px; }
+.jgrid__capture-title em { color: var(--c-tan); }
+.jgrid__capture-sub { margin-top: 16px; max-width: 44ch; color: rgba(240,232,219,.72); line-height: 1.65; }
+.jgrid__form { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.jgrid__form-ok { flex-basis: 100%; color: var(--c-tan); font-family: var(--ff-display); font-size: 20px; font-style: italic; }
+.jgrid__input { flex: 1; min-width: 240px; padding: 15px 18px; border-radius: 999px; border: 1px solid rgba(240,232,219,.28); background: rgba(240,232,219,.06); color: var(--c-cream); font-size: 14px; }
+.jgrid__input::placeholder { color: rgba(240,232,219,.5); }
+.jgrid__form .btn--primary { background: var(--c-tan); color: var(--c-forest); }
+.jgrid__form .btn--primary:hover { background: var(--c-cream); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .jgrid__grid { grid-template-columns: repeat(2, 1fr); }
+  .jgrid__capture { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .jgrid__grid { grid-template-columns: 1fr; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Journal Grid",
+  "settings": [],
+  "presets": [{ "name": "Journal Grid" }]
+}
+{% endschema %}

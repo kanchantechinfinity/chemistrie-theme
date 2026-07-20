@@ -1,0 +1,151 @@
+{%- assign words = article.content | strip_html | split: ' ' | size -%}
+{%- assign rt = words | divided_by: 200 | at_least: 1 -%}
+<article class="art">
+
+  <header class="art__header">
+    <div class="art__header-inner">
+      <a class="art__back" href="{{ blog.url }}">&larr; The Journal</a>
+      {%- if article.tags.size > 0 -%}
+        <span class="art__cat">{{ article.tags.first }}</span>
+      {%- endif -%}
+      <h1 class="display-h display-h--light art__title">{{ article.title }}</h1>
+      <div class="art__meta">
+        {%- if article.author != blank -%}<span>By {{ article.author }}</span><span aria-hidden="true">·</span>{%- endif -%}
+        <span>{{ article.published_at | date: '%B %-d, %Y' }}</span>
+        <span aria-hidden="true">·</span>
+        <span>{{ rt }} min read</span>
+      </div>
+    </div>
+  </header>
+
+  {%- if article.image -%}
+    <div class="art__hero">
+      {{ article.image | image_url: width: 1800 | image_tag: loading: 'eager', widths: '800,1200,1600,1800', alt: article.image.alt | default: article.title, class: 'art__hero-img' }}
+    </div>
+  {%- endif -%}
+
+  <div class="art__body-wrap">
+    <div class="article-body rte">
+      {{ article.content }}
+    </div>
+  </div>
+
+  {%- if blog.comments_enabled? -%}
+    <div class="art__comments">
+      <div class="art__comments-inner">
+        {%- if article.comments_count > 0 -%}
+          <h2 class="art__comments-title">{{ article.comments_count }} {{ article.comments_count | pluralize: 'comment', 'comments' }}</h2>
+          <ul class="art__comment-list">
+            {%- for comment in article.comments -%}
+              <li class="art__comment" id="{{ comment.id }}">
+                <p class="art__comment-body">{{ comment.content }}</p>
+                <p class="art__comment-author">{{ comment.author }} — {{ comment.created_at | date: '%b %-d, %Y' }}</p>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- form 'new_comment', article, class: 'art__comment-form' -%}
+          <h3 class="art__comment-formtitle">Leave a comment</h3>
+          {%- if form.errors -%}
+            <p class="art__form-error">{{ form.errors | default_errors }}</p>
+          {%- elsif form.posted_successfully? -%}
+            <p class="art__form-ok">Thanks — your comment is awaiting moderation.</p>
+          {%- endif -%}
+          <div class="art__form-row">
+            <input type="text" name="comment[author]" placeholder="Name" required>
+            <input type="email" name="comment[email]" placeholder="Email" required>
+          </div>
+          <textarea name="comment[body]" rows="4" placeholder="Your comment" required></textarea>
+          <button type="submit" class="btn btn--primary">Post comment</button>
+        {%- endform -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="art__capture">
+    <div class="art__capture-inner">
+      <span class="eyebrow eyebrow--light">— Letters from the bench —</span>
+      <h2 class="display-h display-h--light art__capture-title">Keep reading <em>with us.</em></h2>
+      <p class="art__capture-sub">Ingredient science and ritual notes, delivered occasionally. No noise.</p>
+      {%- form 'customer', class: 'art__form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="art__form-ok">Thank you — you're on the list.</p>
+        {%- endif -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="art-email">Email address</label>
+        <input class="art__input" id="art-email" type="email" name="contact[email]" placeholder="Your email address" required>
+        <button type="submit" class="btn btn--primary">Subscribe</button>
+      {%- endform -%}
+    </div>
+  </div>
+
+</article>
+
+{% stylesheet %}
+.art__header { background: var(--grad-deep); color: var(--c-cream); padding: clamp(120px, 15vw, 200px) var(--pad-x) clamp(48px, 6vw, 80px); text-align: center; }
+.art__header-inner { max-width: 760px; margin: 0 auto; }
+.art__back { display: inline-block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(240,232,219,.6); transition: color .3s; }
+.art__back:hover { color: var(--c-tan); }
+.art__cat { display: block; margin: 28px 0 0; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-tan); }
+.art__title { margin: 12px 0 0; }
+.art__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 28px; font-size: 13px; letter-spacing: .04em; color: rgba(240,232,219,.65); }
+
+.art__hero { max-width: 1100px; margin: clamp(-40px, -4vw, -60px) auto 0; padding: 0 var(--pad-x); }
+.art__hero-img { width: 100%; border-radius: 16px; box-shadow: 0 40px 80px -40px rgba(14,33,24,.5); }
+
+.art__body-wrap { background: var(--c-cream); padding: clamp(56px, 8vw, 100px) var(--pad-x); }
+.article-body { max-width: 68ch; margin: 0 auto; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.8; color: var(--c-ink); }
+.article-body > * + * { margin-top: 1.4em; }
+.article-body p { margin: 0 0 1.4em; }
+.article-body h2 { font-family: var(--ff-display); font-weight: 400; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; color: var(--c-forest); margin: 1.8em 0 .5em; }
+.article-body h3 { font-family: var(--ff-display); font-weight: 500; font-size: clamp(22px, 2.4vw, 28px); color: var(--c-forest); margin: 1.6em 0 .4em; }
+.article-body a { color: var(--c-tan-2); text-decoration: underline; text-underline-offset: 3px; }
+.article-body a:hover { color: var(--c-forest); }
+.article-body img { border-radius: 12px; margin: 2em auto; }
+.article-body ul, .article-body ol { padding-left: 1.4em; }
+.article-body li { margin: .5em 0; }
+.article-body blockquote { margin: 2em 0; padding: 8px 0 8px 28px; border-left: 3px solid var(--c-tan); font-family: var(--ff-display); font-size: clamp(24px, 3vw, 32px); font-style: italic; line-height: 1.35; color: var(--c-forest); }
+.article-body blockquote p { margin: 0; }
+.article-body hr { border: 0; border-top: 1px solid var(--c-line); margin: 2.4em 0; }
+
+.art__comments { background: var(--c-paper); padding: clamp(48px, 7vw, 90px) var(--pad-x); border-top: 1px solid var(--c-line-soft); }
+.art__comments-inner { max-width: 68ch; margin: 0 auto; }
+.art__comments-title { font-family: var(--ff-display); font-size: 26px; color: var(--c-forest); margin: 0 0 24px; }
+.art__comment-list { list-style: none; margin: 0 0 40px; padding: 0; display: flex; flex-direction: column; gap: 24px; }
+.art__comment { padding-bottom: 24px; border-bottom: 1px solid var(--c-line-soft); }
+.art__comment-body { margin: 0 0 8px; line-height: 1.6; }
+.art__comment-author { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--c-ink-mute); }
+.art__comment-formtitle { font-family: var(--ff-display); font-size: 24px; color: var(--c-forest); margin: 0 0 20px; }
+.art__comment-form { display: flex; flex-direction: column; gap: 14px; }
+.art__form-row { display: flex; gap: 14px; }
+.art__comment-form input, .art__comment-form textarea { width: 100%; padding: 13px 16px; border: 1px solid var(--c-line); border-radius: 10px; background: var(--c-cream); font-family: var(--ff-body); font-size: 15px; color: var(--c-forest); }
+.art__comment-form .btn { align-self: flex-start; }
+.art__form-error { color: #a0402f; }
+.art__form-ok { color: var(--c-sage); font-style: italic; }
+
+.art__capture { background: var(--grad-deep); color: var(--c-cream); padding: clamp(56px, 8vw, 100px) var(--pad-x); text-align: center; }
+.art__capture-inner { max-width: 640px; margin: 0 auto; }
+.art__capture-title { color: var(--c-cream); margin-top: 12px; }
+.art__capture-title em { color: var(--c-tan); }
+.art__capture-sub { margin: 16px 0 0; color: rgba(240,232,219,.72); }
+.art__form { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
+.art__form-ok { flex-basis: 100%; }
+.art__input { flex: 1; min-width: 240px; max-width: 360px; padding: 15px 18px; border-radius: 999px; border: 1px solid rgba(240,232,219,.28); background: rgba(240,232,219,.06); color: var(--c-cream); font-size: 14px; }
+.art__input::placeholder { color: rgba(240,232,219,.5); }
+.art__form .btn--primary { background: var(--c-tan); color: var(--c-forest); }
+.art__form .btn--primary:hover { background: var(--c-cream); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 560px) {
+  .art__form-row { flex-direction: column; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [],
+  "presets": [{ "name": "Article" }]
+}
+{% endschema %}

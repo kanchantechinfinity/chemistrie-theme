@@ -1,0 +1,67 @@
+{%- assign stars = '★★★★★' -%}
+<section class="page-section page-section--paper cnotes">
+  <div class="page-section__inner">
+    <div class="page-section__head">
+      <span class="eyebrow">— From real formulas —</span>
+      <h2 class="display-h">Verified<br/><em>skin notes.</em></h2>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cnotes__grid">
+        {%- for block in section.blocks -%}
+          <figure class="cnote" {{ block.shopify_attributes }}>
+            <div class="cnote__stars" aria-label="5 out of 5 stars">{{ stars }}</div>
+            <blockquote class="cnote__quote">{{ block.settings.quote }}</blockquote>
+            <figcaption class="cnote__author">{{ block.settings.author }}</figcaption>
+          </figure>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.cnotes__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 1.8vw, 24px); }
+.cnote {
+  display: flex; flex-direction: column; gap: 14px; margin: 0;
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px;
+  padding: 26px 24px 28px;
+}
+.cnote__stars { color: var(--c-tan); font-size: 15px; letter-spacing: .12em; }
+.cnote__quote { margin: 0; font-family: var(--ff-display); font-size: 18px; line-height: 1.45; color: var(--c-forest); }
+.cnote__author { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); margin-top: auto; }
+
+@media (max-width: 1100px) { .cnotes__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .cnotes__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection Notes",
+  "blocks": [
+    {
+      "type": "note",
+      "name": "Skin Note",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "This formula changed my skin." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Anna D. · Verified Buyer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Notes",
+      "blocks": [
+        { "type": "note", "settings": { "quote": "Velvet is the first foaming cleanser that hasn't left my skin tight afterward. It just feels clean, not stripped.", "author": "Anna D., Houston · Verified Buyer" } },
+        { "type": "note", "settings": { "quote": "Lumina gave me back a glow I hadn't seen since my twenties. Three weeks in and people keep asking what I changed.", "author": "Priya R., Austin · Verified Buyer" } },
+        { "type": "note", "settings": { "quote": "Cashmere sinks in without a hint of grease. My dry winter cheeks finally stopped flaking.", "author": "Meghan T., Dallas · Verified Buyer" } },
+        { "type": "note", "settings": { "quote": "The Peptide Cream is the one step I refuse to skip now. My fine lines around the eyes look genuinely softer.", "author": "Sofia L., Houston · Verified Buyer" } },
+        { "type": "note", "settings": { "quote": "I love that every bottle is hand-numbered. It feels compounded for me, not mass-produced for everyone.", "author": "Jenna K., Austin · Verified Buyer" } },
+        { "type": "note", "settings": { "quote": "Velvet and Lumina together completely calmed my hormonal breakouts. My skin has never been this even.", "author": "Rebecca M., Dallas · Verified Buyer" } },
+        { "type": "note", "settings": { "quote": "Cashmere layered over the Peptide Cream is my whole nighttime ritual now. I wake up plump and calm.", "author": "Daniela S., Houston · Verified Buyer" } },
+        { "type": "note", "settings": { "quote": "Fast shipping, beautiful packaging, and a formula that actually works. Lumina earned a permanent spot on my shelf.", "author": "Claire W., Austin · Verified Buyer" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,112 @@
+<section class="page-section pharm-profiles">
+  <div class="page-section__inner">
+    {%- for block in section.blocks -%}
+      {%- assign flip = forloop.index0 | modulo: 2 -%}
+      <article class="pprofile {% if flip == 1 %}pprofile--reverse{% endif %}" {{ block.shopify_attributes }}>
+        <div class="pprofile__media">
+          {%- if block.settings.image != blank -%}
+            <div class="pprofile__avatar pprofile__avatar--photo">
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '450,900', alt: block.settings.name | default: 'Founder portrait' }}
+            </div>
+          {%- else -%}
+            {%- assign gid = 'pav-' | append: block.id -%}
+            <div class="pprofile__avatar pprofile__avatar--{{ block.settings.avatar_style }}">
+              <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <defs>
+                  {%- if block.settings.avatar_style == 'tan' -%}
+                    <linearGradient id="{{ gid }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dec39a"/><stop offset="1" stop-color="#8a6f48"/></linearGradient>
+                  {%- else -%}
+                    <linearGradient id="{{ gid }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c8f7b"/><stop offset="1" stop-color="#1a3a2d"/></linearGradient>
+                  {%- endif -%}
+                </defs>
+                <rect width="400" height="500" fill="url(#{{ gid }})"/>
+                <g fill="#0e2118" opacity=".22">
+                  <circle cx="200" cy="205" r="78"/>
+                  <path d="M78 500 C78 372 140 320 200 320 C260 320 322 372 322 500 Z"/>
+                </g>
+              </svg>
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="pprofile__text">
+          <span class="eyebrow">{{ block.settings.eyebrow }}</span>
+          <h2 class="pprofile__name display-h">{{ block.settings.name }}</h2>
+          <p class="pprofile__role">{{ block.settings.role }}</p>
+          <div class="pprofile__body">{{ block.settings.body }}</div>
+          {%- if block.settings.quote != blank -%}
+            <blockquote class="pprofile__quote">{{ block.settings.quote }}</blockquote>
+          {%- endif -%}
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.pharm-profiles { background: var(--c-cream); }
+.pprofile { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 88px); align-items: center; }
+.pprofile + .pprofile { margin-top: clamp(56px, 8vw, 120px); }
+.pprofile--reverse .pprofile__media { order: 2; }
+.pprofile__avatar { border-radius: 46% 46% 46% 46% / 50% 50% 50% 50%; overflow: hidden; aspect-ratio: 4 / 5; max-width: 460px; margin: 0 auto; width: 100%; box-shadow: 0 30px 70px -34px rgba(26,58,45,.55); }
+.pprofile__avatar svg, .pprofile__avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pprofile__name { margin: 16px 0 0; font-size: clamp(34px, 5vw, 60px); }
+.pprofile__role { margin: 10px 0 0; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); }
+.pprofile__body { margin: 22px 0 0; max-width: 46ch; color: var(--c-ink-soft); line-height: 1.75; }
+.pprofile__body p { margin: 0; }
+.pprofile__quote { margin: 26px 0 0; padding-left: 20px; border-left: 2px solid var(--c-tan); font-family: var(--ff-display); font-style: italic; font-size: clamp(19px, 1.8vw, 24px); line-height: 1.5; color: var(--c-forest); max-width: 42ch; }
+@media (max-width: 820px) {
+  .pprofile { grid-template-columns: 1fr; gap: 28px; }
+  .pprofile--reverse .pprofile__media { order: 0; }
+  .pprofile__avatar { max-width: 340px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Pharmacists Profiles",
+  "blocks": [
+    {
+      "type": "founder",
+      "name": "Founder",
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Founder, No. 1 —" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Dr. A" },
+        { "type": "text", "id": "role", "label": "Role", "default": "Co-founder · Compounding Pharmacist" },
+        { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Trained at the compounding bench in Houston, Dr. A spent years weighing actives by the milligram for patients before a single bottle ever carried the Chemistrie name.</p>" },
+        { "type": "textarea", "id": "quote", "label": "Pull-quote", "default": "The first formulas we compounded for someone she loved. That is still the only trust that matters: make it work, make it kind, make it worthy of the person who will use it nightly." },
+        { "type": "image_picker", "id": "image", "label": "Photo (optional — replaces SVG avatar)" },
+        { "type": "select", "id": "avatar_style", "label": "Avatar gradient", "options": [ { "value": "forest", "label": "Forest / Sage" }, { "value": "tan", "label": "Tan" } ], "default": "forest" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pharmacists Profiles",
+      "blocks": [
+        {
+          "type": "founder",
+          "settings": {
+            "eyebrow": "— Founder, No. 1 —",
+            "name": "Dr. A",
+            "role": "Co-founder · Compounding Pharmacist",
+            "body": "<p>Trained at the compounding bench in Houston, Dr. A spent years weighing actives by the milligram for patients before a single bottle ever carried the Chemistrie name.</p>",
+            "quote": "The first formulas we compounded for someone she loved. That is still the only trust that matters: make it work, make it kind, make it worthy of the person who will use it nightly.",
+            "avatar_style": "forest"
+          }
+        },
+        {
+          "type": "founder",
+          "settings": {
+            "eyebrow": "— Founder, No. 2 —",
+            "name": "Dr. M",
+            "role": "Co-founder · Compounding Pharmacist",
+            "body": "<p>Dr. M came to skincare the pharmacist's way — through the prescription pad, not the marketing deck. Refinaldehyde that did not burn was the problem she could not put down.</p>",
+            "quote": "We believe a formula should be honest to the milligram. Every concentration is printed exactly as compounded, because the woman reading the label deserves the same truth we'd tell a patient.",
+            "avatar_style": "tan"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

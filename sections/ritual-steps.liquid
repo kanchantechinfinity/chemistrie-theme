@@ -1,0 +1,138 @@
+<section class="page-section ritual-steps rsteps rsteps--morning" data-screen-label="The Ritual">
+  <div class="page-section__inner">
+    <div class="page-section__head rsteps__head">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="display-h">{{ section.settings.heading }}</h2>
+      <p class="rsteps__sub">{{ section.settings.sub }}</p>
+    </div>
+
+    <div class="rsteps__toggle" role="tablist" aria-label="Ritual time of day">
+      <button class="rsteps__pill is-active" type="button" data-ritual-set="morning" aria-pressed="true">Morning</button>
+      <button class="rsteps__pill" type="button" data-ritual-set="evening" aria-pressed="false">Evening</button>
+    </div>
+
+    <ol class="rsteps__list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+        <li class="rstep" {{ block.shopify_attributes }}>
+          <span class="rstep__num">{{ block.settings.roman }}</span>
+          <div class="rstep__body">
+            <h3 class="rstep__title">
+              {{ block.settings.step_name }} <span class="rstep__arrow">→</span>
+              <span class="rstep__product" data-ritual="morning">{{ block.settings.product_name }}</span>
+              {%- if block.settings.product_name_pm != blank -%}
+                <span class="rstep__product" data-ritual="evening">{{ block.settings.product_name_pm }}</span>
+              {%- else -%}
+                <span class="rstep__product" data-ritual="evening">{{ block.settings.product_name }}</span>
+              {%- endif -%}
+            </h3>
+            <p class="rstep__desc" data-ritual="morning">{{ block.settings.description }}</p>
+            {%- if block.settings.description_pm != blank -%}
+              <p class="rstep__desc" data-ritual="evening">{{ block.settings.description_pm }}</p>
+            {%- else -%}
+              <p class="rstep__desc" data-ritual="evening">{{ block.settings.description }}</p>
+            {%- endif -%}
+            {%- if block.settings.product_url != blank -%}
+              <a class="rstep__shop" href="{{ block.settings.product_url }}">Shop {{ block.settings.product_name }} →</a>
+            {%- endif -%}
+          </div>
+        </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% stylesheet %}
+.ritual-steps { background: var(--c-cream); }
+.rsteps__sub { margin: 20px 0 0; max-width: 62ch; font-size: 15px; line-height: 1.7; color: rgba(26,58,45,.78); }
+.rsteps__toggle {
+  display: inline-flex; gap: 4px; padding: 4px; margin: 0 0 clamp(40px, 5vw, 64px);
+  background: var(--c-paper, #fff); border: 1px solid var(--c-line-soft, rgba(26,58,45,.18));
+  border-radius: 999px;
+}
+.rsteps__pill {
+  padding: 10px 26px; border: 0; border-radius: 999px; cursor: pointer;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  background: none; color: var(--c-forest); transition: background .3s var(--ease-out), color .3s var(--ease-out);
+}
+.rsteps__pill.is-active { background: var(--c-forest); color: var(--c-cream); }
+.rsteps__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.rstep { display: flex; gap: clamp(20px, 3vw, 44px); padding: clamp(28px, 4vw, 40px) 0; border-top: 1px solid var(--c-line-soft, rgba(26,58,45,.16)); }
+.rstep:last-child { border-bottom: 1px solid var(--c-line-soft, rgba(26,58,45,.16)); }
+.rstep__num { flex: 0 0 auto; width: 2.5ch; font-family: var(--ff-display); font-style: italic; font-size: clamp(24px, 3vw, 34px); color: var(--c-tan); }
+.rstep__body { display: flex; flex-direction: column; gap: 12px; }
+.rstep__title { font-family: var(--ff-display); font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; color: var(--c-forest); }
+.rstep__arrow { color: var(--c-tan); }
+.rstep__product { color: var(--c-tan); font-style: italic; }
+.rstep__desc { font-size: 15px; line-height: 1.75; color: rgba(26,58,45,.82); max-width: 66ch; }
+.rstep__shop { align-self: flex-start; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-tan); padding-bottom: 3px; transition: color .3s; }
+.rstep__shop:hover { color: var(--c-tan); }
+
+/* toggle variants */
+.rstep__product[data-ritual="evening"],
+.rstep__desc[data-ritual="evening"] { display: none; }
+.rsteps--evening .rstep__product[data-ritual="morning"],
+.rsteps--evening .rstep__desc[data-ritual="morning"] { display: none; }
+.rsteps--evening .rstep__product[data-ritual="evening"] { display: inline; }
+.rsteps--evening .rstep__desc[data-ritual="evening"] { display: block; }
+
+@media (max-width: 600px) {
+  .rstep { flex-direction: column; gap: 10px; }
+}
+{% endstylesheet %}
+
+{% javascript %}
+document.querySelectorAll('.rsteps').forEach(function (section) {
+  var pills = section.querySelectorAll('.rsteps__pill');
+  pills.forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      var set = pill.getAttribute('data-ritual-set');
+      section.classList.toggle('rsteps--morning', set === 'morning');
+      section.classList.toggle('rsteps--evening', set === 'evening');
+      pills.forEach(function (p) {
+        var active = p === pill;
+        p.classList.toggle('is-active', active);
+        p.setAttribute('aria-pressed', String(active));
+      });
+    });
+  });
+});
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Ritual Steps",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The ritual, step by step —" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "Four steps,<br/><em>morning and night.</em>" },
+    { "type": "textarea", "id": "sub", "label": "Subtext", "default": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down, layer thin, and let the skin ask for the next. Switch between morning and evening to see how each step changes." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "roman", "label": "Roman numeral", "default": "i." },
+        { "type": "text", "id": "step_name", "label": "Step name", "default": "Cleanse" },
+        { "type": "text", "id": "product_name", "label": "Product name", "default": "Velvet" },
+        { "type": "url", "id": "product_url", "label": "Product URL" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Step description." },
+        { "type": "text", "id": "product_name_pm", "label": "Evening product name (optional)" },
+        { "type": "textarea", "id": "description_pm", "label": "Evening description (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ritual Steps",
+      "blocks": [
+        { "type": "step", "settings": { "roman": "i.", "step_name": "Cleanse", "product_name": "Velvet", "description": "Begin with Velvet, our foaming facial cleanser, worked into damp skin for ninety seconds. It lifts the night away without stripping — the face wakes, it does not flinch." } },
+        { "type": "step", "settings": { "roman": "ii.", "step_name": "Treat", "product_name": "Lumina", "product_name_pm": "Renewal", "description": "Two drops of Lumina, our vitamin C serum, pressed — never rubbed — over the face. Brightness and antioxidant defence for the hours of daylight ahead.", "description_pm": "Two drops of Renewal, our night serum, pressed — never rubbed — over the face. Repair and resurfacing for the hours the skin rebuilds." } },
+        { "type": "step", "settings": { "roman": "iii.", "step_name": "Hydrate", "product_name": "Cashmere", "description": "One pearl of Cashmere, our daily moisturiser, warmed between the palms and pressed upward along the jaw, cheekbones and brow. This sealing step before the day." } },
+        { "type": "step", "settings": { "roman": "iv.", "step_name": "Restore", "product_name": "Peptide Cream", "description": "Reserved for the evening. Restore is where the ritual does its quietest, most important work — see the Evening ritual for this final step." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main-addresses": { "type": "main-addresses" }
+  },
+  "order": ["main-addresses"]
+}

@@ -1,0 +1,20 @@
+{% comment %}
+  Reusable dark CTA card ("Begin your ritual" style).
+  Params: eyebrow, heading (may contain <em>/<br>), sub, button_label, button_url
+{% endcomment %}
+<section class="cta cta--page">
+  <div class="cta__card">
+    <span class="cta__corner cta__corner--tl"></span>
+    <span class="cta__corner cta__corner--tr"></span>
+    <span class="cta__corner cta__corner--bl"></span>
+    <span class="cta__corner cta__corner--br"></span>
+
+    <span class="eyebrow eyebrow--light">{{ eyebrow | default: '— Ready when you are —' }}</span>
+    <h2 class="display-h display-h--light">{{ heading | default: 'Begin your <em>ritual.</em>' }}</h2>
+    <p class="cta__sub">{{ sub | default: 'Six formulas, hand-numbered in Houston. Find the one your skin has been waiting for.' }}</p>
+    <a class="btn btn--primary btn--light cta__page-btn" href="{{ button_url | default: routes.all_products_collection_url }}">
+      <span>{{ button_label | default: 'Shop the Collection' }}</span>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>

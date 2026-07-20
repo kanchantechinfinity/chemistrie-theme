@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main-account": { "type": "main-account" }
+  },
+  "order": ["main-account"]
+}

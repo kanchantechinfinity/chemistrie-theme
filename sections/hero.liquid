@@ -1,0 +1,223 @@
+<!-- ───── Hero — Modern split ───── -->
+<section class="hero" data-screen-label="01 Hero">
+  <div class="hero__bg">
+    <div class="hero__blob hero__blob--sage"></div>
+    <div class="hero__blob hero__blob--tan"></div>
+    <div class="hero__noise"></div>
+    <div class="hero__grid-lines" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- Top meta -->
+  <div class="hero__meta hero__meta--left">
+    <span class="hero__live"><span class="hero__live-dot"></span>{{ section.settings.live_text }}</span>
+  </div>
+  <div class="hero__meta hero__meta--right">
+    <span>{{ section.settings.meta_location }}</span>
+    <span class="dot"></span>
+    <span>{{ section.settings.meta_volume }}</span>
+  </div>
+
+  <!-- Main split -->
+  <div class="hero__inner">
+    <!-- Left: copy -->
+    <div class="hero__copy">
+      <p class="hero__eyebrow">
+        <span class="hero__eyebrow-line"></span>
+        <span>{{ section.settings.eyebrow }}</span>
+      </p>
+
+      <h1 class="hero__title" aria-label="{{ section.settings.title_aria }}">
+        <span class="hero__title-row">
+          <span class="hero__title-word">{{ section.settings.title_word_1 }}</span>
+          <em class="hero__title-em">{{ section.settings.title_em_1 }}</em>
+        </span>
+        <span class="hero__title-row">
+          <span class="hero__title-word">{{ section.settings.title_row_2 }}</span>
+        </span>
+        <span class="hero__title-row">
+          <em class="hero__title-em hero__title-em--accent">{{ section.settings.title_em_accent }}</em>
+        </span>
+      </h1>
+
+      <p class="hero__deck">
+        {{ section.settings.deck }}
+      </p>
+
+      <div class="hero__cta-row">
+        <a class="hero__cta-primary" href="{{ section.settings.cta_primary_link }}">
+          <span>{{ section.settings.cta_primary_label }}</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="hero__cta-secondary" href="{{ section.settings.cta_secondary_link }}">
+          <span class="hero__cta-icon">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <span>{{ section.settings.cta_secondary_label }}</span>
+        </a>
+      </div>
+
+      <!-- Trust strip -->
+      <div class="hero__trust">
+        <div class="hero__trust-item">
+          <span class="hero__trust-num">{{ section.settings.trust1_num }}</span>
+          <span class="hero__trust-label">{{ section.settings.trust1_label }}</span>
+        </div>
+        <div class="hero__trust-divider"></div>
+        <div class="hero__trust-item">
+          <span class="hero__trust-num">{{ section.settings.trust2_num }}</span>
+          <span class="hero__trust-label">{{ section.settings.trust2_label }}</span>
+        </div>
+        <div class="hero__trust-divider"></div>
+        <div class="hero__trust-item">
+          <span class="hero__trust-num">{{ section.settings.trust3_num }}</span>
+          <span class="hero__trust-label">{{ section.settings.trust3_label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: visual stage -->
+    <div class="hero__stage">
+      <!-- Floating spec card -->
+      <div class="hero__spec-card hero__spec-card--top">
+        <span class="hero__spec-label">{{ section.settings.spec_top_label }}</span>
+        <span class="hero__spec-value">{{ section.settings.spec_top_value }}</span>
+        <span class="hero__spec-meta">{{ section.settings.spec_top_meta }}</span>
+      </div>
+
+      <!-- Center bottle -->
+      <div class="hero__bottle-wrap">
+        <div class="hero__bottle-glow"></div>
+        {% if section.settings.bottle_image != blank %}
+        <img class="hero__bottle" src="{{ section.settings.bottle_image | image_url: width: 560 }}" alt="{{ section.settings.title_aria | escape }}" width="280" height="480">
+        {% else %}
+        <svg class="hero__bottle" viewBox="0 0 280 480" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <linearGradient id="herob-glass" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3d6b54"/>
+              <stop offset=".5" stop-color="#1a3a2d"/>
+              <stop offset="1" stop-color="#0e2118"/>
+            </linearGradient>
+            <linearGradient id="herob-cap" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#dec39a"/>
+              <stop offset="1" stop-color="#a78a5e"/>
+            </linearGradient>
+            <linearGradient id="herob-hl" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity=".42"/>
+              <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- cap -->
+          <rect x="108" y="20" width="64" height="56" rx="5" fill="url(#herob-cap)"/>
+          <rect x="104" y="76" width="72" height="10" rx="2" fill="#a78a5e"/>
+          <!-- neck -->
+          <rect x="118" y="86" width="44" height="22" fill="url(#herob-glass)"/>
+          <!-- body -->
+          <path d="M62 116 Q62 104 92 104 H188 Q218 104 218 116 V438 Q218 462 192 462 H88 Q62 462 62 438 Z" fill="url(#herob-glass)"/>
+          <!-- highlight -->
+          <rect x="80" y="148" width="14" height="270" rx="7" fill="url(#herob-hl)"/>
+          <!-- label -->
+          <rect x="84" y="232" width="112" height="166" fill="#f9f4ed"/>
+          <text x="140" y="262" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="17" fill="#1a3a2d" letter-spacing="2.5">No. 01</text>
+          <line x1="100" y1="272" x2="180" y2="272" stroke="#c8aa7a" stroke-width="0.7"/>
+          <text x="140" y="298" text-anchor="middle" font-family="Cormorant Garamond" font-size="11" fill="#1a3a2d" letter-spacing="3.5">RENEWAL</text>
+          <text x="140" y="314" text-anchor="middle" font-family="Cormorant Garamond" font-size="11" fill="#1a3a2d" letter-spacing="3.5">SERUM</text>
+          <line x1="108" y1="332" x2="172" y2="332" stroke="#c8aa7a" stroke-width="0.4"/>
+          <text x="140" y="350" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6" fill="#6c8f7b" letter-spacing="2">PHARMACIST FORMULATED</text>
+          <text x="140" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6" fill="#6c8f7b" letter-spacing="2">HOUSTON · 30 ML</text>
+          <text x="140" y="378" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="8" fill="#a78a5e">batch n° 027 / 200</text>
+        </svg>
+        {% endif %}
+        <!-- bottle shadow -->
+        <div class="hero__bottle-shadow"></div>
+      </div>
+
+      <!-- Floating ingredient pills -->
+      <div class="hero__pills">
+        <span class="hero__pill hero__pill--1">{{ section.settings.pill_1 }}</span>
+        <span class="hero__pill hero__pill--2">{{ section.settings.pill_2 }}</span>
+        <span class="hero__pill hero__pill--3">{{ section.settings.pill_3 }}</span>
+      </div>
+
+      <!-- Tag bottom right -->
+      <div class="hero__spec-card hero__spec-card--bottom">
+        <span class="hero__spec-mini">{{ section.settings.spec_bottom_mini }}</span>
+        <span class="hero__spec-rx">{{ section.settings.spec_bottom_rx }}</span>
+      </div>
+
+      <!-- Decorative numbers -->
+      <span class="hero__deco hero__deco--01">{{ section.settings.deco_01 }}</span>
+      <span class="hero__deco hero__deco--ed">{{ section.settings.deco_ed }}</span>
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="hero__strip">
+    <div class="hero__strip-marquee">
+      <span>{{ section.settings.marquee_1 }}</span><i>✦</i>
+      <span>{{ section.settings.marquee_2 }}</span><i>✦</i>
+      <span>{{ section.settings.marquee_3 }}</span><i>✦</i>
+      <span>{{ section.settings.marquee_4 }}</span><i>✦</i>
+      <span>{{ section.settings.marquee_1 }}</span><i>✦</i>
+      <span>{{ section.settings.marquee_2 }}</span><i>✦</i>
+      <span>{{ section.settings.marquee_3 }}</span><i>✦</i>
+      <span>{{ section.settings.marquee_4 }}</span><i>✦</i>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="hero__scroll-cue">
+    <span>{{ section.settings.scroll_label }}</span>
+    <span class="hero__scroll-line"></span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "live_text", "label": "Live indicator text", "default": "A pharmacist is on the line" },
+    { "type": "text", "id": "meta_location", "label": "Meta location", "default": "Houston · 29.76°N" },
+    { "type": "text", "id": "meta_volume", "label": "Meta volume", "default": "Vol. III · 2026" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A Pharmacist's Quiet Luxury" },
+    { "type": "text", "id": "title_aria", "label": "Title (accessibility label)", "default": "Made by pharmacists. Made for the women they love." },
+    { "type": "text", "id": "title_word_1", "label": "Title row 1 word", "default": "Made" },
+    { "type": "text", "id": "title_em_1", "label": "Title row 1 emphasis", "default": "by pharmacists." },
+    { "type": "html", "id": "title_row_2", "label": "Title row 2 (inline HTML)", "default": "Made <em class=\"hero__title-em\">for</em> the women" },
+    { "type": "text", "id": "title_em_accent", "label": "Title row 3 accent", "default": "they love." },
+    { "type": "textarea", "id": "deck", "label": "Deck paragraph", "default": "Compounded by hand in Houston. Twelve formulas, two hundred bottles a batch, retired the moment the batch is poured. Welcome to the bench." },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary CTA label", "default": "Begin the consultation" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary CTA link", "default": "#shop" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary CTA label", "default": "Watch the bench film · 2:14" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary CTA link", "default": "#instagram" },
+    { "type": "text", "id": "trust1_num", "label": "Trust stat 1 number", "default": "2,400+" },
+    { "type": "text", "id": "trust1_label", "label": "Trust stat 1 label", "default": "Women on the list" },
+    { "type": "text", "id": "trust2_num", "label": "Trust stat 2 number", "default": "28" },
+    { "type": "text", "id": "trust2_label", "label": "Trust stat 2 label", "default": "Clinical-grade actives" },
+    { "type": "text", "id": "trust3_num", "label": "Trust stat 3 number", "default": "★ 4.96" },
+    { "type": "text", "id": "trust3_label", "label": "Trust stat 3 label", "default": "Verified buyer rating" },
+    { "type": "header", "content": "Visual stage" },
+    { "type": "image_picker", "id": "bottle_image", "label": "Bottle image (optional — replaces inline SVG)" },
+    { "type": "text", "id": "spec_top_label", "label": "Top spec label", "default": "Tonight's batch" },
+    { "type": "text", "id": "spec_top_value", "label": "Top spec value", "default": "N°027" },
+    { "type": "text", "id": "spec_top_meta", "label": "Top spec meta", "default": "of 200 · poured at 4:42pm CT" },
+    { "type": "text", "id": "pill_1", "label": "Pill 1", "default": "Retinaldehyde 0.05%" },
+    { "type": "text", "id": "pill_2", "label": "Pill 2", "default": "Niacinamide 4%" },
+    { "type": "text", "id": "pill_3", "label": "Pill 3", "default": "Ferulic · Hyaluronic" },
+    { "type": "text", "id": "spec_bottom_mini", "label": "Bottom spec text", "default": "Hand-numbered · pharmacist-signed" },
+    { "type": "text", "id": "spec_bottom_rx", "label": "Bottom spec badge", "default": "Rx" },
+    { "type": "text", "id": "deco_01", "label": "Decorative number (left)", "default": "— 01" },
+    { "type": "text", "id": "deco_ed", "label": "Decorative number (right)", "default": "N°II · ED" },
+    { "type": "header", "content": "Marquee & scroll" },
+    { "type": "text", "id": "marquee_1", "label": "Marquee item 1", "default": "Compounded in Houston" },
+    { "type": "text", "id": "marquee_2", "label": "Marquee item 2", "default": "Made for the women we love" },
+    { "type": "text", "id": "marquee_3", "label": "Marquee item 3", "default": "Hand-numbered batches" },
+    { "type": "text", "id": "marquee_4", "label": "Marquee item 4", "default": "Pharmaceutical-grade actives" },
+    { "type": "text", "id": "scroll_label", "label": "Scroll cue label", "default": "Scroll" }
+  ],
+  "presets": [
+    { "name": "Hero" }
+  ]
+}
+{% endschema %}

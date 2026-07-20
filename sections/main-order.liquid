@@ -1,0 +1,88 @@
+<section class="page-hero page-hero--short" data-screen-label="Order">
+  <div class="page-hero__inner ord__hero-inner">
+    <span class="eyebrow eyebrow--light">— Order {{ order.name }} —</span>
+    <h1 class="display-h display-h--light page-hero__title">Order {{ order.name }}</h1>
+    <p class="ord__date">Placed {{ order.created_at | date: '%B %-d, %Y' }}</p>
+  </div>
+</section>
+
+<section class="page-section page-section--paper ord">
+  <div class="page-section__inner">
+    <a href="{{ routes.account_url }}" class="ord__back">&larr; Back to account</a>
+
+    <div class="ord__status">
+      <div><span class="ord__status-k">Payment</span><span class="ord__status-v">{{ order.financial_status_label }}</span></div>
+      <div><span class="ord__status-k">Fulfillment</span><span class="ord__status-v">{{ order.fulfillment_status_label }}</span></div>
+    </div>
+
+    <div class="ord__table-wrap">
+      <table class="ord__table">
+        <thead>
+          <tr><th>Product</th><th>Price</th><th>Qty</th><th class="ord__right">Total</th></tr>
+        </thead>
+        <tbody>
+          {%- for line in order.line_items -%}
+            <tr>
+              <td>
+                <span class="ord__pname">{{ line.title }}</span>
+                {%- unless line.variant.title contains 'Default' -%}<span class="ord__pvar">{{ line.variant.title }}</span>{%- endunless -%}
+              </td>
+              <td>{{ line.original_price | money }}</td>
+              <td>{{ line.quantity }}</td>
+              <td class="ord__right">{{ line.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+        <tfoot>
+          <tr><td colspan="3">Subtotal</td><td class="ord__right">{{ order.line_items_subtotal_price | money }}</td></tr>
+          {%- for discount in order.cart_level_discount_applications -%}
+            <tr class="ord__disc"><td colspan="3">Discount ({{ discount.title }})</td><td class="ord__right">−{{ discount.total_allocated_amount | money }}</td></tr>
+          {%- endfor -%}
+          {%- for shipping in order.shipping_methods -%}
+            <tr><td colspan="3">Shipping ({{ shipping.title }})</td><td class="ord__right">{{ shipping.price | money }}</td></tr>
+          {%- endfor -%}
+          {%- for tax in order.tax_lines -%}
+            <tr><td colspan="3">Tax ({{ tax.title }})</td><td class="ord__right">{{ tax.price | money }}</td></tr>
+          {%- endfor -%}
+          <tr class="ord__total"><td colspan="3">Total</td><td class="ord__right">{{ order.total_price | money }}</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="ord__addrs">
+      {%- if order.shipping_address -%}
+        <div class="ord__addr"><h3>Shipping address</h3>{{ order.shipping_address | format_address }}</div>
+      {%- endif -%}
+      {%- if order.billing_address -%}
+        <div class="ord__addr"><h3>Billing address</h3>{{ order.billing_address | format_address }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.page-hero--short { padding-top: clamp(110px, 13vw, 170px); padding-bottom: clamp(40px, 5vw, 64px); }
+.ord__date { margin-top: 16px; color: rgba(240,232,219,.7); font-size: 14px; }
+.ord__back { display: inline-block; margin-bottom: 28px; font-size: 13px; color: var(--c-ink-soft); text-decoration: underline; text-underline-offset: 3px; }
+.ord__back:hover { color: var(--c-forest); }
+.ord__status { display: flex; gap: 40px; margin-bottom: 32px; }
+.ord__status-k { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); }
+.ord__status-v { font-family: var(--ff-display); font-size: 22px; color: var(--c-forest); }
+.ord__table-wrap { overflow-x: auto; }
+.ord__table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ord__table th { text-align: left; padding: 12px 16px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); border-bottom: 1px solid var(--c-line); }
+.ord__table td { padding: 14px 16px; border-bottom: 1px solid var(--c-line-soft); color: var(--c-ink-soft); }
+.ord__right { text-align: right; }
+.ord__pname { display: block; font-family: var(--ff-display); font-size: 18px; color: var(--c-forest); }
+.ord__pvar { font-size: 13px; color: var(--c-ink-mute); }
+.ord__table tfoot td { border-bottom: 0; padding: 8px 16px; }
+.ord__total td { padding-top: 16px; border-top: 1px solid var(--c-line); font-size: 16px; color: var(--c-forest); font-weight: 500; }
+.ord__disc td { color: var(--c-sage); }
+.ord__addrs { display: flex; flex-wrap: wrap; gap: 48px; margin-top: 44px; }
+.ord__addr h3 { font-family: var(--ff-display); font-size: 20px; color: var(--c-forest); margin: 0 0 10px; }
+.ord__addr { font-size: 14px; line-height: 1.6; color: var(--c-ink-soft); }
+{% endstylesheet %}
+
+{% schema %}
+{ "name": "Order", "settings": [] }
+{% endschema %}

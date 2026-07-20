@@ -1,0 +1,82 @@
+<section class="page-hero page-hero--short" data-screen-label="Addresses">
+  <div class="page-hero__inner adr__hero-inner">
+    <span class="eyebrow eyebrow--light">— Your account —</span>
+    <h1 class="display-h display-h--light page-hero__title">Addresses</h1>
+    <a href="{{ routes.account_url }}" class="adr__hero-link">&larr; Back to account</a>
+  </div>
+</section>
+
+<section class="page-section page-section--paper adr">
+  <div class="page-section__inner">
+
+    <details class="adr__new">
+      <summary class="btn btn--primary adr__new-btn">Add a new address</summary>
+      <div class="adr__card">
+        {%- form 'customer_address', customer.new_address, class: 'adr__form' -%}
+          {% render 'address-fields', form: form %}
+          <button type="submit" class="btn btn--primary">Add address</button>
+        {%- endform -%}
+      </div>
+    </details>
+
+    {%- if customer.addresses.size > 0 -%}
+      <div class="adr__list">
+        {%- for address in customer.addresses -%}
+          <div class="adr__item">
+            {%- if address == customer.default_address -%}<span class="adr__default">Default</span>{%- endif -%}
+            <div class="adr__body">{{ address | format_address }}</div>
+            <div class="adr__actions">
+              <details class="adr__edit">
+                <summary class="adr__link">Edit</summary>
+                <div class="adr__card">
+                  {%- form 'customer_address', address, class: 'adr__form' -%}
+                    {% render 'address-fields', form: form %}
+                    <button type="submit" class="btn btn--primary">Update address</button>
+                  {%- endform -%}
+                </div>
+              </details>
+              <a href="#" class="adr__link adr__del"
+                 data-confirm-message="Delete this address?"
+                 onclick="event.preventDefault(); if (confirm(this.dataset.confirmMessage)) { Shopify.postLink('{{ address.url }}', {parameters: {_method: 'delete'}}); }">Delete</a>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="adr__empty">You have no saved addresses yet.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+
+{% stylesheet %}
+.page-hero--short { padding-top: clamp(110px, 13vw, 170px); padding-bottom: clamp(40px, 5vw, 64px); }
+.adr__hero-link { display: inline-block; margin-top: 20px; font-size: 13px; color: rgba(240,232,219,.7); text-decoration: underline; text-underline-offset: 3px; }
+.adr__hero-link:hover { color: var(--c-tan); }
+.adr__new { margin-bottom: 40px; }
+.adr__new-btn { list-style: none; }
+.adr__new-btn::-webkit-details-marker { display: none; }
+.adr__card { margin-top: 24px; background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 16px; padding: clamp(24px, 3vw, 36px); max-width: 620px; }
+.adr__form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.adr__form .adr__full { grid-column: 1 / -1; }
+.adr__form label { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); margin-bottom: 6px; }
+.adr__form input, .adr__form select { width: 100%; padding: 12px 14px; border: 1px solid var(--c-line); border-radius: 10px; background: var(--c-paper); font-family: var(--ff-body); font-size: 15px; color: var(--c-forest); }
+.adr__form .btn { grid-column: 1 / -1; justify-self: start; }
+.adr__check { display: flex; align-items: center; gap: 8px; grid-column: 1 / -1; }
+.adr__check label { margin: 0; text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--c-ink-soft); }
+.adr__check input { width: auto; }
+.adr__list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+.adr__item { background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 14px; padding: 24px; }
+.adr__default { display: inline-block; margin-bottom: 12px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; background: var(--c-forest); color: var(--c-cream); padding: 4px 10px; border-radius: 999px; }
+.adr__body { font-size: 14px; line-height: 1.6; color: var(--c-ink-soft); }
+.adr__actions { display: flex; gap: 18px; margin-top: 16px; }
+.adr__link { font-size: 13px; color: var(--c-ink-soft); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.adr__link:hover { color: var(--c-forest); }
+.adr__empty { color: var(--c-ink-soft); }
+@media (max-width: 560px) { .adr__form { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{ "name": "Addresses", "settings": [] }
+{% endschema %}

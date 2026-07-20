@@ -1,0 +1,84 @@
+<section class="page-section ritual-shop" data-screen-label="Shop the Ritual">
+  <div class="page-section__inner">
+    <div class="page-section__head">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="display-h">{{ section.settings.heading }}</h2>
+    </div>
+
+    <div class="rshop__grid">
+      {%- if section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: 5 -%}
+        <article class="pcard">
+          <div class="pcard__media">
+            {%- if product.featured_image -%}
+              <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="600" height="600">
+            {%- else -%}
+              {{ product | placeholder_svg_tag: 'pcard__placeholder' }}
+            {%- endif -%}
+          </div>
+          <div class="pcard__body">
+            <div class="pcard__row">
+              <span class="pcard__name">{{ product.title }}</span>
+              <span class="pcard__price">{{ product.price | money }}</span>
+            </div>
+            <button class="pcard__btn product__cta" data-product-id="{{ product.selected_or_first_available_variant.id }}" type="button">Add to Cart</button>
+          </div>
+        </article>
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign fallback_names = 'Velvet,Lumina,Veil,Cashmere,Peptide Cream' | split: ',' -%}
+        {%- assign fallback_prices = '$36,$68,$58,$52,$—' | split: ',' -%}
+        {%- for name in fallback_names -%}
+        <article class="pcard">
+          <div class="pcard__media">
+            {{ 'product-1' | placeholder_svg_tag: 'pcard__placeholder' }}
+          </div>
+          <div class="pcard__body">
+            <div class="pcard__row">
+              <span class="pcard__name">{{ name }}</span>
+              <span class="pcard__price">{{ fallback_prices[forloop.index0] }}</span>
+            </div>
+            <button class="pcard__btn product__cta" type="button">Add to Cart</button>
+          </div>
+        </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <div class="rshop__foot">
+      <a class="rshop__pdf" href="{{ section.settings.pdf_url | default: '#' }}">Download the Ritual Card (PDF) →</a>
+      <p class="rshop__caption">{{ section.settings.caption }}</p>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.ritual-shop { background: var(--c-cream); }
+.rshop__grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: clamp(16px, 2vw, 26px);
+}
+.pcard__placeholder { width: 100%; height: 100%; object-fit: cover; }
+.rshop__foot { margin-top: clamp(40px, 5vw, 64px); display: flex; flex-direction: column; gap: 10px; }
+.rshop__pdf { align-self: flex-start; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-tan); padding-bottom: 3px; transition: color .3s; }
+.rshop__pdf:hover { color: var(--c-tan); }
+.rshop__caption { font-size: 14px; line-height: 1.6; color: rgba(26,58,45,.65); max-width: 52ch; margin: 0; }
+@media (max-width: 1000px) { .rshop__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .rshop__grid { grid-template-columns: 1fr 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ritual Shop",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Shop this ritual —" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "The whole ritual,<br/><em>in five bottles.</em>" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "url", "id": "pdf_url", "label": "Ritual Card PDF URL" },
+    { "type": "textarea", "id": "caption", "label": "Caption", "default": "A printable card version of the ritual, to keep by the mirror. Coming soon." }
+  ],
+  "presets": [
+    { "name": "Ritual Shop" }
+  ]
+}
+{% endschema %}

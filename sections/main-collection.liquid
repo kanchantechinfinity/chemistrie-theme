@@ -1,0 +1,240 @@
+{%- paginate collection.products by 12 -%}
+<section class="page-section col-main">
+  <div class="page-section__inner">
+    <div class="col-layout">
+
+      {%- comment -%} ───── LEFT: filter sidebar ───── {%- endcomment -%}
+      <aside class="col-side">
+        <div class="col-side__count">{{ collection.products_count }} formulas</div>
+
+        {%- if collection.filters.size > 0 -%}
+          <form method="get" class="col-filters">
+            {%- comment -%} preserve current sort while filtering {%- endcomment -%}
+            {%- if collection.sort_by != blank -%}
+              <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+            {%- endif -%}
+
+            {%- for filter in collection.filters -%}
+              <div class="col-fgroup">
+                <div class="col-fgroup__title">{{ filter.label }}</div>
+
+                {%- case filter.type -%}
+                  {%- when 'list' -%}
+                    <ul class="col-flist">
+                      {%- for value in filter.values -%}
+                        <li class="col-fitem">
+                          <label class="col-check {% if value.count == 0 and value.active == false %}col-check--disabled{% endif %}">
+                            <input
+                              type="checkbox"
+                              name="{{ value.param_name }}"
+                              value="{{ value.value }}"
+                              {% if value.active %}checked{% endif %}
+                              {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                              onchange="this.form.submit()">
+                            <span class="col-check__label">{{ value.label }}</span>
+                            <span class="col-check__count">{{ value.count }}</span>
+                          </label>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+
+                  {%- when 'price_range' -%}
+                    <div class="col-price">
+                      <label class="col-price__field">
+                        <span>Min</span>
+                        <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" placeholder="0" min="0" max="{{ filter.range_max | money_without_currency | round }}">
+                      </label>
+                      <label class="col-price__field">
+                        <span>Max</span>
+                        <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" placeholder="{{ filter.range_max | money_without_currency | round }}" min="0" max="{{ filter.range_max | money_without_currency | round }}">
+                      </label>
+                      <button type="submit" class="btn btn--ghost btn--dark col-price__go">Apply</button>
+                    </div>
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+
+            <noscript><button type="submit" class="btn btn--primary">Filter</button></noscript>
+
+            {%- if collection.current_vendor or collection.current_type or collection.filters != empty -%}
+              <a href="{{ collection.url }}" class="col-clear">Clear all filters</a>
+            {%- endif -%}
+          </form>
+        {%- endif -%}
+      </aside>
+
+      {%- comment -%} ───── RIGHT: sort + grid ───── {%- endcomment -%}
+      <div class="col-body">
+        <div class="col-toolbar">
+          <div class="col-toolbar__count">{{ collection.products_count }} formulas</div>
+          {%- if collection.sort_options.size > 0 -%}
+            <form method="get" class="col-sort">
+              <label for="col-sort-by" class="col-sort__label">Sort</label>
+              <select name="sort_by" id="col-sort-by" onchange="this.form.submit()">
+                {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+                {%- for option in collection.sort_options -%}
+                  <option value="{{ option.value }}" {% if option.value == current_sort %}selected{% endif %}>{{ option.name }}</option>
+                {%- endfor -%}
+              </select>
+            </form>
+          {%- endif -%}
+        </div>
+
+        {%- if collection.products.size > 0 -%}
+          <div class="col-grid">
+            {%- for product in collection.products -%}
+              <article class="pcard">
+                <a class="pcard__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+                  {%- if product.featured_image -%}
+                    {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: product.featured_image.alt | default: product.title }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'pcard__ph' }}
+                  {%- endif -%}
+                  {%- if product.tags contains 'Bestseller' -%}
+                    <span class="pcard__badge">Bestseller</span>
+                  {%- elsif product.tags contains 'New' -%}
+                    <span class="pcard__badge">New</span>
+                  {%- endif -%}
+                </a>
+                <div class="pcard__body">
+                  <div class="pcard__row">
+                    <a class="pcard__name" href="{{ product.url }}">{{ product.title }}</a>
+                    <span class="pcard__price">{{ product.price | money }}</span>
+                  </div>
+                  {%- if product.type != blank -%}
+                    <span class="pcard__type">{{ product.type }}</span>
+                  {%- endif -%}
+                  {%- if product.available -%}
+                    <button
+                      class="pcard__btn product__cta"
+                      type="button"
+                      data-product-id="{{ product.selected_or_first_available_variant.id }}">
+                      Add to Cart
+                    </button>
+                  {%- else -%}
+                    <span class="pcard__btn pcard__btn--soldout">Sold Out</span>
+                  {%- endif -%}
+                </div>
+              </article>
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="col-pager" role="navigation" aria-label="Pagination">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="col-pager__link">← Prev</a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="col-pager__link">{{ part.title }}</a>
+                {%- else -%}
+                  <span class="col-pager__link col-pager__link--current">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="col-pager__link">Next →</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+
+          <div class="col-callouts">
+            <a href="/pages/the-ritual" class="col-callout">Not sure where to start? Begin with The Ritual. →</a>
+            <a href="/pages/gift" class="col-callout">Looking for a gift? See our curated sets. →</a>
+          </div>
+        {%- else -%}
+          <div class="col-empty">
+            <p class="col-empty__title">No formulas match your filters.</p>
+            <a href="{{ collection.url }}" class="btn btn--primary">Clear filters</a>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% stylesheet %}
+.col-main { background: var(--c-cream); }
+.col-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+}
+.col-side { position: sticky; top: 100px; }
+.col-side__count {
+  display: none;
+  font-family: var(--ff-display); font-size: 22px; margin-bottom: 24px;
+}
+.col-filters { display: flex; flex-direction: column; gap: 32px; }
+.col-fgroup__title {
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--c-forest); margin-bottom: 16px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--c-line-soft);
+}
+.col-flist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.col-check { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; color: var(--c-ink-soft); }
+.col-check input { accent-color: var(--c-forest); width: 15px; height: 15px; }
+.col-check__label { flex: 1; }
+.col-check__count { font-size: 12px; color: var(--c-ink-mute); }
+.col-check--disabled { opacity: .4; cursor: default; }
+.col-price { display: flex; flex-wrap: wrap; gap: 10px; }
+.col-price__field { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 80px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-ink-mute); }
+.col-price__field input {
+  padding: 9px 10px; border: 1px solid var(--c-line-soft); border-radius: 6px;
+  background: var(--c-cream); font-size: 14px; color: var(--c-forest);
+}
+.col-price__go { width: 100%; margin-top: 4px; }
+.col-clear { font-size: 12px; letter-spacing: .06em; color: var(--c-ink-mute); text-decoration: underline; }
+
+.col-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--c-line-soft);
+}
+.col-toolbar__count { font-family: var(--ff-display); font-size: 22px; color: var(--c-forest); }
+.col-sort { display: flex; align-items: center; gap: 10px; }
+.col-sort__label { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-ink-mute); }
+.col-sort select {
+  padding: 9px 32px 9px 14px; border: 1px solid var(--c-line-soft); border-radius: 999px;
+  background: var(--c-cream); font-size: 13px; color: var(--c-forest); cursor: pointer;
+  font-family: var(--ff-body);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%231a3a2d' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+}
+.col-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(20px, 2.4vw, 32px); }
+
+.col-pager { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 48px; }
+.col-pager__link {
+  min-width: 40px; padding: 10px 14px; text-align: center; border: 1px solid var(--c-line-soft);
+  border-radius: 8px; font-size: 13px; color: var(--c-ink-soft); transition: background .3s, color .3s;
+}
+.col-pager__link:hover { background: var(--c-forest); color: var(--c-cream); }
+.col-pager__link--current { background: var(--c-forest); color: var(--c-cream); }
+
+.col-callouts { display: flex; flex-wrap: wrap; gap: 16px 40px; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--c-line-soft); }
+.col-callout { font-family: var(--ff-display); font-size: 18px; font-style: italic; color: var(--c-forest); transition: color .3s; }
+.col-callout:hover { color: var(--c-tan); }
+
+.col-empty { text-align: center; padding: 60px 0; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.col-empty__title { font-family: var(--ff-display); font-size: 24px; color: var(--c-forest); }
+
+@media (max-width: 900px) {
+  .col-layout { grid-template-columns: 1fr; }
+  .col-side { position: static; }
+  .col-side__count { display: block; }
+  .col-toolbar__count { display: none; }
+}
+@media (max-width: 560px) {
+  .col-grid { grid-template-columns: 1fr; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection Grid",
+  "settings": [],
+  "presets": [{ "name": "Collection Grid" }]
+}
+{% endschema %}

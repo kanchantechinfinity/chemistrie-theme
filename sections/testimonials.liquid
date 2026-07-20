@@ -1,0 +1,62 @@
+<!-- ───── Testimonials marquee ───── -->
+<section class="testimonials" data-screen-label="09 Testimonials">
+  <div class="testimonials__head">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-h">{{ section.settings.heading }}</h2>
+  </div>
+
+  <div class="testimonials__row">
+    {% for block in section.blocks %}
+      <figure class="testimonial{% cycle '', ' testimonial--alt' %}">
+        <blockquote>&quot;{{ block.settings.quote }}&quot;</blockquote>
+        <figcaption>{{ block.settings.attribution }}</figcaption>
+      </figure>
+    {% endfor %}
+    {% for block in section.blocks %}
+      <figure class="testimonial{% cycle '', ' testimonial--alt' %}" aria-hidden="true">
+        <blockquote>&quot;{{ block.settings.quote }}&quot;</blockquote>
+        <figcaption>{{ block.settings.attribution }}</figcaption>
+      </figure>
+    {% endfor %}
+  </div>
+
+  <div class="testimonials__press">
+    <span>As featured in</span>
+    <em>VOGUE</em>
+    <em>HARPER'S BAZAAR</em>
+    <em>WSJ.</em>
+    <em>ALLURE</em>
+    <em>TOWN &amp; COUNTRY</em>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— In Her Words —" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Women who <em>knew</em> better.<br/>And chose us anyway." }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "I have been a dermatology nurse for nineteen years. This is the first brand I trust on my own daughter's face." },
+        { "type": "text", "id": "attribution", "label": "Attribution", "default": "— Marisol R., Houston, TX · Verified Buyer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "quote", "settings": { "quote": "I have been a dermatology nurse for nineteen years. This is the first brand I trust on my own daughter's face.", "attribution": "— Marisol R., Houston, TX · Verified Buyer" } },
+        { "type": "quote", "settings": { "quote": "The pharmacist wrote me back personally about my redness. I bought three more bottles that afternoon.", "attribution": "— Priya S., Austin, TX · Verified Buyer" } },
+        { "type": "quote", "settings": { "quote": "Heavy glass. Numbered batch. A handwritten card. I keep the box on my dresser.", "attribution": "— Linnea H., Dallas, TX · Verified Buyer" } },
+        { "type": "quote", "settings": { "quote": "Made by pharmacists, made for the women they love — finally a tagline that delivers on the bottle, too.", "attribution": "— Camille D., New Orleans, LA · Verified Buyer" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

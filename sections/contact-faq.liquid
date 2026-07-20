@@ -1,0 +1,92 @@
+<section class="page-section contact-faq" data-screen-label="FAQ">
+  <div class="page-section__inner">
+    <div class="page-section__head">
+      <h2 class="display-h">{{ section.settings.heading }}</h2>
+    </div>
+
+    <div class="faq-list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq' -%}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          <button class="faq-item__q" type="button" aria-expanded="false">
+            <span>{{ block.settings.question }}</span>
+            <span class="faq-item__plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a">
+            <div class="faq-item__a-inner">{{ block.settings.answer }}</div>
+          </div>
+        </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.contact-faq { background: var(--c-cream); }
+.faq-list { max-width: 820px; }
+.faq-item { border-bottom: 1px solid var(--c-line-soft, rgba(26,58,45,.18)); }
+.faq-item:first-child { border-top: 1px solid var(--c-line-soft, rgba(26,58,45,.18)); }
+.faq-item__q {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  padding: 26px 4px; background: none; border: 0; cursor: pointer; text-align: left;
+  font-family: var(--ff-display); font-size: clamp(19px, 2vw, 24px); font-weight: 500;
+  color: var(--c-forest);
+}
+.faq-item__plus {
+  flex: 0 0 auto; font-family: var(--ff-body); font-size: 26px; line-height: 1;
+  color: var(--c-tan); transition: transform .35s var(--ease-out);
+}
+.faq-item__q[aria-expanded="true"] .faq-item__plus { transform: rotate(45deg); }
+.faq-item__a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .45s var(--ease-out);
+}
+.faq-item__a.is-open { max-height: 400px; }
+.faq-item__a-inner { padding: 0 4px 28px; max-width: 68ch; font-size: 15px; line-height: 1.75; color: rgba(26,58,45,.82); }
+.faq-item__a-inner p { margin: 0 0 12px; }
+.faq-item__a-inner p:last-child { margin-bottom: 0; }
+{% endstylesheet %}
+
+{% javascript %}
+document.querySelectorAll('.faq-item__q').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    var panel = btn.nextElementSibling;
+    if (panel && panel.classList.contains('faq-item__a')) {
+      panel.classList.toggle('is-open', !expanded);
+    }
+  });
+});
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Contact FAQ",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "How fast is shipping, and what does it cost?", "answer": "<p>Orders leave the Houston lab within 1–2 business days. Standard shipping is complimentary on orders over $120; below that it's a flat $6. You'll get a tracking number the moment your bottle is numbered and boxed.</p>" } },
+        { "type": "faq", "settings": { "question": "What's your return policy?", "answer": "<p>Because every formula is compounded to order, we can't resell returns — but if a formula isn't right for your skin, write to the pharmacist within 30 days and we'll make it right, whether that's a reformulation or a refund.</p>" } },
+        { "type": "faq", "settings": { "question": "Are your ingredients really pharmaceutical-grade?", "answer": "<p>Yes. Every active is sourced at pharmaceutical grade and compounded in a licensed facility, at the concentration on the label — never a proprietary blend hiding a trace amount.</p>" } },
+        { "type": "faq", "settings": { "question": "What does the batch number on my bottle mean?", "answer": "<p>Each batch is capped at 200 bottles and hand-numbered. Your number tells you exactly which small run your formula came from, and lets us trace it back to the day and pharmacist who poured it.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

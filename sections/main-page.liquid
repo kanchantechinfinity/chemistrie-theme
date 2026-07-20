@@ -1,0 +1,41 @@
+<section class="page-hero" data-screen-label="{{ page.title | strip }}">
+  <div class="page-hero__inner mpage__hero-inner">
+    <span class="eyebrow eyebrow--light">— Chemistrie —</span>
+    <h1 class="display-h display-h--light page-hero__title">{{ page.title }}</h1>
+  </div>
+</section>
+
+<section class="page-section page-section--paper">
+  <div class="page-section__inner mpage__wrap">
+    <div class="mpage__body rte">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.mpage__hero-inner { text-align: center; }
+.mpage__hero-inner .page-hero__title { max-width: none; }
+.mpage__wrap { display: flex; justify-content: center; }
+.mpage__body { max-width: 72ch; width: 100%; font-size: clamp(16px, 1.3vw, 18px); line-height: 1.8; color: var(--c-ink); }
+.mpage__body > * + * { margin-top: 1.3em; }
+.mpage__body h2 { font-family: var(--ff-display); font-weight: 400; font-size: clamp(26px, 3vw, 38px); color: var(--c-forest); margin: 1.6em 0 .4em; line-height: 1.1; }
+.mpage__body h3 { font-family: var(--ff-display); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px); color: var(--c-forest); margin: 1.4em 0 .3em; }
+.mpage__body p { margin: 0 0 1.2em; }
+.mpage__body a { color: var(--c-tan-2); text-decoration: underline; text-underline-offset: 3px; }
+.mpage__body a:hover { color: var(--c-forest); }
+.mpage__body ul, .mpage__body ol { padding-left: 1.4em; }
+.mpage__body li { margin: .5em 0; }
+.mpage__body blockquote { margin: 1.6em 0; padding-left: 24px; border-left: 3px solid var(--c-tan); font-family: var(--ff-display); font-size: 24px; font-style: italic; color: var(--c-forest); }
+.mpage__body img { border-radius: 12px; }
+.mpage__body table { width: 100%; border-collapse: collapse; }
+.mpage__body th, .mpage__body td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--c-line-soft); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [],
+  "presets": [{ "name": "Page" }]
+}
+{% endschema %}

@@ -1,0 +1,45 @@
+<!-- ───── Newsletter CTA ───── -->
+<section class="cta" data-screen-label="12 Newsletter">
+  <div class="cta__card">
+    <span class="cta__corner cta__corner--tl"></span>
+    <span class="cta__corner cta__corner--tr"></span>
+    <span class="cta__corner cta__corner--bl"></span>
+    <span class="cta__corner cta__corner--br"></span>
+
+    <span class="eyebrow eyebrow--light">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-h display-h--light">{{ section.settings.heading }}</h2>
+    <p class="cta__sub">{{ section.settings.sub }}</p>
+
+    {% form 'customer', id: 'newsletter-form', class: 'cta__form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+
+      {% if form.errors and form.errors.size > 0 %}
+        <p class="cta__sub" style="color:#c0392b;">{{ form.errors.messages['email'] | default: 'Please enter a valid email address.' }}</p>
+      {% endif %}
+
+      <label class="cta__field">
+        <span>Your email</span>
+        <input type="email" name="contact[email]" placeholder="you@elsewhere.com" required />
+      </label>
+      <button class="btn btn--primary btn--light" type="submit">
+        <span>Subscribe</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <p class="cta__sent"{% if form.posted_successfully? %} style="opacity:1;"{% endif %}>Thank you. The first letter arrives at the start of next month. ✦</p>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter CTA",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Letters from the Bench —" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Receive the first<br/>pharmacist's <em>letter.</em>" },
+    { "type": "textarea", "id": "sub", "label": "Subheading", "default": "A quiet, monthly note from Dr. A & Dr. M — new formulations, ritual edits, and the occasional invitation. Never marketing." }
+  ],
+  "presets": [
+    { "name": "Newsletter CTA" }
+  ]
+}
+{% endschema %}

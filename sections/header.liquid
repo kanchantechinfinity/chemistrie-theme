@@ -1,0 +1,64 @@
+<!-- ───── Top utility strip ───── -->
+<div class="utility-strip">
+  <span>{{ section.settings.announcement | default: 'Complimentary shipping on orders over $120 · Pharmacist-formulated in Houston, TX' }}</span>
+</div>
+
+<!-- ───── Nav ───── -->
+<header class="nav" id="nav">
+  <a href="{{ routes.root_url }}" class="nav__logo" aria-label="Chemistrie home">
+    <span class="nav__wordmark">CHEMISTRIE</span>
+  </a>
+  <nav class="nav__links" id="navLinks" aria-label="Primary">
+    {%- if section.settings.menu != blank -%}
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+    {%- else -%}
+      <a href="{{ routes.root_url }}">Home</a>
+      <a href="{{ routes.all_products_collection_url }}">The Collection</a>
+      <a href="/pages/the-ritual">The Ritual</a>
+      <a href="/pages/the-pharmacists">The Pharmacists</a>
+      <a href="/blogs/journal">The Journal</a>
+      <a href="/pages/contact">Contact</a>
+    {%- endif -%}
+  </nav>
+  <div class="nav__actions">
+    <a href="{{ routes.search_url }}" class="nav__icon" aria-label="Search">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </a>
+    <a href="{{ routes.account_url }}" class="nav__icon" aria-label="Account">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+    </a>
+    <a href="{{ routes.cart_url }}" class="nav__bag">
+      <span>Bag</span>
+      <span class="nav__bag-count">{{ cart.item_count }}</span>
+    </a>
+    <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span></button>
+  </div>
+  <div class="nav__backdrop" id="navBackdrop" aria-hidden="true"></div>
+</header>
+
+<script>
+  (function () {
+    var nav = document.getElementById('nav');
+    var toggle = document.getElementById('navToggle');
+    var backdrop = document.getElementById('navBackdrop');
+    if (!nav || !toggle) return;
+    function close() { nav.classList.remove('nav--open'); document.body.classList.remove('nav-locked'); toggle.setAttribute('aria-expanded', 'false'); }
+    function open() { nav.classList.add('nav--open'); document.body.classList.add('nav-locked'); toggle.setAttribute('aria-expanded', 'true'); }
+    toggle.addEventListener('click', function () { nav.classList.contains('nav--open') ? close() : open(); });
+    if (backdrop) backdrop.addEventListener('click', close);
+    nav.querySelectorAll('.nav__links a').forEach(function (a) { a.addEventListener('click', close); });
+    window.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "text", "id": "announcement", "label": "Announcement bar text", "default": "Complimentary shipping on orders over $120 · Pharmacist-formulated in Houston, TX" },
+    { "type": "link_list", "id": "menu", "label": "Primary menu (optional — falls back to default links)" }
+  ]
+}
+{% endschema %}
