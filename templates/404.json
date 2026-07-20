@@ -306,12 +306,33 @@
         "heading": "Twelve ingredients,<br>scroll-by-<em>scroll.</em>",
         "lede": "Each active, one at a time. Concentration, source, half-life, the formula it lives in. Scroll horizontally — the pharmacist will hand you the next."
       }
+    },
+    "proof_iDTz9Y": {
+      "type": "proof",
+      "name": "Proof stats",
+      "settings": {
+        "eyebrow": "— The Pharmacy Standard —",
+        "heading": "Numbers, not <em>noise.</em>",
+        "stat1_count": 0,
+        "stat1_suffix": "",
+        "stat1_label": "Fillers, fragrance, fluff.",
+        "stat2_count": 100,
+        "stat2_suffix": "%",
+        "stat2_label": "Pharmacist-formulated. Every batch.",
+        "stat3_count": 28,
+        "stat3_suffix": "",
+        "stat3_label": "Clinically respected actives.",
+        "stat4_count": 14,
+        "stat4_unit": "days",
+        "stat4_label": "Money-back, no-questions ritual trial."
+      }
     }
   },
   "order": [
     "hero_YGMYfA",
     "pillars_tmq87Y",
     "founders_cch8nz",
-    "actives_WHF8yt"
+    "actives_WHF8yt",
+    "proof_iDTz9Y"
   ]
 }
