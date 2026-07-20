@@ -101,20 +101,23 @@
         "intro_heading": "Three things we<br><em>refuse</em> to compromise."
       }
     },
-    "page_hero_qmbkLa": {
-      "type": "page-hero",
-      "name": "Page Hero",
+    "founders_cch8nz": {
+      "type": "founders",
+      "name": "Founders",
       "settings": {
-        "eyebrow": "— The Collection —",
-        "heading": "Six formulas.<br><em>Zero shortcuts.</em>",
-        "deck": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend.",
-        "deck2": ""
+        "caption": "The founding pharmacists, photographed in the compounding lab — Houston, 2026.",
+        "heading": "Two compounding<br>pharmacists.<br><em>One promise.</em>",
+        "lede": "They met behind the same bench in Houston, weighing actives by the milligram for women who had been failed by everything on the shelf.",
+        "paragraph1": "Wives wanted retinol that didn't burn. Mothers wanted vitamin C that didn't oxidise in a week. Best friends wanted a moisturiser they could hand down. So they started making it — quietly, by hand, in concentrations the industry deemed too expensive to mass-produce.",
+        "paragraph2": "Chemistrie is what happened when their patient list became a waiting list.",
+        "sig": "— Dr. A & Dr. M",
+        "sig_sub": "Compounding Pharmacists · Founders"
       }
     }
   },
   "order": [
     "hero_YGMYfA",
     "pillars_tmq87Y",
-    "page_hero_qmbkLa"
+    "founders_cch8nz"
   ]
 }
