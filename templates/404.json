@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "main-404": {
-      "type": "main-404",
-      "settings": {}
-    },
     "hero_YGMYfA": {
       "type": "hero",
       "name": "Hero",
@@ -104,11 +100,21 @@
         "eyebrow": "— Brand Pillars —",
         "intro_heading": "Three things we<br><em>refuse</em> to compromise."
       }
+    },
+    "page_hero_qmbkLa": {
+      "type": "page-hero",
+      "name": "Page Hero",
+      "settings": {
+        "eyebrow": "— The Collection —",
+        "heading": "Six formulas.<br><em>Zero shortcuts.</em>",
+        "deck": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend.",
+        "deck2": ""
+      }
     }
   },
   "order": [
-    "main-404",
     "hero_YGMYfA",
-    "pillars_tmq87Y"
+    "pillars_tmq87Y",
+    "page_hero_qmbkLa"
   ]
 }
