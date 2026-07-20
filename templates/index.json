@@ -277,51 +277,7 @@
       ]
     },
     "proof": {
-      "type": "proof",
-      "blocks": {
-        "stat-1": {
-          "type": "stat",
-          "settings": {
-            "count": 0,
-            "suffix": "",
-            "unit": "",
-            "label": "Fillers, fragrance, fluff."
-          }
-        },
-        "stat-2": {
-          "type": "stat",
-          "settings": {
-            "count": 100,
-            "suffix": "%",
-            "unit": "",
-            "label": "Pharmacist-formulated. Every batch."
-          }
-        },
-        "stat-3": {
-          "type": "stat",
-          "settings": {
-            "count": 28,
-            "suffix": "",
-            "unit": "",
-            "label": "Clinically respected actives."
-          }
-        },
-        "stat-4": {
-          "type": "stat",
-          "settings": {
-            "count": 14,
-            "suffix": "",
-            "unit": "days",
-            "label": "Money-back, no-questions ritual trial."
-          }
-        }
-      },
-      "block_order": [
-        "stat-1",
-        "stat-2",
-        "stat-3",
-        "stat-4"
-      ]
+      "type": "proof"
     },
     "ritual": {
       "type": "ritual",

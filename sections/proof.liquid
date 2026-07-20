@@ -6,16 +6,22 @@
   </div>
 
   <div class="proof__grid">
-    {% for block in section.blocks %}
-    <div class="proof__cell"{{ block.shopify_attributes }}>
-      {% if block.settings.unit != blank %}
-      <span class="proof__num" data-count="{{ block.settings.count }}" data-suffix=""><span class="proof__num-n">0</span><span class="proof__num-u">{{ block.settings.unit }}</span></span>
-      {% else %}
-      <span class="proof__num" data-count="{{ block.settings.count }}" data-suffix="{{ block.settings.suffix }}">0{{ block.settings.suffix }}</span>
-      {% endif %}
-      <span class="proof__label">{{ block.settings.label }}</span>
+    <div class="proof__cell">
+      <span class="proof__num" data-count="{{ section.settings.stat1_count }}" data-suffix="{{ section.settings.stat1_suffix }}">0{{ section.settings.stat1_suffix }}</span>
+      <span class="proof__label">{{ section.settings.stat1_label }}</span>
     </div>
-    {% endfor %}
+    <div class="proof__cell">
+      <span class="proof__num" data-count="{{ section.settings.stat2_count }}" data-suffix="{{ section.settings.stat2_suffix }}">0{{ section.settings.stat2_suffix }}</span>
+      <span class="proof__label">{{ section.settings.stat2_label }}</span>
+    </div>
+    <div class="proof__cell">
+      <span class="proof__num" data-count="{{ section.settings.stat3_count }}" data-suffix="{{ section.settings.stat3_suffix }}">0{{ section.settings.stat3_suffix }}</span>
+      <span class="proof__label">{{ section.settings.stat3_label }}</span>
+    </div>
+    <div class="proof__cell">
+      <span class="proof__num" data-count="{{ section.settings.stat4_count }}" data-suffix=""><span class="proof__num-n">0</span><span class="proof__num-u">{{ section.settings.stat4_unit }}</span></span>
+      <span class="proof__label">{{ section.settings.stat4_label }}</span>
+    </div>
   </div>
 </section>
 
@@ -24,30 +30,20 @@
   "name": "Proof stats",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Pharmacy Standard —" },
-    { "type": "html", "id": "heading", "label": "Heading", "default": "Numbers, not <em>noise.</em>" }
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Numbers, not <em>noise.</em>" },
+    { "type": "number", "id": "stat1_count", "label": "Stat 1 count", "default": 0 },
+    { "type": "text", "id": "stat1_suffix", "label": "Stat 1 suffix", "default": "" },
+    { "type": "text", "id": "stat1_label", "label": "Stat 1 label", "default": "Fillers, fragrance, fluff." },
+    { "type": "number", "id": "stat2_count", "label": "Stat 2 count", "default": 100 },
+    { "type": "text", "id": "stat2_suffix", "label": "Stat 2 suffix", "default": "%" },
+    { "type": "text", "id": "stat2_label", "label": "Stat 2 label", "default": "Pharmacist-formulated. Every batch." },
+    { "type": "number", "id": "stat3_count", "label": "Stat 3 count", "default": 28 },
+    { "type": "text", "id": "stat3_suffix", "label": "Stat 3 suffix", "default": "" },
+    { "type": "text", "id": "stat3_label", "label": "Stat 3 label", "default": "Clinically respected actives." },
+    { "type": "number", "id": "stat4_count", "label": "Stat 4 count", "default": 14 },
+    { "type": "text", "id": "stat4_unit", "label": "Stat 4 unit", "default": "days" },
+    { "type": "text", "id": "stat4_label", "label": "Stat 4 label", "default": "Money-back, no-questions ritual trial." }
   ],
-  "blocks": [
-    {
-      "type": "stat",
-      "name": "Stat",
-      "settings": [
-        { "type": "number", "id": "count", "label": "Count-up target", "default": 0 },
-        { "type": "text", "id": "suffix", "label": "Suffix (e.g. %)", "default": "" },
-        { "type": "text", "id": "unit", "label": "Unit word (optional — e.g. days; overrides suffix)", "default": "" },
-        { "type": "text", "id": "label", "label": "Label", "default": "Fillers, fragrance, fluff." }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Proof stats",
-      "blocks": [
-        { "type": "stat", "settings": { "count": 0, "suffix": "", "unit": "", "label": "Fillers, fragrance, fluff." } },
-        { "type": "stat", "settings": { "count": 100, "suffix": "%", "unit": "", "label": "Pharmacist-formulated. Every batch." } },
-        { "type": "stat", "settings": { "count": 28, "suffix": "", "unit": "", "label": "Clinically respected actives." } },
-        { "type": "stat", "settings": { "count": 14, "suffix": "", "unit": "days", "label": "Money-back, no-questions ritual trial." } }
-      ]
-    }
-  ]
+  "presets": [{ "name": "Proof stats" }]
 }
 {% endschema %}
