@@ -9,6 +9,9 @@
       {%- if section.settings.collection != blank -%}
         {%- for product in section.settings.collection.products limit: 5 -%}
         <article class="pcard">
+          <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
+          </button>
           <div class="pcard__media">
             {%- if product.featured_image -%}
               <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="600" height="600">
@@ -30,6 +33,9 @@
         {%- assign fallback_prices = '$36,$68,$58,$52,$—' | split: ',' -%}
         {%- for name in fallback_names -%}
         <article class="pcard">
+          <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ name | handleize }}" data-title="{{ name | escape }}" data-price="{{ fallback_prices[forloop.index0] }}" data-image="" data-url="#" aria-label="Save to wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
+          </button>
           <div class="pcard__media">
             {{ 'product-1' | placeholder_svg_tag: 'pcard__placeholder' }}
           </div>

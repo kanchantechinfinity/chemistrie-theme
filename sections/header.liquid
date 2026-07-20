@@ -29,7 +29,11 @@
     <a href="{{ routes.account_url }}" class="nav__icon" aria-label="Account">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
     </a>
-    <a href="{{ routes.cart_url }}" class="nav__bag">
+    <button type="button" class="nav__icon nav__wish" data-wishlist-open aria-label="Wishlist">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
+      <span class="nav__wish-count" hidden>0</span>
+    </button>
+    <a href="{{ routes.cart_url }}" class="nav__bag" data-cart-open>
       <span>Bag</span>
       <span class="nav__bag-count">{{ cart.item_count }}</span>
     </a>

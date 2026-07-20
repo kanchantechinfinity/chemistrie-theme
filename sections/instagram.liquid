@@ -22,6 +22,11 @@
     </div>
   </div>
 
+  {%- if section.settings.feed_embed != blank -%}
+  <div class="insta__feed-embed">
+    {{ section.settings.feed_embed }}
+  </div>
+  {%- else -%}
   <div class="insta__slider-wrap">
     <div class="insta__slider" id="instaSlider">
       <article class="reel">
@@ -241,6 +246,7 @@
 
     <div class="insta__dots" id="instaDots"></div>
   </div>
+  {%- endif -%}
 
   <a class="insta__cta" href="{{ section.settings.instagram_url | default: '#' }}" target="_blank" rel="noopener">
     <span>Follow the bench →</span>
@@ -255,7 +261,10 @@
     { "type": "html", "id": "heading", "label": "Heading", "default": "Find us <em>between</em><br/>the bottles." },
     { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
     { "type": "text", "id": "handle", "label": "Handle", "default": "@chemistrie.co" },
-    { "type": "text", "id": "follower_count", "label": "Follower count", "default": "21.4k" }
+    { "type": "text", "id": "follower_count", "label": "Follower count", "default": "21.4k" },
+    { "type": "header", "content": "Live Instagram feed (optional)" },
+    { "type": "paragraph", "content": "Paste an embed/widget code from an Instagram feed app (Instafeed, Elfsight, Behold, etc.). When filled, the live feed replaces the demo reels." },
+    { "type": "html", "id": "feed_embed", "label": "Instagram feed embed code" }
   ],
   "presets": [
     { "name": "Instagram" }

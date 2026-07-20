@@ -13,6 +13,7 @@
 
 {{ 'chemistrie.css' | asset_url | stylesheet_tag }}
 {{ 'pages.css' | asset_url | stylesheet_tag }}
+{{ 'shop-ux.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%} Theme-editor overrides — defaults are the exact reference values, so no visual change unless a merchant edits them. {%- endcomment -%}
 <style>
@@ -44,6 +45,10 @@
 
 {% section 'footer' %}
 
+{% render 'cart-drawer' %}
+{% render 'wishlist-drawer' %}
+
 <script src="{{ 'chemistrie.js' | asset_url }}"></script>
+<script src="{{ 'shop-ux.js' | asset_url }}" defer></script>
 </body>
 </html>

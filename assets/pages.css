@@ -102,3 +102,7 @@
   .nav--open .nav__backdrop { opacity: 1; visibility: visible; }
   body.nav-locked { overflow: hidden; }
 }
+
+/* ---- Instagram live-feed embed wrapper ---- */
+.insta__feed-embed { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad-x); }
+.insta__feed-embed :is(iframe, .instafeed, [class*="feed"]) { max-width: 100%; }

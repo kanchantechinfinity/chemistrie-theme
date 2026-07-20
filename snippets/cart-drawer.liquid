@@ -1,0 +1,28 @@
+<div class="drawer-backdrop" id="cartDrawerBackdrop" aria-hidden="true"></div>
+<aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Your Bag"
+       data-free-shipping="{{ settings.free_shipping_threshold | default: 120 }}">
+  <div class="drawer__head">
+    <h2 class="drawer__title">Your Bag</h2>
+    <button type="button" class="drawer__close" data-cart-close aria-label="Close bag">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="drawer__body">
+    <div id="cartDrawerItems"></div>
+    <div id="cartDrawerEmpty" class="drawer__empty" hidden>
+      <p>Your bag is empty.</p>
+      <a class="btn btn--primary" href="{{ routes.all_products_collection_url }}">Shop the collection</a>
+    </div>
+  </div>
+
+  <div class="drawer__foot" id="cartDrawerFoot">
+    <p class="drawer__shipping" id="cartDrawerShipping"></p>
+    <div class="drawer__subtotal">
+      <span>Subtotal</span>
+      <span id="cartDrawerSubtotal">$0.00</span>
+    </div>
+    <a class="btn btn--primary drawer__checkout" id="cartDrawerCheckout" href="{{ routes.cart_url }}">Checkout</a>
+    <a class="drawer__viewbag" href="{{ routes.cart_url }}">View bag</a>
+  </div>
+</aside>

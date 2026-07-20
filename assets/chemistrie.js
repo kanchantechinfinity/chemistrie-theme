@@ -667,38 +667,3 @@
   window.__chemistrie = { gsap, ScrollTrigger: window.ScrollTrigger, lenis };
 
 })();
-
-/* ───── Shopify cart bridge (added for theme conversion — reference has no cart wiring) ───── */
-(function () {
-  const bagCount = document.querySelector(".nav__bag-count");
-
-  document.querySelectorAll(".product__cta[data-product-id]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-product-id");
-      if (!id) return;
-      const original = btn.textContent;
-      btn.disabled = true;
-      btn.textContent = "Adding…";
-      fetch(window.Shopify && Shopify.routes && Shopify.routes.root ? Shopify.routes.root + "cart/add.js" : "/cart/add.js", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ items: [{ id: id, quantity: 1 }] }),
-      })
-        .then((res) => res.json())
-        .then(() => fetch("/cart.js"))
-        .then((res) => res.json())
-        .then((cart) => {
-          if (bagCount) bagCount.textContent = cart.item_count;
-          btn.textContent = "Added ✓";
-          setTimeout(() => {
-            btn.textContent = original;
-            btn.disabled = false;
-          }, 1400);
-        })
-        .catch(() => {
-          btn.textContent = original;
-          btn.disabled = false;
-        });
-    });
-  });
-})();

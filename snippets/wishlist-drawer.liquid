@@ -1,0 +1,17 @@
+<div class="drawer-backdrop" id="wishlistDrawerBackdrop" aria-hidden="true"></div>
+<aside class="drawer" id="wishlistDrawer" role="dialog" aria-modal="true" aria-label="Your Wishlist">
+  <div class="drawer__head">
+    <h2 class="drawer__title">Your Wishlist</h2>
+    <button type="button" class="drawer__close" data-wishlist-close aria-label="Close wishlist">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="drawer__body">
+    <div id="wishlistItems"></div>
+    <div id="wishlistEmpty" class="drawer__empty" hidden>
+      <p>Your wishlist is empty.</p>
+      <a class="btn btn--primary" href="{{ routes.all_products_collection_url }}">Find something to love</a>
+    </div>
+  </div>
+</aside>
