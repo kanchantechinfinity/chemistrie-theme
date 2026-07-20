@@ -1,9 +1,9 @@
 {
   "sections": {
-    "hero": {
+    "hero_x": {
       "type": "hero"
     },
-    "vision": {
+    "vision_x": {
       "type": "vision",
       "blocks": {
         "cell-1": {
@@ -37,7 +37,7 @@
         "cell-3"
       ]
     },
-    "pillars": {
+    "pillars_x": {
       "type": "pillars",
       "blocks": {
         "pillar-1": {
@@ -83,13 +83,13 @@
         "pillar-3"
       ]
     },
-    "shop": {
+    "shop_x": {
       "type": "shop"
     },
-    "founders": {
+    "founders_x": {
       "type": "founders"
     },
-    "actives": {
+    "actives_x": {
       "type": "actives",
       "blocks": {
         "active-1": {
@@ -276,10 +276,10 @@
         "active-12"
       ]
     },
-    "proof": {
+    "proof_x": {
       "type": "proof"
     },
-    "ritual": {
+    "ritual_x": {
       "type": "ritual",
       "blocks": {
         "step-1": {
@@ -330,7 +330,7 @@
         "step-4"
       ]
     },
-    "testimonials": {
+    "testimonials_x": {
       "type": "testimonials",
       "blocks": {
         "quote-1": {
@@ -369,28 +369,28 @@
         "quote-4"
       ]
     },
-    "story": {
+    "story_x": {
       "type": "story"
     },
-    "instagram": {
+    "instagram_x": {
       "type": "instagram"
     },
-    "newsletter-cta": {
+    "newsletter_cta_x": {
       "type": "newsletter-cta"
     }
   },
   "order": [
-    "hero",
-    "vision",
-    "pillars",
-    "shop",
-    "founders",
-    "actives",
-    "proof",
-    "ritual",
-    "testimonials",
-    "story",
-    "instagram",
-    "newsletter-cta"
+    "hero_x",
+    "vision_x",
+    "pillars_x",
+    "shop_x",
+    "founders_x",
+    "actives_x",
+    "proof_x",
+    "ritual_x",
+    "testimonials_x",
+    "story_x",
+    "instagram_x",
+    "newsletter_cta_x"
   ]
 }
