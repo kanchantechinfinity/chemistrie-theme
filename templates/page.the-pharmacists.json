@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page-hero": {
@@ -38,7 +47,8 @@
         "s1",
         "s2",
         "s3"
-      ]
+      ],
+      "settings": {}
     },
     "pharmacists-profiles": {
       "type": "pharmacists-profiles",
@@ -81,7 +91,8 @@
         "founder_1",
         "founder_2",
         "founder_3"
-      ]
+      ],
+      "settings": {}
     },
     "pharmacists-credentials": {
       "type": "pharmacists-credentials",
@@ -115,7 +126,8 @@
         "cred_1",
         "cred_2",
         "cred_3"
-      ]
+      ],
+      "settings": {}
     },
     "pharmacists-philosophy": {
       "type": "pharmacists-philosophy",
@@ -154,7 +166,8 @@
         "value_2",
         "value_3",
         "value_4"
-      ]
+      ],
+      "settings": {}
     },
     "page-cta": {
       "type": "page-cta",

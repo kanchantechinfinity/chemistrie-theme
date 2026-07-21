@@ -1,10 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page-hero": {
       "type": "page-hero",
       "settings": {
         "eyebrow": "— The Ritual —",
-        "heading": "Four quiet steps,<br/><em>morning and night.</em>",
+        "heading": "Four quiet steps,<br><em>morning and night.</em>",
         "deck": "A Chemistrie ritual is deliberately small. Four steps, layered thin, in the order the skin asks for them.",
         "deck2": "The ritual was designed the way a pharmacist designs anything — for the outcome, not the shelf. Each step exists because the one before it earned it, and nothing is added for the sake of a longer routine. Slow it down, let it become the two minutes of the day that belong only to you."
       }
@@ -18,6 +27,7 @@
             "roman": "i.",
             "step_name": "Cleanse",
             "product_name": "Velvet",
+            "product_url": "",
             "description": "A splash of Velvet on waking — worked into damp skin for thirty seconds, just enough to reset. The face wakes, it does not flinch.",
             "product_name_pm": "Velvet",
             "description_pm": "At night, the same Velvet works longer — ninety seconds, to lift away sunscreen and the day's residue before anything else is applied."
@@ -29,6 +39,7 @@
             "roman": "ii.",
             "step_name": "Treat",
             "product_name": "Lumina",
+            "product_url": "",
             "description": "Two drops of Lumina, our vitamin C serum, pressed — never rubbed — over the face. Brightness and antioxidant defence for the hours of daylight ahead.",
             "product_name_pm": "Renewal",
             "description_pm": "Two drops of Renewal, our retinaldehyde serum, pressed in at night. Resurfacing and repair for the hours the skin rebuilds itself."
@@ -40,6 +51,7 @@
             "roman": "iii.",
             "step_name": "Hydrate",
             "product_name": "Cashmere",
+            "product_url": "",
             "description": "One pearl of Cashmere, warmed between the palms and pressed upward along the jaw, cheekbones and brow — sealing hydration before the day.",
             "product_name_pm": "Cashmere",
             "description_pm": "A second, slower pass of Cashmere at night, layered a touch heavier to hold moisture through sleep."
@@ -51,6 +63,7 @@
             "roman": "iv.",
             "step_name": "Restore",
             "product_name": "Golden Oil",
+            "product_url": "",
             "description": "A single drop of Golden Oil pressed over the cheeks — a soft finish and glow for the morning.",
             "product_name_pm": "Peptide Cream",
             "description_pm": "Reserved for the evening: the Peptide Cream, where the ritual does its quietest, most important work while you sleep."
@@ -62,10 +75,22 @@
         "step_2",
         "step_3",
         "step_4"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "— The ritual, step by step —",
+        "heading": "Four steps,<br><em>morning and night.</em>",
+        "sub": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down, layer thin, and let the skin ask for the next. Switch between morning and evening to see how each step changes."
+      }
     },
     "ritual-shop": {
-      "type": "ritual-shop"
+      "type": "ritual-shop",
+      "settings": {
+        "eyebrow": "— Shop this ritual —",
+        "heading": "The whole ritual,<br><em>in five bottles.</em>",
+        "collection": "home-page-products",
+        "pdf_url": "",
+        "caption": "A printable card version of the ritual, to keep by the mirror. Coming soon."
+      }
     },
     "page-cta": {
       "type": "page-cta",
@@ -73,7 +98,8 @@
         "eyebrow": "— Begin tonight —",
         "heading": "Build your <em>ritual.</em>",
         "sub": "Every step, every bottle, compounded by pharmacists. Start with the collection.",
-        "button_label": "Shop the Collection"
+        "button_label": "Shop the Collection",
+        "button_url": ""
       }
     }
   },
