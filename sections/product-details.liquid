@@ -1,5 +1,19 @@
 {%- assign mf = product.metafields.custom -%}
-{%- case product.handle -%}
+{%- liquid
+  assign _ph = product.handle | downcase
+  assign _pt = product.title | downcase
+  assign pd_key = ''
+  if _ph contains 'velvet' or _pt contains 'velvet'
+    assign pd_key = 'velvet'
+  elsif _ph contains 'aura' or _pt contains 'aura'
+    assign pd_key = 'aura'
+  elsif _ph contains 'cashmere' or _pt contains 'cashmere'
+    assign pd_key = 'cashmere'
+  elsif _ph contains 'silken' or _pt contains 'silken'
+    assign pd_key = 'silken'
+  endif
+-%}
+{%- case pd_key -%}
   {%- when 'velvet' -%}
     {%- capture pd_feeling -%}Rich, dense foam that rinses away completely — no film, no residue. Skin feels clean, balanced, and refreshed, never tight or stripped.{%- endcapture -%}
     {%- capture pd_founder -%}The first step in a routine deserves the same discipline as the last one. If it doesn't set the skin up to receive everything that follows, it doesn't belong in the ritual.{%- endcapture -%}
