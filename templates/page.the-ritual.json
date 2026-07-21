@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page-hero": {
@@ -62,10 +71,12 @@
         "step_2",
         "step_3",
         "step_4"
-      ]
+      ],
+      "settings": {}
     },
     "ritual-shop": {
-      "type": "ritual-shop"
+      "type": "ritual-shop",
+      "settings": {}
     },
     "page-cta": {
       "type": "page-cta",
