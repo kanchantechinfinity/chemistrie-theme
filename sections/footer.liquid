@@ -25,9 +25,21 @@
       <a href="/pages/the-active-index">The Active Index</a>
     </nav>
 
+    {%- liquid
+      assign journal_url_f = blogs.journal.url
+      if journal_url_f == blank
+        for b in blogs
+          assign journal_url_f = b[1].url
+          break
+        endfor
+      endif
+      if journal_url_f == blank
+        assign journal_url_f = '/blogs/journal'
+      endif
+    -%}
     <nav class="footer__col">
       <h4>The Journal</h4>
-      <a href="/blogs/journal">Blog</a>
+      <a href="{{ journal_url_f }}">Blog</a>
     </nav>
 
     <nav class="footer__col">

@@ -14,11 +14,23 @@
         <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
       {%- endfor -%}
     {%- else -%}
+      {%- liquid
+        assign journal_url = blogs.journal.url
+        if journal_url == blank
+          for b in blogs
+            assign journal_url = b[1].url
+            break
+          endfor
+        endif
+        if journal_url == blank
+          assign journal_url = '/blogs/journal'
+        endif
+      -%}
       <a href="{{ routes.root_url }}">Home</a>
       <a href="{{ routes.all_products_collection_url }}">The Collection</a>
       <a href="/pages/the-ritual">The Ritual</a>
       <a href="/pages/the-pharmacists">The Pharmacists</a>
-      <a href="/blogs/journal">The Journal</a>
+      <a href="{{ journal_url }}">The Journal</a>
       <a href="/pages/contact">Contact</a>
     {%- endif -%}
   </nav>
