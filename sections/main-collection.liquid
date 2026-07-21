@@ -226,12 +226,14 @@
 
 @media (max-width: 900px) {
   .col-layout { grid-template-columns: 1fr; }
-  .col-grid { grid-template-columns: 1fr 1fr; }
   .col-side { position: static; }
   .col-side__count { display: block; }
   .col-toolbar__count { display: none; }
 }
-@media (max-width: 560px) {
+@media (max-width: 700px) {
+  .col-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
   .col-grid { grid-template-columns: 1fr; }
 }
 {% endstylesheet %}

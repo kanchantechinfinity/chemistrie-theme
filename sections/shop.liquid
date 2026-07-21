@@ -213,6 +213,9 @@
           <span class="product__tag">
             {% if forloop.first %}No. 01 · Bestseller{% else %}No. 0{{ forloop.index }}{% endif %}
           </span>
+          {%- if product.featured_image -%}
+            <img class="product__photo" src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
+          {%- else -%}
           <svg class="product__bottle" viewBox="0 0 140 220" aria-hidden="true">
             <defs>
               <linearGradient id="g{{ forloop.index }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a5a44"/><stop offset="1" stop-color="#1a3a2d"/></linearGradient>
@@ -224,6 +227,7 @@
             <line x1="58" y1="130" x2="82" y2="130" stroke="#c8aa7a" stroke-width="0.5"/>
             <text x="70" y="146" text-anchor="middle" font-family="Cormorant Garamond" font-size="8" letter-spacing="2" fill="#1a3a2d">{{ product.title | truncate: 14, '' | upcase }}</text>
           </svg>
+          {%- endif -%}
         </div>
         <div class="product__meta">
           <div class="product__meta-top">
@@ -255,6 +259,11 @@
     </a>
   </div>
 </section>
+
+{% stylesheet %}
+.product__photo { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; border-radius: 12px; transition: transform .6s var(--ease-out); }
+.product:hover .product__photo { transform: scale(1.04); }
+{% endstylesheet %}
 
 {% schema %}
 {

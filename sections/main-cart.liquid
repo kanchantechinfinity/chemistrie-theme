@@ -83,7 +83,12 @@
             {%- if cart.total_discounts > 0 -%}
               <div class="cart__row cart__row--total"><span>Estimated total</span><span>{{ cart.total_price | money }}</span></div>
             {%- endif -%}
-            <p class="cart__disc-hint">Have a code? Apply it at checkout.</p>
+            <div class="cart__coupon">
+              <label class="visually-hidden" for="cart-coupon">Coupon code</label>
+              <input type="text" id="cart-coupon" class="cart__coupon-input" placeholder="Enter coupon code" autocomplete="off">
+              <button type="button" class="cart__coupon-btn" id="cartCouponApply">Apply</button>
+            </div>
+            <p class="cart__coupon-hint" id="cartCouponHint" hidden></p>
             <div class="cart__row cart__row--note"><span>Shipping</span><span>Calculated at checkout</span></div>
             <label class="cart__note-label" for="cart-note">Order note</label>
             <textarea id="cart-note" name="note" class="cart__note" rows="2" placeholder="Add a note (gift message, delivery instructions)">{{ cart.note }}</textarea>
@@ -109,7 +114,8 @@
 
 {% stylesheet %}
 .page-hero--short { padding-top: clamp(110px, 13vw, 170px); padding-bottom: clamp(40px, 5vw, 64px); }
-.cart__hero-inner { text-align: center; }
+.cart__hero-inner { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.cart__hero-inner .eyebrow, .cart__hero-inner .page-hero__title { max-width: 100%; margin-left: auto; margin-right: auto; text-align: center; }
 .cart { padding-bottom: clamp(60px, 8vw, 100px); }
 .cart .page-section__inner { max-width: var(--maxw); margin-inline: auto; }
 .cart__ship { margin: 0 auto clamp(32px, 4vw, 48px); max-width: 720px; text-align: center; font-size: 14px; color: var(--c-ink-soft); }
@@ -140,6 +146,13 @@
 .cart__row--disc { color: var(--c-sage); }
 .cart__row--total { font-family: var(--ff-display); font-size: 19px; color: var(--c-forest); border-top: 1px solid var(--c-line-soft); margin-top: 4px; padding-top: 14px; }
 .cart__disc-hint { font-size: 12px; color: var(--c-ink-mute); margin: 8px 0 0; }
+.cart__coupon { display: flex; gap: 8px; margin: 18px 0 6px; }
+.cart__coupon-input { flex: 1; min-width: 0; padding: 12px 14px; border: 1px solid var(--c-line); border-radius: 10px; background: var(--c-cream); font-family: var(--ff-body); font-size: 14px; color: var(--c-forest); }
+.cart__coupon-input::placeholder { color: var(--c-ink-mute); }
+.cart__coupon-btn { flex: 0 0 auto; padding: 12px 22px; border-radius: 10px; background: var(--c-forest); color: var(--c-cream); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; transition: background .3s; }
+.cart__coupon-btn:hover { background: var(--c-forest-2); }
+.cart__coupon-hint { font-size: 12px; color: var(--c-sage); margin: 0 0 6px; }
+.cart__coupon-hint.is-error { color: #b5502e; }
 .cart__discount { font-size: 12px; color: var(--c-sage); letter-spacing: .02em; }
 .cart__line-was { color: var(--c-ink-mute); text-decoration: line-through; margin-right: 8px; font-size: 13px; }
 .cart__row--note { border-bottom: 1px solid var(--c-line-soft); }
@@ -168,6 +181,28 @@
   .cart__img { width: 72px; height: 72px; }
 }
 {% endstylesheet %}
+
+{% javascript %}
+(function () {
+  var btn = document.getElementById('cartCouponApply');
+  var input = document.getElementById('cart-coupon');
+  var hint = document.getElementById('cartCouponHint');
+  if (!btn || !input) return;
+  btn.addEventListener('click', function () {
+    var code = (input.value || '').trim();
+    if (!code) {
+      if (hint) { hint.textContent = 'Enter a code to apply.'; hint.classList.add('is-error'); hint.hidden = false; }
+      input.focus();
+      return;
+    }
+    if (hint) { hint.textContent = 'Applying at checkout…'; hint.classList.remove('is-error'); hint.hidden = false; }
+    window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent('/checkout');
+  });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); btn.click(); }
+  });
+})();
+{% endjavascript %}
 
 {% schema %}
 {
