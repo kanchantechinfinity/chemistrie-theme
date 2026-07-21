@@ -1,25 +1,183 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page-hero": {
       "type": "page-hero",
       "settings": {
         "eyebrow": "— Get in touch —",
-        "heading": "The pharmacist<br/><em>is on the line.</em>",
-        "deck": "Questions about actives, a skin concern, or an order — a real compounding pharmacist reads every message, and picks up the phone Monday through Friday."
+        "heading": "The pharmacist<br><em>is on the line.</em>",
+        "deck": "Questions about actives, a skin concern, or an order — a real compounding pharmacist reads every message, and picks up the phone Monday through Friday.",
+        "deck2": ""
       }
     },
-    "contact-main": { "type": "contact-main" },
-    "contact-steps": { "type": "contact-steps" },
-    "contact-faq": { "type": "contact-faq" },
+    "contact_main_iG8hLF": {
+      "type": "contact-main",
+      "blocks": {
+        "item_irUmQk": {
+          "type": "item",
+          "settings": {
+            "icon": "email",
+            "label": "Email",
+            "value": "hello@chemistrie.com"
+          }
+        },
+        "item_kBRmyz": {
+          "type": "item",
+          "settings": {
+            "icon": "phone",
+            "label": "Phone / Text",
+            "value": "(713) 555-0142"
+          }
+        },
+        "item_tMcyYY": {
+          "type": "item",
+          "settings": {
+            "icon": "location",
+            "label": "Compounding Lab",
+            "value": "Houston, TX"
+          }
+        },
+        "item_T89TGL": {
+          "type": "item",
+          "settings": {
+            "icon": "hours",
+            "label": "Hours",
+            "value": "Mon–Fri, 9am–5pm CT"
+          }
+        },
+        "item_iijFwt": {
+          "type": "item",
+          "settings": {
+            "icon": "info",
+            "label": "Response Time",
+            "value": "Within 1 business day"
+          }
+        }
+      },
+      "block_order": [
+        "item_irUmQk",
+        "item_kBRmyz",
+        "item_tMcyYY",
+        "item_T89TGL",
+        "item_iijFwt"
+      ],
+      "name": "Contact Main",
+      "settings": {
+        "left_eyebrow": "— Direct line —",
+        "left_heading": "Reach Us"
+      }
+    },
+    "contact_steps_FfdmAe": {
+      "type": "contact-steps",
+      "blocks": {
+        "step_3R9C8V": {
+          "type": "step",
+          "settings": {
+            "title": "Take the skin consultation",
+            "body": "A short questionnaire on your skin type, concerns, and any actives you've tried before."
+          }
+        },
+        "step_QVNqcK": {
+          "type": "step",
+          "settings": {
+            "title": "A pharmacist reviews your answers",
+            "body": "A licensed compounding pharmacist matches you to the right formulas and concentrations."
+          }
+        },
+        "step_A7RdK4": {
+          "type": "step",
+          "settings": {
+            "title": "Your formula is compounded & numbered",
+            "body": "Hand-poured in Houston, in batches capped at 200, and numbered before it ships."
+          }
+        },
+        "step_m6ez84": {
+          "type": "step",
+          "settings": {
+            "title": "Shipped to your door",
+            "body": "Out within 1–2 business days, with complimentary shipping on orders over $120."
+          }
+        }
+      },
+      "block_order": [
+        "step_3R9C8V",
+        "step_QVNqcK",
+        "step_A7RdK4",
+        "step_m6ez84"
+      ],
+      "name": "Contact Steps",
+      "settings": {
+        "eyebrow": "— How it works —",
+        "heading": "From consultation<br><em>to your door.</em>"
+      }
+    },
+    "contact_faq_adqYij": {
+      "type": "contact-faq",
+      "blocks": {
+        "faq_4WUKac": {
+          "type": "faq",
+          "settings": {
+            "question": "How fast is shipping, and what does it cost?",
+            "answer": "<p>Orders leave the Houston lab within 1–2 business days. Standard shipping is complimentary on orders over $120; below that it's a flat $6. You'll get a tracking number the moment your bottle is numbered and boxed.</p>"
+          }
+        },
+        "faq_UAbzw9": {
+          "type": "faq",
+          "settings": {
+            "question": "What's your return policy?",
+            "answer": "<p>Because every formula is compounded to order, we can't resell returns — but if a formula isn't right for your skin, write to the pharmacist within 30 days and we'll make it right, whether that's a reformulation or a refund.</p>"
+          }
+        },
+        "faq_JB6xME": {
+          "type": "faq",
+          "settings": {
+            "question": "Are your ingredients really pharmaceutical-grade?",
+            "answer": "<p>Yes. Every active is sourced at pharmaceutical grade and compounded in a licensed facility, at the concentration on the label — never a proprietary blend hiding a trace amount.</p>"
+          }
+        },
+        "faq_xapcQV": {
+          "type": "faq",
+          "settings": {
+            "question": "What does the batch number on my bottle mean?",
+            "answer": "<p>Each batch is capped at 200 bottles and hand-numbered. Your number tells you exactly which small run your formula came from, and lets us trace it back to the day and pharmacist who poured it.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_4WUKac",
+        "faq_UAbzw9",
+        "faq_JB6xME",
+        "faq_xapcQV"
+      ],
+      "name": "Contact FAQ",
+      "settings": {
+        "heading": "Frequently asked questions"
+      }
+    },
     "page-cta": {
       "type": "page-cta",
       "settings": {
         "eyebrow": "— Ready when you are —",
         "heading": "Begin your <em>ritual.</em>",
         "sub": "Questions answered, formula matched, bottle numbered. Start with the collection.",
-        "button_label": "Shop the Collection"
+        "button_label": "Shop the Collection",
+        "button_url": ""
       }
     }
   },
-  "order": ["page-hero", "contact-main", "contact-steps", "contact-faq", "page-cta"]
+  "order": [
+    "page-hero",
+    "contact_main_iG8hLF",
+    "contact_steps_FfdmAe",
+    "contact_faq_adqYij",
+    "page-cta"
+  ]
 }
