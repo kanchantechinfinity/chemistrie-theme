@@ -11,19 +11,116 @@
     "stat-bar": {
       "type": "stat-bar",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": "6,000+", "label": "Women served" } },
-        "s2": { "type": "stat", "settings": { "number": "1–2 Days", "label": "Average ship time" } },
-        "s3": { "type": "stat", "settings": { "number": "★ 4.96", "label": "Verified buyer rating" } },
-        "s4": { "type": "stat", "settings": { "number": "200", "label": "Bottles per hand-numbered batch" } }
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "6,000+",
+            "label": "Women served"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "1–2 Days",
+            "label": "Average ship time"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "★ 4.96",
+            "label": "Verified buyer rating"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "number": "200",
+            "label": "Bottles per hand-numbered batch"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4"]
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
     },
     "main-collection": {
       "type": "main-collection",
       "settings": {}
     },
     "collection-notes": {
-      "type": "collection-notes"
+      "type": "collection-notes",
+      "blocks": {
+        "note_1": {
+          "type": "note",
+          "settings": {
+            "quote": "Velvet is the first foaming cleanser that hasn't left my skin tight afterward. It just feels clean, not stripped.",
+            "author": "Anna D., Houston · Verified Buyer"
+          }
+        },
+        "note_2": {
+          "type": "note",
+          "settings": {
+            "quote": "Lumina gave me back a glow I hadn't seen since my twenties. Three weeks in and people keep asking what I changed.",
+            "author": "Priya R., Austin · Verified Buyer"
+          }
+        },
+        "note_3": {
+          "type": "note",
+          "settings": {
+            "quote": "Cashmere sinks in without a hint of grease. My dry winter cheeks finally stopped flaking.",
+            "author": "Meghan T., Dallas · Verified Buyer"
+          }
+        },
+        "note_4": {
+          "type": "note",
+          "settings": {
+            "quote": "The Peptide Cream is the one step I refuse to skip now. My fine lines around the eyes look genuinely softer.",
+            "author": "Sofia L., Houston · Verified Buyer"
+          }
+        },
+        "note_5": {
+          "type": "note",
+          "settings": {
+            "quote": "I love that every bottle is hand-numbered. It feels compounded for me, not mass-produced for everyone.",
+            "author": "Jenna K., Austin · Verified Buyer"
+          }
+        },
+        "note_6": {
+          "type": "note",
+          "settings": {
+            "quote": "Velvet and Lumina together completely calmed my hormonal breakouts. My skin has never been this even.",
+            "author": "Rebecca M., Dallas · Verified Buyer"
+          }
+        },
+        "note_7": {
+          "type": "note",
+          "settings": {
+            "quote": "Cashmere layered over the Peptide Cream is my whole nighttime ritual now. I wake up plump and calm.",
+            "author": "Daniela S., Houston · Verified Buyer"
+          }
+        },
+        "note_8": {
+          "type": "note",
+          "settings": {
+            "quote": "Fast shipping, beautiful packaging, and a formula that actually works. Lumina earned a permanent spot on my shelf.",
+            "author": "Claire W., Austin · Verified Buyer"
+          }
+        }
+      },
+      "block_order": [
+        "note_1",
+        "note_2",
+        "note_3",
+        "note_4",
+        "note_5",
+        "note_6",
+        "note_7",
+        "note_8"
+      ]
     },
     "page-cta": {
       "type": "page-cta",
@@ -35,5 +132,11 @@
       }
     }
   },
-  "order": ["page-hero", "stat-bar", "main-collection", "collection-notes", "page-cta"]
+  "order": [
+    "page-hero",
+    "stat-bar",
+    "main-collection",
+    "collection-notes",
+    "page-cta"
+  ]
 }

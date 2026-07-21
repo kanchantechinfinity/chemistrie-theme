@@ -8,9 +8,136 @@
         "deck": "Questions about actives, a skin concern, or an order — a real compounding pharmacist reads every message, and picks up the phone Monday through Friday."
       }
     },
-    "contact-main": { "type": "contact-main" },
-    "contact-steps": { "type": "contact-steps" },
-    "contact-faq": { "type": "contact-faq" },
+    "contact-main": {
+      "type": "contact-main",
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "icon": "email",
+            "label": "Email",
+            "value": "hello@chemistrie.com"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "icon": "phone",
+            "label": "Phone / Text",
+            "value": "(713) 555-0142"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "icon": "location",
+            "label": "Compounding Lab",
+            "value": "Houston, TX"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "icon": "hours",
+            "label": "Hours",
+            "value": "Mon–Fri, 9am–5pm CT"
+          }
+        },
+        "item_5": {
+          "type": "item",
+          "settings": {
+            "icon": "info",
+            "label": "Response Time",
+            "value": "Within 1 business day"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5"
+      ]
+    },
+    "contact-steps": {
+      "type": "contact-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Take the skin consultation",
+            "body": "A short questionnaire on your skin type, concerns, and any actives you've tried before."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "A pharmacist reviews your answers",
+            "body": "A licensed compounding pharmacist matches you to the right formulas and concentrations."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Your formula is compounded & numbered",
+            "body": "Hand-poured in Houston, in batches capped at 200, and numbered before it ships."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Shipped to your door",
+            "body": "Out within 1–2 business days, with complimentary shipping on orders over $120."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ]
+    },
+    "contact-faq": {
+      "type": "contact-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "How fast is shipping, and what does it cost?",
+            "answer": "<p>Orders leave the Houston lab within 1–2 business days. Standard shipping is complimentary on orders over $120; below that it's a flat $6. You'll get a tracking number the moment your bottle is numbered and boxed.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "What's your return policy?",
+            "answer": "<p>Because every formula is compounded to order, we can't resell returns — but if a formula isn't right for your skin, write to the pharmacist within 30 days and we'll make it right, whether that's a reformulation or a refund.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Are your ingredients really pharmaceutical-grade?",
+            "answer": "<p>Yes. Every active is sourced at pharmaceutical grade and compounded in a licensed facility, at the concentration on the label — never a proprietary blend hiding a trace amount.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "What does the batch number on my bottle mean?",
+            "answer": "<p>Each batch is capped at 200 bottles and hand-numbered. Your number tells you exactly which small run your formula came from, and lets us trace it back to the day and pharmacist who poured it.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ]
+    },
     "page-cta": {
       "type": "page-cta",
       "settings": {
@@ -21,5 +148,11 @@
       }
     }
   },
-  "order": ["page-hero", "contact-main", "contact-steps", "contact-faq", "page-cta"]
+  "order": [
+    "page-hero",
+    "contact-main",
+    "contact-steps",
+    "contact-faq",
+    "page-cta"
+  ]
 }

@@ -9,8 +9,64 @@
         "deck2": "The ritual was designed the way a pharmacist designs anything — for the outcome, not the shelf. Each step exists because the one before it earned it, and nothing is added for the sake of a longer routine. Slow it down, let it become the two minutes of the day that belong only to you."
       }
     },
-    "ritual-steps": { "type": "ritual-steps" },
-    "ritual-shop": { "type": "ritual-shop" },
+    "ritual-steps": {
+      "type": "ritual-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "roman": "i.",
+            "step_name": "Cleanse",
+            "product_name": "Velvet",
+            "description": "A splash of Velvet on waking — worked into damp skin for thirty seconds, just enough to reset. The face wakes, it does not flinch.",
+            "product_name_pm": "Velvet",
+            "description_pm": "At night, the same Velvet works longer — ninety seconds, to lift away sunscreen and the day's residue before anything else is applied."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "roman": "ii.",
+            "step_name": "Treat",
+            "product_name": "Lumina",
+            "description": "Two drops of Lumina, our vitamin C serum, pressed — never rubbed — over the face. Brightness and antioxidant defence for the hours of daylight ahead.",
+            "product_name_pm": "Renewal",
+            "description_pm": "Two drops of Renewal, our retinaldehyde serum, pressed in at night. Resurfacing and repair for the hours the skin rebuilds itself."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "roman": "iii.",
+            "step_name": "Hydrate",
+            "product_name": "Cashmere",
+            "description": "One pearl of Cashmere, warmed between the palms and pressed upward along the jaw, cheekbones and brow — sealing hydration before the day.",
+            "product_name_pm": "Cashmere",
+            "description_pm": "A second, slower pass of Cashmere at night, layered a touch heavier to hold moisture through sleep."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "roman": "iv.",
+            "step_name": "Restore",
+            "product_name": "Golden Oil",
+            "description": "A single drop of Golden Oil pressed over the cheeks — a soft finish and glow for the morning.",
+            "product_name_pm": "Peptide Cream",
+            "description_pm": "Reserved for the evening: the Peptide Cream, where the ritual does its quietest, most important work while you sleep."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ]
+    },
+    "ritual-shop": {
+      "type": "ritual-shop"
+    },
     "page-cta": {
       "type": "page-cta",
       "settings": {
@@ -21,5 +77,10 @@
       }
     }
   },
-  "order": ["page-hero", "ritual-steps", "ritual-shop", "page-cta"]
+  "order": [
+    "page-hero",
+    "ritual-steps",
+    "ritual-shop",
+    "page-cta"
+  ]
 }

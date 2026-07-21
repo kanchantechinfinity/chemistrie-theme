@@ -12,15 +12,150 @@
     "stat-bar": {
       "type": "stat-bar",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": "2", "label": "Founding pharmacists" } },
-        "s2": { "type": "stat", "settings": { "number": "6+ Yrs", "label": "Behind the bench" } },
-        "s3": { "type": "stat", "settings": { "number": "12", "label": "Formulas brought to life" } }
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "2",
+            "label": "Founding pharmacists"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "6+ Yrs",
+            "label": "Behind the bench"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "12",
+            "label": "Formulas brought to life"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3"]
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
     },
-    "pharmacists-profiles": { "type": "pharmacists-profiles" },
-    "pharmacists-credentials": { "type": "pharmacists-credentials" },
-    "pharmacists-philosophy": { "type": "pharmacists-philosophy" },
+    "pharmacists-profiles": {
+      "type": "pharmacists-profiles",
+      "blocks": {
+        "founder_1": {
+          "type": "founder",
+          "settings": {
+            "eyebrow": "— Founder, No. 1 —",
+            "name": "Dr. A",
+            "role": "Co-founder · Compounding Pharmacist",
+            "body": "<p>Trained at the compounding bench in Houston, Dr. A spent years weighing actives by the milligram for patients before a single bottle ever carried the Chemistrie name.</p>",
+            "quote": "The first formulas we compounded for someone she loved. That is still the only trust that matters: make it work, make it kind, make it worthy of the person who will use it nightly.",
+            "avatar_style": "forest"
+          }
+        },
+        "founder_2": {
+          "type": "founder",
+          "settings": {
+            "eyebrow": "— Founder, No. 2 —",
+            "name": "Dr. M",
+            "role": "Co-founder · Compounding Pharmacist",
+            "body": "<p>Dr. M came to skincare the pharmacist's way — through the prescription pad, not the marketing deck. Refinaldehyde that did not burn was the problem she could not put down.</p>",
+            "quote": "We believe a formula should be honest to the milligram. Every concentration is printed exactly as compounded, because the woman reading the label deserves the same truth we'd tell a patient.",
+            "avatar_style": "tan"
+          }
+        },
+        "founder_3": {
+          "type": "founder",
+          "settings": {
+            "eyebrow": "— Founder, No. 3 —",
+            "name": "Dr. S",
+            "role": "Co-founder · Compounding Pharmacist",
+            "body": "<p>Dr. S rounds out the bench — the formulator who insists every batch is third-party assayed before it ships. No marketing rounding, no exceptions.</p>",
+            "quote": "A number on a label is a promise. We test every run so the promise is true — the same standard we'd hold filling a prescription.",
+            "avatar_style": "forest"
+          }
+        }
+      },
+      "block_order": [
+        "founder_1",
+        "founder_2",
+        "founder_3"
+      ]
+    },
+    "pharmacists-credentials": {
+      "type": "pharmacists-credentials",
+      "blocks": {
+        "cred_1": {
+          "type": "cred",
+          "settings": {
+            "number": "01",
+            "title": "They weigh the actives themselves",
+            "body": "A compounding pharmacist mixes each formula by hand, to the milligram — the same discipline used to prepare a prescription, brought to a bottle you keep on your shelf."
+          }
+        },
+        "cred_2": {
+          "type": "cred",
+          "settings": {
+            "number": "02",
+            "title": "They know how molecules behave",
+            "body": "Which actives can share a bottle, which must be kept apart, what oil keeps vitamin C alive — this is pharmacy, not marketing, and it decides whether a formula actually works."
+          }
+        },
+        "cred_3": {
+          "type": "cred",
+          "settings": {
+            "number": "03",
+            "title": "They answer for every batch",
+            "body": "Each run is numbered and traceable to the pharmacist who compounded it. If a question comes in, a real person who mixed it is the one who answers."
+          }
+        }
+      },
+      "block_order": [
+        "cred_1",
+        "cred_2",
+        "cred_3"
+      ]
+    },
+    "pharmacists-philosophy": {
+      "type": "pharmacists-philosophy",
+      "blocks": {
+        "value_1": {
+          "type": "value",
+          "settings": {
+            "title": "Efficacy before fashion",
+            "body": "We choose the active that works at the concentration that works — not the one trending this season. Pharmacy asks a single question: will it do what the label says?"
+          }
+        },
+        "value_2": {
+          "type": "value",
+          "settings": {
+            "title": "Honest to the milligram",
+            "body": "Every concentration is printed exactly as compounded. A pharmacist would never round a dose for a patient, so we never round one for you."
+          }
+        },
+        "value_3": {
+          "type": "value",
+          "settings": {
+            "title": "Small batches, always fresh",
+            "body": "Actives degrade on a shelf. We compound in runs capped at 200 bottles so nothing you receive has sat waiting — the pharmacist's habit of dispensing fresh, kept intact."
+          }
+        },
+        "value_4": {
+          "type": "value",
+          "settings": {
+            "title": "Formulated for a real face",
+            "body": "Each formula began as a request from someone the founders knew. Nothing ships until it earns a place in a ritual they would hand to the people they love."
+          }
+        }
+      },
+      "block_order": [
+        "value_1",
+        "value_2",
+        "value_3",
+        "value_4"
+      ]
+    },
     "page-cta": {
       "type": "page-cta",
       "settings": {
@@ -32,5 +167,12 @@
       }
     }
   },
-  "order": ["page-hero", "stat-bar", "pharmacists-profiles", "pharmacists-credentials", "pharmacists-philosophy", "page-cta"]
+  "order": [
+    "page-hero",
+    "stat-bar",
+    "pharmacists-profiles",
+    "pharmacists-credentials",
+    "pharmacists-philosophy",
+    "page-cta"
+  ]
 }

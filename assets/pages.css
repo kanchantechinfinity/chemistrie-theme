@@ -50,7 +50,7 @@
 .page-section__head .eyebrow { margin-bottom: 16px; display: inline-block; }
 
 /* ---- Page CTA card button ---- */
-.cta--page { padding-top: 0; }
+.cta--page { padding-top: clamp(56px, 8vw, 110px); }
 .cta__page-btn { margin-top: 12px; }
 
 /* ---- Editorial product card (collection / ritual grids) ---- */

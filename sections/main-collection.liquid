@@ -1,11 +1,12 @@
-{%- paginate collection.products by 12 -%}
+{%- assign col = section.settings.collection | default: collection -%}
+{%- paginate col.products by 12 -%}
 <section class="page-section col-main">
   <div class="page-section__inner">
     <div class="col-layout">
 
       {%- comment -%} ───── LEFT: filter sidebar ───── {%- endcomment -%}
       <aside class="col-side">
-        <div class="col-side__count">{{ collection.products_count }} formulas</div>
+        <div class="col-side__count">{{ col.products_count }} formulas</div>
 
         {%- if collection.filters.size > 0 -%}
           <form method="get" class="col-filters">
@@ -66,7 +67,7 @@
       {%- comment -%} ───── RIGHT: sort + grid ───── {%- endcomment -%}
       <div class="col-body">
         <div class="col-toolbar">
-          <div class="col-toolbar__count">{{ collection.products_count }} formulas</div>
+          <div class="col-toolbar__count">{{ col.products_count }} formulas</div>
           {%- if collection.sort_options.size > 0 -%}
             <form method="get" class="col-sort">
               <label for="col-sort-by" class="col-sort__label">Sort</label>
@@ -80,9 +81,9 @@
           {%- endif -%}
         </div>
 
-        {%- if collection.products.size > 0 -%}
+        {%- if col.products.size > 0 -%}
           <div class="col-grid">
-            {%- for product in collection.products -%}
+            {%- for product in col.products -%}
               <article class="pcard">
                 <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
@@ -206,7 +207,7 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%231a3a2d' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 12px center;
 }
-.col-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(20px, 2.4vw, 32px); }
+.col-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
 
 .col-pager { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 48px; }
 .col-pager__link {
@@ -225,6 +226,7 @@
 
 @media (max-width: 900px) {
   .col-layout { grid-template-columns: 1fr; }
+  .col-grid { grid-template-columns: 1fr 1fr; }
   .col-side { position: static; }
   .col-side__count { display: block; }
   .col-toolbar__count { display: none; }
@@ -237,7 +239,9 @@
 {% schema %}
 {
   "name": "Collection Grid",
-  "settings": [],
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection to display (leave blank to use the current collection; pick \"All\" to show every product)" }
+  ],
   "presets": [{ "name": "Collection Grid" }]
 }
 {% endschema %}
