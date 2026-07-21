@@ -1,25 +1,113 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page-hero": {
       "type": "page-hero",
       "settings": {
         "eyebrow": "— The Ritual —",
-        "heading": "Four quiet steps,<br/><em>morning and night.</em>",
+        "heading": "Four quiet steps,<br><em>morning and night.</em>",
         "deck": "A Chemistrie ritual is deliberately small. Four steps, layered thin, in the order the skin asks for them.",
         "deck2": "The ritual was designed the way a pharmacist designs anything — for the outcome, not the shelf. Each step exists because the one before it earned it, and nothing is added for the sake of a longer routine. Slow it down, let it become the two minutes of the day that belong only to you."
       }
     },
-    "ritual-steps": { "type": "ritual-steps" },
-    "ritual-shop": { "type": "ritual-shop" },
+    "ritual_steps_GY6WEy": {
+      "type": "ritual-steps",
+      "blocks": {
+        "step_YHDywf": {
+          "type": "step",
+          "settings": {
+            "roman": "i.",
+            "step_name": "Cleanse",
+            "product_name": "Velvet",
+            "product_url": "",
+            "description": "Begin with Velvet, our foaming facial cleanser, worked into damp skin for ninety seconds. It lifts the night away without stripping — the face wakes, it does not flinch.",
+            "product_name_pm": "",
+            "description_pm": ""
+          }
+        },
+        "step_7rYU44": {
+          "type": "step",
+          "settings": {
+            "roman": "ii.",
+            "step_name": "Treat",
+            "product_name": "Lumina",
+            "product_url": "",
+            "description": "Two drops of Lumina, our vitamin C serum, pressed — never rubbed — over the face. Brightness and antioxidant defence for the hours of daylight ahead.",
+            "product_name_pm": "Renewal",
+            "description_pm": "Two drops of Renewal, our night serum, pressed — never rubbed — over the face. Repair and resurfacing for the hours the skin rebuilds."
+          }
+        },
+        "step_wgJMiy": {
+          "type": "step",
+          "settings": {
+            "roman": "iii.",
+            "step_name": "Hydrate",
+            "product_name": "Cashmere",
+            "product_url": "",
+            "description": "One pearl of Cashmere, our daily moisturiser, warmed between the palms and pressed upward along the jaw, cheekbones and brow. This sealing step before the day.",
+            "product_name_pm": "",
+            "description_pm": ""
+          }
+        },
+        "step_8wBpN3": {
+          "type": "step",
+          "settings": {
+            "roman": "iv.",
+            "step_name": "Restore",
+            "product_name": "Peptide Cream",
+            "product_url": "",
+            "description": "Reserved for the evening. Restore is where the ritual does its quietest, most important work — see the Evening ritual for this final step.",
+            "product_name_pm": "",
+            "description_pm": ""
+          }
+        }
+      },
+      "block_order": [
+        "step_YHDywf",
+        "step_7rYU44",
+        "step_wgJMiy",
+        "step_8wBpN3"
+      ],
+      "name": "Ritual Steps",
+      "settings": {
+        "eyebrow": "— The ritual, step by step —",
+        "heading": "Four steps,<br><em>morning and night.</em>",
+        "sub": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down, layer thin, and let the skin ask for the next. Switch between morning and evening to see how each step changes."
+      }
+    },
+    "ritual-shop": {
+      "type": "ritual-shop",
+      "settings": {
+        "eyebrow": "— Shop this ritual —",
+        "heading": "The whole ritual,<br><em>in five bottles.</em>",
+        "collection": "home-page-products",
+        "pdf_url": "",
+        "caption": "A printable card version of the ritual, to keep by the mirror. Coming soon."
+      }
+    },
     "page-cta": {
       "type": "page-cta",
       "settings": {
         "eyebrow": "— Begin tonight —",
         "heading": "Build your <em>ritual.</em>",
         "sub": "Every step, every bottle, compounded by pharmacists. Start with the collection.",
-        "button_label": "Shop the Collection"
+        "button_label": "Shop the Collection",
+        "button_url": ""
       }
     }
   },
-  "order": ["page-hero", "ritual-steps", "ritual-shop", "page-cta"]
+  "order": [
+    "page-hero",
+    "ritual_steps_GY6WEy",
+    "ritual-shop",
+    "page-cta"
+  ]
 }
