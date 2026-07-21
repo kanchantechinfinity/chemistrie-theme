@@ -1,4 +1,438 @@
 {%- assign mf = product.metafields.custom -%}
+{%- case product.handle -%}
+  {%- when 'velvet' -%}
+    {%- capture pd_feeling -%}Rich, dense foam that rinses away completely — no film, no residue. Skin feels clean, balanced, and refreshed, never tight or stripped.{%- endcapture -%}
+    {%- capture pd_founder -%}The first step in a routine deserves the same discipline as the last one. If it doesn't set the skin up to receive everything that follows, it doesn't belong in the ritual.{%- endcapture -%}
+    {%- capture pd_whats_inside -%}Pharmacist-formulated on Sodium Hyaluronate, Urea, Panthenol, and VersaBase Foam in preserved water. Full formulation detail and concentrations are held by our compounding pharmacists; percentages are not published on the consumer-facing page.{%- endcapture -%}
+    {%- capture pd_inci -%}Full INCI ingredient list is printed on every bottle. Contact us for a complete breakdown before purchase.{%- endcapture -%}
+    {%- capture pd_routine_am -%}Velvet (Cleanse) → Lumina (Treat) → Cashmere (Moisturize) → SPF (Protect){%- endcapture -%}
+    {%- capture pd_routine_pm -%}Velvet (Cleanse) → Aura (Renew){%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Lifts away makeup, sunscreen, oil, and daily impurities completely</li>
+      <li>Rinses clean with no film or residue left behind</li>
+      <li>Prepares skin to receive everything that follows in the ritual</li>
+      <li>Suitable for normal, combination, dry, oily, and sensitive skin</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>Dispense one to two pumps into damp hands.</li>
+      <li>Massage gently over a damp face.</li>
+      <li>Rinse thoroughly.</li>
+      <li>Follow with, in the morning: Lumina, Cashmere, SPF. In the evening: Aura.</li>
+    </ol>{%- endcapture -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_spotlight -%}
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Panthenol (Pro-Vitamin B5)</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A humectant ingredient long used in skincare formulation to support the look of soft, comfortable skin.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Foaming cleansers can leave skin feeling tight — Panthenol was chosen to counter that, so the cleanse stays thorough without feeling harsh.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> Skin feels clean, not stripped, immediately after rinsing.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced through our pharmacist-selected formulation.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Sodium Hyaluronate</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A lightweight derivative of hyaluronic acid, recognized for helping skin hold onto moisture.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> To help keep the skin barrier feeling supported through the one step in the routine most likely to disrupt it.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> Skin feels prepped rather than parched, and more receptive to what comes next.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced through our pharmacist-selected formulation.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Urea</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A compound naturally present in skin, included here in a modest, balanced concentration.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> To support the look of smooth, refined-feeling texture without disrupting the barrier this cleanser is designed to protect.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> A soft, smooth feel to skin after rinsing — not a tingling or active-treatment sensation.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced through our pharmacist-selected formulation.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture pd_faq -%}
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-1">
+          <span>Can Velvet remove makeup?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-1"><p>Yes. Velvet is formulated to thoroughly lift away makeup along with sunscreen, oil, and daily impurities.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-2">
+          <span>Can I use Velvet twice a day?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-2"><p>Yes. Velvet is gentle enough for both morning and evening use as the first step in your ritual.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-3">
+          <span>Is Velvet suitable for sensitive skin?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-3"><p>Velvet is formulated to cleanse thoroughly without stripping, and is suitable for normal, combination, dry, oily, and sensitive skin. As with any new product, we recommend a patch test before first use.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-4">
+          <span>Does Velvet remove sunscreen?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-4"><p>Yes — Velvet's rich foam is formulated to fully remove sunscreen along with makeup and daily buildup.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-5">
+          <span>Should I double cleanse?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-5"><p>Most skin types find a single, thorough cleanse with Velvet sufficient. If you wear heavy or waterproof makeup, a second cleanse can help ensure everything is fully removed.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-6">
+          <span>Can men use Velvet?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-6"><p>Yes. Velvet is formulated for skin, not for a particular gender, and works as the first step in any Chemistrie ritual.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-7">
+          <span>Can I use Velvet around my eyes?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-7"><p>Avoid direct contact with the eye area. If Velvet gets into eyes, rinse thoroughly with water.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-8">
+          <span>Can I use this if I have dry skin?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-8"><p>Yes. Velvet is formulated to cleanse thoroughly while leaving skin feeling balanced and comfortable, not tight — including on drier skin types.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-9">
+          <span>Why should I use the complete Chemistrie routine?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-velvet-9"><p>Velvet is formulated to prepare skin for the treatments that follow. Used on its own, it does its job well; used as the first step in the full ritual, it helps the rest of the routine perform as intended.</p></div>
+      </div>
+    {%- endcapture -%}
+  {%- when 'aura' -%}
+    {%- capture pd_feeling -%}Silky, creamy, fast-absorbing. Naturally blue, straight from the peptide complex itself — not a dye, not a design choice. A soft, velvety finish with no fragrance and no residue.{%- endcapture -%}
+    {%- capture pd_founder -%}We don't formulate for trends. We formulate the way we'd want our own mothers, sisters, and daughters to be cared for — precisely, and without compromise.{%- endcapture -%}
+    {%- capture pd_whats_inside -%}Centered on a pharmacist-selected blend built on the ExoBlue™ base — copper peptides, exosome-derived peptides, zinc hyaluronate, and centella asiatica extract. Fragrance-free.{%- endcapture -%}
+    {%- capture pd_inci -%}Full INCI ingredient list is printed on every jar. Contact us for a complete breakdown before purchase.{%- endcapture -%}
+    {%- capture pd_routine_am -%}Velvet (Cleanse) → Vitamin C Serum (coming soon) → Aura (Moisturize) → SPF (coming soon){%- endcapture -%}
+    {%- capture pd_routine_pm -%}Velvet (Cleanse) → Hydrating Serum (coming soon) → Aura (Moisturize) → Eye Cream (coming soon){%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Deep hydration with a visibly smoother finish</li>
+      <li>Pharmacist-selected peptide complex built on the ExoBlue™ base</li>
+      <li>Fragrance-free and suitable for all skin types</li>
+      <li>Silky finish that absorbs completely and never feels heavy</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>Warm a small amount between your fingertips.</li>
+      <li>Press gently into skin — face and neck — until it disappears.</li>
+      <li>Follow with sunscreen. Every morning, without exception.</li>
+    </ol>{%- endcapture -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+      <li>Patch testing recommended before first use.</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_spotlight -%}
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Copper Tripeptide-1</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A peptide long used in skincare formulation for its recognized role in skin's own processes.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Established, well-understood, and effective at supporting a smoother, more even-looking surface over time.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> A gradual improvement in texture with consistent use.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced via the PCCA ExoBlue™ platform; pharmacist-selected, not developed in-house.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Acetyl Hexapeptide-8</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A peptide included for its role in supporting the appearance of expression lines.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Works with the skin's surface rather than against it.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> A visibly smoother look in areas of repeated movement, such as the forehead.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced via the PCCA ExoBlue™ platform.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Zinc Hyaluronate</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A hydration-focused compound that helps skin hold onto moisture.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Hydration is foundational to every other benefit this cream offers.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> A plumper, more comfortable feel, especially in dry conditions.</p>
+        <p class="pdet__ing-row pdet__ing-cred">A hyaluronic acid derivative, well studied for hydration support.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture pd_faq -%}
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-aura-1">
+          <span>Is Aura fragrance-free?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-aura-1"><p>Yes. Aura contains no added fragrance.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-aura-2">
+          <span>Why is the cream blue?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-aura-2"><p>The blue tone comes naturally from the peptide complex in the ExoBlue™ base — it isn't an added colorant.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-aura-3">
+          <span>Can I use Aura with other actives in my routine?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-aura-3"><p>Yes — Aura is formulated to sit at the moisturizing step of a routine, after serums and before SPF. If you're combining it with prescription actives, we recommend checking with your pharmacist or dermatologist.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-aura-4">
+          <span>Is Aura suitable for sensitive skin?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-aura-4"><p>Aura is fragrance-free and formulated for all skin types. As with any new product, we recommend a patch test before first use.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-aura-5">
+          <span>Where is Aura formulated?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-aura-5"><p>Aura is formulated by Chemistrie's pharmacist founders, built on ingredients pharmacist-selected from the PCCA ExoBlue™ platform.</p></div>
+      </div>
+    {%- endcapture -%}
+  {%- when 'cashmere' -%}
+    {%- capture pd_feeling -%}Lightweight lotion. Silky, fast-absorbing, with an elegant slip. Non-greasy and comfortable for all-day wear — soft, hydrated, smooth, never sticky.{%- endcapture -%}
+    {%- capture pd_founder -%}Cashmere is the moisturizer reached for without a second thought, every morning — comfort and consistency, never announcing itself.{%- endcapture -%}
+    {%- capture pd_whats_inside -%}A Hydrating Topical Lotion built on a VersaBase® foundation with Aloe Vera and Lubrajel NP. Full formulation detail and concentrations are held by our compounding pharmacists.{%- endcapture -%}
+    {%- capture pd_inci -%}Full INCI ingredient list is printed on every bottle. Contact us for a complete breakdown before purchase.{%- endcapture -%}
+    {%- capture pd_routine_am -%}Velvet → Lumina → Cashmere → SPF{%- endcapture -%}
+    {%- capture pd_routine_pm -%}Velvet → Aura (Cashmere may also be layered in the evening if additional hydration is desired.){%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Provides lightweight daily hydration that absorbs quickly</li>
+      <li>Layers beautifully under sunscreen and under makeup</li>
+      <li>Leaves skin feeling soft and comfortable, never heavy</li>
+      <li>Suitable for all skin types, for everyday use</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>Use morning and evening.</li>
+      <li>Apply after serums.</li>
+      <li>Massage gently into face and neck until absorbed.</li>
+    </ol>{%- endcapture -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_spotlight -%}
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Aloe Vera</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A soothing botanical extract long valued for its lightweight, hydrating feel on skin.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Chosen to support a comfortable, non-irritating daily formula — gentle enough for sensitive skin, light enough for everyday wear.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> A soft, calm feeling on application, without any heaviness.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Pharmacist-selected as part of the VersaBase lotion system.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Lubrajel NP</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A hydrating, skin-conditioning ingredient used to help skin retain a soft, smooth feel.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Selected for its ability to support the look and feel of hydrated skin without adding weight or residue.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> Skin feels smooth and comfortable, never tacky.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Pharmacist-selected via the VersaBase system, formulated for lightweight daily use.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">VersaBase Lotion Technology</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> The lotion base itself — a pharmacy-grade delivery system designed to carry active and conditioning ingredients evenly across skin.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Chosen for its fast-absorbing, non-greasy handling characteristics, which support Cashmere's role as a daily, layerable moisturizer.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> Quick absorption and a finish that disappears into skin rather than sitting on top of it.</p>
+        <p class="pdet__ing-row pdet__ing-cred">A pharmacist-selected compounding base.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture pd_faq -%}
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-1">
+          <span>Why is Cashmere different from Aura?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-1"><p>Aura is Chemistrie's signature renewal treatment, formulated for targeted, intensive care. Cashmere is the everyday moisturizer — lightweight, fast-absorbing, and made for daily wear. Many in the Chemistrie routine use both: Aura in the evening, Cashmere for daily hydration.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-2">
+          <span>Can I use this every morning?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-2"><p>Yes. Cashmere is formulated specifically for daily use, morning and evening, as part of a consistent routine.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-3">
+          <span>Can I wear this under makeup?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-3"><p>Yes. Cashmere absorbs quickly and leaves a smooth, non-greasy finish that layers well under makeup.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-4">
+          <span>Is this suitable for oily skin?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-4"><p>Yes. Cashmere's lightweight, fast-absorbing formula is suited to all skin types, including oily and combination skin.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-5">
+          <span>Is this suitable for sensitive skin?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-5"><p>Yes. Cashmere is formulated to feel comfortable and gentle, suitable for sensitive skin.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-6">
+          <span>Can I layer this with Aura?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-6"><p>Yes. Cashmere can be layered with Aura for additional hydration, most commonly applied before Aura in the evening or on its own in the morning.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-7">
+          <span>Will this leave my skin greasy?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-7"><p>No. Cashmere is formulated to absorb quickly, leaving skin feeling soft and hydrated rather than heavy or greasy.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-8">
+          <span>Can I use this year-round?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-8"><p>Yes. Cashmere's lightweight formula is designed for consistent, everyday use across all seasons.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-9">
+          <span>Why should I complete the full Chemistrie routine?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-cashmere-9"><p>Each Chemistrie product is formulated to work with the others rather than in isolation. Cashmere provides the daily hydration layer that lets Velvet, Lumina, and Aura each do their job fully.</p></div>
+      </div>
+    {%- endcapture -%}
+  {%- when 'silken' -%}
+    {%- capture pd_feeling -%}A silky, lightweight gel. Smooth to apply, non-greasy, designed to create a breathable protective layer that stays comfortable through a full day of wear.{%- endcapture -%}
+    {%- capture pd_founder -%}We wanted a scar gel precise enough to trust and simple enough to actually use, every day, without thinking twice.{%- endcapture -%}
+    {%- capture pd_whats_inside -%}Built on silicone gel technology with Pracaxi oil and skin-conditioning emollients for a long-lasting protective barrier. Full formulation detail per pharmacist documentation.{%- endcapture -%}
+    {%- capture pd_inci -%}Full INCI ingredient list is printed on every bottle. Contact us for a complete breakdown before purchase.{%- endcapture -%}
+    {%- capture pd_routine_am -%}Velvet → Lumina → Cashmere → SPF (apply Silken to targeted areas after cleansing and before moisturizer){%- endcapture -%}
+    {%- capture pd_routine_pm -%}Velvet → Aura (apply Silken to targeted areas after cleansing and before moisturizer){%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Helps improve the appearance of scars and uneven skin texture</li>
+      <li>Leaves skin feeling smooth, comfortable, and lastingly hydrated</li>
+      <li>Creates a breathable protective barrier suitable for daily use</li>
+      <li>Suitable for all skin types, on fully healed scars</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>Apply a thin layer directly to clean, fully healed scars.</li>
+      <li>Use morning and evening, as part of a consistent daily rhythm.</li>
+      <li>Allow the product to dry completely before applying additional skincare or sunscreen.</li>
+    </ol>{%- endcapture -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Do not apply to open wounds or broken skin.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_spotlight -%}
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Pracaxi Oil</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A nutrient-rich botanical oil traditionally used to support the look and feel of healthy skin.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Chosen by our pharmacists for its skin-conditioning properties and its long history of use in skin-focused formulations.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> Skin that feels softer and more supple with consistent use.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced as part of the PCCA-formulated base — pharmacist-selected, not developed in-house.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Silicone Gel Technology</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A lightweight silicone gel matrix that forms a breathable layer on the skin's surface.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Widely used in skin-focused gel formulations for its ability to help the appearance of skin texture appear more even over time.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> A smooth, comfortable feel with no greasy residue.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Formulated within the PCCA PracaSil-Plus® base — pharmacist-selected and precisely measured.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <h3 class="pdet__ing-name">Skin-Conditioning Emollients</h3>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A blend of conditioning agents that help the gel glide on smoothly and support a comfortable, hydrated feel.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Included to keep the gel comfortable for everyday, all-day wear without feeling heavy or occlusive.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> Skin that feels hydrated and comfortable, not tight or dry.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Selected by our pharmacists as part of the overall formulation.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture pd_faq -%}
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-1">
+          <span>What types of scars can Silken be used on?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-1"><p>Silken is formulated for use on fully healed scars, including both newer and more established marks. It's designed to support the look and feel of skin texture as part of a daily ritual, not to treat an active wound.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-2">
+          <span>Can I use Silken on older scars?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-2"><p>Yes. Silken is suited to both recently healed and long-standing scars, used consistently as part of your routine.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-3">
+          <span>Can I wear makeup over Silken?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-3"><p>Once Silken has dried completely, it layers cleanly under makeup, just as it does under sunscreen.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-4">
+          <span>Can I use Silken twice daily?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-4"><p>Yes — Silken is formulated for both morning and evening use as part of a consistent daily rhythm.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-5">
+          <span>How long should I use Silken?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-5"><p>Consistency is what Silken is built for. Most people incorporate it into their daily routine for an extended period, applying it every morning and evening as part of their ritual.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-6">
+          <span>Can I use Silken with the rest of my Chemistrie routine?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-6"><p>Yes. Silken is designed to layer into your existing routine alongside Aura, Velvet, Cashmere, and Lumina.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-7">
+          <span>Is Silken fragrance free?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-7"><p>Yes, Silken is formulated fragrance-free.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-8">
+          <span>Will Silken feel greasy?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-8"><p>No — Silken is a lightweight, silky gel designed to absorb into a breathable, non-greasy finish.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-9">
+          <span>Can I use Silken on sensitive skin?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-9"><p>Silken is formulated to be suitable for all skin types, including sensitive skin. As with any new product, we recommend a small patch test first.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-10">
+          <span>When should I begin using Silken after a procedure or injury?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-silken-10"><p>Silken is intended for use only once skin has fully healed. Please follow your provider's guidance on when your skin is ready.</p></div>
+      </div>
+    {%- endcapture -%}
+{%- else -%}
+  {%- assign pd_feeling = blank -%}
+{%- endcase -%}
 <section class="page-section page-section--paper pdet">
   <div class="page-section__inner">
 
@@ -8,6 +442,8 @@
       <p class="pdet__feeling-copy">
         {%- if mf.feeling != blank -%}
           {{ mf.feeling }}
+        {%- elsif pd_feeling != blank -%}
+          {{ pd_feeling }}
         {%- else -%}
           A quiet ritual of care. {{ product.title }} is compounded by hand in small batches so every application feels deliberate, clean, and calm — never rushed, never generic.
         {%- endif -%}
@@ -20,6 +456,8 @@
         <h2 class="pdet__h">Key Benefits</h2>
         {%- if mf.benefits != blank -%}
           <div class="rte pdet__rte">{{ mf.benefits }}</div>
+        {%- elsif pd_benefits != blank -%}
+          {{ pd_benefits }}
         {%- else -%}
           <ul class="pdet__list">
             <li>Built around a single clinical-grade active — no filler blends.</li>
@@ -35,6 +473,8 @@
         <h2 class="pdet__h">How to Use</h2>
         {%- if mf.how_to_use != blank -%}
           <div class="rte pdet__rte">{{ mf.how_to_use }}</div>
+        {%- elsif pd_how_to_use != blank -%}
+          {{ pd_how_to_use }}
         {%- else -%}
           <p>Apply a small amount to clean skin, morning and evening. Follow with your next ritual step. Introduce gradually if your skin is new to active formulas.</p>
         {%- endif -%}
@@ -47,11 +487,23 @@
       <blockquote class="pdet__founder-quote">
         {%- if mf.founder_note != blank -%}
           {{ mf.founder_note }}
+        {%- elsif pd_founder != blank -%}
+          {{ pd_founder }}
         {%- else -%}
           We built {{ product.title }} the way a pharmacist would — one active, done properly, at a concentration that actually works. No marketing blends, no shortcuts. Just the formula your skin has been waiting for.
         {%- endif -%}
       </blockquote>
     </div>
+
+    {%- comment -%} ───── Ingredient Spotlight ───── {%- endcomment -%}
+    {%- if pd_spotlight != blank -%}
+      <div class="pdet__block pdet__spotlight">
+        <h2 class="pdet__h pdet__h--center">Ingredient Spotlight</h2>
+        <div class="pdet__ing-grid">
+          {{ pd_spotlight }}
+        </div>
+      </div>
+    {%- endif -%}
 
     <div class="pdet__cols">
       {%- comment -%} ───── What's Inside ───── {%- endcomment -%}
@@ -59,6 +511,8 @@
         <h2 class="pdet__h">What's Inside</h2>
         {%- if mf.whats_inside != blank -%}
           <div class="rte pdet__rte">{{ mf.whats_inside }}</div>
+        {%- elsif pd_whats_inside != blank -%}
+          <p class="pdet__rte">{{ pd_whats_inside }}</p>
         {%- else -%}
           <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
         {%- endif -%}
@@ -69,17 +523,58 @@
         <h2 class="pdet__h">Full Ingredient List</h2>
         {%- if mf.inci != blank -%}
           <p class="pdet__inci">{{ mf.inci }}</p>
+        {%- elsif pd_inci != blank -%}
+          <p class="pdet__inci">{{ pd_inci }}</p>
         {%- else -%}
           <p class="pdet__inci">Full INCI ingredient list is printed on every hand-numbered bottle. Contact us for a complete breakdown before purchase.</p>
         {%- endif -%}
       </div>
     </div>
 
+    {%- comment -%} ───── Routine Placement ───── {%- endcomment -%}
+    {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
+      <div class="pdet__block pdet__routine">
+        <h2 class="pdet__h pdet__h--center">Routine Placement</h2>
+        <div class="pdet__routine-grid">
+          {%- if pd_routine_am != blank -%}
+            <div class="pdet__routine-card">
+              <span class="pdet__routine-label">Morning</span>
+              <p>{{ pd_routine_am }}</p>
+            </div>
+          {%- endif -%}
+          {%- if pd_routine_pm != blank -%}
+            <div class="pdet__routine-card">
+              <span class="pdet__routine-label">Evening</span>
+              <p>{{ pd_routine_pm }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
     {%- comment -%} ───── Long-form description ───── {%- endcomment -%}
     {%- if product.description != blank -%}
       <div class="pdet__block pdet__desc">
         <h2 class="pdet__h">The Full Story</h2>
         <div class="rte pdet__rte">{{ product.description }}</div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ───── Warnings ───── {%- endcomment -%}
+    {%- if pd_warnings != blank -%}
+      <div class="pdet__block pdet__warnings">
+        <h2 class="pdet__h">Warnings</h2>
+        {{ pd_warnings }}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ───── FAQ ───── {%- endcomment -%}
+    {%- if pd_faq != blank -%}
+      <div class="pdet__block pdet__faq">
+        <h2 class="pdet__h pdet__h--center">What You'll Want to Know</h2>
+        <div class="pfaq">
+          {{ pd_faq }}
+        </div>
       </div>
     {%- endif -%}
 
@@ -147,6 +642,7 @@
 .pdet__h--center { text-align: center; margin-bottom: 40px; }
 .pdet__rte, .pdet p, .pdet__list { color: var(--c-ink-soft); font-size: 16px; line-height: 1.7; }
 .pdet__list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+.pdet__list--ol { padding-left: 22px; }
 
 .pdet__feeling { text-align: center; max-width: 760px; margin-left: auto; margin-right: auto; }
 .pdet__feeling .eyebrow { display: inline-block; margin-bottom: 20px; }
@@ -158,6 +654,35 @@
 
 .pdet__inci { font-size: 13px; line-height: 1.8; color: var(--c-ink-mute); }
 
+/* Ingredient Spotlight */
+.pdet__ing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
+.pdet__ing-card { background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px; padding: clamp(22px, 2.4vw, 28px); }
+.pdet__ing-name { font-family: var(--ff-display); font-size: 20px; font-weight: 500; color: var(--c-forest); margin: 0 0 14px; }
+.pdet__ing-row { font-size: 14px; line-height: 1.65; color: var(--c-ink-soft); margin: 0 0 10px; }
+.pdet__ing-row:last-child { margin-bottom: 0; }
+.pdet__ing-row strong { color: var(--c-forest); font-weight: 600; }
+.pdet__ing-cred { font-size: 12px; font-style: italic; color: var(--c-ink-mute); }
+
+/* Routine Placement */
+.pdet__routine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 32px); }
+.pdet__routine-card { background: var(--c-paper); border-radius: 14px; padding: clamp(24px, 2.6vw, 32px); text-align: center; }
+.pdet__routine-label { display: inline-block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin-bottom: 10px; }
+.pdet__routine-card p { margin: 0; font-family: var(--ff-display); font-size: 17px; color: var(--c-forest); line-height: 1.5; }
+
+/* Warnings */
+.pdet__warnlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.pdet__warnlist li { font-size: 12.5px; color: var(--c-ink-mute); line-height: 1.6; }
+
+/* FAQ accordion */
+.pfaq { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+.pfaq__item { border-bottom: 1px solid var(--c-line-soft); }
+.pfaq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 4px; background: none; border: 0; text-align: left; font-family: var(--ff-body); font-size: 15.5px; color: var(--c-forest); cursor: pointer; }
+.pfaq__icon { flex: 0 0 auto; font-size: 20px; line-height: 1; color: var(--c-tan-2); transition: transform .3s var(--ease-out); }
+.pfaq__q[aria-expanded="true"] .pfaq__icon { transform: rotate(45deg); }
+.pfaq__a { max-height: 0; overflow: hidden; transition: max-height .35s var(--ease-out); }
+.pfaq__a.is-open { max-height: 400px; }
+.pfaq__a p { margin: 0; padding: 0 4px 20px; font-size: 14.5px; line-height: 1.7; color: var(--c-ink-soft); }
+
 .pdet__rating { display: flex; align-items: baseline; gap: 12px; }
 .pdet__rating-stars { color: var(--c-tan); font-size: 18px; letter-spacing: .1em; }
 .pdet__rating-val { font-family: var(--ff-display); font-size: 22px; color: var(--c-forest); }
@@ -167,8 +692,19 @@
 .pdet__related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
 
 @media (max-width: 860px) { .pdet__cols { grid-template-columns: 1fr; } }
-@media (max-width: 700px) { .pdet__related-grid { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .pdet__related-grid { grid-template-columns: 1fr; } .pdet__ing-grid { grid-template-columns: 1fr; } .pdet__routine-grid { grid-template-columns: 1fr; } }
 {% endstylesheet %}
+
+{% javascript %}
+document.querySelectorAll('.pfaq__q').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if (panel) panel.classList.toggle('is-open', !open);
+  });
+});
+{% endjavascript %}
 
 {% schema %}
 {
