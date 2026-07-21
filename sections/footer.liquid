@@ -14,7 +14,7 @@
       <h4>The Collection</h4>
       <a href="{{ routes.all_products_collection_url }}">All Products</a>
       <a href="/pages/the-ritual">The Ritual Set</a>
-      <a href="/pages/gift">Gift Sets</a>
+      
     </nav>
 
     <nav class="footer__col">
@@ -22,24 +22,12 @@
       <a href="/pages/our-story">Our Story</a>
       <a href="/pages/the-pharmacists">The Pharmacists</a>
       <a href="/pages/the-ritual">The Ritual</a>
-      <a href="/pages/the-active-index">The Active Index</a>
+      <a href="https://chemistrie.co/">The Active Index</a>
     </nav>
 
-    {%- liquid
-      assign journal_url_f = blogs.journal.url
-      if journal_url_f == blank
-        for b in blogs
-          assign journal_url_f = b[1].url
-          break
-        endfor
-      endif
-      if journal_url_f == blank
-        assign journal_url_f = '/blogs/journal'
-      endif
-    -%}
     <nav class="footer__col">
       <h4>The Journal</h4>
-      <a href="{{ journal_url_f }}">Blog</a>
+      <a href="https://chemistrie.co/blogs/news">Blogs</a>
     </nav>
 
     <nav class="footer__col">
