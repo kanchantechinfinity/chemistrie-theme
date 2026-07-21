@@ -1,46 +1,50 @@
 {
   "sections": {
-    "hero_x": {
-      "type": "hero"
+    "hero_YGMYfA": {
+      "type": "hero",
+      "name": "Hero",
+      "settings": {
+        "live_text": "A pharmacist is on the line",
+        "meta_location": "Houston · 29.76°N",
+        "meta_volume": "Vol. III · 2026",
+        "eyebrow": "A Pharmacist's Quiet Luxury",
+        "title_aria": "Made by pharmacists. Made for the women they love.",
+        "title_word_1": "Made",
+        "title_em_1": "by pharmacists.",
+        "title_row_2": "Made <em class=\"hero__title-em\">for</em> the women",
+        "title_em_accent": "they love.",
+        "deck": "Compounded by hand in Houston. Twelve formulas, two hundred bottles a batch, retired the moment the batch is poured. Welcome to the bench.",
+        "cta_primary_label": "Begin the consultation",
+        "cta_primary_link": "#shop",
+        "cta_secondary_label": "Watch the bench film · 2:14",
+        "cta_secondary_link": "#instagram",
+        "trust1_num": "2,400+",
+        "trust1_label": "Women on the list",
+        "trust2_num": "28",
+        "trust2_label": "Clinical-grade actives",
+        "trust3_num": "★ 4.96",
+        "trust3_label": "Verified buyer rating",
+        "spec_top_label": "Tonight's batch",
+        "spec_top_value": "N°027",
+        "spec_top_meta": "of 200 · poured at 4:42pm CT",
+        "pill_1": "Retinaldehyde 0.05%",
+        "pill_2": "Niacinamide 4%",
+        "pill_3": "Ferulic · Hyaluronic",
+        "spec_bottom_mini": "Hand-numbered · pharmacist-signed",
+        "spec_bottom_rx": "Rx",
+        "deco_01": "— 01",
+        "deco_ed": "N°II · ED",
+        "marquee_1": "Compounded in Houston",
+        "marquee_2": "Made for the women we love",
+        "marquee_3": "Hand-numbered batches",
+        "marquee_4": "Pharmaceutical-grade actives",
+        "scroll_label": "Scroll"
+      }
     },
-    "vision_x": {
-      "type": "vision",
-      "blocks": {
-        "cell-1": {
-          "type": "cell",
-          "settings": {
-            "heading": "Compounded, never copied",
-            "body": "Every formula begins on a pharmacist's bench — not in a marketing room. Active concentrations are calibrated to skin physiology, then double-checked in lab.",
-            "tag": "— Lab-verified, every batch"
-          }
-        },
-        "cell-2": {
-          "type": "cell",
-          "settings": {
-            "heading": "Heirloom luxury",
-            "body": "Heavy glass. Hand-poured. Numbered batches. Objects you keep on the counter, not under the sink. The kind of bottle a daughter inherits.",
-            "tag": "— Hand-numbered, 200 / batch"
-          }
-        },
-        "cell-3": {
-          "type": "cell",
-          "settings": {
-            "heading": "For the women we love",
-            "body": "Made first for wives, mothers, daughters and best friends — then offered to you. The standard never wavered because the audience never did.",
-            "tag": "— Letters in every parcel"
-          }
-        }
-      },
-      "block_order": [
-        "cell-1",
-        "cell-2",
-        "cell-3"
-      ]
-    },
-    "pillars_x": {
+    "pillars_tmq87Y": {
       "type": "pillars",
       "blocks": {
-        "pillar-1": {
+        "pillar_yC8hAg": {
           "type": "pillar",
           "settings": {
             "title": "Trust.",
@@ -52,7 +56,7 @@
             "crest_sub": "Pharmacist seal · since 2026"
           }
         },
-        "pillar-2": {
+        "pillar_d6dit9": {
           "type": "pillar",
           "settings": {
             "title": "Luxury.",
@@ -64,7 +68,7 @@
             "crest_sub": "Maison Chemistrie · N° 001"
           }
         },
-        "pillar-3": {
+        "pillar_XacNet": {
           "type": "pillar",
           "settings": {
             "title": "Warmth.",
@@ -78,21 +82,46 @@
         }
       },
       "block_order": [
-        "pillar-1",
-        "pillar-2",
-        "pillar-3"
-      ]
+        "pillar_yC8hAg",
+        "pillar_d6dit9",
+        "pillar_XacNet"
+      ],
+      "name": "Pillars",
+      "settings": {
+        "eyebrow": "— Brand Pillars —",
+        "intro_heading": "Three things we<br><em>refuse</em> to compromise."
+      }
     },
-    "shop_x": {
-      "type": "shop"
+    "shop_jAJymM": {
+      "type": "shop",
+      "name": "Shop",
+      "settings": {
+        "heading": "Six formulas.<br><em>Zero shortcuts.</em>",
+        "lede": "A complete pharmacist-built ritual. Begin with one, build to all six.",
+        "foot_link_label": "Explore the full apothecary",
+        "collection": "home-page-products"
+      }
     },
-    "founders_x": {
-      "type": "founders"
+    "founders_cch8nz": {
+      "type": "founders",
+      "name": "Founders",
+      "settings": {
+        "caption": "The founding pharmacists, photographed in the compounding lab — Houston, 2026.",
+        "heading": "Two compounding<br>pharmacists.<br><em>One promise.</em>",
+        "founder1_name": "Dr. A —",
+        "founder2_name": "Dr. M —",
+        "founder3_name": "Dr. S —",
+        "lede": "They met behind the same bench in Houston, weighing actives by the milligram for women who had been failed by everything on the shelf.",
+        "paragraph1": "Wives wanted retinol that didn't burn. Mothers wanted vitamin C that didn't oxidise in a week. Best friends wanted a moisturiser they could hand down. So they started making it — quietly, by hand, in concentrations the industry deemed too expensive to mass-produce.",
+        "paragraph2": "Chemistrie is what happened when their patient list became a waiting list.",
+        "sig": "— Dr. A & Dr. M",
+        "sig_sub": "Compounding Pharmacists · Founders"
+      }
     },
-    "actives_x": {
+    "actives_WHF8yt": {
       "type": "actives",
       "blocks": {
-        "active-1": {
+        "active_g3fm7B": {
           "type": "active",
           "settings": {
             "is_hero": true,
@@ -106,7 +135,7 @@
             "found_in": "N°01 Renewal"
           }
         },
-        "active-2": {
+        "active_wx8cBB": {
           "type": "active",
           "settings": {
             "is_hero": false,
@@ -120,7 +149,7 @@
             "found_in": "N°02 Vit-C"
           }
         },
-        "active-3": {
+        "active_qjyXf6": {
           "type": "active",
           "settings": {
             "is_hero": true,
@@ -134,7 +163,7 @@
             "found_in": "N°01 · 04 · 06"
           }
         },
-        "active-4": {
+        "active_neLYBe": {
           "type": "active",
           "settings": {
             "is_hero": true,
@@ -148,7 +177,7 @@
             "found_in": "N°03 Golden Oil"
           }
         },
-        "active-5": {
+        "active_ketUa9": {
           "type": "active",
           "settings": {
             "is_hero": false,
@@ -162,7 +191,7 @@
             "found_in": "N°05 Tonic"
           }
         },
-        "active-6": {
+        "active_iyzFyA": {
           "type": "active",
           "settings": {
             "is_hero": false,
@@ -176,7 +205,7 @@
             "found_in": "N°04 Cream"
           }
         },
-        "active-7": {
+        "active_QqUaA7": {
           "type": "active",
           "settings": {
             "is_hero": true,
@@ -190,7 +219,7 @@
             "found_in": "N°04 Velvet"
           }
         },
-        "active-8": {
+        "active_GjCRee": {
           "type": "active",
           "settings": {
             "is_hero": false,
@@ -204,7 +233,7 @@
             "found_in": "N°03 Oil"
           }
         },
-        "active-9": {
+        "active_XpPJEQ": {
           "type": "active",
           "settings": {
             "is_hero": false,
@@ -218,7 +247,7 @@
             "found_in": "N°04b Balm"
           }
         },
-        "active-10": {
+        "active_yDMUqk": {
           "type": "active",
           "settings": {
             "is_hero": true,
@@ -232,7 +261,7 @@
             "found_in": "Whole ritual"
           }
         },
-        "active-11": {
+        "active_irkpni": {
           "type": "active",
           "settings": {
             "is_hero": false,
@@ -246,7 +275,7 @@
             "found_in": "N°01 · 04"
           }
         },
-        "active-12": {
+        "active_eWaXcR": {
           "type": "active",
           "settings": {
             "is_hero": false,
@@ -262,27 +291,50 @@
         }
       },
       "block_order": [
-        "active-1",
-        "active-2",
-        "active-3",
-        "active-4",
-        "active-5",
-        "active-6",
-        "active-7",
-        "active-8",
-        "active-9",
-        "active-10",
-        "active-11",
-        "active-12"
-      ]
+        "active_g3fm7B",
+        "active_wx8cBB",
+        "active_qjyXf6",
+        "active_neLYBe",
+        "active_ketUa9",
+        "active_iyzFyA",
+        "active_QqUaA7",
+        "active_GjCRee",
+        "active_XpPJEQ",
+        "active_yDMUqk",
+        "active_irkpni",
+        "active_eWaXcR"
+      ],
+      "name": "Active Index",
+      "settings": {
+        "eyebrow": "— The Active Index —",
+        "heading": "Twelve ingredients,<br>scroll-by-<em>scroll.</em>",
+        "lede": "Each active, one at a time. Concentration, source, half-life, the formula it lives in. Scroll horizontally — the pharmacist will hand you the next."
+      }
     },
-    "proof_x": {
-      "type": "proof"
+    "proof_iDTz9Y": {
+      "type": "proof",
+      "name": "Proof stats",
+      "settings": {
+        "eyebrow": "— The Pharmacy Standard —",
+        "heading": "Numbers, not <em>noise.</em>",
+        "stat1_count": 0,
+        "stat1_suffix": "",
+        "stat1_label": "Fillers, fragrance, fluff.",
+        "stat2_count": 100,
+        "stat2_suffix": "%",
+        "stat2_label": "Pharmacist-formulated. Every batch.",
+        "stat3_count": 28,
+        "stat3_suffix": "",
+        "stat3_label": "Clinically respected actives.",
+        "stat4_count": 14,
+        "stat4_unit": "days",
+        "stat4_label": "Money-back, no-questions ritual trial."
+      }
     },
-    "ritual_x": {
+    "ritual_raGNG4": {
       "type": "ritual",
       "blocks": {
-        "step-1": {
+        "step_gmjaAk": {
           "type": "step",
           "settings": {
             "num": "i.",
@@ -292,7 +344,7 @@
             "chip": "Velvet Milk · No. 00"
           }
         },
-        "step-2": {
+        "step_9LXN7A": {
           "type": "step",
           "settings": {
             "num": "ii.",
@@ -302,7 +354,7 @@
             "chip": "Clarifying Tonic · No. 05"
           }
         },
-        "step-3": {
+        "step_TxY76t": {
           "type": "step",
           "settings": {
             "num": "iii.",
@@ -312,7 +364,7 @@
             "chip": "Renewal Serum · No. 01"
           }
         },
-        "step-4": {
+        "step_nkpb7w": {
           "type": "step",
           "settings": {
             "num": "iv.",
@@ -324,37 +376,43 @@
         }
       },
       "block_order": [
-        "step-1",
-        "step-2",
-        "step-3",
-        "step-4"
-      ]
+        "step_gmjaAk",
+        "step_9LXN7A",
+        "step_TxY76t",
+        "step_nkpb7w"
+      ],
+      "name": "The Ritual",
+      "settings": {
+        "eyebrow": "— The Ritual —",
+        "heading": "Four<br><em>quiet</em> steps.",
+        "lede": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down. Layer thin. Wait for the skin to ask."
+      }
     },
-    "testimonials_x": {
+    "testimonials_dVdUH3": {
       "type": "testimonials",
       "blocks": {
-        "quote-1": {
+        "quote_nbUbAa": {
           "type": "quote",
           "settings": {
             "quote": "I have been a dermatology nurse for nineteen years. This is the first brand I trust on my own daughter's face.",
             "attribution": "— Marisol R., Houston, TX · Verified Buyer"
           }
         },
-        "quote-2": {
+        "quote_PBKRJM": {
           "type": "quote",
           "settings": {
             "quote": "The pharmacist wrote me back personally about my redness. I bought three more bottles that afternoon.",
             "attribution": "— Priya S., Austin, TX · Verified Buyer"
           }
         },
-        "quote-3": {
+        "quote_fQqrmq": {
           "type": "quote",
           "settings": {
             "quote": "Heavy glass. Numbered batch. A handwritten card. I keep the box on my dresser.",
             "attribution": "— Linnea H., Dallas, TX · Verified Buyer"
           }
         },
-        "quote-4": {
+        "quote_xeN8zh": {
           "type": "quote",
           "settings": {
             "quote": "Made by pharmacists, made for the women they love — finally a tagline that delivers on the bottle, too.",
@@ -363,34 +421,74 @@
         }
       },
       "block_order": [
-        "quote-1",
-        "quote-2",
-        "quote-3",
-        "quote-4"
-      ]
+        "quote_nbUbAa",
+        "quote_PBKRJM",
+        "quote_fQqrmq",
+        "quote_xeN8zh"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "eyebrow": "— In Her Words —",
+        "heading": "Women who <em>knew</em> better.<br>And chose us anyway."
+      }
     },
-    "story_x": {
-      "type": "story"
+    "story_88GJLB": {
+      "type": "story",
+      "name": "Brand Story",
+      "settings": {
+        "eyebrow": "— The Brand Story —",
+        "heading": "Five quiet chapters.<br><em>One bench.</em>",
+        "lede": "Chemistrie was not founded in a boardroom. It was founded one milligram at a time, over a decade, on a single compounding bench in Houston.",
+        "chapter_1_year": "2014",
+        "chapter_1_heading": "The bench, on Heights Boulevard.",
+        "chapter_1_body": "Dr. A and Dr. M meet across the same compounding bench in Houston. A decade of weighing actives by the milligram begins — for patients, for partners, for the women they go home to.",
+        "chapter_2_year": "2018",
+        "chapter_2_heading": "The first wife. The first formula.",
+        "chapter_2_body": "Dr. M's wife asks for a retinol that does not burn. He compounds 0.05% retinaldehyde with niacinamide in a backroom mortar. Within four weeks, six other patients are asking for the same bottle.",
+        "chapter_3_year": "2022",
+        "chapter_3_heading": "The patient list becomes a waiting list.",
+        "chapter_3_body": "Friends of friends. A dermatology nurse's daughter. A schoolteacher in Austin. The bench cannot pour fast enough. The pharmacists begin labelling batches by hand, numbering each bottle as it leaves.",
+        "chapter_4_year": "2025",
+        "chapter_4_heading": "The maison takes a name.",
+        "chapter_4_body": "A glassblower three blocks away. A letterpress in the same city. A photographer who shoots only in west afternoon light. The house is named on a Tuesday — Chemistrie, for the chemistry of patience, hands, and a woman's nightly ritual.",
+        "chapter_5_year": "2026",
+        "chapter_5_heading": "Today. And the women, still.",
+        "chapter_5_body": "Twelve formulas. Two hundred bottles a batch. A pharmacist on the phone, always. Chemistrie is the same bench it always was — only now, with a door open to you."
+      }
     },
-    "instagram_x": {
-      "type": "instagram"
+    "instagram_GV7ThA": {
+      "type": "instagram",
+      "name": "Instagram",
+      "settings": {
+        "eyebrow": "— The Bench, on Instagram —",
+        "heading": "Find us <em>between</em><br>the bottles.",
+        "instagram_url": "",
+        "handle": "@chemistrie.co",
+        "follower_count": "21.4k",
+        "feed_embed": ""
+      }
     },
-    "newsletter_cta_x": {
-      "type": "newsletter-cta"
+    "newsletter_cta_bQgTWH": {
+      "type": "newsletter-cta",
+      "name": "Newsletter CTA",
+      "settings": {
+        "eyebrow": "— Letters from the Bench —",
+        "heading": "Receive the first<br>pharmacist's <em>letter.</em>",
+        "sub": "A quiet, monthly note from Dr. A & Dr. M — new formulations, ritual edits, and the occasional invitation. Never marketing."
+      }
     }
   },
   "order": [
-    "hero_x",
-    "vision_x",
-    "pillars_x",
-    "shop_x",
-    "founders_x",
-    "actives_x",
-    "proof_x",
-    "ritual_x",
-    "testimonials_x",
-    "story_x",
-    "instagram_x",
-    "newsletter_cta_x"
+    "hero_YGMYfA",
+    "pillars_tmq87Y",
+    "shop_jAJymM",
+    "founders_cch8nz",
+    "actives_WHF8yt",
+    "proof_iDTz9Y",
+    "ritual_raGNG4",
+    "testimonials_dVdUH3",
+    "story_88GJLB",
+    "instagram_GV7ThA",
+    "newsletter_cta_bQgTWH"
   ]
 }
