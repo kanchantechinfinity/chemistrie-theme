@@ -1,29 +1,139 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page-hero": {
       "type": "page-hero",
       "settings": {
         "eyebrow": "— The Full Apothecary —",
-        "heading": "Six formulas.<br/><em>Zero shortcuts.</em>",
-        "deck": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend."
+        "heading": "Six formulas.<br><em>Zero shortcuts.</em>",
+        "deck": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend.",
+        "deck2": ""
       }
     },
     "stat-bar": {
       "type": "stat-bar",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": "6,000+", "label": "Women served" } },
-        "s2": { "type": "stat", "settings": { "number": "1–2 Days", "label": "Average ship time" } },
-        "s3": { "type": "stat", "settings": { "number": "★ 4.96", "label": "Verified buyer rating" } },
-        "s4": { "type": "stat", "settings": { "number": "200", "label": "Bottles per hand-numbered batch" } }
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "6,000+",
+            "label": "Women served"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "1–2 Days",
+            "label": "Average ship time"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "★ 4.96",
+            "label": "Verified buyer rating"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "number": "200",
+            "label": "Bottles per hand-numbered batch"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4"]
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {}
     },
     "main-collection": {
       "type": "main-collection",
       "settings": {}
     },
-    "collection-notes": {
-      "type": "collection-notes"
+    "collection_notes_ah6XnB": {
+      "type": "collection-notes",
+      "blocks": {
+        "note_mj7VKY": {
+          "type": "note",
+          "settings": {
+            "quote": "Velvet is the first foaming cleanser that hasn't left my skin tight afterward. It just feels clean, not stripped.",
+            "author": "Anna D., Houston · Verified Buyer"
+          }
+        },
+        "note_VwGzt8": {
+          "type": "note",
+          "settings": {
+            "quote": "Lumina gave me back a glow I hadn't seen since my twenties. Three weeks in and people keep asking what I changed.",
+            "author": "Priya R., Austin · Verified Buyer"
+          }
+        },
+        "note_bkhhpT": {
+          "type": "note",
+          "settings": {
+            "quote": "Cashmere sinks in without a hint of grease. My dry winter cheeks finally stopped flaking.",
+            "author": "Meghan T., Dallas · Verified Buyer"
+          }
+        },
+        "note_UFjGH4": {
+          "type": "note",
+          "settings": {
+            "quote": "The Peptide Cream is the one step I refuse to skip now. My fine lines around the eyes look genuinely softer.",
+            "author": "Sofia L., Houston · Verified Buyer"
+          }
+        },
+        "note_WTMxmJ": {
+          "type": "note",
+          "settings": {
+            "quote": "I love that every bottle is hand-numbered. It feels compounded for me, not mass-produced for everyone.",
+            "author": "Jenna K., Austin · Verified Buyer"
+          }
+        },
+        "note_4nMBHK": {
+          "type": "note",
+          "settings": {
+            "quote": "Velvet and Lumina together completely calmed my hormonal breakouts. My skin has never been this even.",
+            "author": "Rebecca M., Dallas · Verified Buyer"
+          }
+        },
+        "note_3XNRjG": {
+          "type": "note",
+          "settings": {
+            "quote": "Cashmere layered over the Peptide Cream is my whole nighttime ritual now. I wake up plump and calm.",
+            "author": "Daniela S., Houston · Verified Buyer"
+          }
+        },
+        "note_qxGDtE": {
+          "type": "note",
+          "settings": {
+            "quote": "Fast shipping, beautiful packaging, and a formula that actually works. Lumina earned a permanent spot on my shelf.",
+            "author": "Claire W., Austin · Verified Buyer"
+          }
+        }
+      },
+      "block_order": [
+        "note_mj7VKY",
+        "note_VwGzt8",
+        "note_bkhhpT",
+        "note_UFjGH4",
+        "note_WTMxmJ",
+        "note_4nMBHK",
+        "note_3XNRjG",
+        "note_qxGDtE"
+      ],
+      "name": "Collection Notes",
+      "settings": {}
     },
     "page-cta": {
       "type": "page-cta",
@@ -31,9 +141,16 @@
         "eyebrow": "— Ready when you are —",
         "heading": "Begin your <em>ritual.</em>",
         "sub": "Six formulas, hand-numbered in Houston. Find the one your skin has been waiting for.",
-        "button_label": "Shop the Collection"
+        "button_label": "Shop the Collection",
+        "button_url": ""
       }
     }
   },
-  "order": ["page-hero", "stat-bar", "main-collection", "collection-notes", "page-cta"]
+  "order": [
+    "page-hero",
+    "stat-bar",
+    "main-collection",
+    "collection_notes_ah6XnB",
+    "page-cta"
+  ]
 }
