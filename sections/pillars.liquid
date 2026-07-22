@@ -27,8 +27,13 @@
           <li>{{ block.settings.item3 }}</li>
         </ul>
       </div>
-      <div class="pillar__visual">
-        {%- if block.settings.image != blank -%}
+      <div class="pillar__visual{% if section.settings.crest_style == 'full' %} pillar__visual--full{% endif %}">
+        {%- if block.settings.image != blank and section.settings.crest_style == 'full' -%}
+        <div class="pillar__crest pillar__crest--fullimage{{ crest_mod }}">
+          <img class="pillar__crest-img" src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
+        </div>
+        {%- elsif block.settings.image != blank -%}
         <div class="pillar__crest pillar__crest--image{{ crest_mod }}">
           <img class="pillar__crest-img" src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
           <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
@@ -51,7 +56,8 @@
   "name": "Pillars",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Brand Pillars —" },
-    { "type": "html", "id": "intro_heading", "label": "Intro heading", "default": "Three things we<br/><em>refuse</em> to compromise." }
+    { "type": "html", "id": "intro_heading", "label": "Intro heading", "default": "Three things we<br/><em>refuse</em> to compromise." },
+    { "type": "select", "id": "crest_style", "label": "Crest image style", "options": [ { "value": "circle", "label": "Circle badge (default)" }, { "value": "full", "label": "Full-bleed (fills the whole visual column, no circle)" } ], "default": "circle" }
   ],
   "blocks": [
     {

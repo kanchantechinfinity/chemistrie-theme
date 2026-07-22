@@ -1031,6 +1031,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   margin-top: 0;
 }
 
+/* Full-bleed crest variant — fills the entire .pillar__visual column
+   (used only when a section instance sets "Crest image style: Full-bleed").
+   Overrides the circle badge's fixed 220px/border-radius:50%. */
+.pillar__visual--full { padding-left: 32px; align-items: stretch; justify-items: stretch; }
+.pillar__crest--fullimage {
+  width: 100%; height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 0;
+  justify-content: flex-end;
+}
+.pillar__crest--fullimage::before { display: none; }
+
 .pillar__mono {
   font-family: var(--ff-display);
   font-style: italic;
