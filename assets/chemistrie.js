@@ -108,13 +108,26 @@
         scrollTrigger: { trigger: ".vision__grid", start: "top 85%" } });
   }
 
-  /* ───── Pillars — sticky stacking + parallax ───── */
+  /* ───── Pillars — sticky stacking + parallax ─────
+     IMPORTANT: each .pillar is position:sticky, which makes it an unreliable
+     ScrollTrigger *trigger* for its own animations (once "stuck", its rect
+     stops updating the normal way, so self-referencing triggers fire
+     inconsistently). It's ALSO risky to run two separate tweens that both
+     animate `opacity` on the same element (one entrance, one exit-fade) —
+     GSAP/ScrollTrigger can end up with the two fighting over the property,
+     which is exactly what caused pillars to render inconsistently (a card
+     stuck invisible, or not reappearing when scrolling back up).
+     Fix: opacity is now controlled by exactly ONE tween per pillar (the
+     exit-fade, driven by the NEXT sibling entering — a normal, non-sticky
+     trigger reference, and fully reversible since it's `scrub`). No separate
+     self-triggered opacity entrance. Only a `y` slide-in remains on load,
+     which never touches opacity so it can't conflict. */
   if (window.ScrollTrigger) {
     const pillars = $$(".pillar");
     pillars.forEach((p, i) => {
       gsap.fromTo(p,
-        { opacity: 0, y: 80 },
-        { opacity: 1, y: 0, duration: 1.1, ease: "power3.out",
+        { y: 80 },
+        { y: 0, duration: 1.1, ease: "power3.out",
           scrollTrigger: { trigger: p, start: "top 90%" } });
 
       /* Inner content stagger */
@@ -133,12 +146,8 @@
             scrollTrigger: { trigger: p, start: "top 80%" } });
       }
 
-      /* Scale + fade lower cards as the next one stacks over.
-         The fade must finish exactly when the incoming card finishes sliding
-         into its own sticky resting spot (top 10%) — cutting it off earlier
-         (e.g. "top 55%") leaves a gap where the incoming card hasn't fully
-         arrived yet AND the outgoing card is already gone, so both look
-         washed out at once. Ending at "top 10%" removes that gap. */
+      /* Scale + fade lower cards as the next one stacks over — the SOLE
+         opacity controller for this element. Fully reversible (scrub). */
       if (i < pillars.length - 1) {
         gsap.to(p, {
           scale: 0.9 - (i * 0.03),
