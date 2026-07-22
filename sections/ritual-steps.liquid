@@ -78,7 +78,11 @@
 .rsteps--evening .rstep__desc[data-ritual="evening"] { display: block; }
 
 @media (max-width: 600px) {
-  .rstep { flex-direction: column; gap: 10px; }
+  .rsteps__head { margin-bottom: 28px; }
+  .rstep { flex-direction: row; align-items: flex-start; gap: 14px; padding: 22px 0; }
+  .rstep__num { width: 1.8ch; font-size: 20px; }
+  .rstep__body { gap: 8px; }
+  .rstep__title { font-size: 20px; }
 }
 {% endstylesheet %}
 

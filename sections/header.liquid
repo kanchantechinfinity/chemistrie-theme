@@ -9,6 +9,13 @@
     <span class="nav__wordmark">CHEMISTRIE</span>
   </a>
   <nav class="nav__links" id="navLinks" aria-label="Primary">
+    <div class="nav__links-brand">
+      {%- if section.settings.mobile_logo != blank -%}
+        {{ section.settings.mobile_logo | image_url: width: 240 | image_tag: alt: 'Chemistrie', loading: 'lazy' }}
+      {%- else -%}
+        <span class="nav__links-wordmark">CHEMISTRIE</span>
+      {%- endif -%}
+    </div>
     {%- if section.settings.menu != blank -%}
       {%- for link in section.settings.menu.links -%}
         <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
@@ -74,7 +81,8 @@
   "name": "Header",
   "settings": [
     { "type": "text", "id": "announcement", "label": "Announcement bar text", "default": "Complimentary shipping on orders over $120 · Pharmacist-formulated in Houston, TX" },
-    { "type": "link_list", "id": "menu", "label": "Primary menu (optional — falls back to default links)" }
+    { "type": "link_list", "id": "menu", "label": "Primary menu (optional — falls back to default links)" },
+    { "type": "image_picker", "id": "mobile_logo", "label": "Logo shown inside mobile menu panel (optional — falls back to CHEMISTRIE wordmark)" }
   ]
 }
 {% endschema %}

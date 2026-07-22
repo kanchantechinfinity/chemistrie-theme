@@ -120,6 +120,9 @@
     box-shadow: -30px 0 80px -40px rgba(26,58,45,.5); z-index: 120;
   }
   .nav--open .nav__links { transform: translateX(0); }
+  .nav__links-brand { margin: -64px 0 32px; }
+  .nav__links-brand img { display: block; max-width: 140px; height: auto; }
+  .nav__links-wordmark { font-family: var(--ff-display, serif); font-size: 15px; letter-spacing: .34em; color: var(--c-forest); }
   .nav__links a { font-size: 15px; letter-spacing: .12em; padding: 16px 0; border-bottom: 1px solid var(--c-line-soft); }
   .nav__backdrop { position: fixed; inset: 0; background: rgba(14,33,24,.4); opacity: 0; visibility: hidden; transition: opacity .4s; z-index: 110; }
   .nav--open .nav__backdrop { opacity: 1; visibility: visible; }

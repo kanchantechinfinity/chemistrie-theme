@@ -59,6 +59,13 @@
   .pprofile--reverse .pprofile__media { order: 0; }
   .pprofile__avatar { max-width: 340px; }
 }
+@media (max-width: 480px) {
+  .pprofile { gap: 20px; }
+  .pprofile + .pprofile { margin-top: 64px; }
+  .pprofile__avatar { max-width: 240px; aspect-ratio: 4 / 4.4; }
+  .pprofile__name { font-size: 32px; margin-top: 20px; }
+  .pprofile__quote { margin-top: 20px; }
+}
 {% endstylesheet %}
 
 {% schema %}
