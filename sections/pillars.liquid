@@ -28,10 +28,17 @@
         </ul>
       </div>
       <div class="pillar__visual">
+        {%- if block.settings.image != blank -%}
+        <div class="pillar__crest pillar__crest--image{{ crest_mod }}">
+          <img class="pillar__crest-img" src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
+        </div>
+        {%- else -%}
         <div class="pillar__crest{{ crest_mod }}">
           <span class="pillar__mono{{ mono_mod }}">{{ block.settings.crest_mono }}</span>
           <span class="pillar__crest-sub">{{ block.settings.crest_sub }}</span>
         </div>
+        {%- endif -%}
       </div>
     </article>
     {% endfor %}
@@ -57,7 +64,8 @@
         { "type": "text", "id": "item2", "label": "List item 2", "default": "— Every active ingredient cleared by a licensed pharmacist." },
         { "type": "text", "id": "item3", "label": "List item 3", "default": "— Transparency on dose, on source, on shelf-life." },
         { "type": "text", "id": "crest_mono", "label": "Crest mono", "default": "Rx" },
-        { "type": "text", "id": "crest_sub", "label": "Crest sub", "default": "Pharmacist seal · since 2026" }
+        { "type": "text", "id": "crest_sub", "label": "Crest sub", "default": "Pharmacist seal · since 2026" },
+        { "type": "image_picker", "id": "image", "label": "Crest image (optional — replaces the Rx/mono badge with a photo)" }
       ]
     }
   ],

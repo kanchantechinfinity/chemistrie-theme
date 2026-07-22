@@ -133,16 +133,19 @@
             scrollTrigger: { trigger: p, start: "top 80%" } });
       }
 
-      /* Scale + fade lower cards as the next one stacks over */
+      /* Scale + fade lower cards as the next one stacks over.
+         Narrow, fast-completing window + near-zero opacity so the covered
+         card is fully hidden well before the next one settles on top —
+         prevents the two cards' text from being simultaneously legible. */
       if (i < pillars.length - 1) {
         gsap.to(p, {
-          scale: 0.94 - (i * 0.02),
-          opacity: 0.6,
+          scale: 0.9 - (i * 0.03),
+          opacity: 0.06,
           ease: "none",
           scrollTrigger: {
             trigger: pillars[i + 1],
-            start: "top 85%",
-            end: "top 20%",
+            start: "top 95%",
+            end: "top 55%",
             scrub: true,
           },
         });
