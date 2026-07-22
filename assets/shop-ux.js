@@ -65,9 +65,9 @@
         : "";
       html +=
         '<div class="drawer-item">' +
-          img +
+          '<a class="drawer-item__link" href="' + item.url + '">' + img + '</a>' +
           '<div class="drawer-item__info">' +
-            '<span class="drawer-item__title">' + escapeHtml(item.product_title || item.title) + "</span>" +
+            '<a class="drawer-item__title" href="' + item.url + '">' + escapeHtml(item.product_title || item.title) + "</a>" +
             variant +
             '<span class="drawer-item__qty">Qty ' + item.quantity + "</span>" +
           "</div>" +

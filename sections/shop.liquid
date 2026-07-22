@@ -208,6 +208,7 @@
     {% else %}
       {% for product in section.settings.collection.products limit: 6 %}
       <article class="product" data-color="forest">
+        <a class="product__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
         <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>
         <div class="product__media">
           <span class="product__tag">
@@ -215,6 +216,9 @@
           </span>
           {%- if product.featured_image -%}
             <img class="product__photo" src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
+            {%- if product.images.size > 1 -%}
+              <img class="product__photo product__photo--alt" src="{{ product.images[1] | image_url: width: 500 }}" alt="" loading="lazy">
+            {%- endif -%}
           {%- else -%}
           <svg class="product__bottle" viewBox="0 0 140 220" aria-hidden="true">
             <defs>
@@ -261,8 +265,14 @@
 </section>
 
 {% stylesheet %}
-.product__photo { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; border-radius: 12px; transition: transform .6s var(--ease-out); }
+.product__link { position: absolute; inset: 0; z-index: 1; }
+.product .wish-btn, .product .product__cta { position: relative; z-index: 2; }
+.product__photo { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; border-radius: 12px; transition: transform .6s var(--ease-out), opacity .4s var(--ease-out); }
 .product:hover .product__photo { transform: scale(1.04); }
+.product__photo--alt { opacity: 0; }
+.product:hover .product__photo--alt { opacity: 1; }
+.product__meta-top > div { min-width: 0; flex: 1; }
+.product__meta h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 {% endstylesheet %}
 
 {% schema %}

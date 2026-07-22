@@ -31,8 +31,16 @@
   /* ───── Nav scroll state ───── */
   const nav = $("#nav");
   if (nav) {
+    let lastY = window.scrollY;
     const onScroll = () => {
-      nav.classList.toggle("is-scrolled", window.scrollY > 24);
+      const y = window.scrollY;
+      nav.classList.toggle("is-scrolled", y > 24);
+      if (y > lastY && y > 120) {
+        nav.classList.add("nav--hidden");
+      } else if (y < lastY) {
+        nav.classList.remove("nav--hidden");
+      }
+      lastY = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -229,10 +237,10 @@
     const cards = $$(".active-card", track);
     const isPhone = window.matchMedia("(max-width: 700px)").matches;
 
-    /* Intro head reveal */
+    /* Intro head reveal — fire as soon as it enters view, no lag */
     gsap.from(".actives__intro > *", {
-      opacity: 0, y: 30, duration: 1, ease: "power2.out", stagger: 0.1,
-      scrollTrigger: { trigger: ".actives__intro", start: "top 80%" },
+      opacity: 0, y: 16, duration: 0.5, ease: "power2.out", stagger: 0.06,
+      scrollTrigger: { trigger: ".actives__intro", start: "top 100%" },
     });
 
     if (isPhone) {
