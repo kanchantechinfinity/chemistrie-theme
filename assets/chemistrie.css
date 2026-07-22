@@ -1029,15 +1029,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: linear-gradient(0deg, rgba(14,33,24,.65) 0%, transparent 100%);
   width: 100%; padding: 24px 16px 16px;
   margin-top: 0;
-  .pillar__visual--full { padding-left: 32px; align-items: stretch; justify-items: stretch; }
-.pillar__crest--fullimage {
-  width: 100%; height: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  padding: 0;
-  justify-content: flex-end;
-}
-.pillar__crest--fullimage::before { display: none; }
 }
 
 /* Full-bleed crest variant — fills the entire .pillar__visual column
