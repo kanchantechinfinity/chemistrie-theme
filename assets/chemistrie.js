@@ -668,6 +668,27 @@
   }, { threshold: 0.12 });
   document.querySelectorAll("[data-reveal]").forEach((el) => revealIO.observe(el));
 
+  /* ───── Recalculate scroll-trigger positions once layout has fully settled.
+     Web fonts (Cormorant Garamond) and any section images (e.g. pillar crest
+     photos) load asynchronously and reflow the page after ScrollTrigger's
+     initial measurements are taken — without a refresh, every scroll-linked
+     effect (pillars sticky-stack, actives/ritual pin, etc.) keeps using stale
+     start/end positions, causing exactly this "right for a moment, then
+     drifts" symptom. Refresh once fonts are ready, once the window has fully
+     loaded (images included), and again shortly after as a safety net. ───── */
+  if (window.ScrollTrigger) {
+    const refresh = () => ScrollTrigger.refresh();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(refresh);
+    }
+    if (document.readyState === "complete") {
+      refresh();
+    } else {
+      window.addEventListener("load", refresh);
+    }
+    setTimeout(refresh, 600);
+  }
+
   /* expose for tweaks */
   window.__chemistrie = { gsap, ScrollTrigger: window.ScrollTrigger, lenis };
 
