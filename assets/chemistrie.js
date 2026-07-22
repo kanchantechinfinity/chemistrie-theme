@@ -134,9 +134,11 @@
       }
 
       /* Scale + fade lower cards as the next one stacks over.
-         Narrow, fast-completing window + near-zero opacity so the covered
-         card is fully hidden well before the next one settles on top —
-         prevents the two cards' text from being simultaneously legible. */
+         The fade must finish exactly when the incoming card finishes sliding
+         into its own sticky resting spot (top 10%) — cutting it off earlier
+         (e.g. "top 55%") leaves a gap where the incoming card hasn't fully
+         arrived yet AND the outgoing card is already gone, so both look
+         washed out at once. Ending at "top 10%" removes that gap. */
       if (i < pillars.length - 1) {
         gsap.to(p, {
           scale: 0.9 - (i * 0.03),
@@ -144,8 +146,8 @@
           ease: "none",
           scrollTrigger: {
             trigger: pillars[i + 1],
-            start: "top 95%",
-            end: "top 55%",
+            start: "top 90%",
+            end: "top 10%",
             scrub: true,
           },
         });
