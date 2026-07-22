@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero_YGMYfA": {
@@ -101,6 +92,59 @@
       "settings": {
         "eyebrow": "— Brand Pillars —",
         "intro_heading": "Three things we<br><em>refuse</em> to compromise."
+      }
+    },
+    "pillars_r7hExn": {
+      "type": "pillars",
+      "blocks": {
+        "pillar_JQgt3h": {
+          "type": "pillar",
+          "settings": {
+            "title": "Trust.",
+            "lede": "Pharmacist credibility that feels warm, not clinical.",
+            "item1": "— Credentials are the proof. Love is the reason.",
+            "item2": "— Every active ingredient cleared by a licensed pharmacist.",
+            "item3": "— Transparency on dose, on source, on shelf-life.",
+            "crest_mono": "Rx",
+            "crest_sub": "Pharmacist seal · since 2026"
+          }
+        },
+        "pillar_TyVrzy": {
+          "type": "pillar",
+          "settings": {
+            "title": "Luxury.",
+            "lede": "Aspirational, never arrogant. Every touchpoint signals prestige.",
+            "item1": "— Heavy weighted glass. Hand-numbered batches.",
+            "item2": "— Vellum inserts, gold-foil ritual cards.",
+            "item3": "— A box you keep, not unbox.",
+            "crest_mono": "C.",
+            "crest_sub": "Maison Chemistrie · N° 001"
+          }
+        },
+        "pillar_cCqT3t": {
+          "type": "pillar",
+          "settings": {
+            "title": "Warmth.",
+            "lede": "Luxury with a heartbeat. The founder story makes Chemistrie unlike anything in the category.",
+            "item1": "— Two pharmacists. Husbands and fathers first.",
+            "item2": "— Formulas tested on the women they love.",
+            "item3": "— Personal letters in every order.",
+            "crest_mono": "for her",
+            "crest_sub": "",
+            "image": "shopify://shop_images/dda85c0a-53f5-4881-bc23-c9d3314d64c7-removebg-preview_1000x1000_f00956d2-cacc-44c1-adf7-4c60bcda4c5c.png"
+          }
+        }
+      },
+      "block_order": [
+        "pillar_JQgt3h",
+        "pillar_TyVrzy",
+        "pillar_cCqT3t"
+      ],
+      "name": "Pillars",
+      "settings": {
+        "eyebrow": "— Brand Pillars —",
+        "intro_heading": "Three things we<br><em>refuse</em> to compromise.",
+        "crest_style": "full"
       }
     },
     "shop_jAJymM": {
@@ -492,6 +536,7 @@
   "order": [
     "hero_YGMYfA",
     "pillars_tmq87Y",
+    "pillars_r7hExn",
     "shop_jAJymM",
     "founders_cch8nz",
     "actives_WHF8yt",
