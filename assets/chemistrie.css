@@ -1345,7 +1345,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   overflow: hidden;
 }
 .actives__intro {
-  padding: var(--section-pad-y) var(--pad-x) clamp(40px, 5vw, 64px);
+  padding: clamp(48px, 6vw, 88px) var(--pad-x) clamp(20px, 2.4vw, 32px);
   position: relative;
 }
 .actives__intro .display-h { margin-top: 12px; }
