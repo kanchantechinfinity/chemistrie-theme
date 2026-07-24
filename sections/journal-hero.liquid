@@ -6,7 +6,8 @@
         {%- if feat.image -%}
           {{ feat.image | image_url: width: 1600 | image_tag: loading: 'eager', widths: '600,900,1200,1600', alt: feat.image.alt | default: feat.title, class: 'jhero__img' }}
         {%- else -%}
-          {{ 'lifestyle-1' | placeholder_svg_tag: 'jhero__img jhero__ph' }}
+          <img src="{{ 'stock-lifestyle.jpg' | asset_url }}" alt="{{ feat.title | escape }}" loading="eager" class="jhero__img jhero__ph">
+{%- comment -%} Temporary Unsplash stock photo — replace with a real article image in Shopify admin {%- endcomment -%}
         {%- endif -%}
       </a>
       <div class="jhero__copy">

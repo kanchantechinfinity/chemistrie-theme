@@ -21,7 +21,8 @@
                 {%- if article.image -%}
                   {{ article.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,800', alt: article.image.alt | default: article.title, class: 'jcard__img' }}
                 {%- else -%}
-                  {{ 'lifestyle-2' | placeholder_svg_tag: 'jcard__img jcard__ph' }}
+                  <img src="{{ 'stock-lifestyle.jpg' | asset_url }}" alt="{{ article.title | escape }}" loading="lazy" class="jcard__img jcard__ph">
+{%- comment -%} Temporary Unsplash stock photo — replace with a real article image in Shopify admin {%- endcomment -%}
                 {%- endif -%}
                 {%- if article.tags.size > 0 -%}
                   <span class="jcard__cat">{{ article.tags.first }}</span>

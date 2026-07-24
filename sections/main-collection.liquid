@@ -95,7 +95,8 @@
                       {{ product.images[1] | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', class: 'pcard__img pcard__img--alt', alt: '' }}
                     {%- endif -%}
                   {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag: 'pcard__ph' }}
+                    <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy" class="pcard__ph">
+                    {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
                   {%- endif -%}
                   {%- if product.tags contains 'Bestseller' -%}
                     <span class="pcard__badge">Bestseller</span>

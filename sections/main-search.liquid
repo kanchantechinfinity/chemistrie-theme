@@ -26,7 +26,8 @@
                     {%- if item.featured_image -%}
                       {{ item.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: item.title }}
                     {%- else -%}
-                      {{ 'product-1' | placeholder_svg_tag: 'pcard__ph' }}
+                      <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ item.title | escape }}" loading="lazy" class="pcard__ph">
+                      {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
                     {%- endif -%}
                   </a>
                   <div class="pcard__body">

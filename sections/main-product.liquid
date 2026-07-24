@@ -21,7 +21,8 @@
               alt="{{ product.featured_image.alt | default: product.title | escape }}"
               width="1000" height="1000">
           {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'mprod__ph' }}
+            <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" class="mprod__ph">
+            {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
           {%- endif -%}
         </div>
         {%- if product.images.size > 1 -%}
