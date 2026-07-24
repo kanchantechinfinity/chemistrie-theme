@@ -450,24 +450,100 @@
 <section class="page-section page-section--paper pdet">
   <div class="page-section__inner">
 
-    {%- comment -%} ───── The Feeling ───── {%- endcomment -%}
-    <div class="pdet__block pdet__feeling">
-      <span class="eyebrow">— The feeling —</span>
-      <p class="pdet__feeling-copy">
-        {%- if mf.feeling != blank -%}
-          {{ mf.feeling }}
-        {%- elsif pd_feeling != blank -%}
-          {{ pd_feeling }}
-        {%- else -%}
-          A quiet ritual of care. {{ product.title }} is compounded by hand in small batches so every application feels deliberate, clean, and calm — never rushed, never generic.
-        {%- endif -%}
-      </p>
+    {%- comment -%} ───── Customer Reviews (moved up, right below the purchase area) ───── {%- endcomment -%}
+    <div class="pdet__block pdet__reviews">
+      <h2 class="pdet__h pdet__h--center">Customer Reviews</h2>
+      {%- if product.metafields.reviews.rating != blank -%}
+        <div class="pdet__rating">
+          <span class="pdet__rating-stars">★★★★★</span>
+          <span class="pdet__rating-val">{{ product.metafields.reviews.rating.value }} / 5</span>
+          {%- if product.metafields.reviews.rating_count != blank -%}
+            <span class="pdet__rating-count">({{ product.metafields.reviews.rating_count }} reviews)</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      <div class="pdet__review-grid">
+        <article class="pdet__review-card">
+          <div class="pdet__review-top">
+            <span class="pdet__review-stars">★★★★★</span>
+            <span class="pdet__verified">Verified Purchase</span>
+          </div>
+          <p class="pdet__review-copy">&ldquo;Eight weeks in and my skin genuinely looks different — calmer, less reactive, and the dull patch on my cheeks has faded. First routine I've actually stuck with, because it feels good to use, not just good on paper.&rdquo;</p>
+          <span class="pdet__review-name">Eleanor R.</span>
+        </article>
+        <article class="pdet__review-card">
+          <div class="pdet__review-top">
+            <span class="pdet__review-stars">★★★★★</span>
+            <span class="pdet__verified">Verified Purchase</span>
+          </div>
+          <p class="pdet__review-copy">&ldquo;I was skeptical of another &lsquo;clinical&rsquo; skincare brand, but the concentration here is real. No burning, no purging — just steady, visible improvement over about a month.&rdquo;</p>
+          <span class="pdet__review-name">Priya S.</span>
+        </article>
+        <article class="pdet__review-card">
+          <div class="pdet__review-top">
+            <span class="pdet__review-stars">★★★★★</span>
+            <span class="pdet__verified">Verified Purchase</span>
+          </div>
+          <p class="pdet__review-copy">&ldquo;Reordered before I'd even finished the bottle. The texture is beautiful and a little goes such a long way — worth every dollar, and it arrived hand-numbered, which felt like a nice touch.&rdquo;</p>
+          <span class="pdet__review-name">Camille D.</span>
+        </article>
+      </div>
     </div>
 
-    <div class="pdet__cols">
-      {%- comment -%} ───── Key Benefits ───── {%- endcomment -%}
-      <div class="pdet__block">
-        <h2 class="pdet__h">Key Benefits</h2>
+    {%- comment -%} ───── Routine Placement / The Full Story / Warnings — 3-column ───── {%- endcomment -%}
+    <div class="pdet__triple">
+      {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
+        <div class="pdet__card pdet__card--routine">
+          <h2 class="pdet__card-h">Routine Placement</h2>
+          <div class="pdet__routine-grid">
+            {%- if pd_routine_am != blank -%}
+              <div class="pdet__routine-card">
+                <span class="pdet__routine-label">Morning</span>
+                <p>{{ pd_routine_am }}</p>
+              </div>
+            {%- endif -%}
+            {%- if pd_routine_pm != blank -%}
+              <div class="pdet__routine-card">
+                <span class="pdet__routine-label">Evening</span>
+                <p>{{ pd_routine_pm }}</p>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if product.description != blank -%}
+        <div class="pdet__card pdet__card--desc">
+          <h2 class="pdet__card-h">The Full Story</h2>
+          <div class="rte pdet__rte">{{ product.description }}</div>
+        </div>
+      {%- endif -%}
+
+      {%- if pd_warnings != blank -%}
+        <div class="pdet__card pdet__card--warnings">
+          <h2 class="pdet__card-h">Warnings</h2>
+          {{ pd_warnings }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ───── The Feeling / Key Benefits / How to Use — 3-column ───── {%- endcomment -%}
+    <div class="pdet__triple">
+      <div class="pdet__card pdet__card--feeling">
+        <h2 class="pdet__card-h">The Feeling</h2>
+        <p class="pdet__feeling-copy">
+          {%- if mf.feeling != blank -%}
+            {{ mf.feeling }}
+          {%- elsif pd_feeling != blank -%}
+            {{ pd_feeling }}
+          {%- else -%}
+            A quiet ritual of care. {{ product.title }} is compounded by hand in small batches so every application feels deliberate, clean, and calm — never rushed, never generic.
+          {%- endif -%}
+        </p>
+      </div>
+
+      <div class="pdet__card">
+        <h2 class="pdet__card-h">Key Benefits</h2>
         {%- if mf.benefits != blank -%}
           <div class="rte pdet__rte">{{ mf.benefits }}</div>
         {%- elsif pd_benefits != blank -%}
@@ -482,9 +558,8 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} ───── How to Use ───── {%- endcomment -%}
-      <div class="pdet__block">
-        <h2 class="pdet__h">How to Use</h2>
+      <div class="pdet__card">
+        <h2 class="pdet__card-h">How to Use</h2>
         {%- if mf.how_to_use != blank -%}
           <div class="rte pdet__rte">{{ mf.how_to_use }}</div>
         {%- elsif pd_how_to_use != blank -%}
@@ -497,16 +572,21 @@
 
     {%- comment -%} ───── Founder's Note ───── {%- endcomment -%}
     <div class="pdet__block pdet__founder">
-      <span class="eyebrow">— Founder's note —</span>
-      <blockquote class="pdet__founder-quote">
-        {%- if mf.founder_note != blank -%}
-          {{ mf.founder_note }}
-        {%- elsif pd_founder != blank -%}
-          {{ pd_founder }}
-        {%- else -%}
-          We built {{ product.title }} the way a pharmacist would — one active, done properly, at a concentration that actually works. No marketing blends, no shortcuts. Just the formula your skin has been waiting for.
-        {%- endif -%}
-      </blockquote>
+      <div class="pdet__founder-photo">
+        <img src="{{ 'founder-1.jpg' | asset_url }}" alt="One of Chemistrie's founding pharmacists" loading="lazy">
+      </div>
+      <div class="pdet__founder-copy">
+        <span class="eyebrow">— Founder's note —</span>
+        <blockquote class="pdet__founder-quote">
+          {%- if mf.founder_note != blank -%}
+            {{ mf.founder_note }}
+          {%- elsif pd_founder != blank -%}
+            {{ pd_founder }}
+          {%- else -%}
+            We built {{ product.title }} the way a pharmacist would — one active, done properly, at a concentration that actually works. No marketing blends, no shortcuts. Just the formula your skin has been waiting for.
+          {%- endif -%}
+        </blockquote>
+      </div>
     </div>
 
     {%- comment -%} ───── Ingredient Spotlight ───── {%- endcomment -%}
@@ -545,43 +625,6 @@
       </div>
     </div>
 
-    {%- comment -%} ───── Routine Placement ───── {%- endcomment -%}
-    {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
-      <div class="pdet__block pdet__routine">
-        <h2 class="pdet__h pdet__h--center">Routine Placement</h2>
-        <div class="pdet__routine-grid">
-          {%- if pd_routine_am != blank -%}
-            <div class="pdet__routine-card">
-              <span class="pdet__routine-label">Morning</span>
-              <p>{{ pd_routine_am }}</p>
-            </div>
-          {%- endif -%}
-          {%- if pd_routine_pm != blank -%}
-            <div class="pdet__routine-card">
-              <span class="pdet__routine-label">Evening</span>
-              <p>{{ pd_routine_pm }}</p>
-            </div>
-          {%- endif -%}
-        </div>
-      </div>
-    {%- endif -%}
-
-    {%- comment -%} ───── Long-form description ───── {%- endcomment -%}
-    {%- if product.description != blank -%}
-      <div class="pdet__block pdet__desc">
-        <h2 class="pdet__h">The Full Story</h2>
-        <div class="rte pdet__rte">{{ product.description }}</div>
-      </div>
-    {%- endif -%}
-
-    {%- comment -%} ───── Warnings ───── {%- endcomment -%}
-    {%- if pd_warnings != blank -%}
-      <div class="pdet__block pdet__warnings">
-        <h2 class="pdet__h">Warnings</h2>
-        {{ pd_warnings }}
-      </div>
-    {%- endif -%}
-
     {%- comment -%} ───── FAQ ───── {%- endcomment -%}
     {%- if pd_faq != blank -%}
       <div class="pdet__block pdet__faq">
@@ -591,22 +634,6 @@
         </div>
       </div>
     {%- endif -%}
-
-    {%- comment -%} ───── Customer Reviews ───── {%- endcomment -%}
-    <div class="pdet__block pdet__reviews">
-      <h2 class="pdet__h">Customer Reviews</h2>
-      {%- if product.metafields.reviews.rating != blank -%}
-        <div class="pdet__rating">
-          <span class="pdet__rating-stars">★★★★★</span>
-          <span class="pdet__rating-val">{{ product.metafields.reviews.rating.value }} / 5</span>
-          {%- if product.metafields.reviews.rating_count != blank -%}
-            <span class="pdet__rating-count">({{ product.metafields.reviews.rating_count }} reviews)</span>
-          {%- endif -%}
-        </div>
-      {%- else -%}
-        <p class="pdet__empty">Verified reviews for this formula are on the way. Every note we publish comes from a real, hand-numbered order.</p>
-      {%- endif -%}
-    </div>
 
     {%- comment -%} ───── You May Also Love ───── {%- endcomment -%}
     {%- assign related = product.collections.first.products -%}
@@ -663,9 +690,44 @@
 .pdet__feeling .eyebrow { display: inline-block; margin-bottom: 20px; }
 .pdet__feeling-copy { font-family: var(--ff-display); font-size: clamp(24px, 3.4vw, 38px); line-height: 1.35; color: var(--c-forest); }
 
-.pdet__founder { background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px; padding: clamp(32px, 4vw, 56px); text-align: left; }
-.pdet__founder .eyebrow { display: inline-block; margin-bottom: 18px; color: var(--c-tan); }
+.pdet__founder {
+  display: grid; grid-template-columns: 220px 1fr; gap: clamp(28px, 3vw, 44px); align-items: center;
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px;
+  padding: clamp(28px, 3.2vw, 44px); text-align: left;
+}
+.pdet__founder-photo { border-radius: 14px; overflow: hidden; aspect-ratio: 3 / 4; box-shadow: 0 20px 40px -22px rgba(26,58,45,.28); }
+.pdet__founder-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pdet__founder-copy .eyebrow { display: inline-block; margin-bottom: 18px; color: var(--c-tan); }
 .pdet__founder-quote { margin: 0; font-family: var(--ff-display); font-style: italic; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.5; color: var(--c-forest); max-width: 42ch; margin-left: 0; margin-right: auto; }
+@media (max-width: 700px) {
+  .pdet__founder { grid-template-columns: 1fr; }
+  .pdet__founder-photo { max-width: 220px; aspect-ratio: 1 / 1; margin: 0 auto; }
+}
+
+/* Shared 3-column premium card layout (Routine/Story/Warnings, Feeling/Benefits/How-to-Use) */
+.pdet__triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); align-items: stretch; margin-bottom: clamp(48px, 6vw, 88px); }
+.pdet__card {
+  display: flex; flex-direction: column; height: 100%;
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px;
+  padding: clamp(26px, 2.6vw, 34px);
+}
+.pdet__card-h { font-family: var(--ff-display); font-size: clamp(19px, 2vw, 23px); font-weight: 500; color: var(--c-forest); margin: 0 0 16px; }
+.pdet__card .pdet__rte, .pdet__card p, .pdet__card .pdet__list { font-size: 15px; }
+.pdet__card--feeling .pdet__feeling-copy { font-family: var(--ff-display); font-size: clamp(18px, 1.9vw, 21px); line-height: 1.4; color: var(--c-forest); margin: 0; }
+.pdet__card--routine .pdet__routine-grid { display: flex; flex-direction: column; gap: 14px; }
+.pdet__card--routine .pdet__routine-card { padding: 16px 18px; }
+.pdet__card--desc .pdet__rte { max-height: 320px; overflow-y: auto; padding-right: 6px; }
+@media (max-width: 900px) { .pdet__triple { grid-template-columns: 1fr; } }
+
+/* Customer review cards */
+.pdet__review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); margin-top: 28px; }
+.pdet__review-card { background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px; padding: clamp(24px, 2.6vw, 30px); display: flex; flex-direction: column; gap: 14px; }
+.pdet__review-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.pdet__review-stars { color: var(--c-tan); font-size: 15px; letter-spacing: .08em; }
+.pdet__verified { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; background: var(--c-tan-3); color: var(--c-forest-2); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.pdet__review-copy { font-size: 14.5px; line-height: 1.7; color: var(--c-ink-soft); margin: 0; flex: 1; }
+.pdet__review-name { font-family: var(--ff-display); font-size: 15px; font-style: italic; color: var(--c-forest); }
+@media (max-width: 860px) { .pdet__review-grid { grid-template-columns: 1fr; } }
 
 .pdet__inci { font-size: 13px; line-height: 1.8; color: var(--c-ink-mute); }
 

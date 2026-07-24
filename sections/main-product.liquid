@@ -59,40 +59,44 @@
         </div>
 
         {%- form 'product', product, id: 'mprod-form', class: 'mprod__form' -%}
-          {%- if product.variants.size > 1 -%}
-            <div class="mprod__variants">
-              <label for="mprod-variant" class="mprod__field-label">Option</label>
-              <select id="mprod-variant" name="id" class="mprod__select">
-                {%- for variant in product.variants -%}
-                  <option
-                    value="{{ variant.id }}"
-                    {% if variant == cv %}selected{% endif %}
-                    {% unless variant.available %}disabled{% endunless %}>
-                    {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
-                  </option>
-                {%- endfor -%}
-              </select>
-            </div>
-          {%- else -%}
-            <input type="hidden" name="id" value="{{ cv.id }}">
-          {%- endif -%}
+          <div class="mprod__row mprod__row--options">
+            {%- if product.variants.size > 1 -%}
+              <div class="mprod__variants">
+                <label for="mprod-variant" class="mprod__field-label">Option</label>
+                <select id="mprod-variant" name="id" class="mprod__select">
+                  {%- for variant in product.variants -%}
+                    <option
+                      value="{{ variant.id }}"
+                      {% if variant == cv %}selected{% endif %}
+                      {% unless variant.available %}disabled{% endunless %}>
+                      {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- else -%}
+              <input type="hidden" name="id" value="{{ cv.id }}">
+            {%- endif -%}
 
-          <div class="mprod__qty">
-            <label for="mprod-quantity" class="mprod__field-label">Quantity</label>
-            <input type="number" id="mprod-quantity" name="quantity" value="1" min="1" class="mprod__qty-input">
+            <div class="mprod__qty">
+              <label for="mprod-quantity" class="mprod__field-label">Quantity</label>
+              <input type="number" id="mprod-quantity" name="quantity" value="1" min="1" class="mprod__qty-input">
+            </div>
           </div>
 
-          {%- if product.available -%}
-            <button type="submit" name="add" class="btn btn--primary mprod__add">Add to Bag</button>
-          {%- else -%}
-            <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
-          {%- endif -%}
-        {%- endform -%}
+          <div class="mprod__row mprod__row--actions">
+            {%- if product.available -%}
+              <button type="submit" name="add" class="btn btn--primary mprod__add">Add to Bag</button>
+            {%- else -%}
+              <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
+            {%- endif -%}
 
-        <button class="wish-btn mprod__wish" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ cv.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
-          <span>Save to wishlist</span>
-        </button>
+            <button class="wish-btn mprod__wish" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ cv.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
+              <span>Save to wishlist</span>
+            </button>
+          </div>
+        {%- endform -%}
 
         <ul class="mprod__trust">
           <li>Pharmacist-formulated</li>
@@ -106,7 +110,10 @@
 </section>
 
 {% stylesheet %}
-.mprod { padding-top: clamp(28px, 4vw, 56px); }
+/* .page-section's generic padding shorthand (up to 160px top) was winning over this section's
+   own intended top spacing due to equal specificity + later file load order — pin it down with
+   a compound selector so it always wins regardless of stylesheet order. */
+.page-section.mprod { padding-top: clamp(20px, 3vw, 40px); }
 .mprod__layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
 .mprod__main { border-radius: 16px; overflow: hidden; background: var(--grad-cream); aspect-ratio: 1/1; }
 .mprod__main img, .mprod__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -134,9 +141,24 @@
   background: var(--c-cream); font-size: 15px; color: var(--c-forest); font-family: var(--ff-body);
 }
 .mprod__select { width: 100%; appearance: none; }
-.mprod__qty-input { width: 100px; }
-.mprod__add { width: 100%; margin-top: 6px; }
+.mprod__qty-input { width: 100%; }
+
+.mprod__row { display: flex; gap: 16px; }
+.mprod__row--options { align-items: flex-end; }
+.mprod__row--options .mprod__variants { flex: 1 1 auto; min-width: 0; }
+.mprod__row--options .mprod__qty { flex: 0 0 130px; }
+.mprod__row--options input[type="hidden"] ~ .mprod__qty { flex: 1 1 auto; }
+
+.mprod__row--actions { align-items: stretch; }
+.mprod__row--actions .mprod__add { flex: 1 1 auto; width: auto; margin: 0; }
 .mprod__add[disabled] { opacity: .5; cursor: default; }
+.mprod__row--actions .mprod__wish { margin-top: 0; flex: 0 0 auto; }
+
+@media (max-width: 480px) {
+  .mprod__row--options, .mprod__row--actions { flex-direction: column; align-items: stretch; }
+  .mprod__row--options .mprod__qty { flex: 1 1 auto; }
+  .mprod__row--actions .mprod__wish { justify-content: center; }
+}
 
 .mprod__trust {
   list-style: none; margin: 26px 0 0; padding: 22px 0 0; border-top: 1px solid var(--c-line-soft);
