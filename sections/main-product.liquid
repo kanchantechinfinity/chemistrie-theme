@@ -383,13 +383,11 @@
 .mprod__thumb.is-active { border-color: var(--c-forest); }
 .mprod__thumb img { width: 100%; height: 100%; object-fit: cover; }
 
+/* Image stays pinned in the viewport; the buy box is normal flow so it naturally
+   scrolls past underneath — the row's height (set by the taller buy-box column,
+   now that it holds 6 accordion items) is what gives the sticky image room to stay put. */
 .mprod__gallery { position: sticky; top: 100px; align-self: start; }
-.mprod__buy {
-  position: sticky; top: 100px; align-self: start;
-  max-height: calc(100vh - 120px); overflow-y: auto;
-  scrollbar-width: none;
-}
-.mprod__buy::-webkit-scrollbar { display: none; }
+.mprod__buy { align-self: start; }
 .mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
 .mprod__title { margin: 0 0 16px; }
 .mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: 40ch; }
@@ -434,7 +432,6 @@
 @media (max-width: 860px) {
   .mprod__layout { grid-template-columns: 1fr; }
   .mprod__gallery { position: static; }
-  .mprod__buy { position: static; max-height: none; overflow-y: visible; }
 }
 
 /* Left-column accordion: Routine Placement / The Full Story / Warnings */
