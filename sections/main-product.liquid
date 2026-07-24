@@ -353,7 +353,7 @@
    own intended top spacing due to equal specificity + later file load order — pin it down with
    a compound selector so it always wins regardless of stylesheet order. */
 .page-section.mprod { padding-top: clamp(20px, 3vw, 40px); }
-.mprod__layout { display: grid; grid-template-columns: minmax(280px, 440px) 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
+.mprod__layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
 .mprod__main {
   position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 1/1;
   border: 1px solid var(--c-line-soft); background: var(--c-paper);
