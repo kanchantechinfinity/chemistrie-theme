@@ -165,11 +165,25 @@
           <p class="mprod__benefit">{{ benefit }}</p>
         {%- endif -%}
 
+        <div class="mprod__rating">
+          <span class="mprod__rating-stars" aria-hidden="true">★★★★★</span>
+          <span class="mprod__rating-val">4.9</span>
+          <span class="mprod__rating-count">(124 reviews)</span>
+          <span class="mprod__rating-sep" aria-hidden="true">|</span>
+          <span class="mprod__rating-sold">847 sold</span>
+          <a href="#mprod-reviews" class="mprod__rating-link">Read reviews ↓</a>
+        </div>
+
         <div class="mprod__price">
           <span class="mprod__price-now">{{ cv.price | money }}</span>
           {%- if product.compare_at_price > product.price -%}
             <s class="mprod__price-was">{{ product.compare_at_price | money }}</s>
           {%- endif -%}
+        </div>
+
+        <div class="mprod__viewers">
+          <span class="mprod__viewers-dot" aria-hidden="true"></span>
+          <span><strong>28</strong> people are viewing this right now</span>
         </div>
 
         {%- form 'product', product, id: 'mprod-form', class: 'mprod__form' -%}
@@ -391,7 +405,33 @@
 .mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
 .mprod__title { margin: 0 0 16px; }
 .mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: 40ch; }
-.mprod__price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; }
+
+.mprod__rating { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; font-size: 13px; color: var(--c-ink-mute); }
+.mprod__rating-stars { color: var(--c-tan); letter-spacing: .08em; font-size: 13px; }
+.mprod__rating-val { font-family: var(--ff-display); font-size: 16px; font-weight: 500; color: var(--c-forest); }
+.mprod__rating-sep { color: var(--c-line-soft); }
+.mprod__rating-link { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-line-soft); transition: text-decoration-color .3s var(--ease-out); }
+.mprod__rating-link:hover { text-decoration-color: var(--c-forest); }
+
+.mprod__price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+
+.mprod__viewers {
+  display: flex; align-items: center; gap: 9px; margin: 0 0 26px;
+  font-size: 12.5px; color: var(--c-ink-mute);
+}
+.mprod__viewers strong { color: var(--c-forest); font-weight: 600; }
+.mprod__viewers-dot {
+  position: relative; width: 8px; height: 8px; border-radius: 50%; background: #4c8a5e; flex: 0 0 auto;
+}
+.mprod__viewers-dot::after {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid #4c8a5e;
+  animation: mprodPulse 1.8s ease-out infinite;
+}
+@keyframes mprodPulse {
+  0% { transform: scale(.6); opacity: .8; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .mprod__viewers-dot::after { animation: none; } }
 .mprod__price-now { font-size: 24px; color: var(--c-forest); font-weight: 500; }
 .mprod__price-was { font-size: 17px; color: var(--c-ink-mute); }
 
