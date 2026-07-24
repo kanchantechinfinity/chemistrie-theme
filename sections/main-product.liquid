@@ -7,62 +7,37 @@
   {%- if benefit != blank -%}{%- assign benefit = benefit | append: '.' -%}{%- endif -%}
 {%- endif -%}
 
-{%- assign has_rating = false -%}
-{%- if product.metafields.reviews.rating != blank -%}{%- assign has_rating = true -%}{%- endif -%}
-
 <section class="page-section mprod">
   <div class="page-section__inner">
-
-    <nav class="mprod__crumb" aria-label="Breadcrumb">
-      <a href="{{ routes.root_url }}">Home</a>
-      {%- if product.collections.first -%}
-        <span aria-hidden="true">/</span>
-        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
-      {%- endif -%}
-      <span aria-hidden="true">/</span>
-      <span aria-current="page">{{ product.title }}</span>
-    </nav>
-
     <div class="mprod__layout">
 
       {%- comment -%} ───── LEFT: gallery ───── {%- endcomment -%}
       <div class="mprod__gallery">
-        <div class="mprod__frame">
-          {%- if product.images.size > 1 -%}
-            <div class="mprod__thumbs">
-              {%- for image in product.images -%}
-                <button
-                  type="button"
-                  class="mprod__thumb {% if forloop.first %}is-active{% endif %}"
-                  data-full="{{ image | image_url: width: 1200 }}"
-                  aria-label="View image {{ forloop.index }}">
-                  <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" width="160" height="160" loading="lazy">
-                </button>
-              {%- endfor -%}
-            </div>
+        <div class="mprod__main">
+          {%- if product.featured_image -%}
+            <img
+              id="mprod-main-image"
+              src="{{ product.featured_image | image_url: width: 1000 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              width="1000" height="1000">
+          {%- else -%}
+            <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" class="mprod__ph">
+            {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
           {%- endif -%}
-
-          <div class="mprod__main" id="mprodMain">
-            {%- if product.tags contains 'Bestseller' -%}
-              <span class="pcard__badge mprod__badge">Bestseller</span>
-            {%- elsif product.tags contains 'New' -%}
-              <span class="pcard__badge mprod__badge">New</span>
-            {%- endif -%}
-            {%- unless product.available -%}
-              <span class="pcard__badge mprod__badge mprod__badge--sold">Sold Out</span>
-            {%- endunless -%}
-            {%- if product.featured_image -%}
-              <img
-                id="mprod-main-image"
-                src="{{ product.featured_image | image_url: width: 1200 }}"
-                alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                width="1200" height="1200">
-            {%- else -%}
-              <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" class="mprod__ph">
-              {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
-            {%- endif -%}
-          </div>
         </div>
+        {%- if product.images.size > 1 -%}
+          <div class="mprod__thumbs">
+            {%- for image in product.images -%}
+              <button
+                type="button"
+                class="mprod__thumb {% if forloop.first %}is-active{% endif %}"
+                data-full="{{ image | image_url: width: 1000 }}"
+                aria-label="View image {{ forloop.index }}">
+                <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" width="160" height="160" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       </div>
 
       {%- comment -%} ───── RIGHT: buy box ───── {%- endcomment -%}
@@ -72,32 +47,15 @@
         {%- endif -%}
         <h1 class="display-h mprod__title">{{ product.title }}</h1>
 
-        <div class="mprod__rating">
-          {%- if has_rating -%}
-            <span class="mprod__rating-stars" aria-hidden="true">★★★★★</span>
-            <a href="#mprod-reviews" class="mprod__rating-link">{{ product.metafields.reviews.rating.value }} ({{ product.metafields.reviews.rating_count | default: 0 }} reviews)</a>
-          {%- else -%}
-            <a href="#mprod-reviews" class="mprod__rating-link mprod__rating-link--empty">Be the first to review</a>
-          {%- endif -%}
-        </div>
-
         {%- if benefit != blank -%}
           <p class="mprod__benefit">{{ benefit }}</p>
         {%- endif -%}
 
-        <div class="mprod__price-row">
-          <div class="mprod__price">
-            <span class="mprod__price-now">{{ cv.price | money }}</span>
-            {%- if product.compare_at_price > product.price -%}
-              <s class="mprod__price-was">{{ product.compare_at_price | money }}</s>
-              {%- assign pct_off = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price -%}
-              <span class="mprod__save">Save {{ pct_off | round }}%</span>
-            {%- endif -%}
-          </div>
-          <div class="mprod__stock {% if product.available %}is-in{% else %}is-out{% endif %}">
-            <span class="mprod__stock-dot"></span>
-            {%- if product.available -%}In Stock{%- else -%}Sold Out{%- endif -%}
-          </div>
+        <div class="mprod__price">
+          <span class="mprod__price-now">{{ cv.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <s class="mprod__price-was">{{ product.compare_at_price | money }}</s>
+          {%- endif -%}
         </div>
 
         {%- form 'product', product, id: 'mprod-form', class: 'mprod__form' -%}
@@ -119,239 +77,95 @@
             <input type="hidden" name="id" value="{{ cv.id }}">
           {%- endif -%}
 
-          <div class="mprod__row">
-            <div class="mprod__qty">
-              <label for="mprod-quantity" class="mprod__field-label">Quantity</label>
-              <div class="mprod__stepper">
-                <button type="button" class="mprod__step" data-step="-1" aria-label="Decrease quantity">−</button>
-                <input type="number" id="mprod-quantity" name="quantity" value="1" min="1" class="mprod__qty-input">
-                <button type="button" class="mprod__step" data-step="1" aria-label="Increase quantity">+</button>
-              </div>
-            </div>
-
-            <div class="mprod__actions">
-              {%- if product.available -%}
-                <button type="submit" name="add" class="btn btn--primary mprod__add">Add to Bag</button>
-              {%- else -%}
-                <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
-              {%- endif -%}
-              <button class="mprod__wish-icon" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ cv.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist" title="Save to wishlist">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
-              </button>
-            </div>
+          <div class="mprod__qty">
+            <label for="mprod-quantity" class="mprod__field-label">Quantity</label>
+            <input type="number" id="mprod-quantity" name="quantity" value="1" min="1" class="mprod__qty-input">
           </div>
+
+          {%- if product.available -%}
+            <button type="submit" name="add" class="btn btn--primary mprod__add">Add to Bag</button>
+          {%- else -%}
+            <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
+          {%- endif -%}
         {%- endform -%}
 
-        <ul class="mprod__trust">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>
-            <span>Pharmacist-formulated</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 2 12l9 9 11-11-1-8-8-1Z"/><circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/></svg>
-            <span>Hand-numbered</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
-            <span>Made in Houston</span>
-          </li>
-        </ul>
+        <button class="wish-btn mprod__wish" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ cv.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
+          <span>Save to wishlist</span>
+        </button>
 
-        <div class="mprod__accordion">
-          <div class="mprod__acc-item">
-            <button class="mprod__acc-q" type="button" aria-expanded="false" aria-controls="mprod-acc-ship">
-              <span>Shipping &amp; Returns</span>
-              <span class="mprod__acc-icon" aria-hidden="true">+</span>
-            </button>
-            <div class="mprod__acc-a" id="mprod-acc-ship">
-              <p>Complimentary shipping on orders over $120. Ships from Houston, TX within 1–2 business days. Unopened, hand-numbered bottles may be returned within 30 days of delivery.</p>
-            </div>
-          </div>
-        </div>
+        <ul class="mprod__trust">
+          <li>Pharmacist-formulated</li>
+          <li>Hand-numbered</li>
+          <li>Made in Houston</li>
+        </ul>
       </div>
 
     </div>
   </div>
 </section>
 
-<div class="mprod__sticky" id="mprodSticky">
-  <div class="mprod__sticky-inner">
-    {%- if product.featured_image -%}
-      <img src="{{ product.featured_image | image_url: width: 80 }}" alt="" width="40" height="40">
-    {%- endif -%}
-    <div class="mprod__sticky-info">
-      <span class="mprod__sticky-title">{{ product.title }}</span>
-      <span class="mprod__sticky-price">{{ cv.price | money }}</span>
-    </div>
-    <button type="submit" form="mprod-form" name="add" class="btn btn--primary mprod__sticky-btn" {% unless product.available %}disabled{% endunless %}>
-      {%- if product.available -%}Add to Bag{%- else -%}Sold Out{%- endif -%}
-    </button>
-  </div>
-</div>
-
 {% stylesheet %}
-.mprod { padding-top: clamp(20px, 3vw, 40px); }
-
-.mprod__crumb { display: flex; align-items: center; gap: 8px; margin-bottom: clamp(20px, 3vw, 32px); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--c-ink-mute); flex-wrap: wrap; }
-.mprod__crumb a { color: var(--c-ink-mute); transition: color .3s var(--ease-out); }
-.mprod__crumb a:hover { color: var(--c-forest); }
-.mprod__crumb span[aria-current] { color: var(--c-forest); }
-
+.mprod { padding-top: clamp(28px, 4vw, 56px); }
 .mprod__layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
-
-.mprod__frame { display: grid; grid-template-columns: 88px 1fr; gap: 16px; }
-.mprod__thumbs { display: flex; flex-direction: column; gap: 12px; max-height: 560px; overflow-y: auto; }
+.mprod__main { border-radius: 16px; overflow: hidden; background: var(--grad-cream); aspect-ratio: 1/1; }
+.mprod__main img, .mprod__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mprod__thumbs { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
 .mprod__thumb {
-  width: 76px; height: 76px; flex: 0 0 auto; border-radius: 10px; overflow: hidden;
+  width: 76px; height: 76px; border-radius: 10px; overflow: hidden;
   border: 1px solid var(--c-line-soft); cursor: pointer; padding: 0; background: none;
-  transition: border-color .3s var(--ease-out);
+  transition: border-color .3s;
 }
 .mprod__thumb.is-active { border-color: var(--c-forest); }
 .mprod__thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-.mprod__main { position: relative; border-radius: 16px; overflow: hidden; background: var(--grad-cream); aspect-ratio: 1/1; cursor: zoom-in; }
-.mprod__main img, .mprod__ph { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s var(--ease-out); }
-.mprod__main:hover img { transform: scale(1.5); }
-.mprod__badge { position: absolute !important; top: 14px; left: 14px; z-index: 2; }
-.mprod__badge--sold { top: auto; bottom: 14px; left: 14px; background: var(--c-forest); color: var(--c-cream); }
-
 .mprod__buy { position: sticky; top: 100px; }
 .mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
-.mprod__title { margin: 0 0 10px; }
-
-.mprod__rating { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; font-size: 13px; }
-.mprod__rating-stars { color: var(--c-tan); letter-spacing: .1em; font-size: 13px; }
-.mprod__rating-link { color: var(--c-ink-mute); text-underline-offset: 3px; }
-.mprod__rating-link:hover { color: var(--c-forest); }
-
+.mprod__title { margin: 0 0 16px; }
 .mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: 40ch; }
-
-.mprod__price-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--c-line-soft); }
-.mprod__price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.mprod__price-now { font-size: 26px; color: var(--c-forest); font-weight: 500; }
-.mprod__price-was { font-size: 16px; color: var(--c-ink-mute); }
-.mprod__save { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; background: var(--c-tan-3); color: var(--c-forest-2); padding: 4px 10px; border-radius: 999px; }
-.mprod__stock { display: flex; align-items: center; gap: 7px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--c-ink-mute); }
-.mprod__stock-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c-ink-mute); flex: 0 0 auto; }
-.mprod__stock.is-in { color: #3f6b4c; }
-.mprod__stock.is-in .mprod__stock-dot { background: #4c8a5e; }
-.mprod__stock.is-out { color: #a3443b; }
-.mprod__stock.is-out .mprod__stock-dot { background: #b5544a; }
+.mprod__price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; }
+.mprod__price-now { font-size: 24px; color: var(--c-forest); font-weight: 500; }
+.mprod__price-was { font-size: 17px; color: var(--c-ink-mute); }
 
 .mprod__form { display: flex; flex-direction: column; gap: 18px; }
 .mprod__field-label { display: block; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-ink-mute); margin-bottom: 8px; }
-.mprod__select {
+.mprod__select, .mprod__qty-input {
   padding: 12px 14px; border: 1px solid var(--c-line-soft); border-radius: 8px;
   background: var(--c-cream); font-size: 15px; color: var(--c-forest); font-family: var(--ff-body);
-  width: 100%; appearance: none;
 }
-
-.mprod__row { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
-.mprod__stepper { display: flex; align-items: stretch; border: 1px solid var(--c-line-soft); border-radius: 8px; overflow: hidden; width: fit-content; }
-.mprod__step { width: 38px; border: 0; background: var(--c-cream); color: var(--c-forest); font-size: 17px; cursor: pointer; transition: background .25s var(--ease-out); }
-.mprod__step:hover { background: var(--c-cream-2); }
-.mprod__qty-input {
-  width: 52px; border: 0; border-left: 1px solid var(--c-line-soft); border-right: 1px solid var(--c-line-soft);
-  text-align: center; font-size: 15px; color: var(--c-forest); background: var(--c-cream); font-family: var(--ff-body);
-  -moz-appearance: textfield;
-}
-.mprod__qty-input::-webkit-outer-spin-button, .mprod__qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-
-.mprod__actions { display: flex; gap: 10px; flex: 1 1 220px; }
-.mprod__add { flex: 1; margin: 0; }
+.mprod__select { width: 100%; appearance: none; }
+.mprod__qty-input { width: 100px; }
+.mprod__add { width: 100%; margin-top: 6px; }
 .mprod__add[disabled] { opacity: .5; cursor: default; }
-.mprod__wish-icon {
-  flex: 0 0 auto; width: 48px; height: 48px; border-radius: 8px; border: 1px solid var(--c-line-soft);
-  background: var(--c-cream); display: grid; place-items: center; cursor: pointer; color: var(--c-forest);
-  transition: border-color .3s var(--ease-out), color .3s var(--ease-out);
-}
-.mprod__wish-icon svg { width: 19px; height: 19px; }
-.mprod__wish-icon.is-active { color: #b5544a; border-color: #b5544a; }
 
 .mprod__trust {
   list-style: none; margin: 26px 0 0; padding: 22px 0 0; border-top: 1px solid var(--c-line-soft);
-  display: flex; flex-wrap: wrap; gap: 16px 26px;
+  display: flex; flex-wrap: wrap; gap: 8px 20px;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute);
 }
-.mprod__trust li { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-ink-mute); }
-.mprod__trust svg { width: 17px; height: 17px; color: var(--c-tan-2); flex: 0 0 auto; }
-
-.mprod__accordion { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
-.mprod__acc-item { border: 1px solid var(--c-line-soft); border-radius: 10px; overflow: hidden; background: var(--c-cream); }
-.mprod__acc-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 18px; background: none; border: 0; font-family: var(--ff-body); font-size: 13.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--c-forest); cursor: pointer; }
-.mprod__acc-icon { font-size: 16px; line-height: 1; transition: transform .3s var(--ease-out); }
-.mprod__acc-q[aria-expanded="true"] .mprod__acc-icon { transform: rotate(45deg); }
-.mprod__acc-a { max-height: 0; overflow: hidden; transition: max-height .35s var(--ease-out); }
-.mprod__acc-a.is-open { max-height: 220px; }
-.mprod__acc-a p { margin: 0; padding: 0 18px 16px; font-size: 13.5px; line-height: 1.7; color: var(--c-ink-soft); }
-
-.mprod__sticky {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
-  background: var(--c-paper); border-top: 1px solid var(--c-line-soft);
-  box-shadow: 0 -10px 24px -18px rgba(26,58,45,.3);
-  transform: translateY(100%); transition: transform .35s var(--ease-out);
-  display: none;
-}
-.mprod__sticky.is-visible { transform: translateY(0); }
-.mprod__sticky-inner { max-width: var(--maxw); margin: 0 auto; display: flex; align-items: center; gap: 14px; padding: 12px var(--pad-x); }
-.mprod__sticky-inner img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex: 0 0 auto; }
-.mprod__sticky-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
-.mprod__sticky-title { font-size: 13px; color: var(--c-forest); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mprod__sticky-price { font-size: 12px; color: var(--c-ink-mute); }
-.mprod__sticky-btn { flex: 0 0 auto; padding: 10px 24px; margin: 0; }
+.mprod__trust li { position: relative; padding-left: 18px; }
+.mprod__trust li::before { content: '·'; position: absolute; left: 4px; color: var(--c-tan); font-size: 18px; line-height: .9; }
 
 @media (max-width: 860px) {
   .mprod__layout { grid-template-columns: 1fr; }
   .mprod__buy { position: static; }
-  .mprod__sticky { display: block; }
-}
-
-@media (max-width: 640px) {
-  .mprod__frame { grid-template-columns: 1fr; }
-  .mprod__thumbs { flex-direction: row; overflow-x: auto; max-height: none; order: 2; margin-top: 14px; }
-  .mprod__main { order: 1; cursor: default; }
-  .mprod__main:hover img { transform: none; }
 }
 {% endstylesheet %}
 
 {% javascript %}
 (function () {
-  var main = document.getElementById('mprodMain');
-  var mainImg = document.getElementById('mprod-main-image');
+  var main = document.getElementById('mprod-main-image');
   var thumbs = document.querySelectorAll('.mprod__thumb');
   thumbs.forEach(function (t) {
     t.addEventListener('click', function () {
       var full = t.getAttribute('data-full');
-      if (mainImg && full) mainImg.src = full;
+      if (main && full) main.src = full;
       thumbs.forEach(function (x) { x.classList.remove('is-active'); });
       t.classList.add('is-active');
     });
   });
 
-  // Cursor-following zoom on the main image
-  if (main && mainImg) {
-    main.addEventListener('mousemove', function (e) {
-      var rect = main.getBoundingClientRect();
-      var x = ((e.clientX - rect.left) / rect.width) * 100;
-      var y = ((e.clientY - rect.top) / rect.height) * 100;
-      mainImg.style.transformOrigin = x + '% ' + y + '%';
-    });
-    main.addEventListener('mouseleave', function () {
-      mainImg.style.transformOrigin = '50% 50%';
-    });
-  }
-
-  // Quantity stepper
-  var qtyInput = document.getElementById('mprod-quantity');
-  document.querySelectorAll('.mprod__step').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      if (!qtyInput) return;
-      var step = parseInt(btn.getAttribute('data-step'), 10);
-      var next = (parseInt(qtyInput.value, 10) || 1) + step;
-      qtyInput.value = Math.max(1, next);
-    });
-  });
-
-  // Keep price display in sync with selected variant (single-select variant case)
+  // Keep hidden/select variant id in sync with price display (single-select variant case)
   var select = document.getElementById('mprod-variant');
   if (select) {
     select.addEventListener('change', function () {
@@ -360,28 +174,6 @@
       var match = opt.textContent.match(/—\s*(.+?)(?:\s*\(|$)/);
       if (priceEl && match) priceEl.textContent = match[1].trim();
     });
-  }
-
-  // Accordion
-  document.querySelectorAll('.mprod__acc-q').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!open));
-      var panel = document.getElementById(btn.getAttribute('aria-controls'));
-      if (panel) panel.classList.toggle('is-open', !open);
-    });
-  });
-
-  // Sticky mobile add-to-bag bar — show once the main Add to Bag button scrolls out of view
-  var addBtn = document.querySelector('.mprod__add');
-  var sticky = document.getElementById('mprodSticky');
-  if (addBtn && sticky && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        sticky.classList.toggle('is-visible', !entry.isIntersecting);
-      });
-    }, { threshold: 0 });
-    io.observe(addBtn);
   }
 })();
 {% endjavascript %}

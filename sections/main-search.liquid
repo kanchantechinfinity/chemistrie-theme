@@ -24,10 +24,7 @@
                 <article class="pcard">
                   <a class="pcard__media" href="{{ item.url }}" aria-label="{{ item.title | escape }}">
                     {%- if item.featured_image -%}
-                      {{ item.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', class: 'pcard__img', alt: item.title }}
-                      {%- if item.images.size > 1 -%}
-                        {{ item.images[1] | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', class: 'pcard__img pcard__img--alt', alt: '' }}
-                      {%- endif -%}
+                      {{ item.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: item.title }}
                     {%- else -%}
                       <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ item.title | escape }}" loading="lazy" class="pcard__ph">
                       {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
