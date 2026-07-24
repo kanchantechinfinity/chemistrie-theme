@@ -511,65 +511,40 @@
       </div>
     </div>
 
-    {%- comment -%} ───── What's Inside / Full Ingredient List / Ingredient Spotlight — accordion ───── {%- endcomment -%}
-    <div class="pdet__block pdet__info-accordion">
-      <div class="pdet__acc-item">
-        <button type="button" class="pdet__acc-q" aria-expanded="false" aria-controls="pdet-acc-inside">
-          <span class="pdet__acc-label">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 3h6M10 3v5.5L5.5 17a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 8.5V3"/></svg>
-            What's Inside
-          </span>
-          <span class="pdet__acc-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pdet__acc-a" id="pdet-acc-inside">
-          <div class="pdet__acc-a-inner">
-            {%- if mf.whats_inside != blank -%}
-              <div class="rte">{{ mf.whats_inside }}</div>
-            {%- elsif pd_whats_inside != blank -%}
-              <p>{{ pd_whats_inside }}</p>
-            {%- else -%}
-              <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
-            {%- endif -%}
-          </div>
-        </div>
+    {%- comment -%} ───── What's Inside / Full Ingredient List / Ingredient Spotlight — tabs ───── {%- endcomment -%}
+    <div class="pdet__block pdet__tabs">
+      <div class="pdet__tabs-nav" role="tablist">
+        <button type="button" class="pdet__tab is-active" role="tab" aria-selected="true" aria-controls="pdet-tab-inside">What's Inside</button>
+        <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-inci">Full Ingredient List</button>
+        {%- if pd_spotlight != blank -%}
+          <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-spotlight">Ingredient Spotlight</button>
+        {%- endif -%}
       </div>
 
-      <div class="pdet__acc-item">
-        <button type="button" class="pdet__acc-q" aria-expanded="false" aria-controls="pdet-acc-inci">
-          <span class="pdet__acc-label">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 4h9l3 3v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M9 10h6M9 14h6M9 18h3"/></svg>
-            Full Ingredient List
-          </span>
-          <span class="pdet__acc-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pdet__acc-a" id="pdet-acc-inci">
-          <div class="pdet__acc-a-inner">
-            {%- if mf.inci != blank -%}
-              <p class="pdet__inci">{{ mf.inci }}</p>
-            {%- elsif pd_inci != blank -%}
-              <p class="pdet__inci">{{ pd_inci }}</p>
-            {%- else -%}
-              <p class="pdet__inci">Full INCI ingredient list is printed on every hand-numbered bottle. Contact us for a complete breakdown before purchase.</p>
-            {%- endif -%}
-          </div>
-        </div>
+      <div class="pdet__tab-panel is-active" id="pdet-tab-inside" role="tabpanel">
+        {%- if mf.whats_inside != blank -%}
+          <div class="rte">{{ mf.whats_inside }}</div>
+        {%- elsif pd_whats_inside != blank -%}
+          <p>{{ pd_whats_inside }}</p>
+        {%- else -%}
+          <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
+        {%- endif -%}
+      </div>
+
+      <div class="pdet__tab-panel" id="pdet-tab-inci" role="tabpanel">
+        {%- if mf.inci != blank -%}
+          <p class="pdet__inci">{{ mf.inci }}</p>
+        {%- elsif pd_inci != blank -%}
+          <p class="pdet__inci">{{ pd_inci }}</p>
+        {%- else -%}
+          <p class="pdet__inci">Full INCI ingredient list is printed on every hand-numbered bottle. Contact us for a complete breakdown before purchase.</p>
+        {%- endif -%}
       </div>
 
       {%- if pd_spotlight != blank -%}
-        <div class="pdet__acc-item">
-          <button type="button" class="pdet__acc-q" aria-expanded="false" aria-controls="pdet-acc-spotlight">
-            <span class="pdet__acc-label">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg>
-              Ingredient Spotlight
-            </span>
-            <span class="pdet__acc-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="pdet__acc-a" id="pdet-acc-spotlight">
-            <div class="pdet__acc-a-inner">
-              <div class="pdet__ing-grid">
-                {{ pd_spotlight }}
-              </div>
-            </div>
+        <div class="pdet__tab-panel" id="pdet-tab-spotlight" role="tabpanel">
+          <div class="pdet__ing-grid">
+            {{ pd_spotlight }}
           </div>
         </div>
       {%- endif -%}
@@ -651,24 +626,19 @@
   .pdet__founder-photo { min-height: 240px; order: -1; }
 }
 
-/* What's Inside / Full Ingredient List / Ingredient Spotlight — accordion (matches the right-column accordion in main-product.liquid) */
-.pdet__info-accordion { border-top: 1px solid var(--c-line-soft); }
-.pdet__acc-item { border-bottom: 1px solid var(--c-line-soft); }
-.pdet__acc-q {
-  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 22px 4px; background: none; border: 0; cursor: pointer;
-  font-family: var(--ff-body); font-size: 13px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--c-forest); transition: color .3s var(--ease-out);
+/* What's Inside / Full Ingredient List / Ingredient Spotlight — tabs */
+.pdet__tabs-nav { display: flex; gap: clamp(24px, 3vw, 40px); border-bottom: 1px solid var(--c-line-soft); margin-bottom: 28px; overflow-x: auto; }
+.pdet__tab {
+  position: relative; flex: 0 0 auto; padding: 4px 0 16px; background: none; border: 0; cursor: pointer;
+  font-family: var(--ff-body); font-size: 14px; font-weight: 500; color: var(--c-ink-mute);
+  white-space: nowrap; transition: color .3s var(--ease-out);
 }
-.pdet__acc-q:hover { color: var(--c-tan-2); }
-.pdet__acc-label { display: flex; align-items: center; gap: 12px; }
-.pdet__acc-label svg { flex: 0 0 auto; color: var(--c-tan-2); }
-.pdet__acc-icon { flex: 0 0 auto; font-size: 19px; line-height: 1; color: var(--c-ink-mute); transition: transform .3s var(--ease-out); }
-.pdet__acc-q[aria-expanded="true"] .pdet__acc-icon { transform: rotate(45deg); }
-.pdet__acc-a { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease-out); }
-.pdet__acc-a.is-open { max-height: 1400px; }
-.pdet__acc-a-inner { padding: 0 4px 26px; }
-.pdet__acc-a-inner .pdet__ing-grid { margin-top: 4px; }
+.pdet__tab:hover { color: var(--c-forest); }
+.pdet__tab.is-active { color: var(--c-forest); }
+.pdet__tab.is-active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-forest); }
+.pdet__tab-panel { display: none; }
+.pdet__tab-panel.is-active { display: block; }
+.pdet__tab-panel .pdet__ing-grid { margin-top: 4px; }
 
 /* Customer review cards */
 .pdet__review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); margin-top: 28px; }
@@ -746,12 +716,21 @@ document.querySelectorAll('.pfaq__q').forEach(function (btn) {
   });
 });
 
-document.querySelectorAll('.pdet__acc-q').forEach(function (btn) {
-  btn.addEventListener('click', function () {
-    var open = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!open));
-    var panel = document.getElementById(btn.getAttribute('aria-controls'));
-    if (panel) panel.classList.toggle('is-open', !open);
+document.querySelectorAll('.pdet__tabs-nav').forEach(function (nav) {
+  var tabs = nav.querySelectorAll('.pdet__tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var panel = document.getElementById(tab.getAttribute('aria-controls'));
+      tabs.forEach(function (t) {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+        var p = document.getElementById(t.getAttribute('aria-controls'));
+        if (p) p.classList.remove('is-active');
+      });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+      if (panel) panel.classList.add('is-active');
+    });
   });
 });
 {% endjavascript %}

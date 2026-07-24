@@ -353,7 +353,7 @@
    own intended top spacing due to equal specificity + later file load order — pin it down with
    a compound selector so it always wins regardless of stylesheet order. */
 .page-section.mprod { padding-top: clamp(20px, 3vw, 40px); }
-.mprod__layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
+.mprod__layout { display: grid; grid-template-columns: minmax(280px, 440px) 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
 .mprod__main { position: relative; border-radius: 16px; overflow: hidden; background: var(--grad-cream); aspect-ratio: 1/1; }
 .mprod__main img, .mprod__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
 .mprod__nav {
@@ -383,11 +383,9 @@
 .mprod__buy {
   position: sticky; top: 100px; align-self: start;
   max-height: calc(100vh - 120px); overflow-y: auto;
-  padding-right: 6px; scrollbar-width: thin; scrollbar-color: var(--c-tan) transparent;
+  scrollbar-width: none;
 }
-.mprod__buy::-webkit-scrollbar { width: 6px; }
-.mprod__buy::-webkit-scrollbar-track { background: transparent; }
-.mprod__buy::-webkit-scrollbar-thumb { background: var(--c-tan); border-radius: 999px; }
+.mprod__buy::-webkit-scrollbar { display: none; }
 .mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
 .mprod__title { margin: 0 0 16px; }
 .mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: 40ch; }
@@ -432,7 +430,7 @@
 @media (max-width: 860px) {
   .mprod__layout { grid-template-columns: 1fr; }
   .mprod__gallery { position: static; }
-  .mprod__buy { position: static; max-height: none; overflow-y: visible; padding-right: 0; }
+  .mprod__buy { position: static; max-height: none; overflow-y: visible; }
 }
 
 /* Left-column accordion: Routine Placement / The Full Story / Warnings */
