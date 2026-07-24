@@ -2401,8 +2401,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: var(--c-tan-3);
   box-shadow: 0 24px 40px -22px rgba(26,58,45,.22);
 }
-.reel__media svg { width: 100%; height: 100%; display: block; transition: transform .8s var(--ease-out); }
-.reel:hover .reel__media svg { transform: scale(1.05); }
+.reel__media svg,
+.reel__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s var(--ease-out); }
+.reel:hover .reel__media svg,
+.reel:hover .reel__media img { transform: scale(1.05); }
 .reel__media::after {
   content: "";
   position: absolute;

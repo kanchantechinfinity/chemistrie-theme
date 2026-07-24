@@ -18,21 +18,8 @@
         <p>{{ section.settings.chapter_1_body }}</p>
       </div>
       <div class="story__chapter-photo">
-        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="st1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dec39a"/><stop offset="1" stop-color="#8a6f48"/></linearGradient>
-          </defs>
-          <rect width="400" height="500" fill="url(#st1)"/>
-          <rect y="320" width="400" height="180" fill="#1a3a2d" opacity=".7"/>
-          <rect x="190" y="180" width="20" height="160" fill="#0e2118"/>
-          <rect x="100" y="170" width="200" height="10" rx="5" fill="#0e2118"/>
-          <circle cx="120" cy="200" r="22" fill="#c8aa7a"/>
-          <circle cx="280" cy="200" r="22" fill="#c8aa7a"/>
-          <line x1="120" y1="178" x2="120" y2="200" stroke="#0e2118" stroke-width="2"/>
-          <line x1="280" y1="178" x2="280" y2="200" stroke="#0e2118" stroke-width="2"/>
-          <ellipse cx="200" cy="340" rx="100" ry="6" fill="#000" opacity=".3"/>
-          <text x="40" y="470" font-family="JetBrains Mono,monospace" font-size="9" fill="#c8aa7a" letter-spacing="2">CHAPTER I · {{ section.settings.chapter_1_year }}</text>
-        </svg>
+        <img src="{{ 'stock-lab.jpg' | asset_url }}" alt="{{ section.settings.chapter_1_heading | escape }}" loading="lazy">
+        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       </div>
     </li>
 
@@ -46,21 +33,8 @@
         <p>{{ section.settings.chapter_2_body }}</p>
       </div>
       <div class="story__chapter-photo">
-        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="st2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d6b54"/><stop offset="1" stop-color="#1a3a2d"/></linearGradient>
-          </defs>
-          <rect width="400" height="500" fill="url(#st2)"/>
-          <ellipse cx="200" cy="420" rx="120" ry="14" fill="#000" opacity=".4"/>
-          <rect x="174" y="120" width="52" height="60" rx="4" fill="#c8aa7a"/>
-          <path d="M150 180 Q150 168 180 168 H220 Q250 168 250 180 V410 Q250 432 220 432 H180 Q150 432 150 410 Z" fill="#0e2118"/>
-          <rect x="160" y="260" width="80" height="120" fill="#f9f4ed"/>
-          <text x="200" y="290" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="14" fill="#1a3a2d">No. 01</text>
-          <line x1="172" y1="300" x2="228" y2="300" stroke="#c8aa7a" stroke-width="0.5"/>
-          <text x="200" y="320" text-anchor="middle" font-family="Cormorant Garamond" font-size="10" letter-spacing="2" fill="#1a3a2d">RENEWAL</text>
-          <text x="200" y="334" text-anchor="middle" font-family="Cormorant Garamond" font-size="10" letter-spacing="2" fill="#1a3a2d">SERUM</text>
-          <text x="40" y="470" font-family="JetBrains Mono,monospace" font-size="9" fill="#c8aa7a" letter-spacing="2">CHAPTER II · {{ section.settings.chapter_2_year }}</text>
-        </svg>
+        <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ section.settings.chapter_2_heading | escape }}" loading="lazy">
+        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       </div>
     </li>
 
@@ -74,24 +48,8 @@
         <p>{{ section.settings.chapter_3_body }}</p>
       </div>
       <div class="story__chapter-photo">
-        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="st3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ebe3d2"/><stop offset="1" stop-color="#c8aa7a"/></linearGradient>
-          </defs>
-          <rect width="400" height="500" fill="url(#st3)"/>
-          <g transform="rotate(-3 200 250)">
-            <rect x="60" y="140" width="280" height="240" fill="#f9f4ed"/>
-            <line x1="80" y1="190" x2="320" y2="190" stroke="#1a3a2d" stroke-width="1"/>
-            <text x="80" y="184" font-family="Cormorant Garamond" font-style="italic" font-size="18" fill="#1a3a2d">— Waiting List, Vol. III</text>
-            <text x="80" y="218" font-family="Cormorant Garamond" font-style="italic" font-size="13" fill="#1a3a2d">1.  Mrs. Eleanor R. — Houston</text>
-            <text x="80" y="242" font-family="Cormorant Garamond" font-style="italic" font-size="13" fill="#1a3a2d">2.  Priya S. — Austin</text>
-            <text x="80" y="266" font-family="Cormorant Garamond" font-style="italic" font-size="13" fill="#1a3a2d">3.  Camille D. — New Orleans</text>
-            <text x="80" y="290" font-family="Cormorant Garamond" font-style="italic" font-size="13" fill="#1a3a2d">4.  Marisol M. — Houston</text>
-            <text x="80" y="314" font-family="Cormorant Garamond" font-style="italic" font-size="13" fill="#1a3a2d">5.  Aanya P. — Dallas</text>
-            <text x="80" y="338" font-family="Cormorant Garamond" font-style="italic" font-size="13" fill="#1a3a2d">6.  Linnea H. — Houston</text>
-          </g>
-          <text x="40" y="470" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a3a2d" letter-spacing="2">CHAPTER III · {{ section.settings.chapter_3_year }}</text>
-        </svg>
+        <img src="{{ 'stock-note.jpg' | asset_url }}" alt="{{ section.settings.chapter_3_heading | escape }}" loading="lazy">
+        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       </div>
     </li>
 
@@ -105,17 +63,8 @@
         <p>{{ section.settings.chapter_4_body }}</p>
       </div>
       <div class="story__chapter-photo">
-        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="st4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e2118"/><stop offset="1" stop-color="#1a3a2d"/></linearGradient>
-          </defs>
-          <rect width="400" height="500" fill="url(#st4)"/>
-          <text x="200" y="230" text-anchor="middle" font-family="Cormorant Garamond" font-weight="500" font-size="38" fill="#f9f4ed" letter-spacing="12">CHEMISTRIE</text>
-          <line x1="120" y1="260" x2="280" y2="260" stroke="#c8aa7a" stroke-width="0.5"/>
-          <text x="200" y="290" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="16" fill="#c8aa7a">est. Houston, {{ section.settings.chapter_4_year }}</text>
-          <text x="200" y="320" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#dec39a" letter-spacing="3">A PHARMACIST'S MAISON</text>
-          <text x="40" y="470" font-family="JetBrains Mono,monospace" font-size="9" fill="#c8aa7a" letter-spacing="2">CHAPTER IV · {{ section.settings.chapter_4_year }}</text>
-        </svg>
+        <img src="{{ 'stock-packaging.jpg' | asset_url }}" alt="{{ section.settings.chapter_4_heading | escape }}" loading="lazy">
+        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       </div>
     </li>
 
@@ -133,20 +82,8 @@
         </a>
       </div>
       <div class="story__chapter-photo">
-        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="st5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c8f7b"/><stop offset="1" stop-color="#1a3a2d"/></linearGradient>
-          </defs>
-          <rect width="400" height="500" fill="url(#st5)"/>
-          <rect y="380" width="400" height="20" fill="#0e2118"/>
-          <g transform="translate(50 220)"><rect width="36" height="160" rx="3" fill="#1a3a2d"/><rect x="4" y="70" width="28" height="56" fill="#f9f4ed"/></g>
-          <g transform="translate(110 200)"><rect width="36" height="180" rx="3" fill="#3d6b54"/><rect x="4" y="80" width="28" height="60" fill="#f9f4ed"/></g>
-          <g transform="translate(170 230)"><rect width="36" height="150" rx="3" fill="#c8aa7a"/><rect x="4" y="60" width="28" height="56" fill="#f9f4ed"/></g>
-          <g transform="translate(230 210)"><rect width="36" height="170" rx="3" fill="#1a3a2d"/><rect x="4" y="70" width="28" height="60" fill="#f9f4ed"/></g>
-          <g transform="translate(290 240)"><rect width="36" height="140" rx="3" fill="#0e2118"/><rect x="4" y="60" width="28" height="50" fill="#f9f4ed"/></g>
-          <ellipse cx="200" cy="400" rx="180" ry="6" fill="#000" opacity=".5"/>
-          <text x="40" y="470" font-family="JetBrains Mono,monospace" font-size="9" fill="#c8aa7a" letter-spacing="2">CHAPTER V · {{ section.settings.chapter_5_year }}</text>
-        </svg>
+        <img src="{{ 'stock-lineup.jpg' | asset_url }}" alt="{{ section.settings.chapter_5_heading | escape }}" loading="lazy">
+        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       </div>
     </li>
 

@@ -5,30 +5,24 @@
       {% if section.settings.founder1_image != blank %}
         <img src="{{ section.settings.founder1_image | image_url: width: 600 }}" alt="{{ section.settings.founder1_name | escape }}" loading="lazy">
       {% else %}
-      <div class="founders__ph">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-        <span>Add photo</span>
-      </div>
+        <img src="{{ 'founder-1.jpg' | asset_url }}" alt="{{ section.settings.founder1_name | escape }}" loading="lazy">
+        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       {% endif %}
     </div>
     <div class="founders__photo founders__photo--b">
       {% if section.settings.founder2_image != blank %}
         <img src="{{ section.settings.founder2_image | image_url: width: 600 }}" alt="{{ section.settings.founder2_name | escape }}" loading="lazy">
       {% else %}
-      <div class="founders__ph">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-        <span>Add photo</span>
-      </div>
+        <img src="{{ 'founder-2.jpg' | asset_url }}" alt="{{ section.settings.founder2_name | escape }}" loading="lazy">
+        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       {% endif %}
     </div>
     <div class="founders__photo founders__photo--c">
       {% if section.settings.founder3_image != blank %}
         <img src="{{ section.settings.founder3_image | image_url: width: 600 }}" alt="{{ section.settings.founder3_name | escape }}" loading="lazy">
       {% else %}
-      <div class="founders__ph">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-        <span>Add photo</span>
-      </div>
+        <img src="{{ 'founder-3.jpg' | asset_url }}" alt="{{ section.settings.founder3_name | escape }}" loading="lazy">
+        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       {% endif %}
     </div>
     <div class="founders__caption">
