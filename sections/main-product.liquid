@@ -7,6 +7,62 @@
   {%- if benefit != blank -%}{%- assign benefit = benefit | append: '.' -%}{%- endif -%}
 {%- endif -%}
 
+{%- comment -%} Routine placement + warnings for the left-column accordion (mirrors product-details.liquid's pd_key match — Shopify sections don't share Liquid scope, so this is intentionally duplicated) {%- endcomment -%}
+{%- liquid
+  assign _ph = product.handle | downcase
+  assign _pt = product.title | downcase
+  assign pd_key = ''
+  if _ph contains 'velvet' or _pt contains 'velvet'
+    assign pd_key = 'velvet'
+  elsif _ph contains 'aura' or _pt contains 'aura'
+    assign pd_key = 'aura'
+  elsif _ph contains 'cashmere' or _pt contains 'cashmere'
+    assign pd_key = 'cashmere'
+  elsif _ph contains 'silken' or _pt contains 'silken'
+    assign pd_key = 'silken'
+  endif
+-%}
+{%- case pd_key -%}
+  {%- when 'velvet' -%}
+    {%- assign pd_routine_am = 'Velvet (Cleanse) → Lumina (Treat) → Cashmere (Moisturize) → SPF (Protect)' -%}
+    {%- assign pd_routine_pm = 'Velvet (Cleanse) → Aura (Renew)' -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+    </ul>{%- endcapture -%}
+  {%- when 'aura' -%}
+    {%- assign pd_routine_am = 'Velvet (Cleanse) → Vitamin C Serum (coming soon) → Aura (Moisturize) → SPF (coming soon)' -%}
+    {%- assign pd_routine_pm = 'Velvet (Cleanse) → Hydrating Serum (coming soon) → Aura (Moisturize) → Eye Cream (coming soon)' -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+      <li>Patch testing recommended before first use.</li>
+    </ul>{%- endcapture -%}
+  {%- when 'cashmere' -%}
+    {%- assign pd_routine_am = 'Velvet → Lumina → Cashmere → SPF' -%}
+    {%- assign pd_routine_pm = 'Velvet → Aura (Cashmere may also be layered in the evening if additional hydration is desired.)' -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+    </ul>{%- endcapture -%}
+  {%- when 'silken' -%}
+    {%- assign pd_routine_am = 'Velvet → Lumina → Cashmere → SPF (apply Silken to targeted areas after cleansing and before moisturizer)' -%}
+    {%- assign pd_routine_pm = 'Velvet → Aura (apply Silken to targeted areas after cleansing and before moisturizer)' -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Do not apply to open wounds or broken skin.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+    </ul>{%- endcapture -%}
+{%- endcase -%}
+
 <section class="page-section mprod">
   <div class="page-section__inner">
     <div class="mprod__layout">
@@ -24,6 +80,14 @@
             <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" class="mprod__ph">
             {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
           {%- endif -%}
+          {%- if product.images.size > 1 -%}
+            <button type="button" class="mprod__nav mprod__nav--prev" aria-label="Previous image">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <button type="button" class="mprod__nav mprod__nav--next" aria-label="Next image">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          {%- endif -%}
         </div>
         {%- if product.images.size > 1 -%}
           <div class="mprod__thumbs">
@@ -36,6 +100,62 @@
                 <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" width="160" height="160" loading="lazy">
               </button>
             {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if pd_routine_am != blank or pd_routine_pm != blank or product.description != blank or pd_warnings != blank -%}
+          <div class="mprod__info-accordion">
+            {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
+              <div class="mprod__acc-item">
+                <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-routine">
+                  <span class="mprod__acc-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v4M12 17v4M4.2 7l3.5 2M16.3 15l3.5 2M4.2 17l3.5-2M16.3 9l3.5-2"/><circle cx="12" cy="12" r="3.2"/></svg>
+                    Routine Placement
+                  </span>
+                  <span class="mprod__acc-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="mprod__acc-a" id="mprod-acc-routine">
+                  <div class="mprod__acc-a-inner">
+                    {%- if pd_routine_am != blank -%}
+                      <p><strong>Morning —</strong> {{ pd_routine_am }}</p>
+                    {%- endif -%}
+                    {%- if pd_routine_pm != blank -%}
+                      <p><strong>Evening —</strong> {{ pd_routine_pm }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- if product.description != blank -%}
+              <div class="mprod__acc-item">
+                <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-story">
+                  <span class="mprod__acc-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 4h9l3 3v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M9 10h6M9 14h6M9 18h3"/></svg>
+                    The Full Story
+                  </span>
+                  <span class="mprod__acc-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="mprod__acc-a" id="mprod-acc-story">
+                  <div class="rte mprod__acc-a-inner">{{ product.description }}</div>
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- if pd_warnings != blank -%}
+              <div class="mprod__acc-item">
+                <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-warnings">
+                  <span class="mprod__acc-label">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg>
+                    Warnings
+                  </span>
+                  <span class="mprod__acc-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="mprod__acc-a" id="mprod-acc-warnings">
+                  <div class="mprod__acc-a-inner">{{ pd_warnings }}</div>
+                </div>
+              </div>
+            {%- endif -%}
           </div>
         {%- endif -%}
       </div>
@@ -115,8 +235,22 @@
    a compound selector so it always wins regardless of stylesheet order. */
 .page-section.mprod { padding-top: clamp(20px, 3vw, 40px); }
 .mprod__layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
-.mprod__main { border-radius: 16px; overflow: hidden; background: var(--grad-cream); aspect-ratio: 1/1; }
+.mprod__main { position: relative; border-radius: 16px; overflow: hidden; background: var(--grad-cream); aspect-ratio: 1/1; }
 .mprod__main img, .mprod__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mprod__nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%; border: 0;
+  background: rgba(249,244,237,.9); color: var(--c-forest);
+  display: grid; place-items: center; cursor: pointer;
+  opacity: 0; transition: opacity .3s var(--ease-out), background .3s var(--ease-out);
+  backdrop-filter: blur(6px);
+}
+.mprod__main:hover .mprod__nav { opacity: 1; }
+.mprod__nav:hover { background: var(--c-cream); }
+.mprod__nav--prev { left: 14px; }
+.mprod__nav--next { right: 14px; }
+@media (hover: none) { .mprod__nav { opacity: 1; } }
+
 .mprod__thumbs { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
 .mprod__thumb {
   width: 76px; height: 76px; border-radius: 10px; overflow: hidden;
@@ -172,19 +306,60 @@
   .mprod__layout { grid-template-columns: 1fr; }
   .mprod__buy { position: static; }
 }
+
+/* Left-column accordion: Routine Placement / The Full Story / Warnings */
+.mprod__info-accordion { margin-top: clamp(28px, 3vw, 44px); border-top: 1px solid var(--c-line-soft); }
+.mprod__acc-item { border-bottom: 1px solid var(--c-line-soft); }
+.mprod__acc-q {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 18px 2px; background: none; border: 0; cursor: pointer;
+  font-family: var(--ff-body); font-size: 12.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--c-forest); transition: color .3s var(--ease-out);
+}
+.mprod__acc-q:hover { color: var(--c-tan-2); }
+.mprod__acc-label { display: flex; align-items: center; gap: 12px; }
+.mprod__acc-label svg { flex: 0 0 auto; color: var(--c-tan-2); }
+.mprod__acc-icon { flex: 0 0 auto; font-size: 18px; line-height: 1; color: var(--c-ink-mute); transition: transform .3s var(--ease-out); }
+.mprod__acc-q[aria-expanded="true"] .mprod__acc-icon { transform: rotate(45deg); }
+.mprod__acc-a { max-height: 0; overflow: hidden; transition: max-height .35s var(--ease-out); }
+.mprod__acc-a.is-open { max-height: 600px; }
+.mprod__acc-a-inner { padding: 0 2px 20px; font-size: 14px; line-height: 1.7; color: var(--c-ink-soft); }
+.mprod__acc-a-inner p { margin: 0 0 10px; }
+.mprod__acc-a-inner p:last-child { margin-bottom: 0; }
+.mprod__acc-a-inner strong { color: var(--c-forest); font-weight: 600; }
 {% endstylesheet %}
 
 {% javascript %}
 (function () {
   var main = document.getElementById('mprod-main-image');
   var thumbs = document.querySelectorAll('.mprod__thumb');
-  thumbs.forEach(function (t) {
-    t.addEventListener('click', function () {
-      var full = t.getAttribute('data-full');
-      if (main && full) main.src = full;
-      thumbs.forEach(function (x) { x.classList.remove('is-active'); });
-      t.classList.add('is-active');
-    });
+
+  function activate(index) {
+    var t = thumbs[index];
+    if (!t) return;
+    var full = t.getAttribute('data-full');
+    if (main && full) main.src = full;
+    thumbs.forEach(function (x) { x.classList.remove('is-active'); });
+    t.classList.add('is-active');
+  }
+
+  thumbs.forEach(function (t, i) {
+    t.addEventListener('click', function () { activate(i); });
+  });
+
+  // Prev/next arrows on the main image, shown on hover — cycle through the same thumbnail list
+  var prevBtn = document.querySelector('.mprod__nav--prev');
+  var nextBtn = document.querySelector('.mprod__nav--next');
+  function currentIndex() {
+    var found = 0;
+    thumbs.forEach(function (t, i) { if (t.classList.contains('is-active')) found = i; });
+    return found;
+  }
+  if (prevBtn) prevBtn.addEventListener('click', function () {
+    activate((currentIndex() - 1 + thumbs.length) % thumbs.length);
+  });
+  if (nextBtn) nextBtn.addEventListener('click', function () {
+    activate((currentIndex() + 1) % thumbs.length);
   });
 
   // Keep hidden/select variant id in sync with price display (single-select variant case)
@@ -197,6 +372,16 @@
       if (priceEl && match) priceEl.textContent = match[1].trim();
     });
   }
+
+  // Left-column accordion (Routine Placement / The Full Story / Warnings)
+  document.querySelectorAll('.mprod__acc-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if (panel) panel.classList.toggle('is-open', !open);
+    });
+  });
 })();
 {% endjavascript %}
 
