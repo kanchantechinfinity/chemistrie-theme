@@ -212,14 +212,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .nav__icon:hover { background: rgba(26,58,45,.06); }
 .nav__bag {
-  display: flex; align-items: center; gap: 6px;
-  padding: 8px 14px 8px 16px;
+  display: flex; align-items: center; gap: 7px;
+  padding: 9px 13px;
   border: 1px solid var(--c-forest);
   border-radius: 999px;
-  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
   margin-left: 6px;
   transition: all .25s ease;
 }
+.nav__bag svg { width: 18px; height: 18px; }
 .nav__bag:hover { background: var(--c-forest); color: var(--c-cream); }
 .nav__bag-count {
   display: inline-grid; place-items: center;
@@ -2547,7 +2547,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .nav__links { display: none; }
   .nav__wordmark { font-size: 16px; letter-spacing: .32em; }
   .nav__icon { width: 34px; height: 34px; }
-  .nav__bag { padding: 7px 10px 7px 12px; font-size: 10px; }
+  .nav__bag { padding: 7px 10px; }
+  .nav__bag svg { width: 16px; height: 16px; }
   .nav__bag-count { width: 16px; height: 16px; font-size: 9px; }
   .nav__icon:first-of-type { display: none; } /* hide search to save space */
 
