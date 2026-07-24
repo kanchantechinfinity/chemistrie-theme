@@ -38,7 +38,8 @@
 
 /* ───────── Reset / base ───────── */
 * { box-sizing: border-box; }
-html { scroll-behavior: auto; }
+html { scroll-behavior: auto; scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
 body {
   margin: 0;
   font-family: var(--ff-body);
