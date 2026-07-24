@@ -152,54 +152,6 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-
-        {%- comment -%} ───── Left-column info box — same accordion styling as the buy-box one ───── {%- endcomment -%}
-        <div class="mprod__info-accordion">
-          <div class="mprod__acc-item">
-            <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-shipping">
-              <span class="mprod__acc-label">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
-                Shipping
-              </span>
-              <span class="mprod__acc-icon" aria-hidden="true">+</span>
-            </button>
-            <div class="mprod__acc-a" id="mprod-acc-shipping">
-              <div class="mprod__acc-a-inner">
-                <p>Complimentary shipping on orders over $120. Ships from Houston, TX within 1–2 business days.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="mprod__acc-item">
-            <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-returns">
-              <span class="mprod__acc-label">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
-                Returns &amp; Exchanges
-              </span>
-              <span class="mprod__acc-icon" aria-hidden="true">+</span>
-            </button>
-            <div class="mprod__acc-a" id="mprod-acc-returns">
-              <div class="mprod__acc-a-inner">
-                <p>Unopened, hand-numbered bottles may be returned within 30 days of delivery.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="mprod__acc-item">
-            <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-help">
-              <span class="mprod__acc-label">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/><path d="M12 9.5v3M12 15h.01"/></svg>
-                Need Help?
-              </span>
-              <span class="mprod__acc-icon" aria-hidden="true">+</span>
-            </button>
-            <div class="mprod__acc-a" id="mprod-acc-help">
-              <div class="mprod__acc-a-inner">
-                <p>Our pharmacists are on hand for formulation or routine questions — reach us any time through <a href="{{ routes.root_url }}pages/contact">Contact</a>.</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {%- comment -%} ───── RIGHT: buy box ───── {%- endcomment -%}
@@ -400,7 +352,7 @@
 /* .page-section's generic padding shorthand (up to 160px top) was winning over this section's
    own intended top spacing due to equal specificity + later file load order — pin it down with
    a compound selector so it always wins regardless of stylesheet order. */
-.page-section.mprod { padding-top: clamp(20px, 3vw, 40px); padding-bottom: clamp(20px, 3vw, 40px); }
+.page-section.mprod { padding-top: clamp(20px, 3vw, 40px); }
 .mprod__layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
 .mprod__main {
   position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 1/1;
