@@ -1,4 +1,5 @@
 {%- assign cv = product.selected_or_first_available_variant -%}
+{%- assign mf = product.metafields.custom -%}
 {%- comment -%} one-line benefit: metafield else first sentence of description {%- endcomment -%}
 {%- if product.metafields.custom.benefit != blank -%}
   {%- assign benefit = product.metafields.custom.benefit -%}
@@ -7,7 +8,7 @@
   {%- if benefit != blank -%}{%- assign benefit = benefit | append: '.' -%}{%- endif -%}
 {%- endif -%}
 
-{%- comment -%} Routine placement + warnings for the left-column accordion (mirrors product-details.liquid's pd_key match — Shopify sections don't share Liquid scope, so this is intentionally duplicated) {%- endcomment -%}
+{%- comment -%} Routine placement / warnings / feeling / benefits / how-to-use for the buy-box accordion (mirrors product-details.liquid's pd_key match — Shopify sections don't share Liquid scope, so this is intentionally duplicated) {%- endcomment -%}
 {%- liquid
   assign _ph = product.handle | downcase
   assign _pt = product.title | downcase
@@ -32,6 +33,19 @@
       <li>Discontinue use if irritation develops.</li>
       <li>Keep out of reach of children.</li>
     </ul>{%- endcapture -%}
+    {%- capture pd_feeling -%}Rich, dense foam that rinses away completely — no film, no residue. Skin feels clean, balanced, and refreshed, never tight or stripped.{%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Lifts away makeup, sunscreen, oil, and daily impurities completely</li>
+      <li>Rinses clean with no film or residue left behind</li>
+      <li>Prepares skin to receive everything that follows in the ritual</li>
+      <li>Suitable for normal, combination, dry, oily, and sensitive skin</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>Dispense one to two pumps into damp hands.</li>
+      <li>Massage gently over a damp face.</li>
+      <li>Rinse thoroughly.</li>
+      <li>Follow with, in the morning: Lumina, Cashmere, SPF. In the evening: Aura.</li>
+    </ol>{%- endcapture -%}
   {%- when 'aura' -%}
     {%- assign pd_routine_am = 'Velvet (Cleanse) → Vitamin C Serum (coming soon) → Aura (Moisturize) → SPF (coming soon)' -%}
     {%- assign pd_routine_pm = 'Velvet (Cleanse) → Hydrating Serum (coming soon) → Aura (Moisturize) → Eye Cream (coming soon)' -%}
@@ -42,6 +56,18 @@
       <li>Keep out of reach of children.</li>
       <li>Patch testing recommended before first use.</li>
     </ul>{%- endcapture -%}
+    {%- capture pd_feeling -%}Silky, creamy, fast-absorbing. Naturally blue, straight from the peptide complex itself — not a dye, not a design choice. A soft, velvety finish with no fragrance and no residue.{%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Deep hydration with a visibly smoother finish</li>
+      <li>Pharmacist-selected peptide complex built on the ExoBlue™ base</li>
+      <li>Fragrance-free and suitable for all skin types</li>
+      <li>Silky finish that absorbs completely and never feels heavy</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>Warm a small amount between your fingertips.</li>
+      <li>Press gently into skin — face and neck — until it disappears.</li>
+      <li>Follow with sunscreen. Every morning, without exception.</li>
+    </ol>{%- endcapture -%}
   {%- when 'cashmere' -%}
     {%- assign pd_routine_am = 'Velvet → Lumina → Cashmere → SPF' -%}
     {%- assign pd_routine_pm = 'Velvet → Aura (Cashmere may also be layered in the evening if additional hydration is desired.)' -%}
@@ -51,6 +77,18 @@
       <li>Discontinue use if irritation develops.</li>
       <li>Keep out of reach of children.</li>
     </ul>{%- endcapture -%}
+    {%- capture pd_feeling -%}Lightweight lotion. Silky, fast-absorbing, with an elegant slip. Non-greasy and comfortable for all-day wear — soft, hydrated, smooth, never sticky.{%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Provides lightweight daily hydration that absorbs quickly</li>
+      <li>Layers beautifully under sunscreen and under makeup</li>
+      <li>Leaves skin feeling soft and comfortable, never heavy</li>
+      <li>Suitable for all skin types, for everyday use</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>Use morning and evening.</li>
+      <li>Apply after serums.</li>
+      <li>Massage gently into face and neck until absorbed.</li>
+    </ol>{%- endcapture -%}
   {%- when 'silken' -%}
     {%- assign pd_routine_am = 'Velvet → Lumina → Cashmere → SPF (apply Silken to targeted areas after cleansing and before moisturizer)' -%}
     {%- assign pd_routine_pm = 'Velvet → Aura (apply Silken to targeted areas after cleansing and before moisturizer)' -%}
@@ -61,6 +99,18 @@
       <li>Discontinue use if irritation develops.</li>
       <li>Keep out of reach of children.</li>
     </ul>{%- endcapture -%}
+    {%- capture pd_feeling -%}A silky, lightweight gel. Smooth to apply, non-greasy, designed to create a breathable protective layer that stays comfortable through a full day of wear.{%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Helps improve the appearance of scars and uneven skin texture</li>
+      <li>Leaves skin feeling smooth, comfortable, and lastingly hydrated</li>
+      <li>Creates a breathable protective barrier suitable for daily use</li>
+      <li>Suitable for all skin types, on fully healed scars</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>Apply a thin layer directly to clean, fully healed scars.</li>
+      <li>Use morning and evening, as part of a consistent daily rhythm.</li>
+      <li>Allow the product to dry completely before applying additional skincare or sunscreen.</li>
+    </ol>{%- endcapture -%}
 {%- endcase -%}
 
 <section class="page-section mprod">
@@ -168,7 +218,7 @@
           <li>Made in Houston</li>
         </ul>
 
-        {%- if pd_routine_am != blank or pd_routine_pm != blank or product.description != blank or pd_warnings != blank -%}
+        {%- comment -%} Routine/Story/Warnings show only if there's content; Feeling/Benefits/How-to-Use always have a fallback, so the accordion always renders {%- endcomment -%}
           <div class="mprod__info-accordion">
             {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
               <div class="mprod__acc-item">
@@ -221,8 +271,77 @@
                 </div>
               </div>
             {%- endif -%}
+
+            <div class="mprod__acc-item">
+              <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-feeling">
+                <span class="mprod__acc-label">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-7-4.35-7-10.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 7 4.5C19 16.65 12 21 12 21Z"/></svg>
+                  The Feeling
+                </span>
+                <span class="mprod__acc-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="mprod__acc-a" id="mprod-acc-feeling">
+                <div class="mprod__acc-a-inner">
+                  <p>
+                    {%- if mf.feeling != blank -%}
+                      {{ mf.feeling }}
+                    {%- elsif pd_feeling != blank -%}
+                      {{ pd_feeling }}
+                    {%- else -%}
+                      A quiet ritual of care. {{ product.title }} is compounded by hand in small batches so every application feels deliberate, clean, and calm — never rushed, never generic.
+                    {%- endif -%}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mprod__acc-item">
+              <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-benefits">
+                <span class="mprod__acc-label">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 12.5 11 15l4.5-5.5"/><circle cx="12" cy="12" r="9"/></svg>
+                  Key Benefits
+                </span>
+                <span class="mprod__acc-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="mprod__acc-a" id="mprod-acc-benefits">
+                <div class="mprod__acc-a-inner">
+                  {%- if mf.benefits != blank -%}
+                    <div class="rte">{{ mf.benefits }}</div>
+                  {%- elsif pd_benefits != blank -%}
+                    {{ pd_benefits }}
+                  {%- else -%}
+                    <ul class="pdet__list">
+                      <li>Built around a single clinical-grade active — no filler blends.</li>
+                      <li>Compounded by hand in Houston, hand-numbered in batches of 200.</li>
+                      <li>Pharmacist-formulated for real, visible skin results.</li>
+                      <li>Gentle enough for daily use in your complete ritual.</li>
+                    </ul>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+
+            <div class="mprod__acc-item">
+              <button type="button" class="mprod__acc-q" aria-expanded="false" aria-controls="mprod-acc-how-to-use">
+                <span class="mprod__acc-label">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+                  How to Use
+                </span>
+                <span class="mprod__acc-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="mprod__acc-a" id="mprod-acc-how-to-use">
+                <div class="mprod__acc-a-inner">
+                  {%- if mf.how_to_use != blank -%}
+                    <div class="rte">{{ mf.how_to_use }}</div>
+                  {%- elsif pd_how_to_use != blank -%}
+                    {{ pd_how_to_use }}
+                  {%- else -%}
+                    <p>Apply a small amount to clean skin, morning and evening. Follow with your next ritual step. Introduce gradually if your skin is new to active formulas.</p>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
           </div>
-        {%- endif -%}
       </div>
 
     </div>

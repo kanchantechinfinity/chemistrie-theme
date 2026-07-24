@@ -490,50 +490,7 @@
       </div>
     </div>
 
-    {%- comment -%} ───── Routine Placement / The Full Story / Warnings now live as an accordion in main-product.liquid's left column, beside the gallery ───── {%- endcomment -%}
-
-    {%- comment -%} ───── The Feeling / Key Benefits / How to Use — 3-column ───── {%- endcomment -%}
-    <div class="pdet__triple">
-      <div class="pdet__card pdet__card--feeling">
-        <h2 class="pdet__card-h">The Feeling</h2>
-        <p class="pdet__feeling-copy">
-          {%- if mf.feeling != blank -%}
-            {{ mf.feeling }}
-          {%- elsif pd_feeling != blank -%}
-            {{ pd_feeling }}
-          {%- else -%}
-            A quiet ritual of care. {{ product.title }} is compounded by hand in small batches so every application feels deliberate, clean, and calm — never rushed, never generic.
-          {%- endif -%}
-        </p>
-      </div>
-
-      <div class="pdet__card">
-        <h2 class="pdet__card-h">Key Benefits</h2>
-        {%- if mf.benefits != blank -%}
-          <div class="rte pdet__rte">{{ mf.benefits }}</div>
-        {%- elsif pd_benefits != blank -%}
-          {{ pd_benefits }}
-        {%- else -%}
-          <ul class="pdet__list">
-            <li>Built around a single clinical-grade active — no filler blends.</li>
-            <li>Compounded by hand in Houston, hand-numbered in batches of 200.</li>
-            <li>Pharmacist-formulated for real, visible skin results.</li>
-            <li>Gentle enough for daily use in your complete ritual.</li>
-          </ul>
-        {%- endif -%}
-      </div>
-
-      <div class="pdet__card">
-        <h2 class="pdet__card-h">How to Use</h2>
-        {%- if mf.how_to_use != blank -%}
-          <div class="rte pdet__rte">{{ mf.how_to_use }}</div>
-        {%- elsif pd_how_to_use != blank -%}
-          {{ pd_how_to_use }}
-        {%- else -%}
-          <p>Apply a small amount to clean skin, morning and evening. Follow with your next ritual step. Introduce gradually if your skin is new to active formulas.</p>
-        {%- endif -%}
-      </div>
-    </div>
+    {%- comment -%} ───── Routine Placement / The Full Story / Warnings, and The Feeling / Key Benefits / How to Use, now live as accordions in main-product.liquid's right column (buy box) ───── {%- endcomment -%}
 
     {%- comment -%} ───── Founder's Note — copy left, portrait right, bleeding to the card's edges ───── {%- endcomment -%}
     <div class="pdet__block pdet__founder">
@@ -679,10 +636,6 @@
 .pdet__list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
 .pdet__list--ol { padding-left: 22px; }
 
-.pdet__feeling { text-align: left; max-width: 760px; margin-left: 0; margin-right: auto; }
-.pdet__feeling .eyebrow { display: inline-block; margin-bottom: 20px; }
-.pdet__feeling-copy { font-family: var(--ff-display); font-size: clamp(24px, 3.4vw, 38px); line-height: 1.35; color: var(--c-forest); }
-
 .pdet__founder {
   display: grid; grid-template-columns: 1fr 340px; align-items: stretch;
   background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px;
@@ -698,19 +651,7 @@
   .pdet__founder-photo { min-height: 240px; order: -1; }
 }
 
-/* Shared 3-column premium card layout (The Feeling / Key Benefits / How to Use) */
-.pdet__triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); align-items: stretch; margin-bottom: clamp(48px, 6vw, 88px); }
-.pdet__card {
-  display: flex; flex-direction: column; height: 100%;
-  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px;
-  padding: clamp(26px, 2.6vw, 34px);
-}
-.pdet__card-h { font-family: var(--ff-display); font-size: clamp(19px, 2vw, 23px); font-weight: 500; color: var(--c-forest); margin: 0 0 16px; }
-.pdet__card .pdet__rte, .pdet__card p, .pdet__card .pdet__list { font-size: 15px; }
-.pdet__card--feeling .pdet__feeling-copy { font-family: var(--ff-display); font-size: clamp(18px, 1.9vw, 21px); line-height: 1.4; color: var(--c-forest); margin: 0; }
-@media (max-width: 900px) { .pdet__triple { grid-template-columns: 1fr; } }
-
-/* What's Inside / Full Ingredient List / Ingredient Spotlight — accordion (matches the left-column accordion in main-product.liquid) */
+/* What's Inside / Full Ingredient List / Ingredient Spotlight — accordion (matches the right-column accordion in main-product.liquid) */
 .pdet__info-accordion { border-top: 1px solid var(--c-line-soft); }
 .pdet__acc-item { border-bottom: 1px solid var(--c-line-soft); }
 .pdet__acc-q {
