@@ -2768,12 +2768,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .founders__media { min-height: 360px; max-width: 100%; }
   .founders__caption { font-size: 11.5px; bottom: -22px; }
 
-  /* Actives — native horizontal scroll (JS handles isPhone) */
+  /* Actives — native horizontal scroll (CSS-guaranteed fallback, matches .ritual__pin's pattern — don't rely on JS alone) */
   .actives__intro { padding-bottom: 28px; }
   .actives__counter-current { font-size: 44px; }
-  .actives__pin { padding-bottom: 24px; gap: 14px; }
-  .actives__track { gap: 14px; padding: 0 var(--pad-x); }
-  .active-card { flex: 0 0 86vw; height: auto; min-height: 440px; padding: 26px 22px; border-radius: 16px; }
+  .actives__pin {
+    height: auto; min-height: 0; overflow-x: auto; overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory;
+    padding: 0 0 32px; gap: 14px;
+  }
+  .actives__track { transform: none !important; gap: 14px; padding: 0 var(--pad-x); }
+  .active-card { flex: 0 0 86vw; height: auto; min-height: 440px; padding: 26px 22px; border-radius: 16px; scroll-snap-align: start; }
   .active-card__name { font-size: 26px; }
   .active-card__dose { font-size: 22px; }
   .active-card__desc { font-size: 14px; }
