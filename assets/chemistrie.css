@@ -1386,12 +1386,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .actives__pin {
   height: 100vh;
-  min-height: 640px;
+  min-height: auto;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: flex-start;
-  padding-top: clamp(24px, 3vw, 48px);
+  padding-top: clamp(4px, 3vw, 48px);
 }
 .actives__track {
   display: flex;
