@@ -593,7 +593,7 @@
     {%- endif -%}
 
     {%- comment -%} ───── Customer Reviews ───── {%- endcomment -%}
-    <div class="pdet__block pdet__reviews">
+    <div class="pdet__block pdet__reviews" id="mprod-reviews">
       <h2 class="pdet__h">Customer Reviews</h2>
       {%- if product.metafields.reviews.rating != blank -%}
         <div class="pdet__rating">
@@ -621,7 +621,10 @@
               <article class="pcard">
                 <a class="pcard__media" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
                   {%- if p.featured_image -%}
-                    {{ p.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: p.title }}
+                    {{ p.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', class: 'pcard__img', alt: p.title }}
+                    {%- if p.images.size > 1 -%}
+                      {{ p.images[1] | image_url: width: 700 | image_tag: loading: 'lazy', class: 'pcard__img pcard__img--alt', alt: '' }}
+                    {%- endif -%}
                   {%- else -%}
                     <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ p.title | escape }}" loading="lazy" class="pcard__ph">
                     {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
