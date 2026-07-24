@@ -1386,12 +1386,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .actives__pin {
   height: 100vh;
-  min-height: auto;
-  position: relative;
   overflow: hidden;
+  position: relative;
   display: flex;
-  align-items: flex-start;
-  padding-top: clamp(4px, 3vw, 48px);
+  align-items: center;
 }
 .actives__track {
   display: flex;
@@ -2772,9 +2770,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .actives__intro { padding-bottom: 28px; }
   .actives__counter-current { font-size: 44px; }
   .actives__pin {
-    height: auto; min-height: 0; overflow-x: auto; overflow-y: hidden;
+    height: auto; overflow-x: auto; overflow-y: hidden;
     -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory;
-    padding: 0 0 32px; gap: 14px;
+    padding: 0 0 32px;
   }
   .actives__track { transform: none !important; gap: 14px; padding: 0 var(--pad-x); }
   .active-card { flex: 0 0 86vw; height: auto; min-height: 440px; padding: 26px 22px; border-radius: 16px; scroll-snap-align: start; }
