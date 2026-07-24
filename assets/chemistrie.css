@@ -1385,7 +1385,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 .actives__pin {
-  height: auto;
+  height: 100vh;
   min-height: auto;
   position: relative;
   overflow: hidden;
