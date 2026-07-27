@@ -1086,25 +1086,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border-top: 1px solid var(--c-line-soft);
   overflow: hidden;
 }
-.shop__head { max-width: none; margin: 0 0 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; text-align: left; }
-.shop__head .eyebrow,
-.shop__head .display-h { grid-column: 1; }
+.shop__head { max-width: none; margin: 0 0 64px; text-align: left; }
 .shop__lede {
-  grid-column: 2;
-  margin: 0;
+  margin: 24px 0 0;
   color: var(--c-ink-soft);
   font-size: 16px;
-  max-width: 36ch;
+  max-width: 60ch;
   font-family: var(--ff-display);
   font-style: italic;
   line-height: 1.55;
-  padding-left: 32px;
-  border-left: 1px solid var(--c-line);
-  align-self: end;
-}
-@media (max-width: 800px) {
-  .shop__head { grid-template-columns: 1fr; }
-  .shop__head .shop__lede { grid-column: 1; }
+  padding-left: 0;
+  border-left: 0;
 }
 .shop__rail-wrap {
   margin: 0 calc(var(--pad-x) * -1);
@@ -1127,7 +1119,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .shop__rail::-webkit-scrollbar { display: none; }
 .shop__grid { display: contents; }
 .product {
-  flex: 0 0 clamp(280px, 28vw, 360px);
+  flex: 0 0 340px;
+  width: 340px;
   scroll-snap-align: start;
   background: var(--c-cream);
   padding: clamp(24px, 2.4vw, 36px);
