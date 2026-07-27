@@ -562,25 +562,6 @@
       </div>
     </div>
 
-    {%- comment -%} ───── How to Use — numbered step badges ───── {%- endcomment -%}
-    <div class="pdet__block">
-      <h2 class="pdet__h pdet__h--center">How to Use</h2>
-      <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-      <div class="pdet__howto-visual">
-        {%- if mf.how_to_use != blank -%}
-          <div class="rte">{{ mf.how_to_use }}</div>
-        {%- elsif pd_how_to_use != blank -%}
-          {{ pd_how_to_use }}
-        {%- else -%}
-          <ol class="pdet__list pdet__list--ol">
-            <li>Apply a small amount to clean skin, morning and evening.</li>
-            <li>Follow with your next ritual step.</li>
-            <li>Introduce gradually if your skin is new to active formulas.</li>
-          </ol>
-        {%- endif -%}
-      </div>
-    </div>
-
     {%- comment -%} ───── Routine Placement — AM/PM chip flow on a sage band ───── {%- endcomment -%}
     {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
       <div class="pdet__block pdet__visual-band">
@@ -640,34 +621,54 @@
       </div>
     </div>
 
-    {%- comment -%} ───── What's Inside / Full Ingredient List — tabs (Ingredient Spotlight promoted to its own always-visible band near the top) ───── {%- endcomment -%}
-    <div class="pdet__block pdet__tabs">
-      <div class="pdet__tabs-nav" role="tablist">
-        <button type="button" class="pdet__tab is-active" role="tab" aria-selected="true" aria-controls="pdet-tab-inside">What's Inside</button>
-        <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-inci">Full Ingredient List</button>
-      </div>
-
-      <div class="pdet__tab-panel is-active" id="pdet-tab-inside" role="tabpanel">
-        <div class="pdet__ing-card">
-          {%- if mf.whats_inside != blank -%}
-            <div class="rte">{{ mf.whats_inside }}</div>
-          {%- elsif pd_whats_inside != blank -%}
-            <p>{{ pd_whats_inside }}</p>
+    {%- comment -%} ───── How to Use (left) beside What's Inside / Full Ingredient List tabs (right) ───── {%- endcomment -%}
+    <div class="pdet__block pdet__cols pdet__cols--howto">
+      <div class="pdet__howto-col">
+        <h2 class="pdet__h">How to Use</h2>
+        <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        <div class="pdet__howto-visual">
+          {%- if mf.how_to_use != blank -%}
+            <div class="rte">{{ mf.how_to_use }}</div>
+          {%- elsif pd_how_to_use != blank -%}
+            {{ pd_how_to_use }}
           {%- else -%}
-            <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
+            <ol class="pdet__list pdet__list--ol">
+              <li>Apply a small amount to clean skin, morning and evening.</li>
+              <li>Follow with your next ritual step.</li>
+              <li>Introduce gradually if your skin is new to active formulas.</li>
+            </ol>
           {%- endif -%}
         </div>
       </div>
 
-      <div class="pdet__tab-panel" id="pdet-tab-inci" role="tabpanel">
-        <div class="pdet__ing-card">
-          {%- if mf.inci != blank -%}
-            <p class="pdet__inci">{{ mf.inci }}</p>
-          {%- elsif pd_inci != blank -%}
-            <p class="pdet__inci">{{ pd_inci }}</p>
-          {%- else -%}
-            <p class="pdet__inci">Full INCI ingredient list is printed on every hand-numbered bottle. Contact us for a complete breakdown before purchase.</p>
-          {%- endif -%}
+      <div class="pdet__tabs">
+        <div class="pdet__tabs-nav" role="tablist">
+          <button type="button" class="pdet__tab is-active" role="tab" aria-selected="true" aria-controls="pdet-tab-inside">What's Inside</button>
+          <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-inci">Full Ingredient List</button>
+        </div>
+
+        <div class="pdet__tab-panel is-active" id="pdet-tab-inside" role="tabpanel">
+          <div class="pdet__ing-card">
+            {%- if mf.whats_inside != blank -%}
+              <div class="rte">{{ mf.whats_inside }}</div>
+            {%- elsif pd_whats_inside != blank -%}
+              <p>{{ pd_whats_inside }}</p>
+            {%- else -%}
+              <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="pdet__tab-panel" id="pdet-tab-inci" role="tabpanel">
+          <div class="pdet__ing-card">
+            {%- if mf.inci != blank -%}
+              <p class="pdet__inci">{{ mf.inci }}</p>
+            {%- elsif pd_inci != blank -%}
+              <p class="pdet__inci">{{ pd_inci }}</p>
+            {%- else -%}
+              <p class="pdet__inci">Full INCI ingredient list is printed on every hand-numbered bottle. Contact us for a complete breakdown before purchase.</p>
+            {%- endif -%}
+          </div>
         </div>
       </div>
     </div>
@@ -756,17 +757,17 @@
 @media (max-width: 700px) { .pdet__benefits-visual .pdet__list { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 420px) { .pdet__benefits-visual .pdet__list { grid-template-columns: 1fr; } }
 
-/* How to Use — numbered icon steps, connected by a dashed line */
+/* How to Use — compact vertical steps (sits in a half-width column beside the tabs) */
+.pdet__cols--howto { align-items: start; }
 .pdet__howto-visual .pdet__list--ol {
   list-style: none; counter-reset: howto; margin: 0; padding: 10px 0 0;
-  display: flex; gap: 8px; flex-wrap: wrap;
+  display: flex; flex-direction: column; gap: 22px;
 }
 .pdet__howto-visual .pdet__list--ol li {
   counter-increment: howto; position: relative;
-  flex: 1 1 160px; min-width: 140px; padding: 68px 14px 0;
-  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;
-  background-repeat: no-repeat; background-position: top center; background-size: 48px 48px;
-  font-size: 13.5px; line-height: 1.6; color: var(--c-ink-soft);
+  padding-left: 60px; min-height: 44px; display: flex; align-items: center;
+  background-repeat: no-repeat; background-position: left center; background-size: 40px 40px;
+  font-size: 14px; line-height: 1.6; color: var(--c-ink-soft);
 }
 .pdet__howto-visual .pdet__list--ol li:nth-child(4n+1) { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231a3a2d' stroke-width='1.6'%3E%3Cpath d='M24 6c8 10 12 16 12 22a12 12 0 1 1-24 0c0-6 4-12 12-22Z'/%3E%3C/svg%3E"); }
 .pdet__howto-visual .pdet__list--ol li:nth-child(4n+2) { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231a3a2d' stroke-width='1.6'%3E%3Ccircle cx='24' cy='24' r='14'/%3E%3Cpath d='M12 16c2-4 7-7 12-7M36 32c-2 4-7 7-12 7' stroke-linecap='round'/%3E%3C/svg%3E"); }
@@ -774,19 +775,11 @@
 .pdet__howto-visual .pdet__list--ol li:nth-child(4n) { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231a3a2d' stroke-width='1.6'%3E%3Ccircle cx='24' cy='24' r='9'/%3E%3Cpath d='M24 4v6M24 38v6M4 24h6M38 24h6M9.5 9.5l4.2 4.2M34.3 34.3l4.2 4.2M9.5 38.5l4.2-4.2M34.3 13.7l4.2-4.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
 .pdet__howto-visual .pdet__list--ol li::after {
   content: counter(howto);
-  position: absolute; top: 0; left: calc(50% + 12px);
-  width: 24px; height: 24px; border-radius: 50%; background: #2f7a52; color: #fff;
+  position: absolute; left: 26px; top: 50%; transform: translateY(-50%);
+  width: 22px; height: 22px; border-radius: 50%; background: #2f7a52; color: #fff;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--ff-body); font-size: 11px; font-weight: 700;
+  font-family: var(--ff-body); font-size: 10.5px; font-weight: 700;
   box-shadow: 0 0 0 3px var(--c-cream);
-}
-.pdet__howto-visual .pdet__list--ol li:not(:last-child)::before {
-  content: ''; position: absolute; top: 24px; left: 60%; right: -40%; z-index: -1;
-  border-top: 2px dashed var(--c-tan);
-}
-@media (max-width: 700px) {
-  .pdet__howto-visual .pdet__list--ol { flex-direction: column; align-items: stretch; }
-  .pdet__howto-visual .pdet__list--ol li:not(:last-child)::before { display: none; }
 }
 .pdet__rte, .pdet p, .pdet__list { color: var(--c-ink-soft); font-size: 16px; line-height: 1.7; }
 .pdet__list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
@@ -847,6 +840,30 @@
 .pdet__ing-cred { font-size: 12px; font-style: italic; color: var(--c-ink-mute); }
 .pdet__ing-grid--spotlight .pdet__ing-card { background: var(--c-paper); }
 
+/* Routine Placement — Morning/Evening rows with product-name chips */
+.pdet__routine-visual { display: flex; flex-direction: column; gap: 18px; }
+.pdet__routine-row {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px;
+  padding: 20px 24px;
+}
+.pdet__routine-tag {
+  display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto;
+  padding: 9px 18px; border-radius: 999px;
+  font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+}
+.pdet__routine-tag--am { background: #fbe6b8; color: #8a5b12; }
+.pdet__routine-tag--pm { background: #dde3f5; color: #33447a; }
+.pdet__routine-chips { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pdet__routine-chip {
+  display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 999px;
+  background: #2f7a52; color: #fff; font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.pdet__routine-arrow { color: var(--c-tan-2); font-size: 15px; }
+@media (max-width: 700px) {
+  .pdet__routine-row { flex-direction: column; align-items: flex-start; }
+}
+
 /* Lifestyle photo block — "the ritual in use" */
 .pdet__feel { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 4vw, 64px); align-items: center; }
 .pdet__feel-copy .pdet__h { text-align: left; }
@@ -859,7 +876,7 @@
   background: #2f7a52; color: #fff; font-size: 11px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
-.pdet__feel-photo img { width: 100%; height: 100%; border-radius: 20px; object-fit: cover; aspect-ratio: 4 / 5; display: block; box-shadow: 0 30px 60px -30px rgba(26,58,45,.4); }
+.pdet__feel-photo img { width: 100%; height: 100%; border-radius: 20px; object-fit: cover; aspect-ratio: 4 / 3; display: block; box-shadow: 0 30px 60px -30px rgba(26,58,45,.4); }
 @media (max-width: 800px) {
   .pdet__feel { grid-template-columns: 1fr; }
   .pdet__feel-photo { order: -1; }
