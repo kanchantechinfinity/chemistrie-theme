@@ -25,17 +25,16 @@
 </section>
 
 {% stylesheet %}
-.page-hero__inner { display: flex; align-items: center; justify-content: space-between; gap: clamp(24px, 5vw, 72px); }
-.page-hero__copy { flex: 1 1 auto; min-width: 0; }
+.page-hero__inner { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: clamp(32px, 5vw, 80px); }
+.page-hero__copy { min-width: 0; }
 .page-hero__visual {
-  flex: 0 0 auto; width: clamp(160px, 18vw, 260px); aspect-ratio: 1 / 1;
-  border-radius: 14px; overflow: hidden; border: 1px solid rgba(240,232,219,.18);
-  box-shadow: 0 30px 50px -22px rgba(0,0,0,.5);
+  aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(240,232,219,.18); box-shadow: 0 40px 80px -28px rgba(0,0,0,.55);
 }
 .page-hero__visual img,
 .page-hero__visual svg { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 760px) {
-  .page-hero__inner { flex-direction: column; align-items: flex-start; }
+  .page-hero__inner { grid-template-columns: 1fr; }
   .page-hero__visual { display: none; }
 }
 {% endstylesheet %}
