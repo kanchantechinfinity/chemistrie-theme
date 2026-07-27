@@ -9,22 +9,10 @@
               {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '450,900', alt: block.settings.name | default: 'Founder portrait' }}
             </div>
           {%- else -%}
-            {%- assign gid = 'pav-' | append: block.id -%}
-            <div class="pprofile__avatar pprofile__avatar--{{ block.settings.avatar_style }}">
-              <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <defs>
-                  {%- if block.settings.avatar_style == 'tan' -%}
-                    <linearGradient id="{{ gid }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dec39a"/><stop offset="1" stop-color="#8a6f48"/></linearGradient>
-                  {%- else -%}
-                    <linearGradient id="{{ gid }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c8f7b"/><stop offset="1" stop-color="#1a3a2d"/></linearGradient>
-                  {%- endif -%}
-                </defs>
-                <rect width="400" height="500" fill="url(#{{ gid }})"/>
-                <g fill="#0e2118" opacity=".22">
-                  <circle cx="200" cy="205" r="78"/>
-                  <path d="M78 500 C78 372 140 320 200 320 C260 320 322 372 322 500 Z"/>
-                </g>
-              </svg>
+            {%- comment -%} Temporary founder photo — replace via this block's "Photo" setting whenever a real one is uploaded {%- endcomment -%}
+            {%- assign founder_photo_index = forloop.index0 | modulo: 3 | plus: 1 -%}
+            <div class="pprofile__avatar pprofile__avatar--photo">
+              <img src="{{ 'founder-' | append: founder_photo_index | append: '.jpg' | asset_url }}" alt="{{ block.settings.name | default: 'Founder portrait' | escape }}" loading="lazy">
             </div>
           {%- endif -%}
         </div>

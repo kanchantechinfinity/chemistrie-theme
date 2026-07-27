@@ -1,15 +1,55 @@
 <section class="page-hero" data-screen-label="{{ section.settings.eyebrow | strip }}">
   <div class="page-hero__inner">
-    <span class="eyebrow eyebrow--light">{{ section.settings.eyebrow }}</span>
-    <h1 class="display-h display-h--light page-hero__title">{{ section.settings.heading }}</h1>
-    {%- if section.settings.deck != blank -%}
-      <p class="page-hero__deck">{{ section.settings.deck }}</p>
-    {%- endif -%}
-    {%- if section.settings.deck2 != blank -%}
-      <p class="page-hero__deck">{{ section.settings.deck2 }}</p>
+    <div class="page-hero__copy">
+      <span class="eyebrow eyebrow--light">{{ section.settings.eyebrow }}</span>
+      <h1 class="display-h display-h--light page-hero__title">{{ section.settings.heading }}</h1>
+      {%- if section.settings.deck != blank -%}
+        <p class="page-hero__deck">{{ section.settings.deck }}</p>
+      {%- endif -%}
+      {%- if section.settings.deck2 != blank -%}
+        <p class="page-hero__deck">{{ section.settings.deck2 }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_visual -%}
+      <div class="page-hero__visual" aria-hidden="true">
+        {%- if section.settings.hero_image != blank -%}
+          {{ section.settings.hero_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: '' }}
+        {%- else -%}
+          {%- comment -%} Placeholder bottle illustration — swap in a real product PNG (transparent background works best) via this section's "Hero image" setting whenever it's ready {%- endcomment -%}
+          <svg viewBox="0 0 220 340" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="phBody" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3d6b54"/>
+                <stop offset="1" stop-color="#0e2118"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="110" cy="322" rx="58" ry="10" fill="#000" opacity=".28"/>
+            <rect x="94" y="14" width="32" height="40" rx="4" fill="#c8aa7a"/>
+            <ellipse cx="110" cy="54" rx="20" ry="7" fill="#8a6f48"/>
+            <path d="M66 66 Q66 58 92 58 H128 Q154 58 154 66 L162 300 Q162 312 150 312 H70 Q58 312 58 300 Z" fill="url(#phBody)"/>
+            <rect x="78" y="168" width="64" height="96" rx="2" fill="#f9f4ed" opacity=".95"/>
+            <text x="110" y="206" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="15" fill="#1a3a2d">Chemistrie</text>
+            <line x1="88" y1="218" x2="132" y2="218" stroke="#c8aa7a" stroke-width="0.6"/>
+            <text x="110" y="240" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="10" letter-spacing="2" fill="#1a3a2d">PLACEHOLDER</text>
+          </svg>
+        {%- endif -%}
+      </div>
     {%- endif -%}
   </div>
 </section>
+
+{% stylesheet %}
+.page-hero__inner { display: flex; align-items: center; justify-content: space-between; gap: clamp(24px, 5vw, 72px); }
+.page-hero__copy { flex: 1 1 auto; min-width: 0; }
+.page-hero__visual { flex: 0 0 auto; width: clamp(140px, 16vw, 240px); opacity: .96; }
+.page-hero__visual img,
+.page-hero__visual svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 30px 40px rgba(0,0,0,.35)); }
+@media (max-width: 760px) {
+  .page-hero__inner { flex-direction: column; align-items: flex-start; }
+  .page-hero__visual { display: none; }
+}
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -18,7 +58,9 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Collection —" },
     { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "Six formulas.<br/><em>Zero shortcuts.</em>" },
     { "type": "textarea", "id": "deck", "label": "Deck paragraph", "default": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend." },
-    { "type": "textarea", "id": "deck2", "label": "Deck paragraph 2 (optional)" }
+    { "type": "textarea", "id": "deck2", "label": "Deck paragraph 2 (optional)" },
+    { "type": "checkbox", "id": "show_visual", "label": "Show hero image", "default": true },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Optional — a transparent-background PNG works best. Shows a placeholder bottle illustration until one is uploaded. Hidden automatically on narrow screens so it never crowds the heading." }
   ],
   "presets": [{ "name": "Page Hero" }]
 }
