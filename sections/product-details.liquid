@@ -522,23 +522,27 @@
       </div>
 
       <div class="pdet__tab-panel is-active" id="pdet-tab-inside" role="tabpanel">
-        {%- if mf.whats_inside != blank -%}
-          <div class="rte">{{ mf.whats_inside }}</div>
-        {%- elsif pd_whats_inside != blank -%}
-          <p>{{ pd_whats_inside }}</p>
-        {%- else -%}
-          <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
-        {%- endif -%}
+        <div class="pdet__ing-card">
+          {%- if mf.whats_inside != blank -%}
+            <div class="rte">{{ mf.whats_inside }}</div>
+          {%- elsif pd_whats_inside != blank -%}
+            <p>{{ pd_whats_inside }}</p>
+          {%- else -%}
+            <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
+          {%- endif -%}
+        </div>
       </div>
 
       <div class="pdet__tab-panel" id="pdet-tab-inci" role="tabpanel">
-        {%- if mf.inci != blank -%}
-          <p class="pdet__inci">{{ mf.inci }}</p>
-        {%- elsif pd_inci != blank -%}
-          <p class="pdet__inci">{{ pd_inci }}</p>
-        {%- else -%}
-          <p class="pdet__inci">Full INCI ingredient list is printed on every hand-numbered bottle. Contact us for a complete breakdown before purchase.</p>
-        {%- endif -%}
+        <div class="pdet__ing-card">
+          {%- if mf.inci != blank -%}
+            <p class="pdet__inci">{{ mf.inci }}</p>
+          {%- elsif pd_inci != blank -%}
+            <p class="pdet__inci">{{ pd_inci }}</p>
+          {%- else -%}
+            <p class="pdet__inci">Full INCI ingredient list is printed on every hand-numbered bottle. Contact us for a complete breakdown before purchase.</p>
+          {%- endif -%}
+        </div>
       </div>
 
       {%- if pd_spotlight != blank -%}
