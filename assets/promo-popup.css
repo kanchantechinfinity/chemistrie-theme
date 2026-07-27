@@ -35,7 +35,7 @@
   line-height: 1.1; color: var(--c-forest); margin: 10px 0 12px;
 }
 .promo-popup__h em { font-style: italic; color: #2f7a52; }
-.promo-popup__sub { font-size: 14px; line-height: 1.65; color: var(--c-ink-soft); margin: 0 0 20px; }
+.promo-popup__sub { font-size: 16px; line-height: 1.65; color: var(--c-ink-soft); margin: 0 0 20px; }
 
 .promo-popup__code {
   display: flex; align-items: center; gap: 12px; margin: 0 0 20px;

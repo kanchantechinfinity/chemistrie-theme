@@ -884,7 +884,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .vision__cell p {
   margin: 0;
   color: var(--c-ink-soft);
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.65;
   max-width: 36ch;
   flex: 1;
@@ -996,7 +996,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   gap: 12px;
 }
 .pillar__list li {
-  font-size: 14.5px;
+  font-size: 16.5px;
   color: var(--c-ink);
   line-height: 1.6;
   max-width: 44ch;
@@ -1207,7 +1207,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .product__meta p {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--c-ink-soft);
   line-height: 1.5;
 }
@@ -1309,7 +1309,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .founders__copy p {
   margin: 0 0 18px;
   color: var(--c-ink-soft);
-  font-size: 15.5px;
+  font-size: 17.5px;
   line-height: 1.7;
 }
 .founders__signoff {
@@ -1502,7 +1502,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .active-card__desc {
   font-family: var(--ff-display);
   font-style: italic;
-  font-size: 15.5px;
+  font-size: 17.5px;
   line-height: 1.5;
   margin: 0;
   color: var(--c-ink-soft);
@@ -1729,7 +1729,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   margin: 0 0 24px;
 }
 .ritual-step p {
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.65;
   color: var(--c-ink-soft);
   margin: 0;
@@ -2206,7 +2206,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .story__chapter-body p {
   margin: 0;
-  font-size: 15.5px;
+  font-size: 17.5px;
   line-height: 1.7;
   color: var(--c-ink-soft);
   max-width: 42ch;
@@ -2446,7 +2446,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .reel__meta p {
   margin: 0;
-  font-size: 13.5px;
+  font-size: 15.5px;
   line-height: 1.5;
   color: var(--c-ink);
 }
@@ -2776,7 +2776,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .active-card { flex: 0 0 86vw; height: auto; min-height: 440px; padding: 26px 22px; border-radius: 16px; scroll-snap-align: start; }
   .active-card__name { font-size: 26px; }
   .active-card__dose { font-size: 22px; }
-  .active-card__desc { font-size: 14px; }
+  .active-card__desc { font-size: 16px; }
   .active-card__mol { width: 72px; height: 72px; }
   .actives__progress { display: none; }
 
