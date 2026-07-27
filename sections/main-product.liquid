@@ -298,7 +298,7 @@
 /* .page-section's generic padding shorthand (up to 160px top) was winning over this section's
    own intended top spacing due to equal specificity + later file load order — pin it down with
    a compound selector so it always wins regardless of stylesheet order. */
-.page-section.mprod { padding-top: clamp(20px, 3vw, 40px); }
+.page-section.mprod { padding-top: clamp(20px, 3vw, 40px); padding-bottom: clamp(20px, 3vw, 40px); }
 .mprod__layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
 .mprod__main {
   position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 1/1;

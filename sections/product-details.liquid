@@ -724,6 +724,11 @@
 </section>
 
 {% stylesheet %}
+/* .page-section's shared padding-top (up to 160px) stacked on top of .mprod's
+   own bottom padding above, leaving a huge combined gap between the buy box
+   and this section — match .mprod's tightened spacing so it reads as one
+   uniform gap instead of two stacked ones. */
+.page-section.pdet { padding-top: clamp(20px, 3vw, 40px); }
 .pdet__block { margin-bottom: clamp(48px, 6vw, 88px); }
 .pdet__block:last-child { margin-bottom: 0; }
 .pdet__cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 72px); }
