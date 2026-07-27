@@ -11,35 +11,51 @@
       <button class="rsteps__pill" type="button" data-ritual-set="evening" aria-pressed="false">Evening</button>
     </div>
 
-    <ol class="rsteps__list">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'step' -%}
-        <li class="rstep" {{ block.shopify_attributes }}>
-          <span class="rstep__num">{{ block.settings.roman }}</span>
-          <div class="rstep__body">
-            <h3 class="rstep__title">
-              {{ block.settings.step_name }} <span class="rstep__arrow">→</span>
-              <span class="rstep__product" data-ritual="morning">{{ block.settings.product_name }}</span>
-              {%- if block.settings.product_name_pm != blank -%}
-                <span class="rstep__product" data-ritual="evening">{{ block.settings.product_name_pm }}</span>
-              {%- else -%}
-                <span class="rstep__product" data-ritual="evening">{{ block.settings.product_name }}</span>
-              {%- endif -%}
-            </h3>
-            <p class="rstep__desc" data-ritual="morning">{{ block.settings.description }}</p>
-            {%- if block.settings.description_pm != blank -%}
-              <p class="rstep__desc" data-ritual="evening">{{ block.settings.description_pm }}</p>
-            {%- else -%}
-              <p class="rstep__desc" data-ritual="evening">{{ block.settings.description }}</p>
-            {%- endif -%}
-            {%- if block.settings.product_url != blank -%}
-              <a class="rstep__shop" href="{{ block.settings.product_url }}">Shop {{ block.settings.product_name }} →</a>
-            {%- endif -%}
-          </div>
-        </li>
-        {%- endif -%}
+    {%- assign step_blocks = section.blocks | where: 'type', 'step' -%}
+
+    {%- comment -%} ───── Timeline — step icon, connected by a dashed line ───── {%- endcomment -%}
+    <div class="rsteps__timeline" aria-hidden="true">
+      {%- for block in step_blocks -%}
+        {%- assign icon_idx = forloop.index0 | modulo: 4 -%}
+        {%- case icon_idx -%}
+          {%- when 0 -%}{%- assign step_icon = 'ingredient-droplet.jpg' -%}
+          {%- when 1 -%}{%- assign step_icon = 'ingredient-gold.jpg' -%}
+          {%- when 2 -%}{%- assign step_icon = 'ritual-cream.jpg' -%}
+          {%- else -%}{%- assign step_icon = 'ingredient-aloe.jpg' -%}
+        {%- endcase -%}
+        <div class="rsteps__tl-item">
+          <span class="rsteps__tl-icon"><img src="{{ step_icon | asset_url }}" alt="" loading="lazy"></span>
+          <span class="rsteps__tl-pill">{{ block.settings.step_name }}</span>
+        </div>
+        {%- unless forloop.last -%}<span class="rsteps__tl-arrow">›</span>{%- endunless -%}
       {%- endfor -%}
-    </ol>
+    </div>
+
+    <div class="rsteps__grid">
+      {%- for block in step_blocks -%}
+        <article class="rstep" {{ block.shopify_attributes }}>
+          <span class="rstep__num">{{ block.settings.roman }}</span>
+          <h3 class="rstep__title">
+            {{ block.settings.step_name }} <span class="rstep__arrow">→</span>
+            <span class="rstep__product" data-ritual="morning">{{ block.settings.product_name }}</span>
+            {%- if block.settings.product_name_pm != blank -%}
+              <span class="rstep__product" data-ritual="evening">{{ block.settings.product_name_pm }}</span>
+            {%- else -%}
+              <span class="rstep__product" data-ritual="evening">{{ block.settings.product_name }}</span>
+            {%- endif -%}
+          </h3>
+          <p class="rstep__desc" data-ritual="morning">{{ block.settings.description }}</p>
+          {%- if block.settings.description_pm != blank -%}
+            <p class="rstep__desc" data-ritual="evening">{{ block.settings.description_pm }}</p>
+          {%- else -%}
+            <p class="rstep__desc" data-ritual="evening">{{ block.settings.description }}</p>
+          {%- endif -%}
+          {%- if block.settings.product_url != blank -%}
+            <a class="rstep__shop" href="{{ block.settings.product_url }}">Shop {{ block.settings.product_name }} →</a>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
   </div>
 </section>
 
@@ -57,16 +73,37 @@
   background: none; color: var(--c-forest); transition: background .3s var(--ease-out), color .3s var(--ease-out);
 }
 .rsteps__pill.is-active { background: var(--c-forest); color: var(--c-cream); }
-.rsteps__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-.rstep { display: flex; gap: clamp(20px, 3vw, 44px); padding: clamp(28px, 4vw, 40px) 0; border-top: 1px solid var(--c-line-soft, rgba(26,58,45,.16)); }
-.rstep:last-child { border-bottom: 1px solid var(--c-line-soft, rgba(26,58,45,.16)); }
-.rstep__num { flex: 0 0 auto; width: 2.5ch; font-family: var(--ff-display); font-style: italic; font-size: clamp(24px, 3vw, 34px); color: var(--c-tan); }
-.rstep__body { display: flex; flex-direction: column; gap: 12px; }
-.rstep__title { font-family: var(--ff-display); font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; color: var(--c-forest); }
+
+/* Timeline — icon + pill per step, connected by a dashed arrowed line */
+.rsteps__timeline { display: flex; align-items: flex-start; margin: 0 0 clamp(32px, 4vw, 48px); }
+.rsteps__tl-item { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 0 0 auto; }
+.rsteps__tl-icon {
+  width: 56px; height: 56px; border-radius: 50%; overflow: hidden;
+  border: 3px solid var(--c-cream); box-shadow: 0 8px 20px -8px rgba(26,58,45,.4);
+}
+.rsteps__tl-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rsteps__tl-pill {
+  padding: 6px 16px; border-radius: 999px; background: var(--c-paper);
+  font-size: 11.5px; font-weight: 600; color: var(--c-forest); white-space: nowrap;
+}
+.rsteps__tl-arrow {
+  flex: 1 1 auto; align-self: flex-start; margin-top: 26px;
+  min-width: 24px; text-align: center; color: var(--c-tan-2); font-size: 18px;
+  border-top: 2px dashed var(--c-tan); line-height: 0; padding-top: 2px;
+}
+
+/* Step cards — bordered, in a grid instead of a divided list */
+.rsteps__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 24px); }
+.rstep {
+  display: flex; flex-direction: column; gap: 10px; padding: clamp(22px, 2.4vw, 28px);
+  background: var(--c-cream); border: 1px solid var(--c-line-soft, rgba(26,58,45,.16)); border-radius: 16px;
+}
+.rstep__num { font-family: var(--ff-display); font-style: italic; font-size: 20px; color: var(--c-tan); }
+.rstep__title { font-family: var(--ff-display); font-size: clamp(19px, 1.8vw, 22px); font-weight: 500; color: var(--c-forest); }
 .rstep__arrow { color: var(--c-tan); }
 .rstep__product { color: var(--c-tan); font-style: italic; }
-.rstep__desc { font-size: 15px; line-height: 1.75; color: rgba(26,58,45,.82); max-width: 66ch; }
-.rstep__shop { align-self: flex-start; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-tan); padding-bottom: 3px; transition: color .3s; }
+.rstep__desc { font-size: 14px; line-height: 1.7; color: rgba(26,58,45,.82); }
+.rstep__shop { align-self: flex-start; margin-top: 4px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-tan); padding-bottom: 3px; transition: color .3s; }
 .rstep__shop:hover { color: var(--c-tan); }
 
 /* toggle variants */
@@ -77,12 +114,14 @@
 .rsteps--evening .rstep__product[data-ritual="evening"] { display: inline; }
 .rsteps--evening .rstep__desc[data-ritual="evening"] { display: block; }
 
+@media (max-width: 900px) {
+  .rsteps__grid { grid-template-columns: 1fr 1fr; }
+}
 @media (max-width: 600px) {
   .rsteps__head { margin-bottom: 28px; }
-  .rstep { flex-direction: row; align-items: flex-start; gap: 14px; padding: 22px 0; }
-  .rstep__num { width: 1.8ch; font-size: 20px; }
-  .rstep__body { gap: 8px; }
-  .rstep__title { font-size: 20px; }
+  .rsteps__grid { grid-template-columns: 1fr; }
+  .rsteps__timeline { overflow-x: auto; padding-bottom: 6px; }
+  .rsteps__tl-pill { font-size: 10.5px; padding: 5px 12px; }
 }
 {% endstylesheet %}
 
