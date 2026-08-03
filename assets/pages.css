@@ -23,11 +23,12 @@
 }
 .page-hero__deck + .page-hero__deck { margin-top: 16px; }
 
-/* ---- Stat bar (on dark) ---- */
+/* ---- Stat bar — light, so it never sits dark-on-dark directly under the dark page-hero above it ---- */
 .statbar {
-  background: var(--c-forest-2);
-  color: var(--c-cream);
+  background: var(--c-paper);
+  color: var(--c-forest);
   padding: clamp(28px, 4vw, 44px) var(--pad-x);
+  border-bottom: 1px solid var(--c-line-soft);
 }
 .statbar__inner {
   max-width: var(--maxw);
@@ -36,11 +37,11 @@
   grid-template-columns: repeat(var(--statbar-cols, 4), 1fr);
   gap: clamp(20px, 3vw, 48px);
 }
-.statbar__cell { border-left: 1px solid rgba(240,232,219,.16); padding-left: clamp(16px, 2vw, 28px); }
+.statbar__cell { border-left: 1px solid var(--c-line-soft); padding-left: clamp(16px, 2vw, 28px); }
 .statbar__cell:first-child { border-left: 0; padding-left: 0; }
 .statbar__num { font-family: var(--ff-display); font-size: clamp(26px, 3vw, 40px); font-weight: 500; line-height: 1; }
-.statbar__num em { font-style: italic; color: var(--c-tan); }
-.statbar__label { display: block; margin-top: 10px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,232,219,.55); }
+.statbar__num em { font-style: italic; color: var(--c-tan-2); }
+.statbar__label { display: block; margin-top: 10px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink-mute); }
 
 /* ---- Generic light section wrapper ---- */
 .page-section { padding: var(--section-pad-y) var(--pad-x); }

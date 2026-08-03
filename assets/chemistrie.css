@@ -1751,7 +1751,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ───────── Testimonials ───────── */
 .testimonials {
   padding: clamp(48px, 6vw, 80px) 0;
-  background: var(--c-cream-2);
+  background: var(--c-paper);
   border-top: 1px solid var(--c-line-soft);
   overflow: hidden;
 }
