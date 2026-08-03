@@ -7,7 +7,7 @@
         "heading": "Founder's Circle.<br/><em>A relationship, extended.</em>",
         "deck": "Never a transaction, tracked. Founder's Circle exists because the founders can't personally know every customer forever — not because they've stopped wanting to. It's how proximity survives growth: the Letters, an early seat closer to the Bench, and recognition that deepens the longer the relationship lasts.",
         "deck2": "Membership isn't purchased and isn't applied for. It's extended, when a relationship has reached the kind of depth a founder would recognize by name.",
-        "show_visual": false,
+        "show_visual": true,
         "cta_label": "Request an Invitation",
         "cta_url": "#request-invitation",
         "cta2_label": "Read a Letter",
