@@ -16,6 +16,36 @@
 - Animation stack: GSAP 3.12.5 + ScrollTrigger + Lenis smooth-scroll, loaded via CDN in `layout/theme.liquid`, driven by `assets/chemistrie.js`.
 - Real product content (Velvet, Aura, Cashmere, Silken) sourced from client docx files, rendered in `product-details.liquid` via a handle/title-matching `pd_key` pattern.
 
+## Build log — 2026-07-27 (2): No two adjacent sections share a background (commit `4357a5a`)
+User asked for a site-wide audit: no two consecutive sections on any page
+may share the same background color. Method used — for each template's
+`order` array, resolved each section's actual background (checking both
+its own `{% stylesheet %}` and whether it carries the shared
+`page-section--paper` class from `assets/pages.css`), then checked every
+adjacent pair. Found and fixed 4 violations (commit `4357a5a`):
+- Homepage: Ritual → Testimonials (both `--c-cream-2`) — Testimonials → `--c-paper`.
+- Collection AND Pharmacists pages: `page-hero` (dark `--grad-deep`) directly
+  followed by `stat-bar` (dark `--c-forest-2`) — two dark bands, no seam.
+  Fixed by flipping `.statbar` itself to light (`--c-paper` bg, forest
+  text/accents) in `assets/pages.css` — a shared component, so this one
+  change fixed both pages at once.
+- Pharmacists page: pharmacists-credentials → pharmacists-philosophy (both
+  `--c-paper`) — philosophy section dropped the `page-section--paper` class
+  (now plain cream) and its inner `.pphilo__card` background flipped from
+  cream to paper so the cards still contrast against their new section bg.
+- Ritual page: ritual-steps → ritual-shop (both `--c-cream`) — ritual-shop
+  → `--c-paper` (its `.pcard` product cards already have their own explicit
+  cream background, so card contrast was unaffected).
+
+**Method for next time:** page backgrounds in this theme come from one of
+three places — (a) the shared `.page-section--paper` class, (b) a
+section's own `{% stylesheet %}` rule matching its root class, or (c) no
+rule at all (defaults to body's `--c-cream`). When adding a NEW section to
+an existing template, check what backgrounds its immediate neighbors
+resolve to via those three routes before picking one, rather than
+defaulting to cream/paper reflexively — that's exactly how these 4
+violations were introduced originally.
+
 ## Build log — 2026-07-24 (15b): Cart button → icon-only, Shopify-style glyph (commit `2c4fafe`)
 Follow-up to (15): user wanted the "BAG" text gone entirely, icon + count
 only, using Shopify's standard cart icon (not the custom bag path from
@@ -351,6 +381,33 @@ literally, only touching `main-product.liquid` + `product-details.liquid`
   stacks ≤700px.
 - Ingredient Spotlight, What's Inside/INCI, FAQ, You May Also Love are
   untouched, just shifted down to make room for the moved Reviews block.
+
+## Build log — 2026-07-27: Per-page hero images (commit `5dcbf19`)
+User wanted every page-hero to show a real, topically-different photo
+instead of all 6 sharing one (`hero-visual.jpg`). Since `image_picker`
+settings can only reference Shopify-uploaded images (not theme assets),
+added a new `hero_fallback_asset` (plain text) setting to
+`page-hero.liquid` — each page's own JSON template sets this to a
+different asset filename, and `page-hero.liquid`'s fallback branch reads
+`section.settings.hero_fallback_asset | default: 'hero-visual.jpg'`
+instead of a hardcoded name. A real image via the existing "Hero image"
+picker still overrides this instantly, per-page, whenever uploaded.
+
+Assignments — reused existing on-site stock photos where a good thematic
+fit already existed (avoids redundant downloads), sourced 3 new ones where
+it didn't:
+- Collection → `stock-lineup.jpg` (existing)
+- The Pharmacists → `stock-lab.jpg` (existing)
+- Founder's Circle → `stock-note.jpg` (existing — matches the page's
+  "Letters" theme)
+- Our Story → `hero-ourstory.jpg` (new — antique pharmacy bottles)
+- The Ritual → `hero-ritual.jpg` (new — applying skincare lotion)
+- Contact → `hero-contact.jpg` (new — hands writing a note)
+
+**How to apply:** if a 7th page adopts `page-hero.liquid`, give it its own
+`hero_fallback_asset` value in that page's template rather than leaving it
+unset (falls back to the generic `hero-visual.jpg` bottle photo, which is
+now effectively the "no distinct image sourced yet" default).
 
 ## Build log — 2026-07-24 (19b): Real Unsplash photo replaces the SVG hero placeholder (commit `f606458`)
 User wanted the (19) placeholder to be a *real* image after all ("use real
