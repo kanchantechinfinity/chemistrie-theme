@@ -15,7 +15,8 @@
         "eyebrow": "— The Pharmacists —",
         "heading": "The two people<br/><em>behind the bench.</em>",
         "deck": "Chemistrie is not a brand that hired a chemist. It is two compounding pharmacists who could not stop formulating for the people they love.",
-        "deck2": "Before there was a logo, there was a bench in Houston and a short list of requests — a retinol that did not burn, a vitamin C that did not oxidise in a week. The founders answered them one bottle at a time. This page is simply who they are."
+        "deck2": "Before there was a logo, there was a bench in Houston and a short list of requests — a retinol that did not burn, a vitamin C that did not oxidise in a week. The founders answered them one bottle at a time. This page is simply who they are.",
+        "hero_fallback_asset": "stock-lab.jpg"
       }
     },
     "stat-bar": {

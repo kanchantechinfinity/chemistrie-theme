@@ -11,7 +11,8 @@
         "cta_label": "Request an Invitation",
         "cta_url": "#request-invitation",
         "cta2_label": "Read a Letter",
-        "cta2_url": "#letter-sample"
+        "cta2_url": "#letter-sample",
+        "hero_fallback_asset": "stock-note.jpg"
       }
     },
     "founders-circle-content": {

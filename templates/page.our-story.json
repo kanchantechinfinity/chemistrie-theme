@@ -15,7 +15,8 @@
         "eyebrow": "— Our Story —",
         "heading": "It started at a<br><em>compounding bench.</em>",
         "deck": "Chemistrie was not founded in a boardroom. It was founded one milligram at a time, on a pharmacist's bench in Houston, for the women the founders came home to.",
-        "deck2": ""
+        "deck2": "",
+        "hero_fallback_asset": "hero-ourstory.jpg"
       }
     },
     "story-opening": {

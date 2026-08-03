@@ -14,7 +14,8 @@
       "settings": {
         "eyebrow": "— Get in touch —",
         "heading": "The pharmacist<br/><em>is on the line.</em>",
-        "deck": "Questions about actives, a skin concern, or an order — a real compounding pharmacist reads every message, and picks up the phone Monday through Friday."
+        "deck": "Questions about actives, a skin concern, or an order — a real compounding pharmacist reads every message, and picks up the phone Monday through Friday.",
+        "hero_fallback_asset": "hero-contact.jpg"
       }
     },
     "contact-main": {

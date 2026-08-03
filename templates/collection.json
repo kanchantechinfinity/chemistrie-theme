@@ -14,7 +14,8 @@
       "settings": {
         "eyebrow": "— The Full Apothecary —",
         "heading": "Six formulas.<br/><em>Zero shortcuts.</em>",
-        "deck": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend."
+        "deck": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend.",
+        "hero_fallback_asset": "stock-lineup.jpg"
       }
     },
     "stat-bar": {

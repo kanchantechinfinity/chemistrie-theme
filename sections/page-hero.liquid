@@ -26,8 +26,8 @@
         {%- if section.settings.hero_image != blank -%}
           {{ section.settings.hero_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: '' }}
         {%- else -%}
-          {%- comment -%} Temporary Unsplash stock photo — replace via this section's "Hero image" setting whenever a real product shot is ready {%- endcomment -%}
-          <img src="{{ 'hero-visual.jpg' | asset_url }}" alt="" loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo, page-specific — replace via this section's "Hero image" setting whenever a real shot is ready {%- endcomment -%}
+          <img src="{{ section.settings.hero_fallback_asset | default: 'hero-visual.jpg' | asset_url }}" alt="" loading="lazy">
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -62,6 +62,7 @@
     { "type": "textarea", "id": "deck2", "label": "Deck paragraph 2 (optional)" },
     { "type": "checkbox", "id": "show_visual", "label": "Show hero image", "default": true },
     { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Optional. Shows a temporary stock photo until a real product image is uploaded. Hidden automatically on narrow screens so it never crowds the heading." },
+    { "type": "text", "id": "hero_fallback_asset", "label": "Fallback image filename (advanced)", "info": "Internal use — the theme asset filename shown until a real Hero image is uploaded above. Leave as-is unless changing the temporary photo." },
     { "type": "header", "content": "Buttons (optional)" },
     { "type": "text", "id": "cta_label", "label": "Primary button label" },
     { "type": "url", "id": "cta_url", "label": "Primary button link" },
