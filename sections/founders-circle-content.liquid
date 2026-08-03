@@ -1,0 +1,157 @@
+<section class="page-section page-section--paper fcircle">
+  <div class="page-section__inner">
+
+    {%- comment -%} ───── Purpose ───── {%- endcomment -%}
+    <div class="fcircle__block fcircle__intro">
+      <span class="eyebrow">{{ section.settings.intro_eyebrow }}</span>
+      <p class="fcircle__intro-copy">{{ section.settings.intro_copy }}</p>
+    </div>
+
+    {%- comment -%} ───── The Three Expressions of Membership ───── {%- endcomment -%}
+    <div class="fcircle__block">
+      <h2 class="fcircle__h">{{ section.settings.expressions_heading }}</h2>
+      <p class="fcircle__lede">{{ section.settings.expressions_lede }}</p>
+      <div class="fcircle__expressions">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'expression' -%}
+            <div class="fcircle__exp-card" {{ block.shopify_attributes }}>
+              <span class="fcircle__exp-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <h3 class="fcircle__exp-name">{{ block.settings.name }}</h3>
+              <p class="fcircle__exp-desc">{{ block.settings.description }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} ───── What Membership Includes ───── {%- endcomment -%}
+    <div class="fcircle__block">
+      <h2 class="fcircle__h">{{ section.settings.benefits_heading }}</h2>
+      <div class="fcircle__benefits">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'benefit' -%}
+            <div class="fcircle__benefit" {{ block.shopify_attributes }}>
+              <span class="fcircle__benefit-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z"/></svg>
+              </span>
+              <h3 class="fcircle__benefit-name">{{ block.settings.name }}</h3>
+              <p class="fcircle__benefit-desc">{{ block.settings.description }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} ───── A sample Letter — anchor target for the hero's "Read a Letter" link ───── {%- endcomment -%}
+    <div class="fcircle__block fcircle__letter" id="letter-sample">
+      <span class="eyebrow">{{ section.settings.letter_eyebrow }}</span>
+      <blockquote class="fcircle__letter-body">{{ section.settings.letter_body }}</blockquote>
+      <p class="fcircle__letter-sig">{{ section.settings.letter_signature }}</p>
+    </div>
+
+    {%- comment -%} ───── Member Experience ───── {%- endcomment -%}
+    <div class="fcircle__block fcircle__experience">
+      <span class="eyebrow">{{ section.settings.experience_eyebrow }}</span>
+      <p class="fcircle__experience-copy">{{ section.settings.experience_copy }}</p>
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+.fcircle__block { margin-bottom: clamp(56px, 7vw, 96px); }
+.fcircle__block:last-child { margin-bottom: 0; }
+
+.fcircle__intro { max-width: 720px; }
+.fcircle__intro .eyebrow { display: inline-block; margin-bottom: 18px; }
+.fcircle__intro-copy { font-family: var(--ff-display); font-size: clamp(22px, 2.6vw, 30px); line-height: 1.45; color: var(--c-forest); }
+
+.fcircle__h { font-family: var(--ff-display); font-size: clamp(24px, 3vw, 32px); font-weight: 500; color: var(--c-forest); text-align: center; margin: 0 0 14px; }
+.fcircle__lede { text-align: center; max-width: 62ch; margin: 0 auto clamp(32px, 4vw, 48px); color: var(--c-ink-soft); line-height: 1.7; }
+
+.fcircle__expressions { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
+.fcircle__exp-card {
+  background: var(--c-sage-3); border-radius: 16px; padding: clamp(28px, 3vw, 40px);
+  text-align: center; display: flex; flex-direction: column; align-items: center;
+}
+.fcircle__exp-num { font-family: var(--ff-display); font-style: italic; font-size: 15px; color: var(--c-tan-2); margin-bottom: 14px; }
+.fcircle__exp-name { font-family: var(--ff-display); font-size: clamp(22px, 2.4vw, 27px); font-weight: 500; color: var(--c-forest); margin: 0 0 14px; }
+.fcircle__exp-desc { font-size: 14.5px; line-height: 1.7; color: var(--c-ink-soft); margin: 0; }
+
+.fcircle__benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 2.4vw, 28px); }
+.fcircle__benefit { background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px; padding: clamp(22px, 2.4vw, 28px); }
+.fcircle__benefit-icon { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: var(--c-forest); color: var(--c-cream); margin-bottom: 16px; }
+.fcircle__benefit-name { font-family: var(--ff-display); font-size: 18px; font-weight: 500; color: var(--c-forest); margin: 0 0 10px; }
+.fcircle__benefit-desc { font-size: 13.5px; line-height: 1.6; color: var(--c-ink-soft); margin: 0; }
+
+.fcircle__letter {
+  background: var(--c-forest); color: var(--c-cream); border-radius: 18px;
+  padding: clamp(36px, 4.5vw, 64px); max-width: 780px; margin-left: auto; margin-right: auto; text-align: center;
+  scroll-margin-top: 120px;
+}
+.fcircle__letter .eyebrow { color: var(--c-tan); display: inline-block; margin-bottom: 22px; }
+.fcircle__letter-body { margin: 0; font-family: var(--ff-display); font-style: italic; font-size: clamp(19px, 2.2vw, 25px); line-height: 1.6; }
+.fcircle__letter-sig { margin: 22px 0 0; font-size: 13px; letter-spacing: .08em; color: var(--c-tan); }
+
+.fcircle__experience { max-width: 640px; margin-left: auto; margin-right: auto; text-align: center; }
+.fcircle__experience .eyebrow { display: inline-block; margin-bottom: 18px; }
+.fcircle__experience-copy { color: var(--c-ink-soft); line-height: 1.75; margin: 0; }
+
+@media (max-width: 900px) {
+  .fcircle__expressions { grid-template-columns: 1fr; }
+  .fcircle__benefits { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .fcircle__benefits { grid-template-columns: 1fr; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Founder's Circle Content",
+  "settings": [
+    { "type": "text", "id": "intro_eyebrow", "label": "Intro eyebrow", "default": "— Purpose —" },
+    { "type": "textarea", "id": "intro_copy", "label": "Intro copy", "default": "As the catalog grows, the founders cannot personally know every customer the way they once could. Founder's Circle is the structure that preserves proximity for the customers who have earned it, rather than letting scale quietly replace relationship with reach." },
+    { "type": "text", "id": "expressions_heading", "label": "Expressions heading", "default": "Three Expressions of Membership" },
+    { "type": "textarea", "id": "expressions_lede", "label": "Expressions lede", "default": "Presented in the order a relationship might deepen over time — never a ladder to climb by spending, and never a status displayed to track. A member is told what she has; she is not shown what she doesn't have yet." },
+    { "type": "text", "id": "benefits_heading", "label": "Benefits heading", "default": "What Membership Includes" },
+    { "type": "text", "id": "letter_eyebrow", "label": "Letter eyebrow", "default": "— A sample Letter —" },
+    { "type": "textarea", "id": "letter_body", "label": "Letter body", "default": "“We've been formulating for a while now, and somewhere in the last few months, you stopped being a customer we didn't know and became one we did. We'd like to invite you into Founder's Circle — the closest thing we have to letting you sit closer to the bench.”" },
+    { "type": "text", "id": "letter_signature", "label": "Letter signature", "default": "— Harin & Zach" },
+    { "type": "text", "id": "experience_eyebrow", "label": "Member experience eyebrow", "default": "— Day to day —" },
+    { "type": "textarea", "id": "experience_copy", "label": "Member experience copy", "default": "Membership is quiet. A member notices Founder's Circle a handful of times a year — a Letter that reads more personal than the usual Journal send, an early mention of something still in the Study, an Edition she hears about before the general list does. It should never feel like a dashboard to check or a status to maintain." }
+  ],
+  "blocks": [
+    {
+      "type": "expression",
+      "name": "Expression",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Founder's Circle" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "The invitation itself, and the entry point everyone is invited into directly. Members receive the Letters and an informal, early view into the Study. This is the whole membership for most members, for as long as they're in it." }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "The Letters" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "A more frequent, more candid line of correspondence from the founders than the standard Journal." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founder's Circle Content",
+      "blocks": [
+        { "type": "expression", "settings": { "name": "Founder's Circle", "description": "The invitation itself, and the entry point everyone is invited into directly. Members receive the Letters and an informal, early view into the Study. This is the whole membership for most members, for as long as they're in it." } },
+        { "type": "expression", "settings": { "name": "The Atelier", "description": "A deepened relationship, recognized — never requested, never displayed as an available upgrade. Extended to members whose relationship with the House has visibly deepened over time. Members in the Atelier receive first access to the Edition." } },
+        { "type": "expression", "settings": { "name": "The Archive", "description": "Recognized as an early believer — the deepest expression of Founder's Circle, extended rarely, and by the founders alone. Recognition as part of the House's own record, over time." } },
+        { "type": "benefit", "settings": { "name": "The Letters", "description": "A more frequent, more candid line of correspondence from the founders than the standard Journal." } },
+        { "type": "benefit", "settings": { "name": "Access to the Study", "description": "An informal, early view into formulations still being tested — a genuine seat closer to the Bench." } },
+        { "type": "benefit", "settings": { "name": "First Access to the Edition", "description": "Advance notice when a limited or dated release enters the Collection." } },
+        { "type": "benefit", "settings": { "name": "A Place in the Archive", "description": "Long-term recognition as one of the House's earliest believers." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

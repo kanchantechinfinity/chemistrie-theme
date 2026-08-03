@@ -1,0 +1,79 @@
+{
+  "sections": {
+    "page-hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "— Founder's Circle —",
+        "heading": "Founder's Circle.<br/><em>A relationship, extended.</em>",
+        "deck": "Never a transaction, tracked. Founder's Circle exists because the founders can't personally know every customer forever — not because they've stopped wanting to. It's how proximity survives growth: the Letters, an early seat closer to the Bench, and recognition that deepens the longer the relationship lasts.",
+        "deck2": "Membership isn't purchased and isn't applied for. It's extended, when a relationship has reached the kind of depth a founder would recognize by name.",
+        "show_visual": false,
+        "cta_label": "Request an Invitation",
+        "cta_url": "#request-invitation",
+        "cta2_label": "Read a Letter",
+        "cta2_url": "#letter-sample"
+      }
+    },
+    "founders-circle-content": {
+      "type": "founders-circle-content",
+      "blocks": {
+        "expression_1": {
+          "type": "expression",
+          "settings": {
+            "name": "Founder's Circle",
+            "description": "The invitation itself, and the entry point everyone is invited into directly. Members receive the Letters and an informal, early view into the Study. This is the whole membership for most members, for as long as they're in it."
+          }
+        },
+        "expression_2": {
+          "type": "expression",
+          "settings": {
+            "name": "The Atelier",
+            "description": "A deepened relationship, recognized — never requested, never displayed as an available upgrade. Extended to members whose relationship with the House has visibly deepened over time. Members in the Atelier receive first access to the Edition."
+          }
+        },
+        "expression_3": {
+          "type": "expression",
+          "settings": {
+            "name": "The Archive",
+            "description": "Recognized as an early believer — the deepest expression of Founder's Circle, extended rarely, and by the founders alone. Recognition as part of the House's own record, over time."
+          }
+        },
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "name": "The Letters",
+            "description": "A more frequent, more candid line of correspondence from the founders than the standard Journal."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "name": "Access to the Study",
+            "description": "An informal, early view into formulations still being tested — a genuine seat closer to the Bench."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "name": "First Access to the Edition",
+            "description": "Advance notice when a limited or dated release enters the Collection."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "name": "A Place in the Archive",
+            "description": "Long-term recognition as one of the House's earliest believers."
+          }
+        }
+      },
+      "block_order": ["expression_1", "expression_2", "expression_3", "benefit_1", "benefit_2", "benefit_3", "benefit_4"],
+      "settings": {}
+    },
+    "founders-circle-invite": {
+      "type": "founders-circle-invite",
+      "settings": {}
+    }
+  },
+  "order": ["page-hero", "founders-circle-content", "founders-circle-invite"]
+}
