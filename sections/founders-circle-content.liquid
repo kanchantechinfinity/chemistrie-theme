@@ -3,8 +3,17 @@
 
     {%- comment -%} ───── Purpose ───── {%- endcomment -%}
     <div class="fcircle__block fcircle__intro">
-      <span class="eyebrow">{{ section.settings.intro_eyebrow }}</span>
-      <p class="fcircle__intro-copy">{{ section.settings.intro_copy }}</p>
+      <div class="fcircle__intro-copy-col">
+        <span class="eyebrow">{{ section.settings.intro_eyebrow }}</span>
+        <p class="fcircle__intro-copy">{{ section.settings.intro_copy }}</p>
+      </div>
+      <div class="fcircle__intro-media">
+        {%- if section.settings.intro_image != blank -%}
+          {{ section.settings.intro_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: '' }}
+        {%- else -%}
+          <img src="{{ 'stock-note.jpg' | asset_url }}" alt="" loading="lazy">
+        {%- endif -%}
+      </div>
     </div>
 
     {%- comment -%} ───── The Three Expressions of Membership ───── {%- endcomment -%}
@@ -62,9 +71,16 @@
 .fcircle__block { margin-bottom: clamp(56px, 7vw, 96px); }
 .fcircle__block:last-child { margin-bottom: 0; }
 
-.fcircle__intro { max-width: 720px; }
+.fcircle__intro { max-width: none; display: flex; align-items: center; gap: clamp(32px, 5vw, 72px); }
+.fcircle__intro-copy-col { flex: 1 1 50%; max-width: 560px; }
 .fcircle__intro .eyebrow { display: inline-block; margin-bottom: 18px; }
 .fcircle__intro-copy { font-family: var(--ff-display); font-size: clamp(22px, 2.6vw, 30px); line-height: 1.45; color: var(--c-forest); }
+.fcircle__intro-media { flex: 1 1 42%; max-width: 460px; aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 60px -28px rgba(26,58,45,.4); }
+.fcircle__intro-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 800px) {
+  .fcircle__intro { flex-direction: column; align-items: stretch; }
+  .fcircle__intro-media { order: -1; max-width: 100%; }
+}
 
 .fcircle__h { font-family: var(--ff-display); font-size: clamp(24px, 3vw, 32px); font-weight: 500; color: var(--c-forest); text-align: center; margin: 0 0 14px; }
 .fcircle__lede { text-align: center; max-width: 62ch; margin: 0 auto clamp(32px, 4vw, 48px); color: var(--c-ink-soft); line-height: 1.7; }
@@ -112,6 +128,7 @@
   "settings": [
     { "type": "text", "id": "intro_eyebrow", "label": "Intro eyebrow", "default": "— Purpose —" },
     { "type": "textarea", "id": "intro_copy", "label": "Intro copy", "default": "As the catalog grows, the founders cannot personally know every customer the way they once could. Founder's Circle is the structure that preserves proximity for the customers who have earned it, rather than letting scale quietly replace relationship with reach." },
+    { "type": "image_picker", "id": "intro_image", "label": "Purpose image", "info": "Optional. Falls back to a temporary stock photo until a real image is uploaded." },
     { "type": "text", "id": "expressions_heading", "label": "Expressions heading", "default": "Three Expressions of Membership" },
     { "type": "textarea", "id": "expressions_lede", "label": "Expressions lede", "default": "Presented in the order a relationship might deepen over time — never a ladder to climb by spending, and never a status displayed to track. A member is told what she has; she is not shown what she doesn't have yet." },
     { "type": "text", "id": "benefits_heading", "label": "Benefits heading", "default": "What Membership Includes" },
