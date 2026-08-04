@@ -110,9 +110,9 @@
       "type": "shop",
       "name": "Shop",
       "settings": {
-        "heading": "Six formulas.<br><em>Zero shortcuts.</em>",
-        "lede": "A complete pharmacist-built ritual. Begin with one, build to all six.",
-        "foot_link_label": "Explore the full apothecary",
+        "heading": "The Collection.",
+        "lede": "Everything a routine needs, and nothing it doesn't.",
+        "foot_link_label": "Explore the Full Collection",
         "collection": "home-page-products"
       }
     },
@@ -398,8 +398,8 @@
       "name": "The Ritual",
       "settings": {
         "eyebrow": "— The Ritual —",
-        "heading": "Four<br><em>quiet</em> steps.",
-        "lede": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down. Layer thin. Wait for the skin to ask."
+        "heading": "Cleanse. Hydrate.<br><em>Renew. Repeat.</em>",
+        "lede": "Built to layer, not to compete with itself. Morning and evening, in the same order, for as long as it takes to stop feeling like a decision."
       }
     },
     "testimonials_dVdUH3": {
@@ -475,7 +475,7 @@
       "name": "Instagram",
       "settings": {
         "eyebrow": "— The Bench, on Instagram —",
-        "heading": "Find us <em>between</em><br>the bottles.",
+        "heading": "Follow the<br><em>Formulary.</em>",
         "instagram_url": "",
         "handle": "@chemistrie.co",
         "follower_count": "21.4k",
