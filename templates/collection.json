@@ -12,9 +12,9 @@
     "page-hero": {
       "type": "page-hero",
       "settings": {
-        "eyebrow": "— The Full Apothecary —",
-        "heading": "Six formulas.<br/><em>Zero shortcuts.</em>",
-        "deck": "Every Chemistrie formula is compounded by hand in Houston, hand-numbered in batches of 200, and built around a single clinical-grade active — never a marketing blend.",
+        "eyebrow": "— The Collection —",
+        "heading": "The Collection.",
+        "deck": "Four products, formulated to be used together. Each one has a single job. None of them try to do another's.",
         "hero_fallback_asset": "stock-lineup.jpg"
       }
     },
@@ -75,7 +75,7 @@
         "note_2": {
           "type": "note",
           "settings": {
-            "quote": "Lumina gave me back a glow I hadn't seen since my twenties. Three weeks in and people keep asking what I changed.",
+            "quote": "Aura gave me back a glow I hadn't seen since my twenties. Three weeks in and people keep asking what I changed.",
             "author": "Priya R., Austin · Verified Buyer"
           }
         },
@@ -89,7 +89,7 @@
         "note_4": {
           "type": "note",
           "settings": {
-            "quote": "The Peptide Cream is the one step I refuse to skip now. My fine lines around the eyes look genuinely softer.",
+            "quote": "Aura is the one step I refuse to skip now. My fine lines around the eyes look genuinely softer.",
             "author": "Sofia L., Houston · Verified Buyer"
           }
         },
@@ -103,21 +103,21 @@
         "note_6": {
           "type": "note",
           "settings": {
-            "quote": "Velvet and Lumina together completely calmed my hormonal breakouts. My skin has never been this even.",
+            "quote": "Velvet and Silken together completely calmed my hormonal breakouts. My skin has never been this even.",
             "author": "Rebecca M., Dallas · Verified Buyer"
           }
         },
         "note_7": {
           "type": "note",
           "settings": {
-            "quote": "Cashmere layered over the Peptide Cream is my whole nighttime ritual now. I wake up plump and calm.",
+            "quote": "Cashmere layered over Aura is my whole nighttime ritual now. I wake up plump and calm.",
             "author": "Daniela S., Houston · Verified Buyer"
           }
         },
         "note_8": {
           "type": "note",
           "settings": {
-            "quote": "Fast shipping, beautiful packaging, and a formula that actually works. Lumina earned a permanent spot on my shelf.",
+            "quote": "Fast shipping, beautiful packaging, and a formula that actually works. Aura earned a permanent spot on my shelf.",
             "author": "Claire W., Austin · Verified Buyer"
           }
         }
@@ -139,7 +139,7 @@
       "settings": {
         "eyebrow": "— Ready when you are —",
         "heading": "Begin your <em>ritual.</em>",
-        "sub": "Six formulas, hand-numbered in Houston. Find the one your skin has been waiting for.",
+        "sub": "Every formula in this Collection answers to the same two people. Start with one, add as you're ready.",
         "button_label": "Shop the Collection"
       }
     }
