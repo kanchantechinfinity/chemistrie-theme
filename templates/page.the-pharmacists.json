@@ -13,9 +13,9 @@
       "type": "page-hero",
       "settings": {
         "eyebrow": "— The Pharmacists —",
-        "heading": "The two people<br/><em>behind the bench.</em>",
-        "deck": "Chemistrie is not a brand that hired a chemist. It is two compounding pharmacists who could not stop formulating for the people they love.",
-        "deck2": "Before there was a logo, there was a bench in Houston and a short list of requests — a retinol that did not burn, a vitamin C that did not oxidise in a week. The founders answered them one bottle at a time. This page is simply who they are.",
+        "heading": "The Pharmacists.",
+        "deck": "Harin and Zach have been comparing notes since 2011.",
+        "deck2": "Before there was a logo, there was a pharmacy fraternity, two separate careers, and a short list of requests from the women they went home to — skincare formulated by someone who understood what they were doing, not just someone skilled at selling it.",
         "hero_fallback_asset": "stock-lab.jpg"
       }
     },
@@ -57,41 +57,29 @@
         "founder_1": {
           "type": "founder",
           "settings": {
-            "eyebrow": "— Founder, No. 1 —",
-            "name": "Dr. A",
+            "eyebrow": "— Co-founder —",
+            "name": "Harin",
             "role": "Co-founder · Compounding Pharmacist",
-            "body": "<p>Trained at the compounding bench in Houston, Dr. A spent years weighing actives by the milligram for patients before a single bottle ever carried the Chemistrie name.</p>",
-            "quote": "The first formulas we compounded for someone she loved. That is still the only trust that matters: make it work, make it kind, make it worthy of the person who will use it nightly.",
+            "body": "<p>Harin's pharmacy career moved through long-term care, specialty pharmacy, infusion, and compounding — learning to formulate precisely, to a standard with no room for a claim that turned out to be almost true. He and Zach met in 2011 at the University of Houston College of Pharmacy, in the same pharmacy fraternity, Phi Delta Chi.</p>",
+            "quote": "",
             "avatar_style": "forest"
           }
         },
         "founder_2": {
           "type": "founder",
           "settings": {
-            "eyebrow": "— Founder, No. 2 —",
-            "name": "Dr. M",
+            "eyebrow": "— Co-founder —",
+            "name": "Zach",
             "role": "Co-founder · Compounding Pharmacist",
-            "body": "<p>Dr. M came to skincare the pharmacist's way — through the prescription pad, not the marketing deck. Refinaldehyde that did not burn was the problem she could not put down.</p>",
-            "quote": "We believe a formula should be honest to the milligram. Every concentration is printed exactly as compounded, because the woman reading the label deserves the same truth we'd tell a patient.",
+            "body": "<p>Zach spent over a decade in community pharmacy, building deep expertise in over-the-counter and dermatological products — and no shortage of opinions about which ones actually worked. He and Harin reunited years later at The Chemist Pharmacy, comparing the decade they'd spent apart.</p>",
+            "quote": "",
             "avatar_style": "tan"
-          }
-        },
-        "founder_3": {
-          "type": "founder",
-          "settings": {
-            "eyebrow": "— Founder, No. 3 —",
-            "name": "Dr. S",
-            "role": "Co-founder · Compounding Pharmacist",
-            "body": "<p>Dr. S rounds out the bench — the formulator who insists every batch is third-party assayed before it ships. No marketing rounding, no exceptions.</p>",
-            "quote": "A number on a label is a promise. We test every run so the promise is true — the same standard we'd hold filling a prescription.",
-            "avatar_style": "forest"
           }
         }
       },
       "block_order": [
         "founder_1",
-        "founder_2",
-        "founder_3"
+        "founder_2"
       ],
       "settings": {}
     },
@@ -102,33 +90,63 @@
           "type": "cred",
           "settings": {
             "number": "01",
-            "title": "They weigh the actives themselves",
-            "body": "A compounding pharmacist mixes each formula by hand, to the milligram — the same discipline used to prepare a prescription, brought to a bottle you keep on your shelf."
+            "title": "The Meeting",
+            "body": "Harin and Zach met in 2011, at the University of Houston College of Pharmacy — not as business partners, and not yet as anything resembling founders, but as two students in the same pharmacy fraternity, Phi Delta Chi. Both went on to serve as chapter president: Harin in 2012, Zach in 2013."
           }
         },
         "cred_2": {
           "type": "cred",
           "settings": {
             "number": "02",
-            "title": "They know how molecules behave",
-            "body": "Which actives can share a bottle, which must be kept apart, what oil keeps vitamin C alive — this is pharmacy, not marketing, and it decides whether a formula actually works."
+            "title": "Two Careers",
+            "body": "Zach spent the next ten-plus years in community pharmacy, building expertise in over-the-counter products — including the dermatological aisle, and every overpriced bottle in it that promised more than it delivered. Harin moved through long-term care, specialty pharmacy, infusion, and compounding, learning to formulate to a standard with no room for a claim that turned out to be almost true."
           }
         },
         "cred_3": {
           "type": "cred",
           "settings": {
             "number": "03",
-            "title": "They answer for every batch",
-            "body": "Each run is numbered and traceable to the pharmacist who compounded it. If a question comes in, a real person who mixed it is the one who answers."
+            "title": "The Conversation",
+            "body": "Their careers came back together when Zach took a position at The Chemist Pharmacy — Harin's pharmacy. Working alongside each other again, they did what old fraternity brothers tend to do: started comparing the decade they'd just spent apart, and found a strange amount of overlap."
+          }
+        },
+        "cred_4": {
+          "type": "cred",
+          "settings": {
+            "number": "04",
+            "title": "What Their Wives Actually Wanted",
+            "body": "Both married to accountants. Both raising two kids. And both married to women who had spent real money on dermatological products they didn't fully trust and didn't think were worth what they cost. Neither wife was asking for a miracle — they wanted skincare formulated by someone who understood what they were doing, not just someone skilled at selling it."
+          }
+        },
+        "cred_5": {
+          "type": "cred",
+          "settings": {
+            "number": "05",
+            "title": "The Bench",
+            "body": "So Harin and Zach did the thing they'd spent over a decade training to do — applying the same formulation standards they'd apply to anything touching a prescription pad, building products for their wives specifically. Their wives loved what came out of it. That was the moment the idea stopped being personal and started becoming Chemistrie."
+          }
+        },
+        "cred_6": {
+          "type": "cred",
+          "settings": {
+            "number": "06",
+            "title": "Why Chemistrie",
+            "body": "Harin and Zach decided the same standard that worked for two women shouldn't stay limited to two women. “We didn't set out to build a skincare brand. We set out to make something our wives could actually trust. Everything else followed from that.” — Harin & Zach"
           }
         }
       },
       "block_order": [
         "cred_1",
         "cred_2",
-        "cred_3"
+        "cred_3",
+        "cred_4",
+        "cred_5",
+        "cred_6"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "— How Chemistrie began —",
+        "heading": "Two careers,<br/>one <em>conversation.</em>"
+      }
     },
     "pharmacists-philosophy": {
       "type": "pharmacists-philosophy",
