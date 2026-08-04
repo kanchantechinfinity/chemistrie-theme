@@ -34,8 +34,8 @@
         </article>
         {%- endfor -%}
       {%- else -%}
-        {%- assign fallback_names = 'Velvet,Lumina,Cashmere,Peptide Cream' | split: ',' -%}
-        {%- assign fallback_prices = '$36,$68,$52,$118' | split: ',' -%}
+        {%- assign fallback_names = 'Velvet,Cashmere,Aura,Silken' | split: ',' -%}
+        {%- assign fallback_prices = 'From $30,From $85,From $105,From $80' | split: ',' -%}
         {%- for name in fallback_names -%}
         <article class="pcard">
           <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ name | handleize }}" data-title="{{ name | escape }}" data-price="{{ fallback_prices[forloop.index0] }}" data-image="" data-url="#" aria-label="Save to wishlist">
@@ -87,7 +87,7 @@
   "name": "Ritual Shop",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Shop this ritual —" },
-    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "The whole ritual,<br/><em>in five bottles.</em>" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "Shop This<br/><em>Routine.</em>" },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "url", "id": "pdf_url", "label": "Ritual Card PDF URL" },
     { "type": "textarea", "id": "caption", "label": "Caption", "default": "A printable card version of the ritual, to keep by the mirror. Coming soon." }

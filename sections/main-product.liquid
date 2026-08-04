@@ -25,7 +25,8 @@
 -%}
 {%- case pd_key -%}
   {%- when 'velvet' -%}
-    {%- assign pd_routine_am = 'Velvet (Cleanse) → Lumina (Treat) → Cashmere (Moisturize) → SPF (Protect)' -%}
+    {%- assign pd_eyebrow = 'Chemistrie Essentials' -%}
+    {%- assign pd_routine_am = 'Velvet (Cleanse) → Lumina (coming soon) (Treat) → Cashmere (Moisturize) → Your Own SPF (Protect)' -%}
     {%- assign pd_routine_pm = 'Velvet (Cleanse) → Aura (Renew)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
       <li>For external use only.</li>
@@ -44,11 +45,12 @@
       <li>Dispense one to two pumps into damp hands.</li>
       <li>Massage gently over a damp face.</li>
       <li>Rinse thoroughly.</li>
-      <li>Follow with, in the morning: Lumina, Cashmere, SPF. In the evening: Aura.</li>
+      <li>Follow with, in the morning: Lumina (coming soon), Cashmere, Your Own SPF. In the evening: Aura.</li>
     </ol>{%- endcapture -%}
   {%- when 'aura' -%}
-    {%- assign pd_routine_am = 'Velvet (Cleanse) → Vitamin C Serum (coming soon) → Aura (Moisturize) → SPF (coming soon)' -%}
-    {%- assign pd_routine_pm = 'Velvet (Cleanse) → Hydrating Serum (coming soon) → Aura (Moisturize) → Eye Cream (coming soon)' -%}
+    {%- assign pd_eyebrow = 'Chemistrie Signature' -%}
+    {%- assign pd_routine_am = 'Velvet (Cleanse) → Lumina (coming soon) (Treat) → Aura (Renew) → Your Own SPF (Protect)' -%}
+    {%- assign pd_routine_pm = 'Velvet (Cleanse) → Aura (Renew)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
       <li>For external use only.</li>
       <li>Avoid direct contact with eyes.</li>
@@ -69,7 +71,8 @@
       <li>Follow with sunscreen. Every morning, without exception.</li>
     </ol>{%- endcapture -%}
   {%- when 'cashmere' -%}
-    {%- assign pd_routine_am = 'Velvet → Lumina → Cashmere → SPF' -%}
+    {%- assign pd_eyebrow = 'Chemistrie Essentials' -%}
+    {%- assign pd_routine_am = 'Velvet → Lumina (coming soon) → Cashmere → Your Own SPF' -%}
     {%- assign pd_routine_pm = 'Velvet → Aura (Cashmere may also be layered in the evening if additional hydration is desired.)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
       <li>For external use only.</li>
@@ -91,7 +94,8 @@
       <li>Massage gently into face and neck until absorbed.</li>
     </ol>{%- endcapture -%}
   {%- when 'silken' -%}
-    {%- assign pd_routine_am = 'Velvet → Lumina → Cashmere → SPF (apply Silken to targeted areas after cleansing and before moisturizer)' -%}
+    {%- assign pd_eyebrow = 'Chemistrie Precision' -%}
+    {%- assign pd_routine_am = 'Velvet → Lumina (coming soon) → Cashmere → Your Own SPF (apply Silken to targeted areas after cleansing and before moisturizer)' -%}
     {%- assign pd_routine_pm = 'Velvet → Aura (apply Silken to targeted areas after cleansing and before moisturizer)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
       <li>For external use only.</li>
@@ -157,8 +161,8 @@
 
       {%- comment -%} ───── RIGHT: buy box ───── {%- endcomment -%}
       <div class="mprod__buy">
-        {%- if product.type != blank -%}
-          <span class="eyebrow mprod__eyebrow">{{ product.type }}</span>
+        {%- if pd_eyebrow != blank or product.type != blank -%}
+          <span class="eyebrow mprod__eyebrow">{{ pd_eyebrow | default: product.type }}</span>
         {%- endif -%}
         <h1 class="display-h mprod__title">{{ product.title }}</h1>
 
