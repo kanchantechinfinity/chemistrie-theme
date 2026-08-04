@@ -1,12 +1,11 @@
 <section class="page-hero e404" data-screen-label="404">
   <div class="page-hero__inner e404__inner">
     <span class="eyebrow eyebrow--light">— Error 404 —</span>
-    <h1 class="display-h display-h--light e404__title">This page slipped<br/><em>off the bench.</em></h1>
-    <p class="e404__body">The page you're after isn't here — it may have been moved, renamed, or never compounded at all. Let's get you back to something good.</p>
+    <h1 class="display-h display-h--light e404__title">This page didn't make it<br/><em>into the Collection.</em></h1>
+    <p class="e404__body">The link you followed doesn't lead anywhere anymore. Everything else on the site still does.</p>
     <div class="e404__btns">
-      <a href="{{ routes.root_url }}" class="btn btn--primary btn--light">Home</a>
-      <a href="{{ routes.all_products_collection_url }}" class="btn btn--ghost btn--dark e404__ghost">The Collection</a>
-      <a href="/pages/contact" class="btn btn--ghost btn--dark e404__ghost">Contact</a>
+      <a href="{{ routes.root_url }}" class="btn btn--primary btn--light">Return to Homepage</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--ghost btn--dark e404__ghost">Explore the Collection</a>
     </div>
     <form action="{{ routes.search_url }}" method="get" role="search" class="e404__form">
       <label class="visually-hidden" for="e404-q">Search</label>

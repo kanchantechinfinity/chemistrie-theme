@@ -106,8 +106,8 @@
     {%- else -%}
       <div class="cart__empty">
         <h2 class="cart__empty-title">{{ section.settings.empty_heading | default: 'Your cart is empty.' }}</h2>
-        <p class="cart__empty-sub">{{ section.settings.empty_text | default: 'Every formula is compounded by hand, in batches of 200. Find the one your skin has been waiting for.' }}</p>
-        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">{{ section.settings.empty_cta | default: 'Shop the Collection' }}</a>
+        <p class="cart__empty-sub">{{ section.settings.empty_text | default: 'Explore the Collection to start your ritual.' }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">{{ section.settings.empty_cta | default: 'Explore the Collection' }}</a>
       </div>
     {%- endif -%}
   </div>
@@ -214,8 +214,8 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Cart" },
     { "type": "header", "content": "Empty state" },
     { "type": "text", "id": "empty_heading", "label": "Empty heading", "default": "Your cart is empty." },
-    { "type": "textarea", "id": "empty_text", "label": "Empty text", "default": "Every formula is compounded by hand, in batches of 200. Find the one your skin has been waiting for." },
-    { "type": "text", "id": "empty_cta", "label": "Empty button label", "default": "Shop the Collection" }
+    { "type": "textarea", "id": "empty_text", "label": "Empty text", "default": "Explore the Collection to start your ritual." },
+    { "type": "text", "id": "empty_cta", "label": "Empty button label", "default": "Explore the Collection" }
   ],
   "presets": [{ "name": "Cart" }]
 }
