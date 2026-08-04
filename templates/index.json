@@ -30,7 +30,7 @@
         "trust1_num": "2,400+",
         "trust1_label": "Women on the list",
         "trust2_num": "28",
-        "trust2_label": "Clinical-grade actives",
+        "trust2_label": "Pharmacist-grade actives",
         "trust3_num": "★ 4.96",
         "trust3_label": "Verified buyer rating",
         "bottle_image": "shopify://shop_images/dda85c0a-53f5-4881-bc23-c9d3314d64c7-removebg-preview_1_4000x4000_27444232-7a22-43d1-940f-5df673f489c4.png",
@@ -58,7 +58,7 @@
           "type": "pillar",
           "settings": {
             "title": "Trust.",
-            "lede": "Pharmacist credibility that feels warm, not clinical.",
+            "lede": "Pharmacist credibility that feels warm, not sterile.",
             "item1": "— Credentials are the proof. Love is the reason.",
             "item2": "— Every active ingredient cleared by a licensed pharmacist.",
             "item3": "— Transparency on dose, on source, on shelf-life.",

@@ -515,32 +515,36 @@
           {%- endif -%}
         </div>
       {%- endif -%}
-      <div class="pdet__review-grid">
-        <article class="pdet__review-card">
-          <div class="pdet__review-top">
-            <span class="pdet__review-stars">★★★★★</span>
-            <span class="pdet__verified">Verified Purchase</span>
-          </div>
-          <p class="pdet__review-copy">&ldquo;Eight weeks in and my skin genuinely looks different — calmer, less reactive, and the dull patch on my cheeks has faded. First routine I've actually stuck with, because it feels good to use, not just good on paper.&rdquo;</p>
-          <span class="pdet__review-name">Eleanor R.</span>
-        </article>
-        <article class="pdet__review-card">
-          <div class="pdet__review-top">
-            <span class="pdet__review-stars">★★★★★</span>
-            <span class="pdet__verified">Verified Purchase</span>
-          </div>
-          <p class="pdet__review-copy">&ldquo;I was skeptical of another &lsquo;clinical&rsquo; skincare brand, but the concentration here is real. No burning, no purging — just steady, visible improvement over about a month.&rdquo;</p>
-          <span class="pdet__review-name">Priya S.</span>
-        </article>
-        <article class="pdet__review-card">
-          <div class="pdet__review-top">
-            <span class="pdet__review-stars">★★★★★</span>
-            <span class="pdet__verified">Verified Purchase</span>
-          </div>
-          <p class="pdet__review-copy">&ldquo;Reordered before I'd even finished the bottle. The texture is beautiful and a little goes such a long way — worth every dollar, and it arrived hand-numbered, which felt like a nice touch.&rdquo;</p>
-          <span class="pdet__review-name">Camille D.</span>
-        </article>
-      </div>
+      {%- if section.settings.show_demo_reviews -%}
+        <div class="pdet__review-grid">
+          <article class="pdet__review-card">
+            <div class="pdet__review-top">
+              <span class="pdet__review-stars">★★★★★</span>
+              <span class="pdet__verified">Verified Purchase</span>
+            </div>
+            <p class="pdet__review-copy">&ldquo;Eight weeks in and my skin genuinely looks different — calmer, less reactive, and the dull patch on my cheeks has faded. First routine I've actually stuck with, because it feels good to use, not just good on paper.&rdquo;</p>
+            <span class="pdet__review-name">Eleanor R.</span>
+          </article>
+          <article class="pdet__review-card">
+            <div class="pdet__review-top">
+              <span class="pdet__review-stars">★★★★★</span>
+              <span class="pdet__verified">Verified Purchase</span>
+            </div>
+            <p class="pdet__review-copy">&ldquo;I was skeptical of another skincare brand promising more than it delivers, but the formulation here is real. No burning, no purging — just steady, visible improvement over about a month.&rdquo;</p>
+            <span class="pdet__review-name">Priya S.</span>
+          </article>
+          <article class="pdet__review-card">
+            <div class="pdet__review-top">
+              <span class="pdet__review-stars">★★★★★</span>
+              <span class="pdet__verified">Verified Purchase</span>
+            </div>
+            <p class="pdet__review-copy">&ldquo;Reordered before I'd even finished the bottle. The texture is beautiful and a little goes such a long way — worth every dollar, and it arrived hand-numbered, which felt like a nice touch.&rdquo;</p>
+            <span class="pdet__review-name">Camille D.</span>
+          </article>
+        </div>
+      {%- else -%}
+        <p class="pdet__empty">Be the first to share your experience with {{ product.title }}.</p>
+      {%- endif -%}
     </div>
 
     {%- comment -%} ───── Key Benefits — always-visible icon row on a sage band ───── {%- endcomment -%}
@@ -554,7 +558,7 @@
           {{ pd_benefits }}
         {%- else -%}
           <ul class="pdet__list">
-            <li>Built around a single clinical-grade active — no filler blends.</li>
+            <li>Built around a single pharmacist-selected active — no filler blends.</li>
             <li>Compounded by hand in Houston, hand-numbered in batches of 200.</li>
             <li>Pharmacist-formulated for real, visible skin results.</li>
             <li>Gentle enough for daily use in your complete ritual.</li>
@@ -638,7 +642,7 @@
           {%- elsif pd_whats_inside != blank -%}
             <p>{{ pd_whats_inside }}</p>
           {%- else -%}
-            <p>Every batch centers on a clinical-grade active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
+            <p>Every batch centers on a single pharmacist-selected active, supported by a minimal base chosen to carry it cleanly into the skin. See the full ingredient list for exact INCI names.</p>
           {%- endif -%}
         </div>
       </div>
@@ -966,7 +970,9 @@ document.querySelectorAll('.pdet__tabs-nav').forEach(function (nav) {
 {% schema %}
 {
   "name": "Product Details",
-  "settings": [],
+  "settings": [
+    { "type": "checkbox", "id": "show_demo_reviews", "label": "Show demo reviews (internal preview only)", "info": "Off by default — these are placeholder reviews, not real customer feedback. Leave off until real reviews exist.", "default": false }
+  ],
   "presets": [{ "name": "Product Details" }]
 }
 {% endschema %}
