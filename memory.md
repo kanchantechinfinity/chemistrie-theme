@@ -16,6 +16,71 @@
 - Animation stack: GSAP 3.12.5 + ScrollTrigger + Lenis smooth-scroll, loaded via CDN in `layout/theme.liquid`, driven by `assets/chemistrie.js`.
 - Real product content (Velvet, Aura, Cashmere, Silken) sourced from client docx files, rendered in `product-details.liquid` via a handle/title-matching `pd_key` pattern.
 
+## Build log — 2026-08-04: Site-wide Copy Bible alignment pass
+User instruction: match the entire site to "Chemistrie Website Copy Bible v1.0"
+exactly (names, ingredients, structure) for a client demo — "nothing should be
+missing." Bible source: `/tmp/cb/copybible.txt` (extracted from the client's
+docx via `textutil`; re-extract if the docx changes, see extraction method
+note below). Work landed across commits `22194cc`→`e24d4cf`:
+- **The Pharmacists page**: replaced fictional "Dr. A/Dr. M/Dr. S" throughout
+  with real founders Harin & Zach and the Bible's exact 6-part origin story
+  (met 2011 at U of Houston College of Pharmacy, Phi Delta Chi, reunited at
+  The Chemist Pharmacy, etc.). Removed fabricated founder pull-quotes (Bible
+  explicitly warns against inventing quotes founders didn't actually say).
+- **Homepage** (`templates/index.json`): Hero, Founders, Story ch.1-2,
+  Newsletter, Shop/Ritual/Instagram section headings all rewritten to Bible's
+  Part III exact wording. Footer tagline was already an exact match.
+- **Collection page**: Page Intro rewritten to Bible Part IV. Fixed
+  testimonials referencing "Lumina" and "Peptide Cream" as already-purchased
+  — neither is real (Lumina is coming-soon-only per Bible; Peptide Cream
+  isn't in the 4-product launch lineup at all). Swapped to Aura/Silken.
+- **Ritual page + Routine Builder** (biggest structural fix): the site's
+  ritual/routine content used a fictional AM=PM paired 4-step model with
+  invented products (Golden Oil, Renewal, Peptide Cream, Vitamin C Elixir,
+  Hydrating Serum, Eye Cream) — none of which are real. Rebuilt
+  `sections/ritual-steps.liquid` to support independent AM (5 steps:
+  Velvet→Lumina(coming soon)→Silken(optional)→Cashmere→Your Own SPF) and PM
+  (4 steps: Velvet→Silken(optional)→Cashmere(optional)→Aura) sequences per
+  Bible Part VII, instead of a 1:1 toggle. Applied the same Lumina
+  "(coming soon)" tag and "Your Own SPF" relabel (never coming-soon, no
+  product link, since Chemistrie will never make sunscreen) across every
+  product's `pd_routine_am/pm` in **both** `product-details.liquid` and
+  `main-product.liquid` (duplicated pd_key pattern — Shopify sections don't
+  share Liquid scope, see below).
+- **Product pages**: added the Bible's shared Founder Story scaffold
+  paragraph (identical text, all 4 products) to `product-details.liquid`'s
+  Founder's Note block. Added per-product eyebrow labels to
+  `main-product.liquid` buy box: Aura="Chemistrie Signature",
+  Velvet/Cashmere="Chemistrie Essentials", Silken="Chemistrie Precision".
+- **Fictional-name cleanup sweep**: `sections/vision.liquid`,
+  `founders.liquid`, `newsletter-cta.liquid`, `story.liquid` schema
+  *defaults* (not just live template data) still said "Dr. A/Dr. M/Dr. S" —
+  fixed so a merchant "reset to default" in the theme editor can't regress
+  the brand. `sections/shop.liquid` (Product Intro fallback grid) and
+  `sections/actives.liquid` ("Active Index" ingredient scroller) still
+  reference fictional products (Golden Oil, Renewal Serum, Vitamin C Elixir)
+  but only render when their `collection` setting is blank / aren't in
+  Bible scope at all — left as-is, flagged to user, not fixed.
+- **Microcopy** (Bible Part X): 404 page and cart empty-state copy now
+  match Bible exactly ("This page didn't make it into the Collection." /
+  "Explore the Collection to start your ritual.").
+- **Explicitly out of scope / flagged to user, not done**: exact Shopify
+  variant pricing (Velvet $30/$60/$95, Cashmere $85/$150, Aura $105/$195,
+  Silken $80/$135) lives in Shopify Admin product data, not theme files —
+  can't be fixed via code. Our Story page (`page.our-story.json`) has no
+  corresponding Bible part and contains an invented "burned cheeks" retinol
+  anecdote not sourced from the Bible — left alone pending user direction on
+  whether that page should be rewritten or retired. Founder's Circle
+  benefits/tier language (Bible Part VIII §7) has two items the Bible itself
+  flags as needing a founder decision before becoming real copy (private
+  events, birthday gifts) — not applicable to code either way.
+- **Docx extraction method** (repeat if Bible is updated): can't `cp`/`Read`
+  binary files from `~/Downloads` (macOS sandbox blocks it) — ask user to
+  move the file to `~/Desktop` first, then
+  `textutil -convert txt -stdout <path> > /tmp/cb/copybible.txt` (no
+  pandoc/libreoffice on this machine). Cache the txt; re-run `sed -n
+  'X,Yp'` against it per Part rather than re-extracting each time.
+
 ## Build log — 2026-07-27 (2): No two adjacent sections share a background (commit `4357a5a`)
 User asked for a site-wide audit: no two consecutive sections on any page
 may share the same background color. Method used — for each template's
