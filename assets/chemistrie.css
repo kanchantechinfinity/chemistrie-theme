@@ -370,17 +370,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   position: relative;
   display: inline-block;
 }
-.hero__title-em--accent::after {
-  content: "";
-  position: absolute;
-  left: 2%; right: 2%;
-  bottom: 8%;
-  height: 8px;
-  background: var(--c-tan);
-  opacity: .3;
-  z-index: -1;
-  border-radius: 2px;
-}
 
 .hero__deck {
   font-family: var(--ff-display);
@@ -1386,6 +1375,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   position: relative;
   display: flex;
   align-items: center;
+  /* Reserve clear space so the absolutely-positioned progress bar below never
+     overlaps card content on shorter viewports (card min-height can reach
+     64vh, leaving little room under it once centered in 100vh). */
+  padding-bottom: clamp(72px, 9vw, 112px);
+  box-sizing: border-box;
 }
 .actives__track {
   display: flex;
