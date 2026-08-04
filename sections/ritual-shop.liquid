@@ -8,49 +8,60 @@
     <div class="rshop__grid">
       {%- if section.settings.collection != blank -%}
         {%- for product in section.settings.collection.products limit: 4 -%}
-        <article class="pcard">
-          <a class="pcard__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
-          <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
-          </button>
-          <div class="pcard__media">
+        <article class="product" data-color="forest">
+          <a class="product__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
+          <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>
+          <div class="product__media">
+            <span class="product__tag">0{{ forloop.index }}</span>
             {%- if product.featured_image -%}
-              <img class="pcard__img" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="600" height="600">
+              <img class="product__photo" src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
               {%- if product.images.size > 1 -%}
-                <img class="pcard__img pcard__img--alt" src="{{ product.images[1] | image_url: width: 600 }}" alt="" loading="lazy" width="600" height="600">
+                <img class="product__photo product__photo--alt" src="{{ product.images[1] | image_url: width: 500 }}" alt="" loading="lazy">
               {%- endif -%}
             {%- else -%}
-              <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy" class="pcard__placeholder">
+              <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy" class="product__photo">
               {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
             {%- endif -%}
           </div>
-          <div class="pcard__body">
-            <div class="pcard__row">
-              <a class="pcard__name" href="{{ product.url }}">{{ product.title }}</a>
-              <span class="pcard__price">{{ product.price | money }}</span>
+          <div class="product__meta">
+            <div class="product__meta-top">
+              <div>
+                <h3>{{ product.title }}</h3>
+                <p>
+                  {%- if product.metafields.custom.subtitle != blank -%}
+                    {{ product.metafields.custom.subtitle }}
+                  {%- else -%}
+                    {{ product.description | strip_html | truncatewords: 6 }}
+                  {%- endif -%}
+                </p>
+              </div>
+              <span class="product__price">{{ product.price | money }}</span>
             </div>
-            <button class="pcard__btn product__cta" data-product-id="{{ product.selected_or_first_available_variant.id }}" type="button">Add to Cart</button>
+            <button class="product__cta" data-product-id="{{ product.selected_or_first_available_variant.id }}" type="button">Add to Cart</button>
           </div>
         </article>
         {%- endfor -%}
       {%- else -%}
         {%- assign fallback_names = 'Velvet,Cashmere,Aura,Silken' | split: ',' -%}
         {%- assign fallback_prices = 'From $30,From $85,From $105,From $80' | split: ',' -%}
+        {%- assign fallback_subs = 'Foaming Facial Cleanser,Lightweight Hydrating Lotion,Advanced Renewal Cream,Scar Refining Gel' | split: ',' -%}
         {%- for name in fallback_names -%}
-        <article class="pcard">
-          <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ name | handleize }}" data-title="{{ name | escape }}" data-price="{{ fallback_prices[forloop.index0] }}" data-image="" data-url="#" aria-label="Save to wishlist">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
-          </button>
-          <div class="pcard__media">
-            <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ name | escape }}" loading="lazy" class="pcard__placeholder">
+        <article class="product" data-color="forest">
+          <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ name | handleize }}" data-title="{{ name | escape }}" data-price="{{ fallback_prices[forloop.index0] }}" data-image="" data-url="#" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>
+          <div class="product__media">
+            <span class="product__tag">0{{ forloop.index }}</span>
+            <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ name | escape }}" loading="lazy" class="product__photo">
             {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
           </div>
-          <div class="pcard__body">
-            <div class="pcard__row">
-              <span class="pcard__name">{{ name }}</span>
-              <span class="pcard__price">{{ fallback_prices[forloop.index0] }}</span>
+          <div class="product__meta">
+            <div class="product__meta-top">
+              <div>
+                <h3>{{ name }}</h3>
+                <p>{{ fallback_subs[forloop.index0] }}</p>
+              </div>
+              <span class="product__price">{{ fallback_prices[forloop.index0] }}</span>
             </div>
-            <button class="pcard__btn product__cta" type="button">Add to Cart</button>
+            <button class="product__cta" type="button">Add to Cart</button>
           </div>
         </article>
         {%- endfor -%}
@@ -66,14 +77,21 @@
 
 {% stylesheet %}
 .ritual-shop { background: var(--c-paper); }
-.pcard__link { position: absolute; inset: 0; z-index: 1; }
-.pcard .wish-btn, .pcard .product__cta { position: relative; z-index: 2; }
-.pcard__name { display: inline-block; }
+/* This page doesn't load shop.liquid's stylesheet, so the .product card's
+   stretched-link and hover-swap rules (normally defined there) are repeated
+   here to make the exact homepage card behavior work standalone. */
+.ritual-shop .product__link { position: absolute; inset: 0; z-index: 1; }
+.ritual-shop .product .wish-btn, .ritual-shop .product .product__cta { position: relative; z-index: 2; }
+.ritual-shop .product__photo { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; border-radius: 12px; transition: transform .6s var(--ease-out), opacity .4s var(--ease-out); }
+.ritual-shop .product:hover .product__photo { transform: scale(1.04); }
+.ritual-shop .product__photo--alt { opacity: 0; }
+.ritual-shop .product:hover .product__photo--alt { opacity: 1; }
+.ritual-shop .product__meta-top > div { min-width: 0; flex: 1; }
+.ritual-shop .product__meta h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rshop__grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: clamp(16px, 2vw, 26px);
 }
-.pcard__placeholder { width: 100%; height: 100%; object-fit: cover; }
 .rshop__foot { margin-top: clamp(40px, 5vw, 64px); display: flex; flex-direction: column; gap: 10px; }
 .rshop__pdf { align-self: flex-start; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-tan); padding-bottom: 3px; transition: color .3s; }
 .rshop__pdf:hover { color: var(--c-tan); }

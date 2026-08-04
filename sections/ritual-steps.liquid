@@ -66,6 +66,7 @@
 /* Step cards — bordered, in a grid */
 .rsteps__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 24px); }
 .rsteps__grid[data-period="pm"] { grid-template-columns: repeat(4, 1fr); }
+.rsteps__grid[hidden] { display: none; }
 .rstep {
   display: flex; flex-direction: column; gap: 10px; padding: clamp(22px, 2.4vw, 28px);
   background: var(--c-cream); border: 1px solid var(--c-line-soft, rgba(26,58,45,.16)); border-radius: 16px;
