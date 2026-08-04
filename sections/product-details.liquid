@@ -544,6 +544,7 @@
         </div>
       {%- else -%}
         <p class="pdet__empty">Be the first to share your experience with {{ product.title }}.</p>
+        <a href="/pages/contact?subject=Review:%20{{ product.title | url_encode }}" class="btn btn--ghost pdet__review-cta">Write a Review</a>
       {%- endif -%}
     </div>
 
@@ -800,11 +801,11 @@
   overflow: hidden; text-align: left;
 }
 .pdet__founder-copy { padding: clamp(22px, 2.4vw, 32px) clamp(28px, 3.2vw, 44px); display: flex; flex-direction: column; justify-content: center; }
-.pdet__founder-photo { min-height: 200px; max-height: 260px; }
+.pdet__founder-photo { min-height: 200px; height: 100%; }
 .pdet__founder-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
 .pdet__founder-copy .eyebrow { display: inline-block; margin-bottom: 18px; color: var(--c-tan); }
-.pdet__founder-quote { margin: 0; font-family: var(--ff-display); font-style: italic; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.5; color: var(--c-forest); max-width: 42ch; margin-left: 0; margin-right: auto; }
-.pdet__founder-story { margin: 22px 0 0; font-size: 15px; line-height: 1.75; color: rgba(26,58,45,.78); max-width: 52ch; }
+.pdet__founder-quote { margin: 0; font-family: var(--ff-display); font-style: italic; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.5; color: var(--c-forest); max-width: 68ch; margin-left: 0; margin-right: auto; }
+.pdet__founder-story { margin: 22px 0 0; font-size: 15px; line-height: 1.75; color: rgba(26,58,45,.78); max-width: 78ch; }
 @media (max-width: 700px) {
   .pdet__founder { grid-template-columns: 1fr; }
   .pdet__founder-photo { min-height: 240px; order: -1; }
@@ -931,6 +932,7 @@
 .pdet__rating-val { font-family: var(--ff-display); font-size: 22px; color: var(--c-forest); }
 .pdet__rating-count { font-size: 13px; color: var(--c-ink-mute); }
 .pdet__empty { font-style: italic; color: var(--c-ink-mute); }
+.pdet__review-cta { display: inline-block; margin-top: 18px; }
 
 .pdet__related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
 
