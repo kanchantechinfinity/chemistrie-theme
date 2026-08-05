@@ -1,7 +1,7 @@
-<section class="page-section pharm-profiles">
-  <div class="page-section__inner">
-    {%- for block in section.blocks -%}
-      {%- assign flip = forloop.index0 | modulo: 2 -%}
+{%- for block in section.blocks -%}
+  {%- assign flip = forloop.index0 | modulo: 2 -%}
+  <section class="page-section pharm-profiles {% if flip == 1 %}pharm-profiles--alt{% endif %}">
+    <div class="page-section__inner">
       <article class="pprofile {% if flip == 1 %}pprofile--reverse{% endif %}" {{ block.shopify_attributes }}>
         <div class="pprofile__media">
           {%- if block.settings.image != blank -%}
@@ -26,14 +26,14 @@
           {%- endif -%}
         </div>
       </article>
-    {%- endfor -%}
-  </div>
-</section>
+    </div>
+  </section>
+{%- endfor -%}
 
 {% stylesheet %}
-.pharm-profiles { background: var(--c-cream); }
+.pharm-profiles { background: var(--c-cream); padding-top: clamp(40px, 5vw, 64px); padding-bottom: clamp(40px, 5vw, 64px); }
+.pharm-profiles--alt { background: var(--c-paper); }
 .pprofile { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 88px); align-items: center; }
-.pprofile + .pprofile { margin-top: clamp(56px, 8vw, 120px); }
 .pprofile--reverse .pprofile__media { order: 2; }
 .pprofile__avatar { border-radius: 46% 46% 46% 46% / 50% 50% 50% 50%; overflow: hidden; aspect-ratio: 4 / 5; max-width: 460px; margin: 0 auto; width: 100%; box-shadow: 0 30px 70px -34px rgba(26,58,45,.55); }
 .pprofile__avatar svg, .pprofile__avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -49,7 +49,6 @@
 }
 @media (max-width: 480px) {
   .pprofile { gap: 20px; }
-  .pprofile + .pprofile { margin-top: 64px; }
   .pprofile__avatar { max-width: 240px; aspect-ratio: 4 / 4.4; }
   .pprofile__name { font-size: 32px; margin-top: 20px; }
   .pprofile__quote { margin-top: 20px; }
