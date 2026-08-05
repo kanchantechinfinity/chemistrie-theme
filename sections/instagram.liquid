@@ -2,8 +2,23 @@
 <section class="insta" id="instagram" data-screen-label="11 Instagram">
   <div class="insta__intro">
     <div>
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
       <h2 class="display-h">{{ section.settings.heading }}</h2>
-      <p class="insta__sub">{{ section.settings.sub }}</p>
+    </div>
+    <div class="insta__intro-right">
+      <a class="insta__handle" href="{{ section.settings.instagram_url | default: '#' }}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg>
+        <span>{{ section.settings.handle }}</span>
+        <em>· {{ section.settings.follower_count }}</em>
+      </a>
+      <div class="insta__nav" aria-label="Slider navigation">
+        <button class="insta__arrow" data-dir="-1" aria-label="Previous">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="insta__arrow" data-dir="1" aria-label="Next">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -12,11 +27,160 @@
     {{ section.settings.feed_embed }}
   </div>
   {%- else -%}
-  <p class="insta__empty">{{ section.settings.empty_copy }}</p>
+  <div class="insta__slider-wrap">
+    <div class="insta__slider" id="instaSlider">
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-product.jpg' | asset_url }}" alt="One drop, eleven hours of patience." loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">0:42</span>
+        </div>
+        <div class="reel__meta">
+          <p>One drop, eleven hours of patience.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 2.4k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 88</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-lab.jpg' | asset_url }}" alt="Behind the bench — pouring N°027." loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">1:08</span>
+        </div>
+        <div class="reel__meta">
+          <p>Behind the bench — pouring N°027.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 3.1k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 142</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-note.jpg' | asset_url }}" alt="The letter that goes in every parcel." loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">0:34</span>
+        </div>
+        <div class="reel__meta">
+          <p>The letter that goes in every parcel.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 4.8k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 216</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-skin.jpg' | asset_url }}" alt="Eleanor's eight-week review — her words." loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">2:14</span>
+        </div>
+        <div class="reel__meta">
+          <p>Eleanor's eight-week review — her words.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 8.2k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 412</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-ingredients.jpg' | asset_url }}" alt="What's in the Renewal Serum, milligram by milligram." loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">0:58</span>
+        </div>
+        <div class="reel__meta">
+          <p>What's in the Renewal Serum, milligram by milligram.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 5.6k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 304</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-lifestyle.jpg' | asset_url }}" alt="Something has changed. — Priya S., Night 14" loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">0:21</span>
+        </div>
+        <div class="reel__meta">
+          <p>Two weeks in. Priya's voice memo.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 6.7k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 280</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-packaging.jpg' | asset_url }}" alt="How we pack a Chemistrie order, end to end." loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">0:46</span>
+        </div>
+        <div class="reel__meta">
+          <p>How we pack a Chemistrie order, end to end.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 11.2k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 502</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-ingredients.jpg' | asset_url }}" alt="Why pH 5.4 is the only number we trust." loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">0:29</span>
+        </div>
+        <div class="reel__meta">
+          <p>Why pH 5.4 is the only number we trust.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 1.8k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 64</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel">
+        <div class="reel__media">
+          <img src="{{ 'stock-lab.jpg' | asset_url }}" alt="Fourteen-minute hand blend, in real time." loading="lazy">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+          <span class="reel__play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="reel__duration">1:24</span>
+        </div>
+        <div class="reel__meta">
+          <p>Fourteen-minute hand blend, in real time.</p>
+          <div class="reel__stats">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 8a4 4 0 0 0-7-2 4 4 0 0 0-7 2c0 6 7 10 7 10s7-4 7-10z"/></svg> 3.4k</span>
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12c0 4-4 7-9 7-1.5 0-3-.3-4-.7L3 20l1-3.7C3.4 15.2 3 13.7 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg> 174</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="insta__dots" id="instaDots"></div>
+  </div>
   {%- endif -%}
 
   <a class="insta__cta" href="{{ section.settings.instagram_url | default: '#' }}" target="_blank" rel="noopener">
-    <span>{{ section.settings.cta_label }}</span>
+    <span>Follow the bench →</span>
   </a>
 </section>
 
@@ -24,13 +188,13 @@
 {
   "name": "Instagram",
   "settings": [
-    { "type": "html", "id": "heading", "label": "Heading", "default": "Follow the Formulary." },
-    { "type": "textarea", "id": "sub", "label": "Subheadline", "default": "Behind-the-scenes formulation notes, the founders' letters, and the earliest look at what's next." },
-    { "type": "text", "id": "empty_copy", "label": "Empty-state copy", "default": "Customer moments will appear here once there are real ones to share. Not before." },
-    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Follow on Instagram" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Bench, on Instagram —" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Find us <em>between</em><br/>the bottles." },
     { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "text", "id": "handle", "label": "Handle", "default": "@chemistrie.co" },
+    { "type": "text", "id": "follower_count", "label": "Follower count", "default": "21.4k" },
     { "type": "header", "content": "Live Instagram feed (optional)" },
-    { "type": "paragraph", "content": "Paste an embed/widget code from an Instagram feed app (Instafeed, Elfsight, Behold, etc.). When filled, the live feed replaces the empty-state copy." },
+    { "type": "paragraph", "content": "Paste an embed/widget code from an Instagram feed app (Instafeed, Elfsight, Behold, etc.). When filled, the live feed replaces the demo reels." },
     { "type": "html", "id": "feed_embed", "label": "Instagram feed embed code" }
   ],
   "presets": [

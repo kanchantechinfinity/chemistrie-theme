@@ -401,11 +401,11 @@
       "type": "instagram",
       "name": "Instagram",
       "settings": {
+        "eyebrow": "— The Bench, on Instagram —",
         "heading": "Follow the<br><em>Formulary.</em>",
-        "sub": "Behind-the-scenes formulation notes, the founders' letters, and the earliest look at what's next.",
-        "empty_copy": "Customer moments will appear here once there are real ones to share. Not before.",
-        "cta_label": "Follow on Instagram",
         "instagram_url": "",
+        "handle": "@chemistrie.co",
+        "follower_count": "21.4k",
         "feed_embed": ""
       }
     },
