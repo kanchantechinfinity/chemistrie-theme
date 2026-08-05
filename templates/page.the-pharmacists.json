@@ -140,20 +140,16 @@
         "heading": "Two careers,<br/>one <em>conversation.</em>"
       }
     },
-    "pharmacists-philosophy": {
-      "type": "pharmacists-philosophy",
-      "blocks": {},
-      "block_order": [],
-      "settings": {}
-    },
     "page-cta": {
       "type": "page-cta",
       "settings": {
-        "eyebrow": "— What they made —",
-        "heading": "Read the<br/><em>whole story.</em>",
-        "sub": "Now that you know the pharmacists, see where the house began — or go straight to the collection.",
-        "button_label": "Read Our Story",
-        "button_url": "/pages/our-story"
+        "eyebrow": "— What They Made —",
+        "heading": "<em>“We didn't set out to build a skincare brand. We set out to make something our wives could actually trust. Everything else followed from that.”</em>",
+        "sub": "— Harin & Zach",
+        "button_label": "Explore the Collection",
+        "button_url": "/collections/all",
+        "button2_label": "Read a Letter from the Founders",
+        "button2_url": "/pages/founders-circle"
       }
     }
   },
