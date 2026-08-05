@@ -62,85 +62,15 @@
       "type": "main-collection",
       "settings": {}
     },
-    "collection-notes": {
-      "type": "collection-notes",
-      "blocks": {
-        "note_1": {
-          "type": "note",
-          "settings": {
-            "quote": "Velvet is the first foaming cleanser that hasn't left my skin tight afterward. It just feels clean, not stripped.",
-            "author": "Anna D., Houston · Verified Buyer"
-          }
-        },
-        "note_2": {
-          "type": "note",
-          "settings": {
-            "quote": "Aura gave me back a glow I hadn't seen since my twenties. Three weeks in and people keep asking what I changed.",
-            "author": "Priya R., Austin · Verified Buyer"
-          }
-        },
-        "note_3": {
-          "type": "note",
-          "settings": {
-            "quote": "Cashmere sinks in without a hint of grease. My dry winter cheeks finally stopped flaking.",
-            "author": "Meghan T., Dallas · Verified Buyer"
-          }
-        },
-        "note_4": {
-          "type": "note",
-          "settings": {
-            "quote": "Aura is the one step I refuse to skip now. My fine lines around the eyes look genuinely softer.",
-            "author": "Sofia L., Houston · Verified Buyer"
-          }
-        },
-        "note_5": {
-          "type": "note",
-          "settings": {
-            "quote": "I love that every bottle is hand-numbered. It feels compounded for me, not mass-produced for everyone.",
-            "author": "Jenna K., Austin · Verified Buyer"
-          }
-        },
-        "note_6": {
-          "type": "note",
-          "settings": {
-            "quote": "Velvet and Silken together completely calmed my hormonal breakouts. My skin has never been this even.",
-            "author": "Rebecca M., Dallas · Verified Buyer"
-          }
-        },
-        "note_7": {
-          "type": "note",
-          "settings": {
-            "quote": "Cashmere layered over Aura is my whole nighttime ritual now. I wake up plump and calm.",
-            "author": "Daniela S., Houston · Verified Buyer"
-          }
-        },
-        "note_8": {
-          "type": "note",
-          "settings": {
-            "quote": "Fast shipping, beautiful packaging, and a formula that actually works. Aura earned a permanent spot on my shelf.",
-            "author": "Claire W., Austin · Verified Buyer"
-          }
-        }
-      },
-      "block_order": [
-        "note_1",
-        "note_2",
-        "note_3",
-        "note_4",
-        "note_5",
-        "note_6",
-        "note_7",
-        "note_8"
-      ],
-      "settings": {}
-    },
     "page-cta": {
       "type": "page-cta",
       "settings": {
-        "eyebrow": "— Ready when you are —",
-        "heading": "Begin your <em>ritual.</em>",
-        "sub": "Every formula in this Collection answers to the same two people. Start with one, add as you're ready.",
-        "button_label": "Shop the Collection"
+        "eyebrow": "— Build Your Ritual —",
+        "heading": "Start with one. Add as you're ready.",
+        "sub": "Every product here is formulated to layer cleanly with the others, in whatever order your routine already runs.",
+        "button_label": "Build Your Ritual",
+        "button2_label": "Learn the Full Ritual",
+        "button2_url": "/pages/the-ritual"
       }
     }
   },
@@ -148,7 +78,6 @@
     "page-hero",
     "stat-bar",
     "main-collection",
-    "collection-notes",
     "page-cta"
   ]
 }
