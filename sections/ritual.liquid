@@ -3,7 +3,18 @@
   <div class="ritual__intro">
     <span class="eyebrow">{{ section.settings.eyebrow }}</span>
     <h2 class="display-h">{{ section.settings.heading }}</h2>
-    <p>{{ section.settings.lede }}</p>
+    {%- if section.settings.sub != blank -%}
+      <p class="ritual__sub">{{ section.settings.sub }}</p>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p class="ritual__body">{{ section.settings.body }}</p>
+    {%- endif -%}
+    {%- if section.settings.cta_label != blank -%}
+      <a class="btn btn--ghost ritual__cta" href="{{ section.settings.cta_link }}">
+        <span>{{ section.settings.cta_label }}</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    {%- endif -%}
   </div>
 
   <div class="ritual__pin">
@@ -27,7 +38,10 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Ritual —" },
     { "type": "html", "id": "heading", "label": "Heading", "default": "Four<br/><em>quiet</em> steps." },
-    { "type": "textarea", "id": "lede", "label": "Lede", "default": "The Chemistrie ritual was written on a prescription pad, then engraved on a brass card. Slow it down. Layer thin. Wait for the skin to ask." }
+    { "type": "text", "id": "sub", "label": "Subheadline", "default": "Built to layer, not to compete with itself." },
+    { "type": "textarea", "id": "body", "label": "Body copy", "default": "Morning and evening, in the same order, for as long as it takes to stop feeling like a decision." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Learn the Full Ritual" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
   ],
   "blocks": [
     {

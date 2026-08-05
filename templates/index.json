@@ -378,7 +378,10 @@
       "settings": {
         "eyebrow": "— The Ritual —",
         "heading": "Cleanse. Hydrate.<br><em>Renew. Repeat.</em>",
-        "lede": "Built to layer, not to compete with itself. Morning and evening, in the same order, for as long as it takes to stop feeling like a decision."
+        "sub": "Built to layer, not to compete with itself.",
+        "body": "Morning and evening, in the same order, for as long as it takes to stop feeling like a decision.",
+        "cta_label": "Learn the Full Ritual",
+        "cta_link": "/pages/the-ritual"
       }
     },
     "story_88GJLB": {

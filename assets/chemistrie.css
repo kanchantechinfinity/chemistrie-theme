@@ -1668,6 +1668,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 16px;
   line-height: 1.7;
 }
+.ritual__sub {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: clamp(19px, 2vw, 24px) !important;
+  color: var(--c-forest) !important;
+  margin-top: 28px !important;
+}
+.ritual__body { margin-top: 12px !important; }
+.ritual__cta { margin-top: 28px; display: inline-flex; }
 .ritual__pin {
   height: 100vh;
   overflow: hidden;
