@@ -17,14 +17,6 @@
         {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
       {% endif %}
     </div>
-    <div class="founders__photo founders__photo--c">
-      {% if section.settings.founder3_image != blank %}
-        <img src="{{ section.settings.founder3_image | image_url: width: 600 }}" alt="{{ section.settings.founder3_name | escape }}" loading="lazy">
-      {% else %}
-        <img src="{{ 'founder-3.jpg' | asset_url }}" alt="{{ section.settings.founder3_name | escape }}" loading="lazy">
-        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
-      {% endif %}
-    </div>
     <div class="founders__caption">
       <span class="founders__caption-mark">✦</span>
       <span>{{ section.settings.caption }}</span>
@@ -62,8 +54,6 @@
     { "type": "image_picker", "id": "founder1_image", "label": "Founder 1 photo (optional)" },
     { "type": "text", "id": "founder2_name", "label": "Founder 2 name", "default": "Zach —" },
     { "type": "image_picker", "id": "founder2_image", "label": "Founder 2 photo (optional)" },
-    { "type": "text", "id": "founder3_name", "label": "Founder 3 name", "default": "Harin & Zach, compounding —" },
-    { "type": "image_picker", "id": "founder3_image", "label": "Founder 3 photo (optional)" },
     { "type": "textarea", "id": "lede", "label": "Lede", "default": "Harin and Zach, compounding pharmacists, formulating for the women they love." },
     { "type": "textarea", "id": "paragraph1", "label": "Paragraph 1", "default": "Before Chemistrie existed, Harin and Zach spent years behind a pharmacy counter, measuring things for people who couldn't afford to be wrong. Chemistrie carries the same standard onto a skin care shelf." },
     { "type": "textarea", "id": "paragraph2", "label": "Paragraph 2", "default": "We spent years compounding prescriptions for people who couldn't afford to be wrong. We wanted the same standard on a skin care shelf." },
