@@ -2291,6 +2291,21 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   gap: 28px;
   flex-wrap: wrap;
 }
+.insta__sub {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: clamp(18px, 1.8vw, 22px);
+  color: var(--c-forest);
+  margin: 20px 0 0;
+  max-width: 46ch;
+}
+.insta__body {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--c-ink-soft);
+  margin: 10px 0 0;
+  max-width: 46ch;
+}
 .insta__intro-right {
   display: flex;
   flex-direction: column;

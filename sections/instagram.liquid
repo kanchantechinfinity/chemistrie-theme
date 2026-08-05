@@ -4,6 +4,12 @@
     <div>
       <span class="eyebrow">{{ section.settings.eyebrow }}</span>
       <h2 class="display-h">{{ section.settings.heading }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="insta__sub">{{ section.settings.sub }}</p>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="insta__body">{{ section.settings.body }}</p>
+      {%- endif -%}
     </div>
     <div class="insta__intro-right">
       <a class="insta__handle" href="{{ section.settings.instagram_url | default: '#' }}" target="_blank" rel="noopener">
@@ -180,7 +186,7 @@
   {%- endif -%}
 
   <a class="insta__cta" href="{{ section.settings.instagram_url | default: '#' }}" target="_blank" rel="noopener">
-    <span>Follow the bench →</span>
+    <span>{{ section.settings.cta_label }}</span>
   </a>
 </section>
 
@@ -190,6 +196,9 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Bench, on Instagram —" },
     { "type": "html", "id": "heading", "label": "Heading", "default": "Find us <em>between</em><br/>the bottles." },
+    { "type": "text", "id": "sub", "label": "Subheadline", "default": "Behind-the-scenes formulation notes, the founders' letters, and the earliest look at what's next." },
+    { "type": "textarea", "id": "body", "label": "Body copy", "default": "Shared occasionally, on Instagram." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Follow on Instagram" },
     { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
     { "type": "text", "id": "handle", "label": "Handle", "default": "@chemistrie.co" },
     { "type": "text", "id": "follower_count", "label": "Follower count", "default": "21.4k" },
