@@ -906,7 +906,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   max-width: none;
   margin: 0 0 64px;
 }
-.pillars__cta { margin-top: 28px; display: inline-flex; }
+.pillars__cta { margin-top: 28px; display: inline-flex; opacity: 1 !important; transform: none !important; visibility: visible !important; }
 .pillars__stack {
   max-width: none;
   margin: 0;
@@ -993,6 +993,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   position: relative;
   padding-left: 20px;
 }
+.pillar__list li:empty { display: none; }
+.pillar__list:empty { display: none; }
 .pillar__list li::before {
   content: "•";
   position: absolute;
@@ -1677,7 +1679,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   margin-top: 28px !important;
 }
 .ritual__body { margin-top: 12px !important; }
-.ritual__cta { margin-top: 28px; display: inline-flex; }
+.ritual__cta { margin-top: 28px; display: inline-flex; opacity: 1 !important; transform: none !important; visibility: visible !important; }
 .ritual__pin {
   min-height: clamp(500px, 68vh, 660px);
   overflow: hidden;
