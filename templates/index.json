@@ -104,12 +104,12 @@
       "settings": {
         "caption": "The founding pharmacists, photographed in the compounding lab — Houston, 2026.",
         "heading": "The bench doesn't lie,<br><em>so neither do we.</em>",
-        "founder1_name": "Harin —",
-        "founder2_name": "Zach —",
+        "founder1_name": "Harin",
+        "founder2_name": "Zach",
         "lede": "Harin and Zach, compounding pharmacists, formulating for the women they love.",
         "paragraph1": "Before Chemistrie existed, Harin and Zach spent years behind a pharmacy counter, measuring things for people who couldn't afford to be wrong. Chemistrie carries the same standard onto a skin care shelf.",
         "paragraph2": "We spent years compounding prescriptions for people who couldn't afford to be wrong. We wanted the same standard on a skin care shelf.",
-        "sig": "— Harin & Zach",
+        "sig": "Harin & Zach",
         "sig_sub": "Co-founders · Compounding Pharmacists"
       }
     },
@@ -121,7 +121,7 @@
           "settings": {
             "is_hero": true,
             "molecule": 1,
-            "tier": "— Hero active",
+            "tier": "Hero active",
             "name": "Retinaldehyde",
             "dose": "0.05%",
             "description": "Eleven times faster than retinol. Half the irritation. The dose only a pharmacist would risk.",
@@ -135,7 +135,7 @@
           "settings": {
             "is_hero": false,
             "molecule": 2,
-            "tier": "— Hero active",
+            "tier": "Hero active",
             "name": "L-Ascorbic Acid",
             "dose": "15%",
             "description": "Stabilised with ferulic and tocopherol. The pharmacist's gold standard for brightening.",
@@ -149,7 +149,7 @@
           "settings": {
             "is_hero": true,
             "molecule": 3,
-            "tier": "— Hero active",
+            "tier": "Hero active",
             "name": "Niacinamide",
             "dose": "4%",
             "description": "Refines pore visibility, reinforces barrier. Universally well-tolerated.",
@@ -163,7 +163,7 @@
           "settings": {
             "is_hero": true,
             "molecule": 4,
-            "tier": "— Hero active",
+            "tier": "Hero active",
             "name": "Bakuchiol",
             "dose": "1%",
             "description": "Botanical retinol-alternative for pregnancy and the most sensitive nights.",
@@ -177,7 +177,7 @@
           "settings": {
             "is_hero": false,
             "molecule": 5,
-            "tier": "— Supporting",
+            "tier": "Supporting",
             "name": "Mandelic Acid",
             "dose": "8%",
             "description": "The kindest AHA. Large molecule, slow penetration, dignified results.",
@@ -191,7 +191,7 @@
           "settings": {
             "is_hero": false,
             "molecule": 6,
-            "tier": "— Supporting",
+            "tier": "Supporting",
             "name": "Peptide-5",
             "dose": "2%",
             "description": "Signals collagen synthesis. Daily, undramatic improvement.",
@@ -205,7 +205,7 @@
           "settings": {
             "is_hero": true,
             "molecule": 7,
-            "tier": "— Hero active",
+            "tier": "Hero active",
             "name": "Ceramide Complex",
             "dose": "NP·AP·EOP",
             "description": "Three ceramides mirroring the lipid ratio of healthy young skin.",
@@ -219,7 +219,7 @@
           "settings": {
             "is_hero": false,
             "molecule": 8,
-            "tier": "— Supporting",
+            "tier": "Supporting",
             "name": "Squalane",
             "dose": "100%",
             "description": "Plant-derived. Pharmaceutical-grade. Closes the ritual, never clogs.",
@@ -233,7 +233,7 @@
           "settings": {
             "is_hero": false,
             "molecule": 9,
-            "tier": "— Supporting",
+            "tier": "Supporting",
             "name": "Calendula",
             "dose": "3%",
             "description": "Anti-inflammatory infusion. The reason redness softens, not just hides.",
@@ -247,7 +247,7 @@
           "settings": {
             "is_hero": true,
             "molecule": 10,
-            "tier": "— Hero active",
+            "tier": "Hero active",
             "name": "Hyaluronic, 3-MW",
             "dose": "2%",
             "description": "Low, mid and high molecular weights — together. Hydration at every layer.",
@@ -261,7 +261,7 @@
           "settings": {
             "is_hero": false,
             "molecule": 11,
-            "tier": "— Supporting",
+            "tier": "Supporting",
             "name": "Allantoin",
             "dose": "1%",
             "description": "Soothes, smooths, accelerates barrier repair after every active.",
@@ -275,7 +275,7 @@
           "settings": {
             "is_hero": false,
             "molecule": 12,
-            "tier": "— Supporting",
+            "tier": "Supporting",
             "name": "Centella Asiatica",
             "dose": "5%",
             "description": "Madecassoside-rich. The bench's favourite calming active.",
