@@ -617,7 +617,7 @@
         },
       });
     }
-    gsap.from(".ritual__intro > *", {
+    gsap.from(".ritual__intro > *:not(.ritual__cta)", {
       opacity: 0, y: 30, duration: 1, ease: "power2.out", stagger: 0.1,
       scrollTrigger: { trigger: ".ritual__intro", start: "top 75%" },
     });
