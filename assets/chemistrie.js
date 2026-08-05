@@ -275,18 +275,19 @@
     });
 
     /* Per-card entrance animations tied to the horizontal container.
-       Card 0 is skipped deliberately: at containerAnimation progress 0 it already
-       sits left of the "left 95%"/"left 90%" trigger points (it starts at the pin's
-       left edge, not off-screen right like the rest), so ScrollTrigger's start/end
-       math for it resolves outside the valid [0,1] range and it can be left stuck
-       at its opacity:0 initial state — showing as blank space next to the heading
-       instead of the card. Show it immediately in its final state instead, and let
-       cards 1+ keep the normal scroll-revealed entrance. */
+       Any card that already sits inside the initial viewport (not just card 0)
+       starts left of the "left 95%"/"left 90%" trigger points at containerAnimation
+       progress 0, so ScrollTrigger's start/end math resolves outside the valid
+       [0,1] range for it and it can be left stuck at its opacity:0 initial state —
+       showing as blank space instead of the card. Show every such card immediately
+       in its final state instead, and let only the truly off-screen cards keep the
+       normal scroll-revealed entrance. */
+    const viewportW = window.innerWidth;
     cards.forEach((card, i) => {
       const mol = card.querySelector(".active-card__mol svg");
       const inner = card.querySelectorAll(".active-card__tier, .active-card__name, .active-card__dose, .active-card__desc, .active-card__specs > div");
 
-      if (i === 0) {
+      if (card.offsetLeft < viewportW) {
         gsap.set(card, { y: 0, opacity: 1, scale: 1 });
         if (mol) gsap.set(mol, { scale: 1, opacity: 1, rotation: 0 });
         gsap.set(inner, { y: 0, opacity: 1 });
