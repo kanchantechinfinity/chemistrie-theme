@@ -989,6 +989,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   color: var(--c-ink);
   line-height: 1.6;
   max-width: 44ch;
+  position: relative;
+  padding-left: 20px;
+}
+.pillar__list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--c-tan);
 }
 
 .pillar__visual {
