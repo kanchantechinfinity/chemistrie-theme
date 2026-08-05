@@ -72,12 +72,21 @@
         "button2_label": "Learn the Full Ritual",
         "button2_url": "/pages/the-ritual"
       }
+    },
+    "closing-statement": {
+      "type": "vision",
+      "settings": {
+        "eyebrow": "",
+        "quote": "Every formula in this Collection answers to the same two people.",
+        "attribution": ""
+      }
     }
   },
   "order": [
     "page-hero",
     "stat-bar",
     "main-collection",
-    "page-cta"
+    "page-cta",
+    "closing-statement"
   ]
 }
