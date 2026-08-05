@@ -25,8 +25,19 @@
 {% stylesheet %}
 .ritual-faq { background: var(--c-cream-2); padding: clamp(28px, 3.5vw, 44px) var(--pad-x); }
 .ritual-faq .faq-item { background: var(--c-cream); }
-.ritual-faq__head { text-align: center; max-width: none; margin-left: auto; margin-right: auto; }
-.ritual-faq__head .display-h { margin-left: auto; margin-right: auto; }
+.ritual-faq .ritual-faq__head.page-section__head {
+  text-align: center !important;
+  max-width: none !important;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.ritual-faq .ritual-faq__head.page-section__head .display-h {
+  width: 100%;
+  text-align: center !important;
+  margin-left: auto;
+  margin-right: auto;
+}
 .ritual-faq .faq-list { max-width: 760px; margin: 0 auto; }
 {% endstylesheet %}
 
