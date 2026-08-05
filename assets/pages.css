@@ -8,7 +8,7 @@
   position: relative;
   background: var(--grad-deep);
   color: var(--c-cream);
-  padding: clamp(120px, 16vw, 220px) var(--pad-x) clamp(60px, 8vw, 110px);
+  padding: clamp(24px, 3.5vw, 52px) var(--pad-x) clamp(60px, 8vw, 110px);
   overflow: clip;
 }
 .page-hero__inner { max-width: var(--maxw); margin: 0 auto; }
