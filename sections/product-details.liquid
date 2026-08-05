@@ -443,11 +443,6 @@
           {%- if mf.feeling != blank -%}{{ mf.feeling }}{%- else -%}{{ pd_feeling }}{%- endif -%}
         </p>
         {%- if pd_who != blank -%}<p>{{ pd_who }}</p>{%- endif -%}
-        {%- if pd_tags != blank -%}
-          <div class="pdet__routine-chips">
-            {%- for tag in pd_tags -%}<span class="pdet__routine-chip">{{ tag | strip }}</span>{%- endfor -%}
-          </div>
-        {%- endif -%}
         {%- if pd_benefits != blank -%}
           <div class="pdet__feel-checks">{{ pd_benefits }}</div>
         {%- endif -%}
