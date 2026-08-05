@@ -10,9 +10,9 @@
       </div>
       <div class="ritual-why__circle">
         {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,600', alt: section.settings.heading | escape }}
+          {{ section.settings.image | image_url: width: 600 | image_tag: width: 240, height: 240, widths: '300,600', alt: section.settings.heading | escape }}
         {%- else -%}
-          <img src="{{ 'ritual-cream.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
+          <img src="{{ 'ritual-cream.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" width="240" height="240">
           {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
         {%- endif -%}
       </div>

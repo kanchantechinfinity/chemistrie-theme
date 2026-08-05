@@ -54,6 +54,10 @@
 .cta--page { padding-top: clamp(56px, 8vw, 110px); }
 .cta__page-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 .cta__page-btn { margin-top: 12px; }
+@media (max-width: 600px) {
+  .cta__page-btns { flex-direction: column; align-items: stretch; }
+  .cta__page-btns .btn { width: 100%; justify-content: center; white-space: normal; text-align: center; }
+}
 
 /* ---- Editorial product card (collection / ritual grids) ---- */
 .pcard { display: flex; flex-direction: column; background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px; overflow: hidden; transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out); }

@@ -2629,18 +2629,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
   /* Founders */
   .founders__media { min-height: 380px; }
-  .founders__photo--a { width: 70%; height: 65%; }
-  .founders__photo--b { width: 60%; height: 55%; }
+  .founders__photo--a { width: 58%; height: 52%; top: 0; left: 0; }
+  .founders__photo--b { width: 50%; height: 46%; top: auto; bottom: 0; left: auto; right: 0; }
   .founders__caption { font-size: 12px; bottom: -24px; left: 0; }
   .founders__lede { font-size: 18px; }
   .founders__sig { font-size: 22px; }
 
   /* Proof */
-  .proof__grid { grid-template-columns: 1fr; }
-  .proof__cell { padding: 28px 0; border-left: 0; border-top: 1px solid rgba(249,244,237,.12); }
-  .proof__cell:first-child { border-top: 0; }
+  .proof__grid { grid-template-columns: repeat(2, 1fr); }
+  .proof__cell { padding: 28px 0; border-left: 0; }
+  .proof__cell:nth-child(odd) { border-left: 0; }
+  .proof__cell:nth-child(even) { border-left: 1px solid rgba(249,244,237,.12); }
   .proof__cell:nth-child(n+3) { border-top: 1px solid rgba(249,244,237,.12); }
-  .proof__num { font-size: clamp(64px, 18vw, 88px); }
+  .proof__num { font-size: clamp(48px, 12vw, 72px); }
 
   /* Ritual — keep horizontal scroll but unpinned & touch-scroll instead of GSAP pin */
   .ritual__pin { height: auto; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; padding: 0 0 32px; }
@@ -2683,6 +2684,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ── Pause sticky pillars on phones (motion sensitivity) ── */
 @media (max-width: 640px) {
   .pillar { transform: none !important; }
+}
+
+/* ── Skip scroll-triggered fade/slide-in on phones (was appearing mid-scroll,
+   interrupting reading — e.g. the Story Journey timeline) ── */
+@media (max-width: 640px) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* ── Reduce motion ── */
