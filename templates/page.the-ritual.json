@@ -37,9 +37,9 @@
           "settings": {
             "roman": "2",
             "step_name": "Treat",
-            "product_name": "Lumina (coming soon)",
+            "product_name": "Veil",
             "product_url": "",
-            "description": "A vitamin C serum, still in the Study. Not yet part of the routine, but already accounted for in it."
+            "description": "A featherlight hydrating solution, pressed in right after cleansing and before anything heavier."
           }
         },
         "step_am_3": {
@@ -49,7 +49,7 @@
             "step_name": "Refine",
             "product_name": "Silken (optional, targeted)",
             "product_url": "",
-            "description": "For anyone using it: apply to targeted areas after cleansing, before the moisturizing step."
+            "description": "For anyone using it: apply to targeted areas after Veil, before the moisturizing step."
           }
         },
         "step_am_4": {
@@ -69,7 +69,7 @@
             "step_name": "Protect",
             "product_name": "Your Own SPF",
             "product_url": "",
-            "description": "Any sunscreen, applied last, every single morning without exception. Chemistrie doesn't make this one — that's not a gap in the routine, it's a boundary we're comfortable naming."
+            "description": "Any sunscreen, applied last, every single morning without exception. Chemistrie doesn't make this one."
           }
         },
         "step_pm_1": {
@@ -86,26 +86,36 @@
           "type": "step_pm",
           "settings": {
             "roman": "2",
-            "step_name": "Refine",
-            "product_name": "Silken (optional, targeted)",
+            "step_name": "Treat",
+            "product_name": "Veil",
             "product_url": "",
-            "description": "Apply to targeted areas after cleansing, before the moisturizing step — same placement as morning."
+            "description": "The same weightless hydration, pressed in right after cleansing."
           }
         },
         "step_pm_3": {
           "type": "step_pm",
           "settings": {
             "roman": "3",
-            "step_name": "Moisturize",
-            "product_name": "Cashmere (optional)",
+            "step_name": "Refine",
+            "product_name": "Silken (optional, targeted)",
             "product_url": "",
-            "description": "Layered before Aura for anyone who wants additional hydration. Not required, and never a missing step if skipped."
+            "description": "Apply to targeted areas after Veil, before the moisturizing step — same placement as morning."
           }
         },
         "step_pm_4": {
           "type": "step_pm",
           "settings": {
             "roman": "4",
+            "step_name": "Moisturize",
+            "product_name": "Cashmere (optional)",
+            "product_url": "",
+            "description": "Layered before Aura for anyone who wants additional hydration. Not required, and never a missing step if skipped."
+          }
+        },
+        "step_pm_5": {
+          "type": "step_pm",
+          "settings": {
+            "roman": "5",
             "step_name": "Renew",
             "product_name": "Aura",
             "product_url": "",
@@ -122,7 +132,8 @@
         "step_pm_1",
         "step_pm_2",
         "step_pm_3",
-        "step_pm_4"
+        "step_pm_4",
+        "step_pm_5"
       ],
       "settings": {
         "eyebrow": "— The ritual, step by step —",

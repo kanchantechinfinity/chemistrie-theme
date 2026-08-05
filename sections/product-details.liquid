@@ -5,6 +5,8 @@
   assign pd_key = ''
   if _ph contains 'velvet' or _pt contains 'velvet'
     assign pd_key = 'velvet'
+  elsif _ph contains 'veil' or _pt contains 'veil'
+    assign pd_key = 'veil'
   elsif _ph contains 'aura' or _pt contains 'aura'
     assign pd_key = 'aura'
   elsif _ph contains 'cashmere' or _pt contains 'cashmere'
@@ -19,8 +21,8 @@
     {%- capture pd_founder -%}The first step in a routine deserves the same discipline as the last one. If it doesn't set the skin up to receive everything that follows, it doesn't belong in the ritual.{%- endcapture -%}
     {%- capture pd_whats_inside -%}Pharmacist-formulated on Sodium Hyaluronate, Urea, Panthenol, and VersaBase Foam in preserved water. Full formulation detail and concentrations are held by our compounding pharmacists; percentages are not published on the consumer-facing page.{%- endcapture -%}
     {%- capture pd_inci -%}Full INCI ingredient list is printed on every bottle. Contact us for a complete breakdown before purchase.{%- endcapture -%}
-    {%- capture pd_routine_am -%}Velvet (Cleanse) → Lumina (coming soon) (Treat) → Cashmere (Moisturize) → Your Own SPF (Protect){%- endcapture -%}
-    {%- capture pd_routine_pm -%}Velvet (Cleanse) → Aura (Renew){%- endcapture -%}
+    {%- capture pd_routine_am -%}Velvet (Cleanse) → Veil (Treat) → Cashmere (Moisturize) → Your Own SPF (Protect){%- endcapture -%}
+    {%- capture pd_routine_pm -%}Velvet (Cleanse) → Veil (Treat) → Aura (Renew){%- endcapture -%}
     {%- capture pd_benefits -%}<ul class="pdet__list">
       <li>Lifts away makeup, sunscreen, oil, and daily impurities completely</li>
       <li>Rinses clean with no film or residue left behind</li>
@@ -31,7 +33,7 @@
       <li>Dispense one to two pumps into damp hands.</li>
       <li>Massage gently over a damp face.</li>
       <li>Rinse thoroughly.</li>
-      <li>Follow with, in the morning: Lumina (coming soon), Cashmere, Your Own SPF. In the evening: Aura.</li>
+      <li>Follow with, in the morning: Veil, Cashmere, Your Own SPF. Follow with, in the evening: Veil, Aura.</li>
     </ol>{%- endcapture -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
       <li>For external use only.</li>
@@ -71,75 +73,105 @@
     {%- capture pd_faq -%}
       <div class="pfaq__item">
         <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-1">
-          <span>Can Velvet remove makeup?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-velvet-1"><p>Yes. Velvet is formulated to thoroughly lift away makeup along with sunscreen, oil, and daily impurities.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-2">
-          <span>Can I use Velvet twice a day?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-velvet-2"><p>Yes. Velvet is gentle enough for both morning and evening use as the first step in your ritual.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-3">
-          <span>Is Velvet suitable for sensitive skin?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-velvet-3"><p>Velvet is formulated to cleanse thoroughly without stripping, and is suitable for normal, combination, dry, oily, and sensitive skin. As with any new product, we recommend a patch test before first use.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-4">
-          <span>Does Velvet remove sunscreen?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-velvet-4"><p>Yes — Velvet's rich foam is formulated to fully remove sunscreen along with makeup and daily buildup.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-5">
-          <span>Should I double cleanse?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-velvet-5"><p>Most skin types find a single, thorough cleanse with Velvet sufficient. If you wear heavy or waterproof makeup, a second cleanse can help ensure everything is fully removed.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-6">
           <span>Can men use Velvet?</span>
           <span class="pfaq__icon" aria-hidden="true">+</span>
         </button>
-        <div class="pfaq__a" id="pfaq-velvet-6"><p>Yes. Velvet is formulated for skin, not for a particular gender, and works as the first step in any Chemistrie ritual.</p></div>
+        <div class="pfaq__a" id="pfaq-velvet-1"><p>Yes. Velvet is formulated for skin, not for a particular gender, and suits normal, combination, dry, oily, and sensitive skin types.</p></div>
       </div>
+    {%- endcapture -%}
+  {%- when 'veil' -%}
+    {%- capture pd_feeling -%}Fluid. Near-weightless. Almost water-like. Veil absorbs in seconds, with no film, no tack, and no residue — just a soft cushion of hydration beneath everything that follows.{%- endcapture -%}
+    {%- capture pd_founder -%}The best step in a routine is sometimes the one skin doesn't notice is working. We wanted something that disappeared on contact, so nothing after it has to work through a film that shouldn't be there.{%- endcapture -%}
+    {%- capture pd_whats_inside -%}Pharmacist-formulated on Sodium Hyaluronate, Beta Glucan, and Glycerin. Full formulation detail and concentrations are held by our compounding pharmacists; percentages are not published on the consumer-facing page.{%- endcapture -%}
+    {%- capture pd_inci -%}Full INCI ingredient list is printed on every bottle. Contact us for a complete breakdown before purchase.{%- endcapture -%}
+    {%- capture pd_routine_am -%}Velvet (Cleanse) → Veil (Treat) → Cashmere (Moisturize) → Your Own SPF (Protect){%- endcapture -%}
+    {%- capture pd_routine_pm -%}Velvet (Cleanse) → Veil (Treat) → Aura (Renew){%- endcapture -%}
+    {%- capture pd_benefits -%}<ul class="pdet__list">
+      <li>Weightless hydration, absorbed in seconds</li>
+      <li>Leaves no film, no tack, and no residue behind</li>
+      <li>Fragrance-free and suitable for all skin types</li>
+      <li>Layers cleanly with the rest of the ritual, morning and evening</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
+      <li>After cleansing, dispense one pump into your palm.</li>
+      <li>Press gently into face and neck — do not rub.</li>
+      <li>Follow with Cashmere in the morning or Aura in the evening.</li>
+    </ol>{%- endcapture -%}
+    {%- capture pd_warnings -%}<ul class="pdet__warnlist">
+      <li>For external use only.</li>
+      <li>Avoid direct contact with eyes.</li>
+      <li>Discontinue use if irritation develops.</li>
+      <li>Keep out of reach of children.</li>
+      <li>Patch testing recommended before first use.</li>
+      <li>Shake well before use.</li>
+      <li>Store away from direct light.</li>
+    </ul>{%- endcapture -%}
+    {%- capture pd_spotlight -%}
+      <div class="pdet__ing-card">
+        <div class="pdet__ing-badge"><img src="{{ 'ingredient-droplet.jpg' | asset_url }}" alt="" loading="lazy"></div>
+        <h3 class="pdet__ing-name">Sodium Hyaluronate</h3>
+        <p class="pdet__ing-tag">Instant Softness</p>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A lightweight, hydration-focused compound recognized for helping skin hold onto moisture.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Chosen for its ability to draw and hold moisture at the skin's surface without adding weight.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> Skin feels instantly softer and more supple.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced through our pharmacist-selected formulation.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <div class="pdet__ing-badge"><img src="{{ 'ingredient-aloe.jpg' | asset_url }}" alt="" loading="lazy"></div>
+        <h3 class="pdet__ing-name">Beta Glucan</h3>
+        <p class="pdet__ing-tag">Calms & Settles</p>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A soothing polysaccharide long used in skin-supportive preparations.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Included to support the look of calm, comfortable-looking skin alongside the hydrating base.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> A settled, comfortable feel, especially on days skin feels reactive.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced through our pharmacist-selected formulation.</p>
+      </div>
+      <div class="pdet__ing-card">
+        <div class="pdet__ing-badge"><img src="{{ 'ingredient-gold.jpg' | asset_url }}" alt="" loading="lazy"></div>
+        <h3 class="pdet__ing-name">Glycerin</h3>
+        <p class="pdet__ing-tag">Locks Moisture</p>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A humectant long recognized for drawing moisture to the skin.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Works alongside sodium hyaluronate to reinforce hydration without adding weight.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> Skin feels soft and comfortable, never tacky.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced through our pharmacist-selected formulation.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture pd_faq -%}
       <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-7">
-          <span>Can I use Velvet around my eyes?</span>
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-veil-1">
+          <span>Is Veil fragrance-free?</span>
           <span class="pfaq__icon" aria-hidden="true">+</span>
         </button>
-        <div class="pfaq__a" id="pfaq-velvet-7"><p>Avoid direct contact with the eye area. If Velvet gets into eyes, rinse thoroughly with water.</p></div>
+        <div class="pfaq__a" id="pfaq-veil-1"><p>Yes. Veil contains no added fragrance.</p></div>
       </div>
       <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-8">
-          <span>Can I use this if I have dry skin?</span>
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-veil-2">
+          <span>Do I use Veil in the morning or evening?</span>
           <span class="pfaq__icon" aria-hidden="true">+</span>
         </button>
-        <div class="pfaq__a" id="pfaq-velvet-8"><p>Yes. Velvet is formulated to cleanse thoroughly while leaving skin feeling balanced and comfortable, not tight — including on drier skin types.</p></div>
+        <div class="pfaq__a" id="pfaq-veil-2"><p>Both. Veil is formulated to sit after cleansing and before moisturizing, whether that's Cashmere in the morning or Aura in the evening.</p></div>
       </div>
       <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-velvet-9">
-          <span>Why should I use the complete Chemistrie routine?</span>
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-veil-3">
+          <span>Will Veil feel sticky or heavy?</span>
           <span class="pfaq__icon" aria-hidden="true">+</span>
         </button>
-        <div class="pfaq__a" id="pfaq-velvet-9"><p>Velvet is formulated to prepare skin for the treatments that follow. Used on its own, it does its job well; used as the first step in the full ritual, it helps the rest of the routine perform as intended.</p></div>
+        <div class="pfaq__a" id="pfaq-veil-3"><p>No. Veil is formulated to absorb in seconds, leaving a weightless layer of hydration behind.</p></div>
+      </div>
+      <div class="pfaq__item">
+        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-veil-4">
+          <span>Is Veil suitable for sensitive skin?</span>
+          <span class="pfaq__icon" aria-hidden="true">+</span>
+        </button>
+        <div class="pfaq__a" id="pfaq-veil-4"><p>Yes. As with any new product, we recommend a patch test before first use.</p></div>
       </div>
     {%- endcapture -%}
   {%- when 'aura' -%}
     {%- capture pd_feeling -%}Silky, creamy, fast-absorbing. Naturally blue, straight from the peptide complex itself — not a dye, not a design choice. A soft, velvety finish with no fragrance and no residue.{%- endcapture -%}
     {%- capture pd_founder -%}We don't formulate for trends. We formulate the way we'd want our own mothers, sisters, and daughters to be cared for — precisely, and without compromise.{%- endcapture -%}
-    {%- capture pd_whats_inside -%}Centered on a pharmacist-selected blend built on the ExoBlue™ base — copper peptides, exosome-derived peptides, zinc hyaluronate, and centella asiatica extract. Fragrance-free.{%- endcapture -%}
+    {%- capture pd_whats_inside -%}Centered on a pharmacist-selected blend of copper peptides, exosome-derived peptides, zinc hyaluronate, and centella asiatica extract. Fragrance-free.{%- endcapture -%}
     {%- capture pd_inci -%}Full INCI ingredient list is printed on every jar. Contact us for a complete breakdown before purchase.{%- endcapture -%}
-    {%- capture pd_routine_am -%}Velvet (Cleanse) → Lumina (coming soon) (Treat) → Aura (Renew) → Your Own SPF (Protect){%- endcapture -%}
-    {%- capture pd_routine_pm -%}Velvet (Cleanse) → Aura (Renew){%- endcapture -%}
+    {%- assign pd_routine_am = blank -%}
+    {%- capture pd_routine_pm -%}Velvet (Cleanse) → Veil (Treat) → Aura (Renew){%- endcapture -%}
     {%- capture pd_benefits -%}<ul class="pdet__list">
       <li>Deep hydration with a visibly smoother finish</li>
       <li>Pharmacist-selected peptide complex built on the ExoBlue™ base</li>
@@ -216,21 +248,14 @@
         </button>
         <div class="pfaq__a" id="pfaq-aura-4"><p>Aura is fragrance-free and formulated for all skin types. As with any new product, we recommend a patch test before first use.</p></div>
       </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-aura-5">
-          <span>Where is Aura formulated?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-aura-5"><p>Aura is formulated by Chemistrie's pharmacist founders, built on ingredients pharmacist-selected from the PCCA ExoBlue™ platform.</p></div>
-      </div>
     {%- endcapture -%}
   {%- when 'cashmere' -%}
     {%- capture pd_feeling -%}Lightweight lotion. Silky, fast-absorbing, with an elegant slip. Non-greasy and comfortable for all-day wear — soft, hydrated, smooth, never sticky.{%- endcapture -%}
     {%- capture pd_founder -%}Cashmere is the moisturizer reached for without a second thought, every morning — comfort and consistency, never announcing itself.{%- endcapture -%}
     {%- capture pd_whats_inside -%}A Hydrating Topical Lotion built on a VersaBase® foundation with Aloe Vera and Lubrajel NP. Full formulation detail and concentrations are held by our compounding pharmacists.{%- endcapture -%}
     {%- capture pd_inci -%}Full INCI ingredient list is printed on every bottle. Contact us for a complete breakdown before purchase.{%- endcapture -%}
-    {%- capture pd_routine_am -%}Velvet → Lumina (coming soon) → Cashmere → Your Own SPF{%- endcapture -%}
-    {%- capture pd_routine_pm -%}Velvet → Aura (Cashmere may also be layered in the evening if additional hydration is desired.){%- endcapture -%}
+    {%- capture pd_routine_am -%}Velvet → Veil → Cashmere → Your Own SPF{%- endcapture -%}
+    {%- capture pd_routine_pm -%}Velvet → Veil → Aura (Cashmere may also be layered in the evening if additional hydration is desired.){%- endcapture -%}
     {%- capture pd_benefits -%}<ul class="pdet__list">
       <li>Provides lightweight daily hydration that absorbs quickly</li>
       <li>Layers beautifully under sunscreen and under makeup</li>
@@ -238,9 +263,9 @@
       <li>Suitable for all skin types, for everyday use</li>
     </ul>{%- endcapture -%}
     {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
-      <li>Use morning and evening.</li>
-      <li>Apply after serums.</li>
+      <li>Apply morning and evening, after serums.</li>
       <li>Massage gently into face and neck until absorbed.</li>
+      <li>May be layered before Aura in the evening for extra hydration — this is optional, not a required step.</li>
     </ol>{%- endcapture -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
       <li>For external use only.</li>
@@ -287,13 +312,6 @@
         <div class="pfaq__a" id="pfaq-cashmere-1"><p>Aura is Chemistrie's signature renewal treatment, formulated for targeted, intensive care. Cashmere is the everyday moisturizer — lightweight, fast-absorbing, and made for daily wear. Many in the Chemistrie routine use both: Aura in the evening, Cashmere for daily hydration.</p></div>
       </div>
       <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-2">
-          <span>Can I use this every morning?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-cashmere-2"><p>Yes. Cashmere is formulated specifically for daily use, morning and evening, as part of a consistent routine.</p></div>
-      </div>
-      <div class="pfaq__item">
         <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-3">
           <span>Can I wear this under makeup?</span>
           <span class="pfaq__icon" aria-hidden="true">+</span>
@@ -307,49 +325,14 @@
         </button>
         <div class="pfaq__a" id="pfaq-cashmere-4"><p>Yes. Cashmere's lightweight, fast-absorbing formula is suited to all skin types, including oily and combination skin.</p></div>
       </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-5">
-          <span>Is this suitable for sensitive skin?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-cashmere-5"><p>Yes. Cashmere is formulated to feel comfortable and gentle, suitable for sensitive skin.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-6">
-          <span>Can I layer this with Aura?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-cashmere-6"><p>Yes. Cashmere can be layered with Aura for additional hydration, most commonly applied before Aura in the evening or on its own in the morning.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-7">
-          <span>Will this leave my skin greasy?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-cashmere-7"><p>No. Cashmere is formulated to absorb quickly, leaving skin feeling soft and hydrated rather than heavy or greasy.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-8">
-          <span>Can I use this year-round?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-cashmere-8"><p>Yes. Cashmere's lightweight formula is designed for consistent, everyday use across all seasons.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-cashmere-9">
-          <span>Why should I complete the full Chemistrie routine?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-cashmere-9"><p>Each Chemistrie product is formulated to work with the others rather than in isolation. Cashmere provides the daily hydration layer that lets Velvet, Lumina, and Aura each do their job fully.</p></div>
-      </div>
     {%- endcapture -%}
   {%- when 'silken' -%}
     {%- capture pd_feeling -%}A silky, lightweight gel. Smooth to apply, non-greasy, designed to create a breathable protective layer that stays comfortable through a full day of wear.{%- endcapture -%}
     {%- capture pd_founder -%}We wanted a scar gel precise enough to trust and simple enough to actually use, every day, without thinking twice.{%- endcapture -%}
     {%- capture pd_whats_inside -%}Built on silicone gel technology with Pracaxi oil and skin-conditioning emollients for a long-lasting protective barrier. Full formulation detail per pharmacist documentation.{%- endcapture -%}
     {%- capture pd_inci -%}Full INCI ingredient list is printed on every bottle. Contact us for a complete breakdown before purchase.{%- endcapture -%}
-    {%- capture pd_routine_am -%}Velvet → Lumina (coming soon) → Cashmere → Your Own SPF (apply Silken to targeted areas after cleansing and before moisturizer){%- endcapture -%}
-    {%- capture pd_routine_pm -%}Velvet → Aura (apply Silken to targeted areas after cleansing and before moisturizer){%- endcapture -%}
+    {%- capture pd_routine_am -%}Velvet → Veil → Cashmere → Your Own SPF (apply Silken to targeted areas after Veil and before moisturizer){%- endcapture -%}
+    {%- capture pd_routine_pm -%}Velvet → Veil → Aura (apply Silken to targeted areas after Veil and before moisturizer){%- endcapture -%}
     {%- capture pd_benefits -%}<ul class="pdet__list">
       <li>Helps improve the appearance of scars and uneven skin texture</li>
       <li>Leaves skin feeling smooth, comfortable, and lastingly hydrated</li>
@@ -406,67 +389,11 @@
         <div class="pfaq__a" id="pfaq-silken-1"><p>Silken is formulated for use on fully healed scars, including both newer and more established marks. It's designed to support the look and feel of skin texture as part of a daily ritual, not to treat an active wound.</p></div>
       </div>
       <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-2">
-          <span>Can I use Silken on older scars?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-silken-2"><p>Yes. Silken is suited to both recently healed and long-standing scars, used consistently as part of your routine.</p></div>
-      </div>
-      <div class="pfaq__item">
         <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-3">
           <span>Can I wear makeup over Silken?</span>
           <span class="pfaq__icon" aria-hidden="true">+</span>
         </button>
         <div class="pfaq__a" id="pfaq-silken-3"><p>Once Silken has dried completely, it layers cleanly under makeup, just as it does under sunscreen.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-4">
-          <span>Can I use Silken twice daily?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-silken-4"><p>Yes — Silken is formulated for both morning and evening use as part of a consistent daily rhythm.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-5">
-          <span>How long should I use Silken?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-silken-5"><p>Consistency is what Silken is built for. Most people incorporate it into their daily routine for an extended period, applying it every morning and evening as part of their ritual.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-6">
-          <span>Can I use Silken with the rest of my Chemistrie routine?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-silken-6"><p>Yes. Silken is designed to layer into your existing routine alongside Aura, Velvet, Cashmere, and Lumina.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-7">
-          <span>Is Silken fragrance free?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-silken-7"><p>Yes, Silken is formulated fragrance-free.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-8">
-          <span>Will Silken feel greasy?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-silken-8"><p>No — Silken is a lightweight, silky gel designed to absorb into a breathable, non-greasy finish.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-9">
-          <span>Can I use Silken on sensitive skin?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-silken-9"><p>Silken is formulated to be suitable for all skin types, including sensitive skin. As with any new product, we recommend a small patch test first.</p></div>
-      </div>
-      <div class="pfaq__item">
-        <button type="button" class="pfaq__q" aria-expanded="false" aria-controls="pfaq-silken-10">
-          <span>When should I begin using Silken after a procedure or injury?</span>
-          <span class="pfaq__icon" aria-hidden="true">+</span>
-        </button>
-        <div class="pfaq__a" id="pfaq-silken-10"><p>Silken is intended for use only once skin has fully healed. Please follow your provider's guidance on when your skin is ready.</p></div>
       </div>
     {%- endcapture -%}
 {%- else -%}
@@ -621,7 +548,7 @@
             We built {{ product.title }} the way a pharmacist would — one active, done properly, at a concentration that actually works. No marketing blends, no shortcuts. Just the formula your skin has been waiting for.
           {%- endif -%}
         </blockquote>
-        <p class="pdet__founder-story">Before Chemistrie was a skincare brand, it was a pharmacy counter. Harin and Zach spent 21+ years collectively behind that counter, compounding prescriptions for people who trusted them with the most literal version of "put this on your skin." Their wives had asked for years to have them formulate skin care products better than what they were paying so much for with less than ideal results. Chemistrie exists because that same rigor — measured, tested, formulated by someone who has to be right, not just persuasive — deserved to exist outside a prescription pad. Made by pharmacists. Made for the women they love.</p>
+        <p class="pdet__founder-story">Before Chemistrie was a skincare brand, it was a pharmacy counter. Harin and Zach spent 21+ years collectively behind that counter, compounding prescriptions for people who trusted them with the most literal version of "put this on your skin." Their wives had asked for years to have them formulate skin care products better than what they were paying so much for with less than ideal results. Chemistrie exists because that same rigor — measured, tested, formulated by someone who has to be right, not just persuasive — deserved to exist outside a prescription pad. Made by pharmacists. Made with love.</p>
       </div>
       <div class="pdet__founder-photo">
         <img src="{{ 'founder-1.jpg' | asset_url }}" alt="One of Chemistrie's founding pharmacists" loading="lazy">

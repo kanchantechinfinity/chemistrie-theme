@@ -7,7 +7,7 @@
 
     <div class="rshop__grid">
       {%- if section.settings.collection != blank -%}
-        {%- for product in section.settings.collection.products limit: 4 -%}
+        {%- for product in section.settings.collection.products limit: 5 -%}
         <article class="product" data-color="forest">
           <a class="product__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
           <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>
@@ -42,9 +42,9 @@
         </article>
         {%- endfor -%}
       {%- else -%}
-        {%- assign fallback_names = 'Velvet,Cashmere,Aura,Silken' | split: ',' -%}
-        {%- assign fallback_prices = 'From $30,From $85,From $105,From $80' | split: ',' -%}
-        {%- assign fallback_subs = 'Foaming Facial Cleanser,Lightweight Hydrating Lotion,Advanced Renewal Cream,Scar Refining Gel' | split: ',' -%}
+        {%- assign fallback_names = 'Velvet,Veil,Cashmere,Aura,Silken' | split: ',' -%}
+        {%- assign fallback_prices = 'From $30,$85,From $85,$195,$135' | split: ',' -%}
+        {%- assign fallback_subs = 'Foaming Facial Cleanser,Weightless Hydrating Serum,Lightweight Hydrating Lotion,Advanced Renewal Cream,Scar Refining Gel' | split: ',' -%}
         {%- for name in fallback_names -%}
         <article class="product" data-color="forest">
           <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ name | handleize }}" data-title="{{ name | escape }}" data-price="{{ fallback_prices[forloop.index0] }}" data-image="" data-url="#" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>
@@ -89,8 +89,8 @@
 .ritual-shop .product__meta-top > div { min-width: 0; flex: 1; }
 .ritual-shop .product__meta h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rshop__grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: clamp(16px, 2vw, 26px);
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: clamp(14px, 1.6vw, 22px);
 }
 .rshop__foot { margin-top: clamp(40px, 5vw, 64px); display: flex; flex-direction: column; gap: 10px; }
 .rshop__pdf { align-self: flex-start; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-tan); padding-bottom: 3px; transition: color .3s; }

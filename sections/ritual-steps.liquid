@@ -64,7 +64,7 @@
 .rsteps__pill.is-active { background: var(--c-forest); color: var(--c-cream); }
 
 /* Step cards — bordered, in a grid */
-.rsteps__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 24px); }
+.rsteps__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(14px, 1.6vw, 22px); }
 .rsteps__grid[data-period="pm"] { grid-template-columns: repeat(4, 1fr); }
 .rsteps__grid[hidden] { display: none; }
 .rstep {
@@ -152,14 +152,15 @@ document.querySelectorAll('.rsteps').forEach(function (section) {
       "name": "Ritual Steps",
       "blocks": [
         { "type": "step_am", "settings": { "roman": "1", "step_name": "Cleanse", "product_name": "Velvet", "description": "The rich foam that lifts away the night before, so everything that follows can actually absorb." } },
-        { "type": "step_am", "settings": { "roman": "2", "step_name": "Treat", "product_name": "Lumina (coming soon)", "description": "A vitamin C serum, still in the Study. Not yet part of the routine, but already accounted for in it." } },
-        { "type": "step_am", "settings": { "roman": "3", "step_name": "Refine", "product_name": "Silken (optional, targeted)", "description": "For anyone using it: apply to targeted areas after cleansing, before the moisturizing step." } },
+        { "type": "step_am", "settings": { "roman": "2", "step_name": "Treat", "product_name": "Veil", "description": "A featherlight hydrating solution, pressed in right after cleansing and before anything heavier." } },
+        { "type": "step_am", "settings": { "roman": "3", "step_name": "Refine", "product_name": "Silken (optional, targeted)", "description": "For anyone using it: apply to targeted areas after Veil, before the moisturizing step." } },
         { "type": "step_am", "settings": { "roman": "4", "step_name": "Moisturize", "product_name": "Cashmere", "description": "Lightweight hydration that disappears before it has the chance to feel like a step at all." } },
-        { "type": "step_am", "settings": { "roman": "5", "step_name": "Protect", "product_name": "Your Own SPF", "description": "Any sunscreen, applied last, every single morning without exception. Chemistrie doesn't make this one — that's not a gap in the routine, it's a boundary we're comfortable naming." } },
+        { "type": "step_am", "settings": { "roman": "5", "step_name": "Protect", "product_name": "Your Own SPF", "description": "Any sunscreen, applied last, every single morning without exception. Chemistrie doesn't make this one." } },
         { "type": "step_pm", "settings": { "roman": "1", "step_name": "Cleanse", "product_name": "Velvet", "description": "The same cleanse, undoing a different day." } },
-        { "type": "step_pm", "settings": { "roman": "2", "step_name": "Refine", "product_name": "Silken (optional, targeted)", "description": "Apply to targeted areas after cleansing, before the moisturizing step — same placement as morning." } },
-        { "type": "step_pm", "settings": { "roman": "3", "step_name": "Moisturize", "product_name": "Cashmere (optional)", "description": "Layered before Aura for anyone who wants additional hydration. Not required, and never a missing step if skipped." } },
-        { "type": "step_pm", "settings": { "roman": "4", "step_name": "Renew", "product_name": "Aura", "description": "The one step in the ritual built to ask for two considered minutes, not disappear into thirty seconds." } }
+        { "type": "step_pm", "settings": { "roman": "2", "step_name": "Treat", "product_name": "Veil", "description": "The same weightless hydration, pressed in right after cleansing." } },
+        { "type": "step_pm", "settings": { "roman": "3", "step_name": "Refine", "product_name": "Silken (optional, targeted)", "description": "Apply to targeted areas after Veil, before the moisturizing step — same placement as morning." } },
+        { "type": "step_pm", "settings": { "roman": "4", "step_name": "Moisturize", "product_name": "Cashmere (optional)", "description": "Layered before Aura for anyone who wants additional hydration. Not required, and never a missing step if skipped." } },
+        { "type": "step_pm", "settings": { "roman": "5", "step_name": "Renew", "product_name": "Aura", "description": "The one step in the ritual built to ask for two considered minutes, not disappear into thirty seconds." } }
       ]
     }
   ]
