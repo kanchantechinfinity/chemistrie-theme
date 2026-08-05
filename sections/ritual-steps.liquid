@@ -1,9 +1,19 @@
 <section class="page-section ritual-steps rsteps rsteps--morning" data-screen-label="The Ritual">
   <div class="page-section__inner">
-    <div class="page-section__head rsteps__head">
-      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-      <h2 class="display-h">{{ section.settings.heading }}</h2>
-      <p class="rsteps__sub">{{ section.settings.sub }}</p>
+    <div class="rsteps__head-row">
+      <div class="page-section__head rsteps__head">
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="display-h">{{ section.settings.heading }}</h2>
+        <p class="rsteps__sub">{{ section.settings.sub }}</p>
+      </div>
+      <div class="rsteps__circle">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 600 | image_tag: width: 240, height: 240, widths: '300,600', alt: section.settings.heading | escape }}
+        {%- else -%}
+          <img src="{{ 'ritual-cream.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" width="240" height="240">
+          {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+        {%- endif -%}
+      </div>
     </div>
 
     <div class="rsteps__toggle" role="tablist" aria-label="Ritual time of day">
@@ -49,7 +59,19 @@
 </section>
 
 {% stylesheet %}
-.ritual-steps { background: var(--c-cream); }
+.ritual-steps { background: var(--c-tan); }
+.rsteps__head-row { display: flex; align-items: center; justify-content: space-between; gap: clamp(24px, 4vw, 56px); }
+.rsteps__head { flex: 1 1 auto; min-width: 0; margin-bottom: 0; }
+.rsteps__circle {
+  flex: 0 0 auto;
+  width: clamp(160px, 16vw, 240px);
+  height: clamp(160px, 16vw, 240px);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--c-cream);
+  box-shadow: 0 20px 44px -18px rgba(26,58,45,.4);
+}
+.rsteps__circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .rsteps__sub { margin: 20px 0 0; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgba(26,58,45,.78); }
 .rsteps__toggle {
   display: inline-flex; gap: 4px; padding: 4px; margin: 0 0 clamp(40px, 5vw, 64px);
@@ -83,6 +105,8 @@
 }
 @media (max-width: 900px) {
   .rsteps__grid { grid-template-columns: 1fr 1fr; }
+  .rsteps__head-row { flex-direction: column; text-align: center; }
+  .rsteps__circle { order: -1; }
 }
 @media (max-width: 600px) {
   .rsteps__head { margin-bottom: 28px; }
@@ -120,7 +144,8 @@ document.querySelectorAll('.rsteps').forEach(function (section) {
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The ritual, step by step —" },
     { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "Cleanse. Treat.<br/><em>Moisturize. Protect.</em>" },
-    { "type": "textarea", "id": "sub", "label": "Subtext", "default": "In that order, every time. Switch between morning and evening to see how each step changes." }
+    { "type": "textarea", "id": "sub", "label": "Subtext", "default": "In that order, every time. Switch between morning and evening to see how each step changes." },
+    { "type": "image_picker", "id": "image", "label": "Circle image (optional)" }
   ],
   "blocks": [
     {
