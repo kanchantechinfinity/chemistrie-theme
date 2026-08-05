@@ -38,55 +38,6 @@
       </div>
     </li>
 
-    <li class="story__chapter">
-      <div class="story__chapter-meta">
-        <span class="story__year">{{ section.settings.chapter_3_year }}</span>
-        <span class="story__roman">— III —</span>
-      </div>
-      <div class="story__chapter-body">
-        <h3>{{ section.settings.chapter_3_heading }}</h3>
-        <p>{{ section.settings.chapter_3_body }}</p>
-      </div>
-      <div class="story__chapter-photo">
-        <img src="{{ 'stock-note.jpg' | asset_url }}" alt="{{ section.settings.chapter_3_heading | escape }}" loading="lazy">
-        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
-      </div>
-    </li>
-
-    <li class="story__chapter story__chapter--reverse">
-      <div class="story__chapter-meta">
-        <span class="story__year">{{ section.settings.chapter_4_year }}</span>
-        <span class="story__roman">— IV —</span>
-      </div>
-      <div class="story__chapter-body">
-        <h3>{{ section.settings.chapter_4_heading }}</h3>
-        <p>{{ section.settings.chapter_4_body }}</p>
-      </div>
-      <div class="story__chapter-photo">
-        <img src="{{ 'stock-packaging.jpg' | asset_url }}" alt="{{ section.settings.chapter_4_heading | escape }}" loading="lazy">
-        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
-      </div>
-    </li>
-
-    <li class="story__chapter">
-      <div class="story__chapter-meta">
-        <span class="story__year">{{ section.settings.chapter_5_year }}</span>
-        <span class="story__roman">— V —</span>
-      </div>
-      <div class="story__chapter-body">
-        <h3>{{ section.settings.chapter_5_heading }}</h3>
-        <p>{{ section.settings.chapter_5_body }}</p>
-        <a href="#shop" class="story__chapter-cta">
-          <span>Step inside the maison</span>
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-      <div class="story__chapter-photo">
-        <img src="{{ 'stock-lineup.jpg' | asset_url }}" alt="{{ section.settings.chapter_5_heading | escape }}" loading="lazy">
-        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
-      </div>
-    </li>
-
   </ol>
 </section>
 
@@ -114,34 +65,19 @@
 {
   "name": "Brand Story",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Brand Story —" },
-    { "type": "html", "id": "heading", "label": "Heading", "default": "Five quiet chapters.<br/><em>One bench.</em>" },
-    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Chemistrie was not founded in a boardroom. It was founded one milligram at a time, over a decade, on a single compounding bench in Houston." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "" },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "" },
 
     { "type": "header", "content": "Chapter I" },
     { "type": "text", "id": "chapter_1_year", "label": "Year", "default": "2011" },
-    { "type": "text", "id": "chapter_1_heading", "label": "Heading", "default": "Two students, one fraternity." },
-    { "type": "textarea", "id": "chapter_1_body", "label": "Body", "default": "Harin and Zach meet at the University of Houston College of Pharmacy — two students in the same pharmacy fraternity, Phi Delta Chi, years before either of them is a founder of anything." },
+    { "type": "text", "id": "chapter_1_heading", "label": "Heading", "default": "The Meeting" },
+    { "type": "textarea", "id": "chapter_1_body", "label": "Body", "default": "Harin and Zach met in 2011, at the University of Houston College of Pharmacy — not as business partners, and not yet as anything resembling founders, but as two students in the same pharmacy fraternity, Phi Delta Chi." },
 
     { "type": "header", "content": "Chapter II" },
-    { "type": "text", "id": "chapter_2_year", "label": "Year", "default": "2018" },
-    { "type": "text", "id": "chapter_2_heading", "label": "Heading", "default": "Two careers, one conversation." },
-    { "type": "textarea", "id": "chapter_2_body", "label": "Body", "default": "Their careers reunite at The Chemist Pharmacy. Comparing notes on the decade apart, Harin and Zach find their wives share the same quiet frustration: dermatological products that promised more than they delivered." },
-
-    { "type": "header", "content": "Chapter III" },
-    { "type": "text", "id": "chapter_3_year", "label": "Year", "default": "2022" },
-    { "type": "text", "id": "chapter_3_heading", "label": "Heading", "default": "The patient list becomes a waiting list." },
-    { "type": "textarea", "id": "chapter_3_body", "label": "Body", "default": "Friends of friends. A dermatology nurse's daughter. A schoolteacher in Austin. The bench cannot pour fast enough. The pharmacists begin labelling batches by hand, numbering each bottle as it leaves." },
-
-    { "type": "header", "content": "Chapter IV" },
-    { "type": "text", "id": "chapter_4_year", "label": "Year", "default": "2025" },
-    { "type": "text", "id": "chapter_4_heading", "label": "Heading", "default": "The maison takes a name." },
-    { "type": "textarea", "id": "chapter_4_body", "label": "Body", "default": "A glassblower three blocks away. A letterpress in the same city. A photographer who shoots only in west afternoon light. The house is named on a Tuesday — Chemistrie, for the chemistry of patience, hands, and a woman's nightly ritual." },
-
-    { "type": "header", "content": "Chapter V" },
-    { "type": "text", "id": "chapter_5_year", "label": "Year", "default": "2026" },
-    { "type": "text", "id": "chapter_5_heading", "label": "Heading", "default": "Today. And the women, still." },
-    { "type": "textarea", "id": "chapter_5_body", "label": "Body", "default": "Twelve formulas. Two hundred bottles a batch. A pharmacist on the phone, always. Chemistrie is the same bench it always was — only now, with a door open to you." }
+    { "type": "text", "id": "chapter_2_year", "label": "Year", "default": "" },
+    { "type": "text", "id": "chapter_2_heading", "label": "Heading", "default": "The Conversation" },
+    { "type": "textarea", "id": "chapter_2_body", "label": "Body", "default": "The two careers came back together when Zach took a position at The Chemist Pharmacy — Harin's pharmacy. Working alongside each other again, they did what old fraternity brothers tend to do: started comparing the decade they'd just spent apart." }
   ],
   "presets": [
     { "name": "Brand Story" }
