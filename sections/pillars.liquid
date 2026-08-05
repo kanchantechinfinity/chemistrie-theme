@@ -3,6 +3,12 @@
   <div class="pillars__intro">
     <span class="eyebrow">{{ section.settings.eyebrow }}</span>
     <h2 class="display-h">{{ section.settings.intro_heading }}</h2>
+    {%- if section.settings.cta_label != blank -%}
+      <a class="btn btn--ghost pillars__cta" href="{{ section.settings.cta_link }}">
+        <span>{{ section.settings.cta_label }}</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    {%- endif -%}
   </div>
 
   <div class="pillars__stack" id="pillarsStack">
@@ -59,6 +65,8 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Trust Signals —" },
     { "type": "html", "id": "intro_heading", "label": "Intro heading", "default": "Nothing here was<br/><em>rounded up.</em>" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Read the Ingredient Philosophy" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
     { "type": "select", "id": "crest_style", "label": "Crest image style", "options": [ { "value": "circle", "label": "Circle badge" }, { "value": "full", "label": "Full-bleed (no circle)" } ], "default": "circle" }
   ],
   "blocks": [
