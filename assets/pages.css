@@ -50,8 +50,9 @@
 .page-section__head { max-width: 720px; margin: 0 0 clamp(40px, 6vw, 72px); }
 .page-section__head .eyebrow { margin-bottom: 16px; display: inline-block; }
 
-/* ---- Page CTA card button ---- */
+/* ---- Page CTA card button(s) ---- */
 .cta--page { padding-top: clamp(56px, 8vw, 110px); }
+.cta__page-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 .cta__page-btn { margin-top: 12px; }
 
 /* ---- Editorial product card (collection / ritual grids) ---- */

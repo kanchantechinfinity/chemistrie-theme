@@ -141,6 +141,51 @@
         "sub": "In that order, every time. Switch between morning and evening to see how each step changes."
       }
     },
+    "ritual-why": {
+      "type": "ritual-why",
+      "settings": {
+        "eyebrow": "— Why This Order —",
+        "heading": "Why This Order",
+        "body": "<p>The order isn't arbitrary. Cleanser goes first, because nothing else works properly on skin that hasn't been cleared. Anything targeted (Silken, for the areas that need it) goes on before the broader moisturizing step, so it reaches skin directly instead of sitting underneath something else. Moisturizer comes before sunscreen, always, because sunscreen is the step that needs to sit on top to do its job.</p>"
+      }
+    },
+    "ritual-faq": {
+      "type": "ritual-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need all five products to see a difference?",
+            "answer": "<p>No. Each product is formulated to do its job on its own. The full ritual is built for anyone who wants the complete system, but it isn't a requirement to get value from any single step.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "What if I have sensitive skin?",
+            "answer": "<p>Every launch product is formulated to be suitable for sensitive skin. As with any new product, we recommend a patch test before adding it to your routine.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Where does Silken fit if I don't have a targeted concern?",
+            "answer": "<p>It doesn't. Silken is a targeted step for the areas that need it, not a required part of the core ritual.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Where does Veil fit if I already use a lot of products?",
+            "answer": "<p>Right after cleansing, before anything else. Veil is formulated to be weightless enough that it never competes with what follows. It adds a layer of hydration, not a layer of thickness.</p>"
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "heading": "FAQ"
+      }
+    },
     "ritual-shop": {
       "type": "ritual-shop",
       "settings": {
@@ -157,14 +202,18 @@
         "eyebrow": "— Begin tonight —",
         "heading": "Build your <em>ritual.</em>",
         "sub": "Read the Founder Story, or start with the Collection.",
-        "button_label": "Read the Founder Story",
-        "button_url": "/pages/the-pharmacists"
+        "button_label": "Shop This Routine",
+        "button_url": "/collections/all",
+        "button2_label": "Read the Founder Story",
+        "button2_url": "/pages/the-pharmacists"
       }
     }
   },
   "order": [
     "page-hero",
     "ritual-steps",
+    "ritual-why",
+    "ritual-faq",
     "ritual-shop",
     "page-cta"
   ]

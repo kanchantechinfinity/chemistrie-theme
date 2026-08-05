@@ -131,6 +131,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .btn--ghost:hover { color: var(--c-sage); border-color: var(--c-sage); }
 .btn--ghost.btn--dark { padding: 16px 28px; border: 1px solid var(--c-forest); border-radius: 999px; }
 .btn--ghost.btn--dark:hover { background: var(--c-forest); color: var(--c-cream); border-color: var(--c-forest); }
+.btn--ghost.btn--light { padding: 16px 28px; border: 1px solid rgba(240,232,219,.4); border-radius: 999px; color: var(--c-cream); }
+.btn--ghost.btn--light:hover { background: var(--c-cream); color: var(--c-forest); border-color: var(--c-cream); }
 
 /* ───────── Utility strip + Nav ───────── */
 .utility-strip {
