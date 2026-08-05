@@ -1,6 +1,6 @@
 <section class="page-section ritual-faq" data-screen-label="Ritual FAQ">
   <div class="page-section__inner">
-    <div class="page-section__head">
+    <div class="page-section__head ritual-faq__head">
       <h2 class="display-h">{{ section.settings.heading }}</h2>
     </div>
 
@@ -23,7 +23,10 @@
 </section>
 
 {% stylesheet %}
-.ritual-faq { background: var(--c-cream); }
+.ritual-faq { background: var(--c-cream); padding-top: clamp(32px, 4vw, 56px); }
+.ritual-faq__head { text-align: center; max-width: none; margin-left: auto; margin-right: auto; }
+.ritual-faq__head .display-h { margin-left: auto; margin-right: auto; }
+.ritual-faq .faq-list { max-width: 760px; margin: 0 auto; }
 {% endstylesheet %}
 
 {% javascript %}
