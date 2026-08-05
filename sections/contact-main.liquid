@@ -45,11 +45,11 @@
         <div class="cform">
           <div class="cform__field">
             <label class="cform__label" for="cform-name">Name</label>
-            <input class="cform__input" id="cform-name" type="text" name="contact[name]" value="{{ form.name }}" placeholder="Jane Doe">
+            <input class="cform__input" id="cform-name" type="text" name="contact[name]" value="{{ form.name }}" placeholder="Jane Doe" required minlength="2" maxlength="60" pattern="[A-Za-zÀ-ÖØ-öø-ÿ' .-]+" title="Please enter a name using letters only (no numbers or symbols).">
           </div>
           <div class="cform__field">
             <label class="cform__label" for="cform-email">Email</label>
-            <input class="cform__input" id="cform-email" type="email" name="contact[email]" value="{{ form.email }}" placeholder="you@elsewhere.com">
+            <input class="cform__input" id="cform-email" type="email" name="contact[email]" value="{{ form.email }}" placeholder="you@elsewhere.com" required maxlength="100" title="Please enter a valid email address.">
           </div>
           <div class="cform__field">
             <label class="cform__label" for="cform-subject">Subject</label>
@@ -63,7 +63,8 @@
           </div>
           <div class="cform__field">
             <label class="cform__label" for="cform-body">Message</label>
-            <textarea class="cform__input cform__textarea" id="cform-body" name="contact[body]" rows="5" placeholder="How can we help?">{{ form.body }}</textarea>
+            <textarea class="cform__input cform__textarea" id="cform-body" name="contact[body]" rows="5" maxlength="1000" required placeholder="How can we help?" oninput="this.value = this.value.replace(/[<>]/g, '')">{{ form.body }}</textarea>
+            <span class="cform__hint">No &lt; or &gt; characters. 1000 characters max.</span>
           </div>
           <button class="btn btn--primary" type="submit">Send Message</button>
         </div>
@@ -106,6 +107,7 @@
 }
 .cform__input:focus { outline: none; border-color: var(--c-forest); }
 .cform__textarea { resize: vertical; min-height: 130px; }
+.cform__hint { font-size: 12px; color: var(--c-ink-mute, rgba(26,58,45,.55)); }
 .cform__select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%231a3a2d' stroke-width='1.4' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; padding-right: 38px; }
 .cform__success, .cform__error {
   padding: 16px 20px; border-radius: 10px; margin: 0 0 24px;
