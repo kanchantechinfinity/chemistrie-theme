@@ -1,7 +1,12 @@
-<section class="page-hero page-hero--short" data-screen-label="Search">
-  <div class="page-hero__inner srch__hero-inner">
+<section class="cta cta--page srch__hero" data-screen-label="Search">
+  <div class="cta__card srch__hero-inner">
+    <span class="cta__corner cta__corner--tl"></span>
+    <span class="cta__corner cta__corner--tr"></span>
+    <span class="cta__corner cta__corner--bl"></span>
+    <span class="cta__corner cta__corner--br"></span>
+
     <span class="eyebrow eyebrow--light">— {{ section.settings.eyebrow | default: 'Search' }} —</span>
-    <h1 class="display-h display-h--light page-hero__title">{{ section.settings.heading | default: 'Find your formula' }}</h1>
+    <h1 class="display-h display-h--light">{{ section.settings.heading | default: 'Find your formula' }}</h1>
     <form action="{{ routes.search_url }}" method="get" role="search" class="srch__form">
       <input type="hidden" name="type" value="product,article,page">
       <input type="hidden" name="options[prefix]" value="last">
@@ -83,9 +88,9 @@
 </section>
 
 {% stylesheet %}
-.page-hero--short { padding-top: clamp(110px, 13vw, 170px); padding-bottom: clamp(40px, 5vw, 64px); }
-.page-hero__inner.srch__hero-inner { text-align: center; display: flex; flex-direction: column; align-items: center; }
-.srch__hero-inner .eyebrow, .srch__hero-inner .page-hero__title { max-width: 100%; margin-left: auto; margin-right: auto; text-align: center; }
+.cta.srch__hero { padding-top: clamp(140px, 15vw, 190px); }
+.cta__card.srch__hero-inner { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.srch__hero-inner .eyebrow { max-width: 100%; margin-left: auto; margin-right: auto; text-align: center; }
 .srch__form { display: flex; gap: 12px; justify-content: center; margin: 32px auto 0; max-width: 820px; width: 100%; flex-wrap: wrap; }
 .srch__input { flex: 1; min-width: 240px; padding: 17px 24px; border-radius: 999px; border: 1px solid rgba(240,232,219,.28); background: rgba(240,232,219,.06); color: var(--c-cream); font-size: 16px; }
 .srch__input::placeholder { color: rgba(240,232,219,.5); }
