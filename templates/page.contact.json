@@ -14,7 +14,7 @@
       "settings": {
         "eyebrow": "— Get in touch —",
         "heading": "The pharmacist<br/><em>is on the line.</em>",
-        "deck": "Questions about actives, a skin concern, or an order — a real compounding pharmacist reads every message, and picks up the phone Monday through Friday.",
+        "deck": "Questions about actives, a skin concern, or an order — a real compounding pharmacist reads every message.",
         "hero_fallback_asset": "hero-contact.jpg"
       }
     },
@@ -29,14 +29,6 @@
             "value": "hello@chemistrie.com"
           }
         },
-        "item_2": {
-          "type": "item",
-          "settings": {
-            "icon": "phone",
-            "label": "Phone / Text",
-            "value": "(713) 555-0142"
-          }
-        },
         "item_3": {
           "type": "item",
           "settings": {
@@ -44,30 +36,11 @@
             "label": "Compounding Lab",
             "value": "Houston, TX"
           }
-        },
-        "item_4": {
-          "type": "item",
-          "settings": {
-            "icon": "hours",
-            "label": "Hours",
-            "value": "Mon–Fri, 9am–5pm CT"
-          }
-        },
-        "item_5": {
-          "type": "item",
-          "settings": {
-            "icon": "info",
-            "label": "Response Time",
-            "value": "Within 1 business day"
-          }
         }
       },
       "block_order": [
         "item_1",
-        "item_2",
-        "item_3",
-        "item_4",
-        "item_5"
+        "item_3"
       ],
       "settings": {}
     },
@@ -156,7 +129,7 @@
       "settings": {
         "eyebrow": "— Ready when you are —",
         "heading": "Begin your <em>ritual.</em>",
-        "sub": "Questions answered, formula matched, bottle numbered. Start with the collection.",
+        "sub": "Start with the collection.",
         "button_label": "Shop the Collection"
       }
     }
@@ -164,8 +137,6 @@
   "order": [
     "page-hero",
     "contact-main",
-    "contact-steps",
-    "contact-faq",
     "page-cta"
   ]
 }

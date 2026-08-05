@@ -37,7 +37,7 @@
     <div class="contact-main__col contact-main__col--right">
       {%- form 'contact' -%}
         {%- if form.posted_successfully? -%}
-          <p class="cform__success">Thank you — your message reached the lab. A pharmacist will write back within one business day.</p>
+          <p class="cform__success">Thank you — your message reached the lab. A pharmacist will write back.</p>
         {%- endif -%}
         {%- if form.errors -%}
           <p class="cform__error">{{ form.errors | default_errors }}</p>
@@ -147,10 +147,7 @@
       "name": "Contact Main",
       "blocks": [
         { "type": "item", "settings": { "icon": "email", "label": "Email", "value": "hello@chemistrie.com" } },
-        { "type": "item", "settings": { "icon": "phone", "label": "Phone / Text", "value": "(713) 555-0142" } },
-        { "type": "item", "settings": { "icon": "location", "label": "Compounding Lab", "value": "Houston, TX" } },
-        { "type": "item", "settings": { "icon": "hours", "label": "Hours", "value": "Mon–Fri, 9am–5pm CT" } },
-        { "type": "item", "settings": { "icon": "info", "label": "Response Time", "value": "Within 1 business day" } }
+        { "type": "item", "settings": { "icon": "location", "label": "Compounding Lab", "value": "Houston, TX" } }
       ]
     }
   ]
