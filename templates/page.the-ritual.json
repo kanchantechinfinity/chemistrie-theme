@@ -15,8 +15,15 @@
         "eyebrow": "— The Ritual —",
         "heading": "The Ritual.",
         "deck": "Cleanse. Treat. Moisturize. Protect. In that order, every time.",
-        "deck2": "Built to layer, not to compete with itself. Every Chemistrie product is formulated with the step before it and the step after it in mind. None of them were designed to work alone, and none of them ask you to guess where they belong.",
         "hero_fallback_asset": "hero-ritual.jpg"
+      }
+    },
+    "ritual-philosophy": {
+      "type": "ritual-philosophy",
+      "settings": {
+        "eyebrow": "— The Philosophy —",
+        "statement": "Built to layer, not to compete with itself.",
+        "body": "Every Chemistrie product is formulated with the step before it and the step after it in mind. None of them were designed to work alone, and none of them ask you to guess where they belong."
       }
     },
     "ritual-steps": {
@@ -211,6 +218,7 @@
   },
   "order": [
     "page-hero",
+    "ritual-philosophy",
     "ritual-steps",
     "ritual-why",
     "ritual-faq",
