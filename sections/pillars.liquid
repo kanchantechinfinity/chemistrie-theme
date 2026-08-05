@@ -21,11 +21,13 @@
       <div class="pillar__body">
         <h3 class="pillar__title">{{ block.settings.title }}</h3>
         <p class="pillar__lede">{{ block.settings.lede }}</p>
+        {%- if block.settings.item1 != blank or block.settings.item2 != blank or block.settings.item3 != blank -%}
         <ul class="pillar__list">
-          <li>{{ block.settings.item1 }}</li>
-          <li>{{ block.settings.item2 }}</li>
-          <li>{{ block.settings.item3 }}</li>
+          {%- if block.settings.item1 != blank -%}<li>{{ block.settings.item1 }}</li>{%- endif -%}
+          {%- if block.settings.item2 != blank -%}<li>{{ block.settings.item2 }}</li>{%- endif -%}
+          {%- if block.settings.item3 != blank -%}<li>{{ block.settings.item3 }}</li>{%- endif -%}
         </ul>
+        {%- endif -%}
       </div>
       <div class="pillar__visual{% if section.settings.crest_style == 'full' %} pillar__visual--full{% endif %}">
         {%- if block.settings.image != blank and section.settings.crest_style == 'full' -%}
@@ -55,8 +57,8 @@
 {
   "name": "Pillars",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Brand Pillars —" },
-    { "type": "html", "id": "intro_heading", "label": "Intro heading", "default": "Three things we<br/><em>refuse</em> to compromise." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Trust Signals —" },
+    { "type": "html", "id": "intro_heading", "label": "Intro heading", "default": "Nothing here was<br/><em>rounded up.</em>" },
     { "type": "select", "id": "crest_style", "label": "Crest image style", "options": [ { "value": "circle", "label": "Circle badge" }, { "value": "full", "label": "Full-bleed (no circle)" } ], "default": "circle" }
   ],
   "blocks": [
@@ -64,13 +66,13 @@
       "type": "pillar",
       "name": "Pillar",
       "settings": [
-        { "type": "text", "id": "title", "label": "Title", "default": "Trust." },
-        { "type": "text", "id": "lede", "label": "Lede", "default": "Pharmacist credibility that feels warm, not sterile." },
-        { "type": "text", "id": "item1", "label": "List item 1", "default": "— Credentials are the proof. Love is the reason." },
-        { "type": "text", "id": "item2", "label": "List item 2", "default": "— Every active ingredient cleared by a licensed pharmacist." },
-        { "type": "text", "id": "item3", "label": "List item 3", "default": "— Transparency on dose, on source, on shelf-life." },
+        { "type": "text", "id": "title", "label": "Title", "default": "Pharmacist-Formulated" },
+        { "type": "text", "id": "lede", "label": "Lede", "default": "Every formula answers to two pharmacists, by name, not a lab Chemistrie doesn't own." },
+        { "type": "text", "id": "item1", "label": "List item 1", "default": "" },
+        { "type": "text", "id": "item2", "label": "List item 2", "default": "" },
+        { "type": "text", "id": "item3", "label": "List item 3", "default": "" },
         { "type": "text", "id": "crest_mono", "label": "Crest mono", "default": "Rx" },
-        { "type": "text", "id": "crest_sub", "label": "Crest sub", "default": "Pharmacist seal · since 2026" },
+        { "type": "text", "id": "crest_sub", "label": "Crest sub", "default": "" },
         { "type": "image_picker", "id": "image", "label": "Crest image (optional — replaces the Rx/mono badge with a photo)" }
       ]
     }
@@ -80,9 +82,9 @@
     {
       "name": "Pillars",
       "blocks": [
-        { "type": "pillar", "settings": { "title": "Trust.", "lede": "Pharmacist credibility that feels warm, not sterile.", "item1": "Credentials are the proof. Love is the reason.", "item2": "Every active ingredient cleared by a licensed pharmacist.", "item3": "Transparency on dose, on source, on shelf-life.", "crest_mono": "Rx", "crest_sub": "Pharmacist seal · since 2026" } },
-        { "type": "pillar", "settings": { "title": "Luxury.", "lede": "Aspirational, never arrogant. Every touchpoint signals prestige.", "item1": "Heavy weighted glass. Hand-numbered batches.", "item2": "Vellum inserts, gold-foil ritual cards.", "item3": "A box you keep, not unbox.", "crest_mono": "C.", "crest_sub": "Maison Chemistrie · N° 001" } },
-        { "type": "pillar", "settings": { "title": "Warmth.", "lede": "Luxury with a heartbeat. The founder story makes Chemistrie unlike anything in the category.", "item1": "Two pharmacists. Husbands and fathers first.", "item2": "Formulas tested on the women they love.", "item3": "Personal letters in every order.", "crest_mono": "for her", "crest_sub": "written by hand · in every box" } }
+        { "type": "pillar", "settings": { "title": "Pharmacist-Formulated", "lede": "Every formula answers to two pharmacists, by name, not a lab Chemistrie doesn't own.", "crest_mono": "Rx" } },
+        { "type": "pillar", "settings": { "title": "Pharmacist-Selected Sourcing", "lede": "Ingredients sourced through PCCA's ExoBlue platform, chosen deliberately, never developed in-house and never claimed as Chemistrie's own technology.", "crest_mono": "C." } },
+        { "type": "pillar", "settings": { "title": "Appearance-Language, Always", "lede": "Every claim on this site is written to be checked, not simply believed.", "crest_mono": "for her" } }
       ]
     }
   ]

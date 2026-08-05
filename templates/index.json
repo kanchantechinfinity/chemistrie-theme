@@ -37,11 +37,11 @@
         "pillar_JQgt3h": {
           "type": "pillar",
           "settings": {
-            "title": "Trust.",
-            "lede": "Pharmacist credibility that feels warm, not sterile.",
-            "item1": "Credentials are the proof. Love is the reason.",
-            "item2": "Every active ingredient cleared by a licensed pharmacist.",
-            "item3": "Transparency on dose, on source, on shelf-life.",
+            "title": "Pharmacist-Formulated",
+            "lede": "Every formula answers to two pharmacists, by name, not a lab Chemistrie doesn't own.",
+            "item1": "",
+            "item2": "",
+            "item3": "",
             "crest_mono": "Rx",
             "crest_sub": "",
             "image": "shopify://shop_images/high-angle-natural-cream-concept.jpg"
@@ -50,11 +50,11 @@
         "pillar_TyVrzy": {
           "type": "pillar",
           "settings": {
-            "title": "Luxury.",
-            "lede": "Aspirational, never arrogant. Every touchpoint signals prestige.",
-            "item1": "Heavy weighted glass. Hand-numbered batches.",
-            "item2": "Vellum inserts, gold-foil ritual cards.",
-            "item3": "A box you keep, not unbox.",
+            "title": "Pharmacist-Selected Sourcing",
+            "lede": "Ingredients sourced through PCCA's ExoBlue platform, chosen deliberately, never developed in-house and never claimed as Chemistrie's own technology.",
+            "item1": "",
+            "item2": "",
+            "item3": "",
             "crest_mono": "C.",
             "crest_sub": "",
             "image": "shopify://shop_images/natural-products-arrangement-top-view.jpg"
@@ -63,11 +63,11 @@
         "pillar_cCqT3t": {
           "type": "pillar",
           "settings": {
-            "title": "Warmth.",
-            "lede": "Luxury with a heartbeat. The founder story makes Chemistrie unlike anything in the category.",
-            "item1": "Two pharmacists. Husbands and fathers first.",
-            "item2": "Formulas tested on the women they love.",
-            "item3": "Personal letters in every order.",
+            "title": "Appearance-Language, Always",
+            "lede": "Every claim on this site is written to be checked, not simply believed.",
+            "item1": "",
+            "item2": "",
+            "item3": "",
             "crest_mono": "for her",
             "crest_sub": "",
             "image": "shopify://shop_images/beach-skincare-product-still-life.jpg"
@@ -81,8 +81,8 @@
       ],
       "name": "Pillars",
       "settings": {
-        "eyebrow": "— Brand Pillars —",
-        "intro_heading": "Three things we<br><em>refuse</em> to compromise.",
+        "eyebrow": "— Trust Signals —",
+        "intro_heading": "Nothing here was<br/><em>rounded up.</em>",
         "crest_style": "full"
       }
     },
