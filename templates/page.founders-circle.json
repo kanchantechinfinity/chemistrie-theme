@@ -15,6 +15,46 @@
         "hero_fallback_asset": "stock-note.jpg"
       }
     },
+    "stat-bar": {
+      "type": "stat-bar",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "6,000+",
+            "label": "Women served"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "1–2 Days",
+            "label": "Average ship time"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "★ 4.96",
+            "label": "Verified buyer rating"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "number": "200",
+            "label": "Bottles per hand-numbered batch"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {}
+    },
     "founders-circle-content": {
       "type": "founders-circle-content",
       "blocks": {
@@ -68,7 +108,15 @@
           }
         }
       },
-      "block_order": ["expression_1", "expression_2", "expression_3", "benefit_1", "benefit_2", "benefit_3", "benefit_4"],
+      "block_order": [
+        "expression_1",
+        "expression_2",
+        "expression_3",
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ],
       "settings": {}
     },
     "founders-circle-invite": {
@@ -76,5 +124,10 @@
       "settings": {}
     }
   },
-  "order": ["page-hero", "founders-circle-content", "founders-circle-invite"]
+  "order": [
+    "page-hero",
+    "stat-bar",
+    "founders-circle-content",
+    "founders-circle-invite"
+  ]
 }
