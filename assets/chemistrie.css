@@ -1678,11 +1678,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ritual__body { margin-top: 12px !important; }
 .ritual__cta { margin-top: 28px; display: inline-flex; }
 .ritual__pin {
-  height: 100vh;
+  min-height: clamp(500px, 68vh, 660px);
   overflow: hidden;
   position: relative;
   display: flex;
   align-items: center;
+  padding: 32px 0;
+  box-sizing: border-box;
 }
 .ritual__track {
   display: flex;
