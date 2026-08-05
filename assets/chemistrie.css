@@ -963,9 +963,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .pillar__title {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: clamp(56px, 8vw, 124px);
-  line-height: .95;
-  letter-spacing: -.025em;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -.015em;
   margin: 0 0 18px;
   color: var(--c-forest);
 }
@@ -2506,7 +2506,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .pillar__crest { width: 140px; height: 140px; }
   .pillar__mono { font-size: 44px; }
   .pillar__mono--script { font-size: 28px; }
-  .pillar__title { font-size: clamp(48px, 8vw, 84px); }
+  .pillar__title { font-size: clamp(28px, 5vw, 44px); }
 
   .vision__words { font-size: clamp(28px, 4.6vw, 56px); }
 
@@ -2576,7 +2576,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   }
   .pillar__index { flex-direction: row; align-items: baseline; gap: 10px; border-right: 0; padding-right: 0; }
   .pillar__num { font-size: 56px; }
-  .pillar__title { font-size: 64px; }
+  .pillar__title { font-size: 38px; }
   .pillar__lede { font-size: 17px; }
   .pillar__visual { border-top: 1px solid var(--c-line); padding-top: 24px; margin-top: 8px; }
   .pillar__crest { width: 120px; height: 120px; }
@@ -2638,7 +2638,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ── Very small phones (≤380px) ── */
 @media (max-width: 380px) {
   .hero__title { font-size: clamp(48px, 20vw, 90px); }
-  .pillar__title { font-size: 52px; }
+  .pillar__title { font-size: 30px; }
   .ritual-step { flex: 0 0 90vw; }
   .testimonial { flex: 0 0 86vw; }
 }
@@ -2737,7 +2737,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   }
   .pillar__index { flex-direction: row; align-items: baseline; gap: 12px; border-right: 0; padding: 0 0 10px; }
   .pillar__num { font-size: 50px; }
-  .pillar__title { font-size: clamp(44px, 13vw, 64px); }
+  .pillar__title { font-size: clamp(26px, 8vw, 40px); }
   .pillar__lede { font-size: 17px; }
   .pillar__visual { border-left: 0; padding: 18px 0 0; border-top: 1px solid var(--c-line); justify-content: flex-start; }
   .pillar__crest { width: 120px; height: 120px; }
