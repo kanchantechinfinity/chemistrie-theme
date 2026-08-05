@@ -11,32 +11,30 @@
     </div>
 
     <nav class="footer__col">
-      <h4>The Collection</h4>
-      <a href="{{ routes.all_products_collection_url }}">All Products</a>
-      <a href="/pages/the-ritual">The Ritual Set</a>
-      
+      <h4>Shop</h4>
+      <a href="{{ routes.all_products_collection_url }}">Collection</a>
+      <a href="/collections/all">Product Pages</a>
     </nav>
 
     <nav class="footer__col">
-      <h4>The Brand</h4>
-      <a href="/pages/our-story">Our Story</a>
+      <h4>About</h4>
       <a href="/pages/the-pharmacists">The Pharmacists</a>
       <a href="/pages/the-ritual">The Ritual</a>
-      <a href="https://chemistrie.co/">The Active Index</a>
       <a href="/pages/founders-circle">Founder's Circle</a>
     </nav>
 
     <nav class="footer__col">
-      <h4>The Journal</h4>
-      <a href="https://chemistrie.co/blogs/news">Blogs</a>
+      <h4>Support</h4>
+      <a href="/pages/contact">Contact</a>
+      <a href="/pages/faq">FAQ</a>
+      <a href="/pages/shipping-returns">Shipping</a>
+      <a href="/pages/shipping-returns">Returns</a>
     </nav>
 
     <nav class="footer__col">
-      <h4>Help</h4>
-      <a href="/pages/faq">FAQ</a>
-      <a href="/pages/shipping-returns">Shipping &amp; Returns</a>
-      <a href="/pages/contact">Contact</a>
-      <a href="/pages/accessibility">Accessibility</a>
+      <h4>Legal</h4>
+      <a href="/pages/privacy">Privacy</a>
+      <a href="/pages/terms">Terms</a>
     </nav>
 
     {%- liquid
@@ -45,22 +43,10 @@
       assign pin = settings.social_pinterest | default: section.settings.pinterest | default: '#'
       assign mail = settings.social_email | default: section.settings.email | default: 'hello@chemistrie.com'
     -%}
-    <nav class="footer__col">
-      <h4>Connect</h4>
-      <a href="{{ ig }}">Instagram</a>
-      <a href="{{ tt }}">TikTok</a>
-      <a href="{{ pin }}">Pinterest</a>
-      <a href="mailto:{{ mail }}">Email</a>
-    </nav>
   </div>
 
   <div class="footer__bot">
     <span>© Chemistrie LLC, {{ 'now' | date: '%Y' }}. Compounded with care in Houston.</span>
-    <div class="footer__legal">
-      <a href="/pages/terms">Terms</a>
-      <a href="/pages/privacy">Privacy</a>
-      <a href="/pages/accessibility">Accessibility</a>
-    </div>
     <div class="footer__social">
       <a href="{{ ig }}" aria-label="Instagram">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>

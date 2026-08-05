@@ -1942,7 +1942,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding-bottom: 56px;
   border-bottom: 1px solid rgba(249,244,237,.1);
 }
-.footer__top--5col { grid-template-columns: 1.4fr repeat(5, 1fr); }
+.footer__top--5col { grid-template-columns: 1.4fr repeat(4, 1fr); }
 @media (max-width: 900px) { .footer__top--5col { grid-template-columns: 1fr 1fr; } }
 .footer__wordmark {
   font-family: var(--ff-display);
