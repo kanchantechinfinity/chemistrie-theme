@@ -645,7 +645,7 @@
 
   /* ───── Generic section-head reveals ───── */
   if (window.ScrollTrigger) {
-    gsap.from(".pillars__intro > *", {
+    gsap.from(".pillars__intro > *:not(.pillars__cta)", {
       opacity: 0, y: 24, duration: 1, ease: "power2.out", stagger: 0.1,
       scrollTrigger: { trigger: ".pillars__intro", start: "top 84%" },
     });
