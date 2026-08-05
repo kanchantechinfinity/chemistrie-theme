@@ -2266,6 +2266,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 @media (max-width: 900px) {
   .story__chapters::before { left: 24px; }
+  .story__chapters::after { left: 24px; width: 2px; transform: scaleY(var(--p, 0)); }
+  .story__chapters .story__rail-dot { left: 24px; }
   .story__chapter,
   .story__chapter--reverse {
     grid-template-columns: 48px 1fr;
@@ -2826,6 +2828,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
   /* Brand Story */
   .story__chapters::before { left: 18px; }
+  .story__chapters::after { left: 18px; width: 2px; }
+  .story__chapters .story__rail-dot { left: 18px; }
   .story__chapter, .story__chapter--reverse { grid-template-columns: 40px 1fr !important; gap: 18px !important; }
   .story__chapter > .story__chapter-body,
   .story__chapter--reverse > .story__chapter-body { order: 3; grid-column: 2; padding: 0 !important; text-align: left !important; align-items: flex-start !important; }
