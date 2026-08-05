@@ -19,30 +19,6 @@
         "hero_fallback_asset": "stock-lab.jpg"
       }
     },
-    "stat-bar": {
-      "type": "stat-bar",
-      "blocks": {
-        "s1": {
-          "type": "stat",
-          "settings": {
-            "number": "2",
-            "label": "Founding pharmacists"
-          }
-        },
-        "s2": {
-          "type": "stat",
-          "settings": {
-            "number": "2011",
-            "label": "Where the bench started"
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2"
-      ],
-      "settings": {}
-    },
     "pharmacists-profiles": {
       "type": "pharmacists-profiles",
       "blocks": {
@@ -155,7 +131,6 @@
   },
   "order": [
     "page-hero",
-    "stat-bar",
     "pharmacists-profiles",
     "pharmacists-credentials",
     "page-cta"
