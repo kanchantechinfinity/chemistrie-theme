@@ -32,22 +32,14 @@
         "s2": {
           "type": "stat",
           "settings": {
-            "number": "6+ Yrs",
-            "label": "Behind the bench"
-          }
-        },
-        "s3": {
-          "type": "stat",
-          "settings": {
-            "number": "12",
-            "label": "Formulas brought to life"
+            "number": "2011",
+            "label": "Where the bench started"
           }
         }
       },
       "block_order": [
         "s1",
-        "s2",
-        "s3"
+        "s2"
       ],
       "settings": {}
     },
@@ -150,42 +142,8 @@
     },
     "pharmacists-philosophy": {
       "type": "pharmacists-philosophy",
-      "blocks": {
-        "value_1": {
-          "type": "value",
-          "settings": {
-            "title": "Efficacy before fashion",
-            "body": "We choose the active that works at the concentration that works — not the one trending this season. Pharmacy asks a single question: will it do what the label says?"
-          }
-        },
-        "value_2": {
-          "type": "value",
-          "settings": {
-            "title": "Honest to the milligram",
-            "body": "Every concentration is printed exactly as compounded. A pharmacist would never round a dose for a patient, so we never round one for you."
-          }
-        },
-        "value_3": {
-          "type": "value",
-          "settings": {
-            "title": "Small batches, always fresh",
-            "body": "Actives degrade on a shelf. We compound in runs capped at 200 bottles so nothing you receive has sat waiting — the pharmacist's habit of dispensing fresh, kept intact."
-          }
-        },
-        "value_4": {
-          "type": "value",
-          "settings": {
-            "title": "Formulated for a real face",
-            "body": "Each formula began as a request from someone the founders knew. Nothing ships until it earns a place in a ritual they would hand to the people they love."
-          }
-        }
-      },
-      "block_order": [
-        "value_1",
-        "value_2",
-        "value_3",
-        "value_4"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {}
     },
     "page-cta": {
@@ -204,7 +162,6 @@
     "stat-bar",
     "pharmacists-profiles",
     "pharmacists-credentials",
-    "pharmacists-philosophy",
     "page-cta"
   ]
 }
