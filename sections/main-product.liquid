@@ -28,8 +28,6 @@
 {%- case pd_key -%}
   {%- when 'velvet' -%}
     {%- assign pd_eyebrow = 'Chemistrie Essentials' -%}
-    {%- assign pd_subheadline = 'Foaming Facial Cleanser' -%}
-    {%- capture pd_descriptor -%}A rich, foaming cleanser formulated to remove makeup, sunscreen, and the day itself, so everything that follows can do its job.{%- endcapture -%}
     {%- assign pd_routine_am = 'Velvet (Cleanse) → Veil (Treat) → Cashmere (Moisturize) → Your Own SPF (Protect)' -%}
     {%- assign pd_routine_pm = 'Velvet (Cleanse) → Veil (Treat) → Aura (Renew)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -53,8 +51,6 @@
     </ol>{%- endcapture -%}
   {%- when 'veil' -%}
     {%- assign pd_eyebrow = 'Chemistrie Essentials' -%}
-    {%- assign pd_subheadline = 'Weightless Hydrating Serum' -%}
-    {%- capture pd_descriptor -%}A featherlight solution that settles into skin like a veil, hydration without a single ounce of weight, morning and evening.{%- endcapture -%}
     {%- assign pd_routine_am = 'Velvet (Cleanse) → Veil (Treat) → Cashmere (Moisturize) → Your Own SPF (Protect)' -%}
     {%- assign pd_routine_pm = 'Velvet (Cleanse) → Veil (Treat) → Aura (Renew)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -80,8 +76,6 @@
     </ol>{%- endcapture -%}
   {%- when 'aura' -%}
     {%- assign pd_eyebrow = 'Chemistrie Signature' -%}
-    {%- assign pd_subheadline = 'Advanced Renewal Cream' -%}
-    {%- capture pd_descriptor -%}A silky, fragrance-free moisturizer formulated around a pharmacist-selected peptide complex, for skin that looks and feels quietly renewed.{%- endcapture -%}
     {%- assign pd_routine_am = blank -%}
     {%- assign pd_routine_pm = 'Velvet (Cleanse) → Veil (Treat) → Aura (Renew)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -105,8 +99,6 @@
     </ol>{%- endcapture -%}
   {%- when 'cashmere' -%}
     {%- assign pd_eyebrow = 'Chemistrie Essentials' -%}
-    {%- assign pd_subheadline = 'Lightweight Hydrating Lotion' -%}
-    {%- capture pd_descriptor -%}A lightweight, fast-absorbing lotion formulated for effortless daily hydration, layers cleanly under sunscreen and makeup, morning and evening.{%- endcapture -%}
     {%- assign pd_routine_am = 'Velvet → Veil → Cashmere → Your Own SPF' -%}
     {%- assign pd_routine_pm = 'Velvet → Veil → Aura (Cashmere may also be layered in the evening if additional hydration is desired.)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -130,8 +122,6 @@
     </ol>{%- endcapture -%}
   {%- when 'silken' -%}
     {%- assign pd_eyebrow = 'Chemistrie Precision' -%}
-    {%- assign pd_subheadline = 'Scar Refining Gel' -%}
-    {%- capture pd_descriptor -%}A quiet, precise ritual for the skin you're rebuilding trust with.{%- endcapture -%}
     {%- assign pd_routine_am = 'Velvet → Veil → Cashmere → Your Own SPF (apply Silken to targeted areas after Veil and before moisturizer)' -%}
     {%- assign pd_routine_pm = 'Velvet → Veil → Aura (apply Silken to targeted areas after Veil and before moisturizer)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -201,26 +191,21 @@
         {%- if pd_eyebrow != blank or product.type != blank -%}
           <span class="eyebrow mprod__eyebrow">{{ pd_eyebrow | default: product.type }}</span>
         {%- endif -%}
-        <h1 class="display-h mprod__title">{{ product.title | split: '-' | first | strip }}</h1>
-        {%- if pd_subheadline != blank -%}
-          <p class="mprod__subheadline">{{ pd_subheadline }}</p>
-        {%- endif -%}
+        <h1 class="display-h mprod__title">{{ product.title }}</h1>
 
-        {%- if pd_descriptor != blank -%}
-          <p class="mprod__benefit">{{ pd_descriptor }}</p>
-        {%- elsif benefit != blank -%}
+        {%- if benefit != blank -%}
           <p class="mprod__benefit">{{ benefit }}</p>
         {%- endif -%}
 
         {%- if product.metafields.reviews.rating != blank -%}
-          <div class="mprod__rating">
-            <span class="mprod__rating-stars" aria-hidden="true">★★★★★</span>
-            <span class="mprod__rating-val">{{ product.metafields.reviews.rating.value }}</span>
-            {%- if product.metafields.reviews.rating_count != blank -%}
-              <span class="mprod__rating-count">({{ product.metafields.reviews.rating_count }} reviews)</span>
-            {%- endif -%}
-            <a href="#mprod-reviews" class="mprod__rating-link">Read reviews ↓</a>
-          </div>
+        <div class="mprod__rating">
+          <span class="mprod__rating-stars" aria-hidden="true">★★★★★</span>
+          <span class="mprod__rating-val">{{ product.metafields.reviews.rating.value }}</span>
+          {%- if product.metafields.reviews.rating_count != blank -%}
+            <span class="mprod__rating-count">({{ product.metafields.reviews.rating_count }} reviews)</span>
+          {%- endif -%}
+          <a href="#mprod-reviews" class="mprod__rating-link">Read reviews ↓</a>
+        </div>
         {%- endif -%}
 
         <div class="mprod__price">
@@ -228,6 +213,11 @@
           {%- if product.compare_at_price > product.price -%}
             <s class="mprod__price-was">{{ product.compare_at_price | money }}</s>
           {%- endif -%}
+        </div>
+
+        <div class="mprod__viewers">
+          <span class="mprod__viewers-dot" aria-hidden="true"></span>
+          <span><strong>28</strong> people are viewing this right now</span>
         </div>
 
         {%- form 'product', product, id: 'mprod-form', class: 'mprod__form' -%}
@@ -257,11 +247,10 @@
           </div>
 
           <div class="mprod__row mprod__row--actions">
-            {%- assign pd_clean_name = product.title | split: '-' | first | strip -%}
             {%- if product.available -%}
-              <button type="submit" name="add" class="btn btn--primary mprod__add" aria-label="Add {{ pd_clean_name }} to cart">Add to Ritual</button>
+              <button type="submit" name="add" class="btn btn--primary mprod__add" aria-label="Add {{ product.title | split: '-' | first | strip }} to cart">Add to Ritual</button>
             {%- else -%}
-              <button type="submit" name="add" class="btn btn--primary mprod__add" disabled aria-label="{{ pd_clean_name }} is out of stock">Sold Out</button>
+              <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
             {%- endif -%}
 
             <button class="wish-btn mprod__wish" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ cv.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
@@ -380,8 +369,7 @@
 .mprod__gallery { position: sticky; top: 100px; align-self: start; }
 .mprod__buy { align-self: start; }
 .mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
-.mprod__title { margin: 0 0 6px; }
-.mprod__subheadline { font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--c-ink-mute); margin: 0 0 18px; }
+.mprod__title { margin: 0 0 16px; }
 .mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: none; }
 
 .mprod__rating { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; font-size: 13px; color: var(--c-ink-mute); }
