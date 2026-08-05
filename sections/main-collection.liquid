@@ -84,6 +84,30 @@
         {%- if col.products.size > 0 -%}
           <div class="col-grid">
             {%- for product in col.products -%}
+              {%- liquid
+                assign _pt = product.title | downcase
+                assign _ph = product.handle | downcase
+                assign card_name = product.title | split: '-' | first | strip
+                if _ph contains 'velvet' or _pt contains 'velvet'
+                  assign card_role = 'Cleanse'
+                  assign card_copy = 'The step that makes everything after it work harder.'
+                elsif _ph contains 'veil' or _pt contains 'veil'
+                  assign card_role = 'Treat'
+                  assign card_copy = 'A featherlight solution that settles into skin like a veil, hydration without a single ounce of weight.'
+                elsif _ph contains 'cashmere' or _pt contains 'cashmere'
+                  assign card_role = 'Hydrate'
+                  assign card_copy = 'Effortless hydration, worn every day without a second thought.'
+                elsif _ph contains 'aura' or _pt contains 'aura'
+                  assign card_role = 'Renew'
+                  assign card_copy = 'The signature renewal cream, formulated around a pharmacist-selected peptide complex, for skin that looks and feels quietly renewed.'
+                elsif _ph contains 'silken' or _pt contains 'silken'
+                  assign card_role = 'Refine'
+                  assign card_copy = 'A precise, everyday ritual for the areas of skin that deserve focused attention.'
+                else
+                  assign card_role = blank
+                  assign card_copy = product.description | strip_html | truncatewords: 20
+                endif
+              -%}
               <article class="pcard">
                 <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
@@ -98,27 +122,18 @@
                     <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy" class="pcard__ph">
                     {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
                   {%- endif -%}
-                  {%- if product.tags contains 'Bestseller' -%}
-                    <span class="pcard__badge">Bestseller</span>
-                  {%- elsif product.tags contains 'New' -%}
-                    <span class="pcard__badge">New</span>
+                  {%- if card_role != blank -%}
+                    <span class="pcard__badge">{{ card_role | upcase }}</span>
                   {%- endif -%}
                 </a>
                 <div class="pcard__body">
                   <div class="pcard__row">
-                    <a class="pcard__name" href="{{ product.url }}">{{ product.title }}</a>
+                    <a class="pcard__name" href="{{ product.url }}">{{ card_name }}</a>
                     <span class="pcard__price">{{ product.price | money }}</span>
                   </div>
-                  {%- if product.type != blank -%}
-                    <span class="pcard__type">{{ product.type }}</span>
-                  {%- endif -%}
+                  <p class="pcard__copy">{{ card_copy }}</p>
                   {%- if product.available -%}
-                    <button
-                      class="pcard__btn product__cta"
-                      type="button"
-                      data-product-id="{{ product.selected_or_first_available_variant.id }}">
-                      Add to Cart
-                    </button>
+                    <a class="pcard__btn product__cta" href="{{ product.url }}">View {{ card_name }} →</a>
                   {%- else -%}
                     <span class="pcard__btn pcard__btn--soldout">Sold Out</span>
                   {%- endif -%}

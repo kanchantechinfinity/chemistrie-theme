@@ -67,7 +67,8 @@
 .pcard__name { font-family: var(--ff-display); font-size: 20px; font-weight: 500; }
 .pcard__price { font-size: 14px; color: var(--c-ink-soft); white-space: nowrap; }
 .pcard__type { font-size: 12px; letter-spacing: .08em; color: var(--c-ink-mute); text-transform: uppercase; }
-.pcard__btn { margin-top: auto; width: 100%; padding: 13px; background: var(--c-forest); color: var(--c-cream); border-radius: 8px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-align: center; transition: background .3s; }
+.pcard__copy { font-size: 14px; line-height: 1.6; color: var(--c-ink-soft); margin: 2px 0 4px; }
+.pcard__btn { display: block; margin-top: auto; width: 100%; padding: 13px; background: var(--c-forest); color: var(--c-cream); border-radius: 8px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-align: center; text-decoration: none; transition: background .3s; }
 .pcard__btn:hover { background: var(--c-forest-2); }
 .pcard__btn[disabled], .pcard__btn--soldout { background: var(--c-sage); cursor: default; opacity: .8; }
 

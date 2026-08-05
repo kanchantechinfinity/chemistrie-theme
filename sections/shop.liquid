@@ -207,13 +207,37 @@
 
     {% else %}
       {% for product in section.settings.collection.products limit: 6 %}
+      {%- liquid
+        assign _pt = product.title | downcase
+        assign _ph = product.handle | downcase
+        assign card_name = product.title | split: '-' | first | strip
+        if _ph contains 'velvet' or _pt contains 'velvet'
+          assign card_role = 'Cleanse'
+          assign card_copy = 'The step that makes everything after it work harder.'
+        elsif _ph contains 'veil' or _pt contains 'veil'
+          assign card_role = 'Treat'
+          assign card_copy = 'A featherlight solution that settles into skin like a veil, hydration without a single ounce of weight.'
+        elsif _ph contains 'cashmere' or _pt contains 'cashmere'
+          assign card_role = 'Hydrate'
+          assign card_copy = 'Effortless hydration, worn every day without a second thought.'
+        elsif _ph contains 'aura' or _pt contains 'aura'
+          assign card_role = 'Renew'
+          assign card_copy = 'The signature renewal cream, formulated around a pharmacist-selected peptide complex, for skin that looks and feels quietly renewed.'
+        elsif _ph contains 'silken' or _pt contains 'silken'
+          assign card_role = 'Refine'
+          assign card_copy = 'A precise, everyday ritual for the areas of skin that deserve focused attention.'
+        else
+          assign card_role = blank
+          assign card_copy = product.description | strip_html | truncatewords: 20
+        endif
+      -%}
       <article class="product" data-color="forest">
         <a class="product__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
         <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>
         <div class="product__media">
-          <span class="product__tag">
-            {% if forloop.first %}No. 01 · Bestseller{% else %}No. 0{{ forloop.index }}{% endif %}
-          </span>
+          {%- if card_role != blank -%}
+            <span class="product__tag">{{ card_role | upcase }}</span>
+          {%- endif -%}
           {%- if product.featured_image -%}
             <img class="product__photo" src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
             {%- if product.images.size > 1 -%}
@@ -236,18 +260,12 @@
         <div class="product__meta">
           <div class="product__meta-top">
             <div>
-              <h3>{{ product.title }}</h3>
-              <p>
-                {%- if product.metafields.custom.subtitle != blank -%}
-                  {{ product.metafields.custom.subtitle }}
-                {%- else -%}
-                  {{ product.description | strip_html | truncatewords: 6 }}
-                {%- endif -%}
-              </p>
+              <h3>{{ card_name }}</h3>
+              <p>{{ card_copy }}</p>
             </div>
             <span class="product__price">{{ product.price | money }}</span>
           </div>
-          <button class="product__cta" data-product-id="{{ product.selected_or_first_available_variant.id }}" type="button">Add to Cart</button>
+          <a class="product__cta" href="{{ product.url }}">View {{ card_name }} →</a>
         </div>
       </article>
       {% endfor %}
@@ -281,7 +299,7 @@
   "settings": [
     { "type": "html", "id": "heading", "label": "Heading", "default": "" },
     { "type": "textarea", "id": "lede", "label": "Lede", "default": "" },
-    { "type": "text", "id": "foot_link_label", "label": "Footer link label", "default": "Explore the full apothecary" },
+    { "type": "text", "id": "foot_link_label", "label": "Footer link label", "default": "Explore the Full Collection" },
     { "type": "collection", "id": "collection", "label": "Collection" }
   ],
   "presets": [
