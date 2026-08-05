@@ -9,25 +9,10 @@
     </div>
   </div>
 
-  <!-- Top meta -->
-  <div class="hero__meta hero__meta--left">
-    <span class="hero__live"><span class="hero__live-dot"></span>{{ section.settings.live_text }}</span>
-  </div>
-  <div class="hero__meta hero__meta--right">
-    <span>{{ section.settings.meta_location }}</span>
-    <span class="dot"></span>
-    <span>{{ section.settings.meta_volume }}</span>
-  </div>
-
   <!-- Main split -->
   <div class="hero__inner">
     <!-- Left: copy -->
     <div class="hero__copy">
-      <p class="hero__eyebrow">
-        <span class="hero__eyebrow-line"></span>
-        <span>{{ section.settings.eyebrow }}</span>
-      </p>
-
       <h1 class="hero__title" aria-label="{{ section.settings.title_aria }}">
         <span class="hero__title-row">
           <span class="hero__title-word">{{ section.settings.title_word_1 }}</span>
@@ -49,12 +34,6 @@
         <a class="hero__cta-primary" href="{{ section.settings.cta_primary_link }}">
           <span>{{ section.settings.cta_primary_label }}</span>
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a class="hero__cta-secondary" href="{{ section.settings.cta_secondary_link }}">
-          <span class="hero__cta-icon">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </span>
-          <span>{{ section.settings.cta_secondary_label }}</span>
         </a>
       </div>
 
@@ -79,13 +58,6 @@
 
     <!-- Right: visual stage -->
     <div class="hero__stage">
-      <!-- Floating spec card -->
-      <div class="hero__spec-card hero__spec-card--top">
-        <span class="hero__spec-label">{{ section.settings.spec_top_label }}</span>
-        <span class="hero__spec-value">{{ section.settings.spec_top_value }}</span>
-        <span class="hero__spec-meta">{{ section.settings.spec_top_meta }}</span>
-      </div>
-
       <!-- Center bottle -->
       <div class="hero__bottle-wrap">
         <div class="hero__bottle-glow"></div>
@@ -132,37 +104,6 @@
         <!-- bottle shadow -->
         <div class="hero__bottle-shadow"></div>
       </div>
-
-      <!-- Floating ingredient pills -->
-      <div class="hero__pills">
-        <span class="hero__pill hero__pill--1">{{ section.settings.pill_1 }}</span>
-        <span class="hero__pill hero__pill--2">{{ section.settings.pill_2 }}</span>
-        <span class="hero__pill hero__pill--3">{{ section.settings.pill_3 }}</span>
-      </div>
-
-      <!-- Tag bottom right -->
-      <div class="hero__spec-card hero__spec-card--bottom">
-        <span class="hero__spec-mini">{{ section.settings.spec_bottom_mini }}</span>
-        <span class="hero__spec-rx">{{ section.settings.spec_bottom_rx }}</span>
-      </div>
-
-      <!-- Decorative numbers -->
-      <span class="hero__deco hero__deco--01">{{ section.settings.deco_01 }}</span>
-      <span class="hero__deco hero__deco--ed">{{ section.settings.deco_ed }}</span>
-    </div>
-  </div>
-
-  <!-- Bottom strip -->
-  <div class="hero__strip">
-    <div class="hero__strip-marquee">
-      <span>{{ section.settings.marquee_1 }}</span><i>✦</i>
-      <span>{{ section.settings.marquee_2 }}</span><i>✦</i>
-      <span>{{ section.settings.marquee_3 }}</span><i>✦</i>
-      <span>{{ section.settings.marquee_4 }}</span><i>✦</i>
-      <span>{{ section.settings.marquee_1 }}</span><i>✦</i>
-      <span>{{ section.settings.marquee_2 }}</span><i>✦</i>
-      <span>{{ section.settings.marquee_3 }}</span><i>✦</i>
-      <span>{{ section.settings.marquee_4 }}</span><i>✦</i>
     </div>
   </div>
 
@@ -177,30 +118,6 @@
 {
   "name": "Hero",
   "settings": [
-    {
-      "type": "text",
-      "id": "live_text",
-      "label": "Live indicator text",
-      "default": "A pharmacist is on the line"
-    },
-    {
-      "type": "text",
-      "id": "meta_location",
-      "label": "Meta location",
-      "default": "Houston · 29.76°N"
-    },
-    {
-      "type": "text",
-      "id": "meta_volume",
-      "label": "Meta volume",
-      "default": "Vol. III · 2026"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "A Pharmacist's Quiet Luxury"
-    },
     {
       "type": "text",
       "id": "title_aria",
@@ -235,31 +152,19 @@
       "type": "textarea",
       "id": "deck",
       "label": "Deck paragraph",
-      "default": "Compounded by hand in Houston. Twelve formulas, two hundred bottles a batch, retired the moment the batch is poured. Welcome to the bench."
+      "default": "A quiet standard, applied every morning."
     },
     {
       "type": "text",
       "id": "cta_primary_label",
       "label": "Primary CTA label",
-      "default": "Begin the consultation"
+      "default": "Explore the Collection"
     },
     {
       "type": "text",
       "id": "cta_primary_link",
       "label": "Primary CTA link",
       "default": "#shop"
-    },
-    {
-      "type": "text",
-      "id": "cta_secondary_label",
-      "label": "Secondary CTA label",
-      "default": "Watch the bench film · 2:14"
-    },
-    {
-      "type": "text",
-      "id": "cta_secondary_link",
-      "label": "Secondary CTA link",
-      "default": "#instagram"
     },
     {
       "type": "text",
@@ -305,94 +210,6 @@
       "type": "image_picker",
       "id": "bottle_image",
       "label": "Bottle image (optional — replaces inline SVG)"
-    },
-    {
-      "type": "text",
-      "id": "spec_top_label",
-      "label": "Top spec label",
-      "default": "Tonight's batch"
-    },
-    {
-      "type": "text",
-      "id": "spec_top_value",
-      "label": "Top spec value",
-      "default": "N°027"
-    },
-    {
-      "type": "text",
-      "id": "spec_top_meta",
-      "label": "Top spec meta",
-      "default": "of 200 · poured at 4:42pm CT"
-    },
-    {
-      "type": "text",
-      "id": "pill_1",
-      "label": "Pill 1",
-      "default": "Retinaldehyde 0.05%"
-    },
-    {
-      "type": "text",
-      "id": "pill_2",
-      "label": "Pill 2",
-      "default": "Niacinamide 4%"
-    },
-    {
-      "type": "text",
-      "id": "pill_3",
-      "label": "Pill 3",
-      "default": "Ferulic · Hyaluronic"
-    },
-    {
-      "type": "text",
-      "id": "spec_bottom_mini",
-      "label": "Bottom spec text",
-      "default": "Hand-numbered · pharmacist-signed"
-    },
-    {
-      "type": "text",
-      "id": "spec_bottom_rx",
-      "label": "Bottom spec badge",
-      "default": "Rx"
-    },
-    {
-      "type": "text",
-      "id": "deco_01",
-      "label": "Decorative number (left)",
-      "default": "— 01"
-    },
-    {
-      "type": "text",
-      "id": "deco_ed",
-      "label": "Decorative number (right)",
-      "default": "N°II · ED"
-    },
-    {
-      "type": "header",
-      "content": "Marquee & scroll"
-    },
-    {
-      "type": "text",
-      "id": "marquee_1",
-      "label": "Marquee item 1",
-      "default": "Compounded in Houston"
-    },
-    {
-      "type": "text",
-      "id": "marquee_2",
-      "label": "Marquee item 2",
-      "default": "Made for the women we love"
-    },
-    {
-      "type": "text",
-      "id": "marquee_3",
-      "label": "Marquee item 3",
-      "default": "Hand-numbered batches"
-    },
-    {
-      "type": "text",
-      "id": "marquee_4",
-      "label": "Marquee item 4",
-      "default": "Pharmaceutical-grade actives"
     },
     {
       "type": "text",

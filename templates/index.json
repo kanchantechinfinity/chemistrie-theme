@@ -13,10 +13,6 @@
       "type": "hero",
       "name": "Hero",
       "settings": {
-        "live_text": "A pharmacist is on the line",
-        "meta_location": "Houston · 29.76°N",
-        "meta_volume": "Vol. III · 2026",
-        "eyebrow": "A Pharmacist's Quiet Luxury",
         "title_aria": "Some rituals don't need reinventing. They need to be done well.",
         "title_word_1": "Some rituals",
         "title_em_1": "don't need reinventing.",
@@ -25,8 +21,6 @@
         "deck": "A quiet standard, applied every morning.",
         "cta_primary_label": "Explore the Collection",
         "cta_primary_link": "#shop",
-        "cta_secondary_label": "Watch the bench film · 2:14",
-        "cta_secondary_link": "#instagram",
         "trust1_num": "2,400+",
         "trust1_label": "Women on the list",
         "trust2_num": "28",
@@ -34,20 +28,6 @@
         "trust3_num": "★ 4.96",
         "trust3_label": "Verified buyer rating",
         "bottle_image": "shopify://shop_images/dda85c0a-53f5-4881-bc23-c9d3314d64c7-removebg-preview_1_4000x4000_27444232-7a22-43d1-940f-5df673f489c4.png",
-        "spec_top_label": "Tonight's batch",
-        "spec_top_value": "N°027",
-        "spec_top_meta": "of 200 · poured at 4:42pm CT",
-        "pill_1": "Retinaldehyde 0.05%",
-        "pill_2": "Niacinamide 4%",
-        "pill_3": "Ferulic · Hyaluronic",
-        "spec_bottom_mini": "Hand-numbered · pharmacist-signed",
-        "spec_bottom_rx": "Rx",
-        "deco_01": "— 01",
-        "deco_ed": "N°II · ED",
-        "marquee_1": "Compounded in Houston",
-        "marquee_2": "Made for the women we love",
-        "marquee_3": "Hand-numbered batches",
-        "marquee_4": "Pharmaceutical-grade actives",
         "scroll_label": "Scroll"
       }
     },
@@ -402,50 +382,6 @@
         "lede": "Built to layer, not to compete with itself. Morning and evening, in the same order, for as long as it takes to stop feeling like a decision."
       }
     },
-    "testimonials_dVdUH3": {
-      "type": "testimonials",
-      "blocks": {
-        "quote_nbUbAa": {
-          "type": "quote",
-          "settings": {
-            "quote": "I have been a dermatology nurse for nineteen years. This is the first brand I trust on my own daughter's face.",
-            "attribution": "— Marisol R., Houston, TX · Verified Buyer"
-          }
-        },
-        "quote_PBKRJM": {
-          "type": "quote",
-          "settings": {
-            "quote": "The pharmacist wrote me back personally about my redness. I bought three more bottles that afternoon.",
-            "attribution": "— Priya S., Austin, TX · Verified Buyer"
-          }
-        },
-        "quote_fQqrmq": {
-          "type": "quote",
-          "settings": {
-            "quote": "Heavy glass. Numbered batch. A handwritten card. I keep the box on my dresser.",
-            "attribution": "— Linnea H., Dallas, TX · Verified Buyer"
-          }
-        },
-        "quote_xeN8zh": {
-          "type": "quote",
-          "settings": {
-            "quote": "Made by pharmacists, made with love — finally a tagline that delivers on the bottle, too.",
-            "attribution": "— Camille D., New Orleans, LA · Verified Buyer"
-          }
-        }
-      },
-      "block_order": [
-        "quote_nbUbAa",
-        "quote_PBKRJM",
-        "quote_fQqrmq",
-        "quote_xeN8zh"
-      ],
-      "name": "Testimonials",
-      "settings": {
-        "eyebrow": "— In Her Words —",
-        "heading": "Women who <em>knew</em> better.<br>And chose us anyway."
-      }
-    },
     "story_88GJLB": {
       "type": "story",
       "name": "Brand Story",
@@ -465,11 +401,11 @@
       "type": "instagram",
       "name": "Instagram",
       "settings": {
-        "eyebrow": "— The Bench, on Instagram —",
         "heading": "Follow the<br><em>Formulary.</em>",
+        "sub": "Behind-the-scenes formulation notes, the founders' letters, and the earliest look at what's next.",
+        "empty_copy": "Customer moments will appear here once there are real ones to share. Not before.",
+        "cta_label": "Follow on Instagram",
         "instagram_url": "",
-        "handle": "@chemistrie.co",
-        "follower_count": "21.4k",
         "feed_embed": ""
       }
     },
@@ -491,7 +427,6 @@
     "actives_WHF8yt",
     "proof_iDTz9Y",
     "ritual_raGNG4",
-    "testimonials_dVdUH3",
     "story_88GJLB",
     "instagram_GV7ThA",
     "newsletter_cta_bQgTWH"
