@@ -191,7 +191,12 @@
         {%- if pd_eyebrow != blank or product.type != blank -%}
           <span class="eyebrow mprod__eyebrow">{{ pd_eyebrow | default: product.type }}</span>
         {%- endif -%}
-        <h1 class="display-h mprod__title">{{ product.title }}</h1>
+        <h1 class="display-h mprod__title">{{ product.title | split: '—' | first | strip }}</h1>
+
+        {%- assign pd_subheadline = mf.subheadline | default: product.title | split: '—' | last | strip -%}
+        {%- if pd_subheadline != blank -%}
+          <p class="mprod__subhead">{{ pd_subheadline }}</p>
+        {%- endif -%}
 
         {%- if benefit != blank -%}
           <p class="mprod__benefit">{{ benefit }}</p>
@@ -248,7 +253,7 @@
 
           <div class="mprod__row mprod__row--actions">
             {%- if product.available -%}
-              <button type="submit" name="add" class="btn btn--primary mprod__add" aria-label="Add {{ product.title | split: '-' | first | strip }} to cart">Add to Ritual</button>
+              <button type="submit" name="add" class="btn btn--primary mprod__add" aria-label="Add {{ product.title | split: '—' | first | strip }} to cart">Add to Ritual</button>
             {%- else -%}
               <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
             {%- endif -%}
@@ -369,7 +374,8 @@
 .mprod__gallery { position: sticky; top: 100px; align-self: start; }
 .mprod__buy { align-self: start; }
 .mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
-.mprod__title { margin: 0 0 16px; }
+.mprod__title { margin: 0 0 8px; }
+.mprod__subhead { font-family: var(--ff-body); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 16px; }
 .mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: none; }
 
 .mprod__rating { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; font-size: 13px; color: var(--c-ink-mute); }

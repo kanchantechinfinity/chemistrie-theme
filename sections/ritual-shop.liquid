@@ -13,7 +13,7 @@
         {%- liquid
           assign _pt = product.title | downcase
           assign _ph = product.handle | downcase
-          assign card_name = product.title | split: '-' | first | strip
+          assign card_name = product.title | split: '—' | first | strip
           if _ph contains 'velvet' or _pt contains 'velvet'
             assign card_role = 'Cleanse'
             assign card_copy = 'The step that makes everything after it work harder.'
