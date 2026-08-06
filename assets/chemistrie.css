@@ -2783,7 +2783,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
   /* Bring bottle up into the top-right corner, tucked behind the copy (size unchanged, ok to crop) */
   .hero__inner { position: relative; }
-  .hero__stage { position: absolute !important; top: -8px !important; right: -70px !important; margin: 0 !important; z-index: 1; pointer-events: none; }
+  .hero__stage { position: absolute !important; top: -8px !important; right: -230px !important; margin: 0 !important; z-index: 1; pointer-events: none; }
   .hero__copy { position: relative; z-index: 2; }
 }
 
