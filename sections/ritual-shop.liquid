@@ -5,6 +5,8 @@
       <h2 class="display-h">{{ section.settings.heading }}</h2>
     </div>
 
+    <div class="rshop__rail-wrap">
+    <div class="rshop__rail">
     <div class="rshop__grid">
       {%- if section.settings.collection != blank -%}
         {%- for product in section.settings.collection.products limit: 5 -%}
@@ -89,6 +91,8 @@
         {%- endfor -%}
       {%- endif -%}
     </div>
+    </div>
+    </div>
 
     <div class="rshop__foot">
       <a class="rshop__pdf" href="{{ section.settings.pdf_url | default: '#' }}">Download the Ritual Card (PDF) →</a>
@@ -110,16 +114,29 @@
 .ritual-shop .product:hover .product__photo--alt { opacity: 1; }
 .ritual-shop .product__meta-top > div { min-width: 0; flex: 1; }
 .ritual-shop .product__meta h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.rshop__grid {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: clamp(14px, 1.6vw, 22px);
+.rshop__rail-wrap {
+  margin: 0 calc(var(--pad-x) * -1);
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent 0, black 2%, black 98%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 2%, black 98%, transparent 100%);
 }
-.rshop__foot { margin-top: clamp(40px, 5vw, 64px); display: flex; flex-direction: column; gap: 10px; }
+.rshop__rail {
+  display: flex;
+  gap: clamp(14px, 1.6vw, 22px);
+  padding: 8px var(--pad-x) 28px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--pad-x);
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
+}
+.rshop__rail::-webkit-scrollbar { display: none; }
+.rshop__grid { display: contents; }
+.rshop__rail .product { flex: 0 0 300px; width: 300px; scroll-snap-align: start; }
+.rshop__foot { margin-top: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 10px; }
 .rshop__pdf { align-self: flex-start; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-tan); padding-bottom: 3px; transition: color .3s; }
 .rshop__pdf:hover { color: var(--c-tan); }
 .rshop__caption { font-size: 14px; line-height: 1.6; color: rgba(26,58,45,.65); max-width: 52ch; margin: 0; }
-@media (max-width: 1000px) { .rshop__grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 640px) { .rshop__grid { grid-template-columns: 1fr 1fr; } }
 {% endstylesheet %}
 
 {% schema %}

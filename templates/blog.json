@@ -1,7 +1,14 @@
 {
   "sections": {
     "journal-hero": { "type": "journal-hero" },
-    "journal-grid": { "type": "journal-grid" }
+    "journal-grid": { "type": "journal-grid" },
+    "newsletter-cta": {
+      "type": "newsletter-cta",
+      "settings": {
+        "eyebrow": "— Letters from the Bench —",
+        "heading": "Notes from<br/><em>the lab.</em>"
+      }
+    }
   },
-  "order": ["journal-hero", "journal-grid"]
+  "order": ["journal-hero", "journal-grid", "newsletter-cta"]
 }
