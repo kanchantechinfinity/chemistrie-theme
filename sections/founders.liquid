@@ -1,5 +1,13 @@
 <!-- ───── Founder story ───── -->
 <section class="founders" id="founders" data-screen-label="05 Founders">
+  <div class="founders__head">
+    <span class="eyebrow">— The Pharmacists —</span>
+    <h2 class="display-h">{{ section.settings.heading }}</h2>
+    <p class="founders__lede">
+      {{ section.settings.lede }}
+    </p>
+  </div>
+
   <div class="founders__media">
     <div class="founders__photo founders__photo--a">
       {% if section.settings.founder1_image != blank %}
@@ -23,12 +31,7 @@
     </div>
   </div>
 
-  <div class="founders__copy">
-    <span class="eyebrow">— The Pharmacists —</span>
-    <h2 class="display-h">{{ section.settings.heading }}</h2>
-    <p class="founders__lede">
-      {{ section.settings.lede }}
-    </p>
+  <div class="founders__body">
     <p>
       {{ section.settings.paragraph1 }}
     </p>
