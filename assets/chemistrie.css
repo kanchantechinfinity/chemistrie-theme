@@ -2645,9 +2645,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .founders__head { order: 1; }
   .founders__media { order: 2; margin: 8px 0; }
   .founders__body { order: 3; }
-  .founders__media { min-height: 340px; }
-  .founders__photo--a { width: 55%; height: 50%; top: 0; left: 0; }
-  .founders__photo--b { width: 46%; height: 42%; top: auto; bottom: 0; left: auto; right: 6%; }
+  .founders__media { min-height: 260px; }
+  .founders__photo--a { width: 58%; height: 60%; top: 0; left: 0; }
+  .founders__photo--b { width: 50%; height: 52%; top: auto; bottom: 0; left: auto; right: 0; }
   .founders__caption { font-size: 12px; bottom: -24px; left: 0; }
   .founders__lede { font-size: 18px; }
   .founders__sig { font-size: 22px; }
