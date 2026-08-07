@@ -14,7 +14,8 @@
       "settings": {
         "eyebrow": "— The Collection —",
         "heading": "The Collection.",
-        "deck": "Four products, formulated to be used together. Each one has a single job. None of them try to do another's.",
+        "deck": "Five products, formulated to be used together.",
+        "deck2": "Each one has a single job. None of them try to do another's.",
         "hero_fallback_asset": "stock-lineup.jpg"
       }
     },
