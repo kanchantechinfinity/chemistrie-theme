@@ -593,7 +593,14 @@
         <div class="pdet__ing-card">
           <div class="pdet__howto-visual">
             {%- if mf.how_to_use != blank -%}
-              <div class="rte">{{ mf.how_to_use }}</div>
+              {%- comment -%} Plain-text metafield values (e.g. "1. Step one. 2. Step two.") don't carry list markup — break each numbered step onto its own line rather than letting it run together. {%- endcomment -%}
+              {%- assign howto_text = mf.how_to_use -%}
+              {%- for n in (2..9) -%}
+                {%- assign marker = ' ' | append: n | append: '. ' -%}
+                {%- assign replacement = '<br><br>' | append: n | append: '. ' -%}
+                {%- assign howto_text = howto_text | replace: marker, replacement -%}
+              {%- endfor -%}
+              <div class="rte">{{ howto_text }}</div>
             {%- elsif pd_how_to_use != blank -%}
               {{ pd_how_to_use }}
             {%- else -%}
