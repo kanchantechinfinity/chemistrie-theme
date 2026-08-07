@@ -7,6 +7,8 @@
   {%- assign benefit = product.description | strip_html | split: '. ' | first -%}
   {%- if benefit != blank -%}{%- assign benefit = benefit | append: '.' -%}{%- endif -%}
 {%- endif -%}
+{%- comment -%} Site-wide rule: no em-dashes in visible copy, even if Admin data has one {%- endcomment -%}
+{%- assign benefit = benefit | replace: '—', ',' | replace: ' ,', ',' -%}
 
 {%- comment -%} Routine placement / warnings / feeling / benefits / how-to-use for the buy-box accordion (mirrors product-details.liquid's pd_key match — Shopify sections don't share Liquid scope, so this is intentionally duplicated) {%- endcomment -%}
 {%- liquid
@@ -36,7 +38,7 @@
       <li>Discontinue use if irritation develops.</li>
       <li>Keep out of reach of children.</li>
     </ul>{%- endcapture -%}
-    {%- capture pd_feeling -%}Rich, dense foam that rinses away completely — no film, no residue. Skin feels clean, balanced, and refreshed, never tight or stripped.{%- endcapture -%}
+    {%- capture pd_feeling -%}Rich, dense foam that rinses away completely, no film, no residue. Skin feels clean, balanced, and refreshed, never tight or stripped.{%- endcapture -%}
     {%- capture pd_benefits -%}<ul class="pdet__list">
       <li>Lifts away makeup, sunscreen, oil, and daily impurities completely</li>
       <li>Rinses clean with no film or residue left behind</li>
@@ -62,7 +64,7 @@
       <li>Shake well before use.</li>
       <li>Store away from direct light.</li>
     </ul>{%- endcapture -%}
-    {%- capture pd_feeling -%}Fluid. Near-weightless. Almost water-like. Veil absorbs in seconds, with no film, no tack, and no residue — just a soft cushion of hydration beneath everything that follows.{%- endcapture -%}
+    {%- capture pd_feeling -%}Fluid. Near-weightless. Almost water-like. Veil absorbs in seconds, with no film, no tack, and no residue, just a soft cushion of hydration beneath everything that follows.{%- endcapture -%}
     {%- capture pd_benefits -%}<ul class="pdet__list">
       <li>Weightless hydration, absorbed in seconds</li>
       <li>Leaves no film, no tack, and no residue behind</li>
@@ -71,7 +73,7 @@
     </ul>{%- endcapture -%}
     {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
       <li>After cleansing, dispense one pump into your palm.</li>
-      <li>Press gently into face and neck — do not rub.</li>
+      <li>Press gently into face and neck. Do not rub.</li>
       <li>Follow with Cashmere in the morning or Aura in the evening.</li>
     </ol>{%- endcapture -%}
   {%- when 'aura' -%}
@@ -85,7 +87,7 @@
       <li>Keep out of reach of children.</li>
       <li>Patch testing recommended before first use.</li>
     </ul>{%- endcapture -%}
-    {%- capture pd_feeling -%}Silky, creamy, fast-absorbing. Naturally blue, straight from the peptide complex itself — not a dye, not a design choice. A soft, velvety finish with no fragrance and no residue.{%- endcapture -%}
+    {%- capture pd_feeling -%}Silky, creamy, fast-absorbing. Naturally blue, straight from the peptide complex itself, not a dye, not a design choice. A soft, velvety finish with no fragrance and no residue.{%- endcapture -%}
     {%- capture pd_benefits -%}<ul class="pdet__list">
       <li>Deep hydration with a visibly smoother finish</li>
       <li>Pharmacist-selected peptide complex</li>
@@ -94,7 +96,7 @@
     </ul>{%- endcapture -%}
     {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
       <li>Warm a small amount between your fingertips.</li>
-      <li>Press gently into skin — face and neck — until it disappears.</li>
+      <li>Press gently into skin (face and neck) until it disappears.</li>
       <li>Follow with sunscreen. Every morning, without exception.</li>
     </ol>{%- endcapture -%}
   {%- when 'cashmere' -%}
@@ -108,7 +110,7 @@
       <li>Keep out of reach of children.</li>
       <li>Patch testing recommended before first use.</li>
     </ul>{%- endcapture -%}
-    {%- capture pd_feeling -%}Lightweight lotion. Silky, fast-absorbing, with an elegant slip. Non-greasy and comfortable for all-day wear — soft, hydrated, smooth, never sticky.{%- endcapture -%}
+    {%- capture pd_feeling -%}Lightweight lotion. Silky, fast-absorbing, with an elegant slip. Non-greasy and comfortable for all-day wear, soft, hydrated, smooth, never sticky.{%- endcapture -%}
     {%- capture pd_benefits -%}<ul class="pdet__list">
       <li>Provides lightweight daily hydration that absorbs quickly</li>
       <li>Layers beautifully under sunscreen and under makeup</li>
@@ -118,7 +120,7 @@
     {%- capture pd_how_to_use -%}<ol class="pdet__list pdet__list--ol">
       <li>Apply morning and evening, after serums.</li>
       <li>Massage gently into face and neck until absorbed.</li>
-      <li>May be layered before Aura in the evening for extra hydration — this is optional, not a required step.</li>
+      <li>May be layered before Aura in the evening for extra hydration. This is optional, not a required step.</li>
     </ol>{%- endcapture -%}
   {%- when 'silken' -%}
     {%- assign pd_eyebrow = 'Chemistrie Precision' -%}
@@ -236,7 +238,7 @@
                       value="{{ variant.id }}"
                       {% if variant == cv %}selected{% endif %}
                       {% unless variant.available %}disabled{% endunless %}>
-                      {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
+                      {{ variant.title }} · {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
                     </option>
                   {%- endfor -%}
                 </select>
@@ -315,11 +317,11 @@
                 <div class="mprod__acc-a-inner">
                   <p>
                     {%- if mf.feeling != blank -%}
-                      {{ mf.feeling }}
+                      {{ mf.feeling | replace: '—', ',' }}
                     {%- elsif pd_feeling != blank -%}
                       {{ pd_feeling }}
                     {%- else -%}
-                      A quiet ritual of care. {{ product.title }} is compounded by hand in small batches so every application feels deliberate, clean, and calm — never rushed, never generic.
+                      A quiet ritual of care. {{ product.title }} is compounded by hand in small batches so every application feels deliberate, clean, and calm, never rushed, never generic.
                     {%- endif -%}
                   </p>
                 </div>
@@ -519,7 +521,7 @@
     select.addEventListener('change', function () {
       var opt = select.options[select.selectedIndex];
       var priceEl = document.querySelector('.mprod__price-now');
-      var match = opt.textContent.match(/—\s*(.+?)(?:\s*\(|$)/);
+      var match = opt.textContent.match(/·\s*(.+?)(?:\s*\(|$)/);
       if (priceEl && match) priceEl.textContent = match[1].trim();
     });
   }
