@@ -1,0 +1,29 @@
+<section class="closing-band">
+  <p class="closing-band__text">{{ section.settings.text }}</p>
+</section>
+
+{% stylesheet %}
+.closing-band {
+  background: var(--c-forest);
+  padding: clamp(20px, 2.4vw, 32px) var(--pad-x);
+}
+.closing-band__text {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--c-cream);
+  font-family: var(--ff-body);
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.6;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Closing Statement Band",
+  "settings": [
+    { "type": "textarea", "id": "text", "label": "Statement", "default": "Every formula in this Collection answers to the same two people." }
+  ],
+  "presets": [{ "name": "Closing Statement Band" }]
+}
+{% endschema %}

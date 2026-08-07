@@ -69,17 +69,21 @@
         "eyebrow": "— Build Your Ritual —",
         "heading": "Start with one. Add as you're ready.",
         "sub": "Every product here is formulated to layer cleanly with the others, in whatever order your routine already runs.",
-        "sub2": "Every formula in this Collection answers to the same two people.",
         "button_label": "Build Your Ritual",
         "button2_label": "Learn the Full Ritual",
         "button2_url": "/pages/the-ritual"
       }
+    },
+    "closing-statement": {
+      "type": "closing-statement",
+      "settings": {}
     }
   },
   "order": [
     "page-hero",
     "stat-bar",
     "main-collection",
-    "page-cta"
+    "page-cta",
+    "closing-statement"
   ]
 }
