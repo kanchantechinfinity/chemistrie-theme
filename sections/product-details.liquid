@@ -621,15 +621,8 @@
         <div class="pdet__ing-card">
           <div class="pdet__howto-visual">
             {%- if mf.how_to_use != blank -%}
-              {%- comment -%} Plain-text metafield values (e.g. "1. Step one. 2. Step two.") don't carry list markup — break each numbered step onto its own line rather than letting it run together. {%- endcomment -%}
-              {%- comment -%} Doc-pasted text sometimes carries a non-breaking space instead of a regular one before each number, normalize it first. {%- endcomment -%}
-              {%- assign howto_text = mf.how_to_use | replace: '—', ',' | replace: ' ', ' ' -%}
-              {%- for n in (2..9) -%}
-                {%- assign marker = ' ' | append: n | append: '. ' -%}
-                {%- assign replacement = '<br><br>' | append: n | append: '. ' -%}
-                {%- assign howto_text = howto_text | replace: marker, replacement -%}
-              {%- endfor -%}
-              <div class="rte">{{ howto_text }}</div>
+              {%- comment -%} The metafield value already has a line break per step — HTML collapses raw newlines by default, so convert them to <br> tags to actually show each step on its own line. {%- endcomment -%}
+              <div class="rte">{{ mf.how_to_use | replace: '—', ',' | newline_to_br }}</div>
             {%- elsif pd_how_to_use != blank -%}
               {{ pd_how_to_use }}
             {%- else -%}
