@@ -622,7 +622,8 @@
           <div class="pdet__howto-visual">
             {%- if mf.how_to_use != blank -%}
               {%- comment -%} Plain-text metafield values (e.g. "1. Step one. 2. Step two.") don't carry list markup — break each numbered step onto its own line rather than letting it run together. {%- endcomment -%}
-              {%- assign howto_text = mf.how_to_use | replace: '—', ',' -%}
+              {%- comment -%} Doc-pasted text sometimes carries a non-breaking space instead of a regular one before each number, normalize it first. {%- endcomment -%}
+              {%- assign howto_text = mf.how_to_use | replace: '—', ',' | replace: ' ', ' ' -%}
               {%- for n in (2..9) -%}
                 {%- assign marker = ' ' | append: n | append: '. ' -%}
                 {%- assign replacement = '<br><br>' | append: n | append: '. ' -%}
