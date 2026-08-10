@@ -1255,7 +1255,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  gap: clamp(24px, 3vw, 40px) clamp(40px, 6vw, 96px);
+  gap: clamp(8px, 1vw, 16px) clamp(40px, 6vw, 96px);
   align-items: stretch;
 }
 .founders__head { grid-column: 2; grid-row: 1; align-self: end; }
@@ -1308,7 +1308,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 22px;
   line-height: 1.45;
   color: var(--c-forest);
-  margin: 0 0 24px;
+  margin: 14px 0 12px;
 }
 .founders__copy p {
   margin: 0 0 18px;
