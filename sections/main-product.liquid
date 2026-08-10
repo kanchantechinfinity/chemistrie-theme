@@ -573,7 +573,7 @@
     select.addEventListener('change', function () {
       var opt = select.options[select.selectedIndex];
       var priceEl = document.querySelector('.mprod__price-now');
-      var match = opt.textContent.match(/·\s*(.+?)(?:\s*\(|$)/);
+      var match = opt.textContent.trim().match(/·\s*(.+?)(?:\s*\(|$)/);
       if (priceEl && match) priceEl.textContent = match[1].trim();
     });
   }
