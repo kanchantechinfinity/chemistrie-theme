@@ -1310,10 +1310,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   color: var(--c-forest);
   margin: 14px 0 12px;
 }
-.founders__copy p {
+.founders__body p {
   margin: 0 0 18px;
   color: var(--c-ink-soft);
-  font-size: 17.5px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
   line-height: 1.7;
 }
 .founders__signoff {
