@@ -245,17 +245,30 @@
           <div class="mprod__row mprod__row--options">
             {%- if product.variants.size > 1 -%}
               <div class="mprod__variants">
-                <label for="mprod-variant" class="mprod__field-label">Option</label>
-                <select id="mprod-variant" name="id" class="mprod__select">
-                  {%- for variant in product.variants -%}
-                    <option
-                      value="{{ variant.id }}"
-                      {% if variant == cv %}selected{% endif %}
-                      {% unless variant.available %}disabled{% endunless %}>
-                      {{ variant.title }} · {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
-                    </option>
-                  {%- endfor -%}
-                </select>
+                <span class="mprod__field-label" id="mprod-variant-label">Option</span>
+                <div class="mprod__dd" data-variant-dropdown>
+                  <select id="mprod-variant" name="id" class="visually-hidden" tabindex="-1" aria-hidden="true">
+                    {%- for variant in product.variants -%}
+                      <option
+                        value="{{ variant.id }}"
+                        {% if variant == cv %}selected{% endif %}
+                        {% unless variant.available %}disabled{% endunless %}>
+                        {{ variant.title }} · {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                  <button type="button" class="mprod__dd-toggle" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="mprod-variant-label mprod-variant-toggle-label" id="mprod-variant-toggle">
+                    <span class="mprod__dd-toggle-label" id="mprod-variant-toggle-label">{{ cv.title }} · {{ cv.price | money }}</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                  <ul class="mprod__dd-list" role="listbox" hidden>
+                    {%- for variant in product.variants -%}
+                      <li role="option" class="mprod__dd-option{% if variant == cv %} is-selected{% endif %}{% unless variant.available %} is-disabled{% endunless %}" data-value="{{ variant.id }}" aria-selected="{% if variant == cv %}true{% else %}false{% endif %}">
+                        <span>{{ variant.title }} · {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}</span>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
               </div>
             {%- else -%}
               <input type="hidden" name="id" value="{{ cv.id }}">
@@ -425,12 +438,37 @@
 
 .mprod__form { display: flex; flex-direction: column; gap: 18px; }
 .mprod__field-label { display: block; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-ink-mute); margin-bottom: 8px; }
-.mprod__select, .mprod__qty-input {
+.mprod__qty-input {
   padding: 12px 14px; border: 1px solid var(--c-line-soft); border-radius: 8px;
   background: var(--c-cream); font-size: 15px; color: var(--c-forest); font-family: var(--ff-body);
+  width: 100%;
 }
-.mprod__select { width: 100%; appearance: none; }
-.mprod__qty-input { width: 100%; }
+
+.mprod__dd { position: relative; }
+.mprod__dd-toggle {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 14px; border: 1px solid var(--c-line-soft); border-radius: 8px;
+  background: var(--c-cream); font-size: 15px; color: var(--c-forest); font-family: var(--ff-body);
+  cursor: pointer; transition: border-color .2s;
+}
+.mprod__dd-toggle:hover { border-color: var(--c-forest); }
+.mprod__dd[data-open="true"] .mprod__dd-toggle { border-color: var(--c-forest); }
+.mprod__dd[data-open="true"] .mprod__dd-toggle svg { transform: rotate(180deg); }
+.mprod__dd-toggle svg { flex: 0 0 auto; color: var(--c-tan-2); transition: transform .2s; }
+.mprod__dd-list {
+  position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 20;
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 8px;
+  box-shadow: 0 16px 32px -12px rgba(26,58,45,.28); overflow: hidden; padding: 6px;
+  list-style: none; margin: 0;
+}
+.mprod__dd-option {
+  padding: 10px 12px; border-radius: 6px; font-size: 14px; color: var(--c-forest);
+  cursor: pointer; transition: background .15s;
+}
+.mprod__dd-option:hover, .mprod__dd-option.is-active { background: var(--c-cream-2); }
+.mprod__dd-option.is-selected { background: var(--c-forest); color: var(--c-cream); font-weight: 500; }
+.mprod__dd-option.is-disabled { color: var(--c-ink-mute); cursor: default; text-decoration: line-through; }
+.mprod__dd-option.is-disabled:hover { background: none; }
 
 .mprod__row { display: flex; gap: 16px; }
 .mprod__row--options { align-items: flex-end; }
@@ -537,6 +575,53 @@
       var priceEl = document.querySelector('.mprod__price-now');
       var match = opt.textContent.match(/·\s*(.+?)(?:\s*\(|$)/);
       if (priceEl && match) priceEl.textContent = match[1].trim();
+    });
+  }
+
+  // Custom themed variant dropdown, drives the hidden <select> above
+  var dd = document.querySelector('[data-variant-dropdown]');
+  if (dd && select) {
+    var toggle = dd.querySelector('.mprod__dd-toggle');
+    var toggleLabel = dd.querySelector('.mprod__dd-toggle-label');
+    var list = dd.querySelector('.mprod__dd-list');
+    var options = Array.prototype.slice.call(dd.querySelectorAll('.mprod__dd-option'));
+
+    function closeDd() {
+      dd.removeAttribute('data-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      list.hidden = true;
+    }
+    function openDd() {
+      dd.setAttribute('data-open', 'true');
+      toggle.setAttribute('aria-expanded', 'true');
+      list.hidden = false;
+    }
+
+    toggle.addEventListener('click', function () {
+      if (list.hidden) openDd(); else closeDd();
+    });
+
+    options.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        if (opt.classList.contains('is-disabled')) return;
+        options.forEach(function (o) {
+          o.classList.remove('is-selected');
+          o.setAttribute('aria-selected', 'false');
+        });
+        opt.classList.add('is-selected');
+        opt.setAttribute('aria-selected', 'true');
+        toggleLabel.textContent = opt.textContent.trim();
+        select.value = opt.getAttribute('data-value');
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+        closeDd();
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!dd.contains(e.target)) closeDd();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDd();
     });
   }
 
