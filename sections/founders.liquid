@@ -43,6 +43,13 @@
       <span class="founders__sig">{{ section.settings.sig }}</span>
       <span class="founders__sig-sub">{{ section.settings.sig_sub }}</span>
     </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <a class="btn btn--ghost founders__cta" href="{{ section.settings.button_url }}">
+        <span>{{ section.settings.button_label }}</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    {%- endif -%}
   </div>
 </section>
 
@@ -50,18 +57,21 @@
 {
   "name": "Founders",
   "settings": [
-    { "type": "text", "id": "caption", "label": "Photo caption", "default": "The founding pharmacists, photographed in the compounding lab — Houston, 2026." },
-    { "type": "html", "id": "heading", "label": "Heading", "default": "The bench doesn't lie,<br/><em>so neither do we.</em>" },
+    { "type": "text", "id": "caption", "label": "Photo caption", "default": "The founding pharmacists, photographed in the compounding lab, Houston, 2026." },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "This began at a pharmacy counter, not a marketing meeting." },
     { "type": "header", "content": "Founder portraits" },
     { "type": "text", "id": "founder1_name", "label": "Founder 1 name", "default": "Harin" },
     { "type": "image_picker", "id": "founder1_image", "label": "Founder 1 photo (optional)" },
     { "type": "text", "id": "founder2_name", "label": "Founder 2 name", "default": "Zach" },
     { "type": "image_picker", "id": "founder2_image", "label": "Founder 2 photo (optional)" },
     { "type": "textarea", "id": "lede", "label": "Lede", "default": "Harin and Zach, compounding pharmacists, formulating for the women they love." },
-    { "type": "textarea", "id": "paragraph1", "label": "Paragraph 1", "default": "Before Chemistrie existed, Harin and Zach spent years behind a pharmacy counter, measuring things for people who couldn't afford to be wrong. Chemistrie carries the same standard onto a skin care shelf." },
-    { "type": "textarea", "id": "paragraph2", "label": "Paragraph 2", "default": "We spent years compounding prescriptions for people who couldn't afford to be wrong. We wanted the same standard on a skin care shelf." },
+    { "type": "textarea", "id": "paragraph1", "label": "Paragraph 1", "default": "Before Chemistrie existed, Harin and Zach spent years behind a pharmacy counter, measuring things for people who couldn't afford to be wrong." },
+    { "type": "textarea", "id": "paragraph2", "label": "Paragraph 2", "default": "Chemistrie carries the same standard onto a skin care shelf." },
     { "type": "text", "id": "sig", "label": "Signature", "default": "Harin & Zach" },
-    { "type": "text", "id": "sig_sub", "label": "Signature subtitle", "default": "Co-founders · Compounding Pharmacists" }
+    { "type": "text", "id": "sig_sub", "label": "Signature subtitle", "default": "Co-founders · Compounding Pharmacists" },
+    { "type": "header", "content": "CTA (optional)" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Meet the Pharmacists" },
+    { "type": "url", "id": "button_url", "label": "Button URL" }
   ],
   "presets": [
     { "name": "Founders" }

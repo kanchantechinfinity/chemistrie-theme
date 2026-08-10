@@ -1332,6 +1332,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--c-ink-mute);
 }
+.founders__cta { margin-top: 28px; display: inline-flex; align-self: flex-start; }
 @media (max-width: 900px) {
   .founders { grid-template-columns: 1fr; }
   .founders__head, .founders__media, .founders__body { grid-column: 1; grid-row: auto; }

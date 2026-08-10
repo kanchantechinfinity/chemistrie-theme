@@ -102,15 +102,17 @@
       "type": "founders",
       "name": "Founders",
       "settings": {
-        "caption": "The founding pharmacists, photographed in the compounding lab — Houston, 2026.",
-        "heading": "The bench doesn't lie,<br><em>so neither do we.</em>",
+        "caption": "The founding pharmacists, photographed in the compounding lab, Houston, 2026.",
+        "heading": "This began at a pharmacy counter, not a marketing meeting.",
         "founder1_name": "Harin",
         "founder2_name": "Zach",
         "lede": "Harin and Zach, compounding pharmacists, formulating for the women they love.",
-        "paragraph1": "Before Chemistrie existed, Harin and Zach spent years behind a pharmacy counter, measuring things for people who couldn't afford to be wrong. Chemistrie carries the same standard onto a skin care shelf.",
-        "paragraph2": "We spent years compounding prescriptions for people who couldn't afford to be wrong. We wanted the same standard on a skin care shelf.",
+        "paragraph1": "Before Chemistrie existed, Harin and Zach spent years behind a pharmacy counter, measuring things for people who couldn't afford to be wrong.",
+        "paragraph2": "Chemistrie carries the same standard onto a skin care shelf.",
         "sig": "Harin & Zach",
-        "sig_sub": "Co-founders · Compounding Pharmacists"
+        "sig_sub": "Co-founders · Compounding Pharmacists",
+        "button_label": "Meet the Pharmacists",
+        "button_url": "/pages/the-pharmacists"
       }
     },
     "actives_WHF8yt": {
