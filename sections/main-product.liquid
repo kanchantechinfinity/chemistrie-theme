@@ -1,12 +1,26 @@
 {%- assign cv = product.selected_or_first_available_variant -%}
 {%- assign mf = product.metafields.custom -%}
-{%- comment -%} one-line benefit: metafield else first sentence of description {%- endcomment -%}
-{%- if product.metafields.custom.benefit != blank -%}
-  {%- assign benefit = product.metafields.custom.benefit -%}
-{%- else -%}
-  {%- assign benefit = product.description | strip_html | split: '. ' | first -%}
-  {%- if benefit != blank -%}{%- assign benefit = benefit | append: '.' -%}{%- endif -%}
-{%- endif -%}
+
+{%- comment -%} Same short Card Copy used on the Homepage/Collection/Ritual product cards, reused here as the hero descriptor so the line matches everywhere it appears instead of the (previously broken) Admin benefit metafield text. {%- endcomment -%}
+{%- liquid
+  assign _ph0 = product.handle | downcase
+  assign _pt0 = product.title | downcase
+  if _ph0 contains 'velvet' or _pt0 contains 'velvet'
+    assign benefit = 'The step that makes everything after it work harder.'
+  elsif _ph0 contains 'veil' or _pt0 contains 'veil'
+    assign benefit = 'A featherlight solution that settles into skin like a veil, hydration without a single ounce of weight.'
+  elsif _ph0 contains 'cashmere' or _pt0 contains 'cashmere'
+    assign benefit = 'Effortless hydration, worn every day without a second thought.'
+  elsif _ph0 contains 'aura' or _pt0 contains 'aura'
+    assign benefit = 'The signature renewal cream, formulated around a pharmacist-selected peptide complex, for skin that looks and feels quietly renewed.'
+  elsif _ph0 contains 'silken' or _pt0 contains 'silken'
+    assign benefit = 'A precise, everyday ritual for the areas of skin that deserve focused attention.'
+  elsif product.metafields.custom.benefit != blank
+    assign benefit = product.metafields.custom.benefit
+  else
+    assign benefit = product.description | strip_html | split: '. ' | first | append: '.'
+  endif
+-%}
 {%- comment -%} Site-wide rule: no em-dashes in visible copy, even if Admin data has one {%- endcomment -%}
 {%- assign benefit = benefit | replace: '—', ',' | replace: ' ,', ',' -%}
 

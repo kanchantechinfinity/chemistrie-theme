@@ -26,8 +26,8 @@
         <div class="cart__grid">
           <div class="cart__items">
             <div class="cart__thead">
-              <span>Product</span>
-              <span>Quantity</span>
+              <span class="cart__thead-product">Product</span>
+              <span class="cart__thead-qty">Quantity</span>
               <span class="cart__thead-price">Total</span>
             </div>
             {%- for item in cart.items -%}
@@ -41,7 +41,7 @@
                   {%- endif -%}
                 </a>
                 <div class="cart__info">
-                  <a class="cart__name" href="{{ item.url }}">{{ item.product.title }}</a>
+                  <a class="cart__name" href="{{ item.url }}">{{ item.product.title | split: '—' | first | strip }}</a>
                   {%- unless item.variant.title contains 'Default' -%}
                     <span class="cart__variant">{{ item.variant.title }}</span>
                   {%- endunless -%}
@@ -124,9 +124,11 @@
 .cart__ship-bar { display: block; height: 6px; margin-top: 12px; border-radius: 999px; background: var(--c-line-soft); overflow: hidden; }
 .cart__ship-fill { display: block; height: 100%; background: var(--c-forest); transition: width .5s var(--ease-out); }
 .cart__grid { display: grid; grid-template-columns: 1fr 360px; gap: clamp(32px, 4vw, 64px); align-items: start; }
-.cart__thead { display: grid; grid-template-columns: 1fr auto auto; gap: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--c-line); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink-mute); }
+.cart__thead { display: grid; grid-template-columns: 90px 1fr 84px 96px; gap: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--c-line); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink-mute); }
+.cart__thead-product { grid-column: 1 / span 2; }
+.cart__thead-qty { text-align: center; }
 .cart__thead-price { text-align: right; }
-.cart__item { display: grid; grid-template-columns: 90px 1fr auto auto; gap: 20px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--c-line-soft); }
+.cart__item { display: grid; grid-template-columns: 90px 1fr 84px 96px; gap: 20px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--c-line-soft); }
 .cart__media { border-radius: 10px; overflow: hidden; background: var(--grad-cream); }
 .cart__img { width: 90px; height: 90px; object-fit: cover; }
 .cart__info { display: flex; flex-direction: column; gap: 4px; }
