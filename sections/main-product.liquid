@@ -280,9 +280,10 @@
             </div>
           </div>
 
+          {%- assign pd_name = product.title | split: '—' | first | strip -%}
           <div class="mprod__row mprod__row--actions">
             {%- if product.available -%}
-              <button type="submit" name="add" class="btn btn--primary mprod__add" aria-label="Add {{ product.title | split: '—' | first | strip }} to cart">Add to Ritual</button>
+              <button type="submit" name="add" class="btn btn--primary mprod__add" data-add-to-ritual data-product-name="{{ pd_name | escape }}" aria-label="Add {{ pd_name }} to cart">Add to Ritual</button>
             {%- else -%}
               <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
             {%- endif -%}
@@ -293,6 +294,10 @@
             </button>
           </div>
         {%- endform -%}
+
+        {%- unless product.available -%}
+          <p class="mprod__soldout-note">{{ pd_name }} is temporarily out of stock. Join the waitlist to hear when it's back.</p>
+        {%- endunless -%}
 
         <ul class="mprod__trust">
           <li>Pharmacist-formulated</li>
@@ -360,6 +365,8 @@
 
     </div>
   </div>
+
+  <div class="mprod__toast" data-cart-toast role="status" aria-live="polite" hidden></div>
 </section>
 
 {% stylesheet %}
@@ -479,6 +486,17 @@
 .mprod__row--actions { align-items: stretch; }
 .mprod__row--actions .mprod__add { flex: 1 1 auto; width: auto; margin: 0; }
 .mprod__add[disabled] { opacity: .5; cursor: default; }
+.mprod__soldout-note { margin: 14px 0 0; font-size: 13px; color: var(--c-ink-soft); line-height: 1.6; }
+
+.mprod__toast {
+  position: fixed; left: 50%; bottom: 32px; transform: translate(-50%, 12px);
+  background: var(--c-forest); color: var(--c-cream); padding: 14px 22px; border-radius: 999px;
+  font-size: 14px; box-shadow: 0 20px 40px -16px rgba(26,58,45,.5);
+  z-index: 60; opacity: 0; transition: opacity .3s var(--ease-out), transform .3s var(--ease-out);
+  pointer-events: none;
+}
+.mprod__toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+.mprod__toast.is-error { background: #7a2b2b; }
 .mprod__row--actions .mprod__wish { margin-top: 0; flex: 0 0 auto; }
 
 @media (max-width: 480px) {
@@ -634,6 +652,59 @@
       if (panel) panel.classList.toggle('is-open', !open);
     });
   });
+
+  // Add to Ritual — AJAX add-to-cart with per-product "[Name] is in your ritual." / out-of-stock microcopy
+  var form = document.getElementById('mprod-form');
+  var addBtn = document.querySelector('[data-add-to-ritual]');
+  var toastEl = document.querySelector('[data-cart-toast]');
+  var toastTimer;
+
+  function showToast(message, isError) {
+    if (!toastEl) return;
+    toastEl.textContent = message;
+    toastEl.classList.toggle('is-error', !!isError);
+    toastEl.hidden = false;
+    requestAnimationFrame(function () { toastEl.classList.add('is-visible'); });
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('is-visible');
+      setTimeout(function () { toastEl.hidden = true; }, 300);
+    }, 3200);
+  }
+
+  if (form && addBtn) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = addBtn.getAttribute('data-product-name') || 'Item';
+      addBtn.disabled = true;
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          id: new FormData(form).get('id'),
+          quantity: new FormData(form).get('quantity') || 1
+        })
+      })
+        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (result) {
+          if (!result.ok) {
+            showToast(name + ' is temporarily out of stock. Join the waitlist to hear when it\'s back.', true);
+            return;
+          }
+          showToast(name + ' is in your ritual.');
+          return fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
+            var countEl = document.querySelector('.nav__bag-count');
+            if (countEl) countEl.textContent = cart.item_count;
+          });
+        })
+        .catch(function () {
+          showToast(name + ' is temporarily out of stock. Join the waitlist to hear when it\'s back.', true);
+        })
+        .finally(function () {
+          addBtn.disabled = false;
+        });
+    });
+  }
 })();
 {% endjavascript %}
 
