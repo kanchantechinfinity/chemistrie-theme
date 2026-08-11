@@ -242,6 +242,16 @@
         <p class="pdet__ing-row"><strong>What you'll notice:</strong> A plumper, more comfortable feel, especially in dry conditions.</p>
         <p class="pdet__ing-row pdet__ing-cred">A hyaluronic acid derivative, well studied for hydration support.</p>
       </div>
+      <div class="pdet__ing-card">
+        <div class="pdet__ing-badge"><img src="{{ 'ingredient-aloe.jpg' | asset_url }}" alt="" loading="lazy"></div>
+        <h3 class="pdet__ing-name">Centella Asiatica Extract</h3>
+        <p class="pdet__ing-tag">Calms &amp; Balances</p>
+        <svg class="pdet__squiggle pdet__squiggle--tag" viewBox="0 0 60 10" width="40" height="8" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        <p class="pdet__ing-row"><strong>What it is:</strong> A botanical extract with a long history of use in skin-supportive preparations.</p>
+        <p class="pdet__ing-row"><strong>Why we selected it:</strong> Supports the look of calm, balanced-looking skin alongside the active peptides.</p>
+        <p class="pdet__ing-row"><strong>What you'll notice:</strong> A settled, less reactive-looking complexion.</p>
+        <p class="pdet__ing-row pdet__ing-cred">Sourced through our pharmacist-selected formulation.</p>
+      </div>
     {%- endcapture -%}
     {%- capture pd_faq -%}
       <div class="pfaq__item">
@@ -447,8 +457,10 @@
       <div class="pdet__block pdet__visual-band">
         <h2 class="pdet__h pdet__h--center">Thoughtfully Formulated with Skin-loving Ingredients</h2>
         <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-        <div class="pdet__ing-grid pdet__ing-grid--spotlight">
-          {{ pd_spotlight }}
+        <div class="pdet__ing-rail-wrap">
+          <div class="pdet__ing-grid pdet__ing-grid--spotlight">
+            {{ pd_spotlight }}
+          </div>
         </div>
       </div>
     {%- endif -%}
@@ -800,6 +812,23 @@
 
 /* Ingredient Spotlight */
 .pdet__ing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
+.pdet__ing-rail-wrap {
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent 0, black 3%, black 97%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 3%, black 97%, transparent 100%);
+}
+.pdet__ing-grid--spotlight {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 8px;
+  align-items: stretch;
+}
+.pdet__ing-grid--spotlight::-webkit-scrollbar { display: none; }
+.pdet__ing-grid--spotlight .pdet__ing-card { flex: 0 0 min(300px, 82vw); scroll-snap-align: start; }
 .pdet__ing-card { background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px; padding: clamp(22px, 2.4vw, 28px); transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out); }
 .pdet__tab-panel .pdet__ing-card p { margin: 0 0 16px; color: var(--c-ink-soft); line-height: 1.75; }
 .pdet__tab-panel .pdet__ing-card p:last-child { margin-bottom: 0; }
