@@ -636,14 +636,14 @@
 {% endcapture %}
               <ol class="pdet__list pdet__list--ol">
                 {%- assign howto_lines = mf.how_to_use | replace: '—', ',' | split: nl -%}
+                {%- assign step_num = 0 -%}
                 {%- for line in howto_lines -%}
-                  {%- assign line = line | strip -%}
-                  {%- if line != blank -%}
-                    {%- for n in (1..9) -%}
-                      {%- assign marker = n | append: '. ' -%}
-                      {%- assign line = line | replace_first: marker, '' -%}
-                    {%- endfor -%}
-                    <li>{{ line }}</li>
+                  {%- assign trimmed = line | strip -%}
+                  {%- if trimmed != blank -%}
+                    {%- assign step_num = step_num | plus: 1 -%}
+                    {%- assign marker = step_num | append: '. ' -%}
+                    {%- assign clean_line = trimmed | replace_first: marker, '' -%}
+                    <li>{{ clean_line }}</li>
                   {%- endif -%}
                 {%- endfor -%}
               </ol>
