@@ -178,6 +178,8 @@
     "page-hero",
     "stat-bar",
     "contact-main",
+    "contact-steps",
+    "contact-faq",
     "page-cta"
   ]
 }
