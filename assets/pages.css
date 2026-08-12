@@ -107,6 +107,7 @@
 
 /* ───────── Mobile navigation (additive — desktop unchanged, matches Vercel) ───────── */
 .nav__toggle { display: none; }
+.nav__links-close { display: none; }
 @media (max-width: 900px) {
   .nav__toggle {
     display: inline-flex; align-items: center; justify-content: center;
@@ -129,6 +130,11 @@
     box-shadow: -30px 0 80px -40px rgba(26,58,45,.5); z-index: 120;
   }
   .nav--open .nav__links { transform: translateX(0); }
+  .nav__links-close {
+    display: flex; align-items: center; justify-content: center;
+    position: absolute; top: 28px; right: 24px; width: 36px; height: 36px;
+    color: var(--c-forest); background: none; border: 0; z-index: 2;
+  }
   .nav__links-brand { display: block; margin: -64px 0 32px; }
   .nav__links-brand img { display: block; max-width: 200px; height: auto; }
   .nav__links-wordmark { font-family: var(--ff-display, serif); font-size: 24px; letter-spacing: .3em; color: var(--c-forest); }
