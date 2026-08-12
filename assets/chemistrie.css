@@ -1516,10 +1516,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   line-height: 1;
 }
 .active-card__desc {
-  font-family: var(--ff-display);
-  font-style: italic;
-  font-size: 17.5px;
-  line-height: 1.5;
+  font-family: var(--ff-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
   margin: 0;
   color: var(--c-ink-soft);
   position: relative;
@@ -2830,7 +2831,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .founders__caption { font-size: 11.5px; bottom: -22px; }
 
   /* Actives — native horizontal scroll (CSS-guaranteed fallback, matches .ritual__pin's pattern — don't rely on JS alone) */
-  .actives__intro { padding-bottom: 28px; }
+  .actives__intro { padding-top: 64px; padding-bottom: 28px; }
   .actives__counter-current { font-size: 44px; }
   .actives__pin {
     height: auto; overflow-x: auto; overflow-y: hidden;
