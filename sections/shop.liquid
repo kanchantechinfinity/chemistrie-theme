@@ -206,7 +206,7 @@
     </article>
 
     {% else %}
-      {% for product in section.settings.collection.products limit: 6 %}
+      {% for product in section.settings.collection.products limit: 12 %}
       {%- liquid
         assign _pt = product.title | downcase
         assign _ph = product.handle | downcase
@@ -228,7 +228,11 @@
           assign card_copy = 'Scar Refining Gel'
         else
           assign card_role = blank
-          assign card_copy = product.description | strip_html | truncatewords: 20
+          assign card_copy = product.type
+        endif
+        assign meta_descriptor = product.metafields.custom.descriptor.value
+        if meta_descriptor != blank
+          assign card_copy = meta_descriptor
         endif
       -%}
       <article class="product" data-color="forest">
@@ -258,14 +262,10 @@
           {%- endif -%}
         </div>
         <div class="product__meta">
-          <div class="product__meta-top">
-            <div>
-              <h3>{{ card_name }}</h3>
-              <p>{{ card_copy }}</p>
-            </div>
-            <span class="product__price">{{ product.price | money }}</span>
-          </div>
-          <a class="product__cta" href="{{ product.url }}">View {{ card_name }} →</a>
+          <h3>{{ card_name }}</h3>
+          {%- if card_copy != blank -%}<p>{{ card_copy }}</p>{%- endif -%}
+          <span class="product__price">{{ product.price | money }}</span>
+          <a class="product__cta" href="{{ product.url }}">Shop {{ card_name }}</a>
         </div>
       </article>
       {% endfor %}
@@ -289,7 +289,6 @@
 .product:hover .product__photo { transform: scale(1.04); }
 .product__photo--alt { opacity: 0; }
 .product:hover .product__photo--alt { opacity: 1; }
-.product__meta-top > div { min-width: 0; flex: 1; }
 .product__meta h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 {% endstylesheet %}
 

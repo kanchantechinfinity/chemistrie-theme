@@ -1134,7 +1134,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: transform .5s var(--ease-out), border-color .5s var(--ease-out), box-shadow .5s var(--ease-out);
   cursor: pointer;
   min-height: 540px;
-  height: 540px;
   align-self: stretch;
 }
 .product:hover {
@@ -2821,7 +2820,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .vision__icon svg { width: 28px; height: 28px; }
 
   /* Shop */
-  .product { flex: 0 0 78vw; height: 460px; min-height: 460px; padding: 22px; }
+  .product { flex: 0 0 78vw; min-height: 460px; padding: 22px; }
   .product__bottle { height: 180px; }
   .product__meta h3 { font-size: 19px; }
   .product__price { font-size: 19px; }
