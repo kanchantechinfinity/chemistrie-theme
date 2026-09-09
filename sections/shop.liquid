@@ -214,21 +214,27 @@
         if _ph contains 'velvet' or _pt contains 'velvet'
           assign card_role = 'Cleanse'
           assign card_copy = 'Foaming Facial Cleanser'
+          assign card_asset = 'product-velvet.png'
         elsif _ph contains 'veil' or _pt contains 'veil'
           assign card_role = 'Treat'
           assign card_copy = 'Weightless Hydrating Serum'
+          assign card_asset = 'product-veil.png'
         elsif _ph contains 'cashmere' or _pt contains 'cashmere'
           assign card_role = 'Hydrate'
           assign card_copy = 'Lightweight Hydrating Lotion'
+          assign card_asset = 'product-cashmere.png'
         elsif _ph contains 'aura' or _pt contains 'aura'
           assign card_role = 'Renew'
           assign card_copy = 'Advanced Renewal Cream'
+          assign card_asset = 'product-aura.png'
         elsif _ph contains 'silken' or _pt contains 'silken'
           assign card_role = 'Refine'
           assign card_copy = 'Scar Refining Gel'
+          assign card_asset = 'product-silken.png'
         else
           assign card_role = blank
           assign card_copy = product.type
+          assign card_asset = blank
         endif
         assign meta_descriptor = product.metafields.custom.descriptor.value
         if meta_descriptor != blank
@@ -242,7 +248,9 @@
           {%- if card_role != blank -%}
             <span class="product__tag">{{ card_role | upcase }}</span>
           {%- endif -%}
-          {%- if product.featured_image -%}
+          {%- if card_asset != blank -%}
+            <img class="product__photo" src="{{ card_asset | asset_url }}" alt="{{ card_name | escape }}" loading="lazy">
+          {%- elsif product.featured_image -%}
             <img class="product__photo" src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
             {%- if product.images.size > 1 -%}
               <img class="product__photo product__photo--alt" src="{{ product.images[1] | image_url: width: 500 }}" alt="" loading="lazy">
