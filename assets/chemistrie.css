@@ -2864,3 +2864,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { opacity: 1; transform: none; transition: none; }
 }
+
+/* ───────── Trust Signals (pillars) — tablet & phone image sizing ─────────
+   The stacked breakpoints above re-declare `.pillar__crest` at the circle
+   badge's fixed 120/140px, which also hit the full-bleed image variant and
+   squashed it to a small square. These selectors carry two classes so they
+   win on specificity rather than source order — a later single-class
+   `.pillar__crest` rule can't undo them again. */
+@media (max-width: 1024px) {
+  .pillar__visual--full .pillar__crest--fullimage {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 18px;
+  }
+}
+@media (max-width: 700px) {
+  .pillar__visual--full .pillar__crest--fullimage { max-width: none; }
+}
