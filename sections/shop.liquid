@@ -214,33 +214,29 @@
         if _ph contains 'velvet' or _pt contains 'velvet'
           assign card_role = 'Cleanse'
           assign card_copy = 'Foaming Facial Cleanser'
-          assign card_asset = 'product-velvet.png'
         elsif _ph contains 'veil' or _pt contains 'veil'
           assign card_role = 'Treat'
           assign card_copy = 'Weightless Hydrating Serum'
-          assign card_asset = 'product-veil.png'
         elsif _ph contains 'cashmere' or _pt contains 'cashmere'
           assign card_role = 'Hydrate'
           assign card_copy = 'Lightweight Hydrating Lotion'
-          assign card_asset = 'product-cashmere.png'
         elsif _ph contains 'aura' or _pt contains 'aura'
           assign card_role = 'Renew'
           assign card_copy = 'Advanced Renewal Cream'
-          assign card_asset = 'product-aura.png'
         elsif _ph contains 'silken' or _pt contains 'silken'
           assign card_role = 'Refine'
           assign card_copy = 'Scar Refining Gel'
-          assign card_asset = 'product-silken.png'
         else
           assign card_role = blank
           assign card_copy = product.type
-          assign card_asset = blank
         endif
         assign meta_descriptor = product.metafields.custom.descriptor.value
         if meta_descriptor != blank
           assign card_copy = meta_descriptor
         endif
       -%}
+      {%- capture card_asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}
+      {%- assign card_asset = card_asset | strip -%}
       <article class="product" data-color="forest">
         <a class="product__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
         <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>

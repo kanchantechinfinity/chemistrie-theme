@@ -35,7 +35,11 @@
               {%- if item.object_type == 'product' -%}
                 <article class="pcard">
                   <a class="pcard__media" href="{{ item.url }}" aria-label="{{ item.title | escape }}">
-                    {%- if item.featured_image -%}
+                    {%- capture item_asset -%}{%- render 'product-image-asset', product: item -%}{%- endcapture -%}
+                    {%- assign item_asset = item_asset | strip -%}
+                    {%- if item_asset != blank -%}
+                      <img class="pcard__img" src="{{ item_asset | asset_url }}" alt="{{ item.title | escape }}" loading="lazy">
+                    {%- elsif item.featured_image -%}
                       {{ item.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: item.title }}
                     {%- else -%}
                       <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ item.title | escape }}" loading="lazy" class="pcard__ph">

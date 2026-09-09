@@ -41,7 +41,11 @@
             {%- if card_role != blank -%}
               <span class="product__tag">{{ card_role | upcase }}</span>
             {%- endif -%}
-            {%- if product.featured_image -%}
+            {%- capture card_asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}
+            {%- assign card_asset = card_asset | strip -%}
+            {%- if card_asset != blank -%}
+              <img class="product__photo" src="{{ card_asset | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
+            {%- elsif product.featured_image -%}
               <img class="product__photo" src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
               {%- if product.images.size > 1 -%}
                 <img class="product__photo product__photo--alt" src="{{ product.images[1] | image_url: width: 500 }}" alt="" loading="lazy">

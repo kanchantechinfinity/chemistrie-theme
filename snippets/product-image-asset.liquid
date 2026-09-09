@@ -1,0 +1,20 @@
+{%- comment -%}
+  Outputs the approved launch-product image filename in /assets for a product,
+  or nothing for products without one. Client-approved shots live in the theme
+  because the matching Shopify product images are not the approved ones.
+{%- endcomment -%}
+{%- liquid
+  assign _ph = product.handle | downcase
+  assign _pt = product.title | downcase
+  if _ph contains 'velvet' or _pt contains 'velvet'
+    echo 'product-velvet.png'
+  elsif _ph contains 'veil' or _pt contains 'veil'
+    echo 'product-veil.png'
+  elsif _ph contains 'cashmere' or _pt contains 'cashmere'
+    echo 'product-cashmere.png'
+  elsif _ph contains 'aura' or _pt contains 'aura'
+    echo 'product-aura.png'
+  elsif _ph contains 'silken' or _pt contains 'silken'
+    echo 'product-silken.png'
+  endif
+-%}

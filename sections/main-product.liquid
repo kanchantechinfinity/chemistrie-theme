@@ -167,8 +167,12 @@
 
       {%- comment -%} ───── LEFT: gallery ───── {%- endcomment -%}
       <div class="mprod__gallery">
+        {%- capture card_asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}
+        {%- assign card_asset = card_asset | strip -%}
         <div class="mprod__main">
-          {%- if product.featured_image -%}
+          {%- if card_asset != blank -%}
+            <img id="mprod-main-image" src="{{ card_asset | asset_url }}" alt="{{ product.title | escape }}">
+          {%- elsif product.featured_image -%}
             <img
               id="mprod-main-image"
               src="{{ product.featured_image | image_url: width: 1000 }}"
@@ -178,7 +182,7 @@
             <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" class="mprod__ph">
             {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
           {%- endif -%}
-          {%- if product.images.size > 1 -%}
+          {%- if card_asset == blank and product.images.size > 1 -%}
             <button type="button" class="mprod__nav mprod__nav--prev" aria-label="Previous image">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
             </button>
@@ -187,7 +191,7 @@
             </button>
           {%- endif -%}
         </div>
-        {%- if product.images.size > 1 -%}
+        {%- if card_asset == blank and product.images.size > 1 -%}
           <div class="mprod__thumbs">
             {%- for image in product.images -%}
               <button
