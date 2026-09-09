@@ -1,9 +1,28 @@
 <!-- ───── Footer ───── -->
+{%- liquid
+  assign journal_url = blogs.journal.url
+  if journal_url == blank
+    for b in blogs
+      assign journal_url = b[1].url
+      break
+    endfor
+  endif
+  if journal_url == blank
+    assign journal_url = '/blogs/journal'
+  endif
+
+  assign privacy_url = section.settings.privacy_url | default: shop.privacy_policy.url
+  assign terms_url = section.settings.terms_url | default: shop.terms_of_service.url
+
+  assign ig = settings.social_instagram | default: section.settings.instagram
+  assign tt = settings.social_tiktok | default: section.settings.tiktok
+  assign pin = settings.social_pinterest | default: section.settings.pinterest
+-%}
 <footer class="footer">
-  <div class="footer__top footer__top--5col">
+  <div class="footer__top">
     <div class="footer__brand">
       <span class="footer__wordmark">CHEMISTRIE</span>
-      <p class="footer__tag">Made by pharmacists.<br/>Made with love.</p>
+      <p class="footer__tag">{{ section.settings.brand_line }}</p>
       <div class="footer__seal">
         <span>Rx</span>
         <em>Pharmacist-formulated · Houston, TX</em>
@@ -11,52 +30,74 @@
     </div>
 
     <nav class="footer__col">
-      <h4>Shop</h4>
-      <a href="{{ routes.all_products_collection_url }}">Collection</a>
-      <a href="/collections/all">Product Pages</a>
+      <h4>{{ section.settings.heading_shop }}</h4>
+      {%- if section.settings.menu_shop != blank -%}
+        {%- for link in linklists[section.settings.menu_shop].links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}">The Collection</a>
+        <a href="/pages/the-ritual">Ritual Finder</a>
+      {%- endif -%}
     </nav>
 
     <nav class="footer__col">
-      <h4>About</h4>
-      <a href="/pages/the-pharmacists">The Pharmacists</a>
-      <a href="/pages/the-ritual">The Ritual</a>
-      <a href="/pages/founders-circle">Founder's Circle</a>
+      <h4>{{ section.settings.heading_discover }}</h4>
+      {%- if section.settings.menu_discover != blank -%}
+        {%- for link in linklists[section.settings.menu_discover].links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="/pages/the-pharmacists">The Pharmacists</a>
+        <a href="{{ journal_url }}">The Journal</a>
+        <a href="/pages/founders-circle">Founders' Circle</a>
+      {%- endif -%}
     </nav>
 
     <nav class="footer__col">
-      <h4>Support</h4>
-      <a href="/pages/contact">Contact</a>
-      <a href="/pages/faq">FAQ</a>
-      <a href="/pages/shipping-returns">Shipping</a>
-      <a href="/pages/shipping-returns">Returns</a>
+      <h4>{{ section.settings.heading_help }}</h4>
+      {%- if section.settings.menu_help != blank -%}
+        {%- for link in linklists[section.settings.menu_help].links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="/pages/contact">Contact</a>
+        <a href="/pages/faq">FAQ</a>
+        <a href="/pages/shipping-returns">Shipping &amp; Returns</a>
+      {%- endif -%}
     </nav>
-
-    <nav class="footer__col">
-      <h4>Legal</h4>
-      <a href="/pages/privacy">Privacy</a>
-      <a href="/pages/terms">Terms</a>
-    </nav>
-
-    {%- liquid
-      assign ig = settings.social_instagram | default: section.settings.instagram | default: '#'
-      assign tt = settings.social_tiktok | default: section.settings.tiktok | default: '#'
-      assign pin = settings.social_pinterest | default: section.settings.pinterest | default: '#'
-      assign mail = settings.social_email | default: section.settings.email | default: 'hello@chemistrie.com'
-    -%}
   </div>
 
   <div class="footer__bot">
-    <span>© Chemistrie LLC, {{ 'now' | date: '%Y' }}. Compounded with care in Houston.</span>
+    <span>© {{ 'now' | date: '%Y' }} {{ section.settings.copyright_line }} Compounded with care in Houston.</span>
+
+    {%- if privacy_url != blank or terms_url != blank -%}
+      <nav class="footer__legal">
+        {%- if privacy_url != blank -%}
+          <a href="{{ privacy_url }}">{{ section.settings.privacy_label }}</a>
+        {%- endif -%}
+        {%- if terms_url != blank -%}
+          <a href="{{ terms_url }}">{{ section.settings.terms_label }}</a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+
     <div class="footer__social">
-      <a href="{{ ig }}" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
-      </a>
-      <a href="{{ pin }}" aria-label="Pinterest">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M11 22 13 13M9 9c0-2 1.5-4 4-4s4 2 4 4-1 5-4 5c-1.2 0-2-1-2-2"/></svg>
-      </a>
-      <a href="{{ tt }}" aria-label="TikTok">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 4v10a4 4 0 1 1-4-4M14 4c0 3 2 5 5 5"/></svg>
-      </a>
+      {%- if ig != blank -%}
+        <a href="{{ ig }}" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+        </a>
+      {%- endif -%}
+      {%- if pin != blank -%}
+        <a href="{{ pin }}" aria-label="Pinterest">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M11 22 13 13M9 9c0-2 1.5-4 4-4s4 2 4 4-1 5-4 5c-1.2 0-2-1-2-2"/></svg>
+        </a>
+      {%- endif -%}
+      {%- if tt != blank -%}
+        <a href="{{ tt }}" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 4v10a4 4 0 1 1-4-4M14 4c0 3 2 5 5 5"/></svg>
+        </a>
+      {%- endif -%}
     </div>
   </div>
 
@@ -67,10 +108,25 @@
 {
   "name": "Footer",
   "settings": [
+    { "type": "textarea", "id": "brand_line", "label": "Brand line", "default": "Pharmacist-formulated skincare, thoughtfully made." },
+    { "type": "header", "content": "Navigation columns" },
+    { "type": "paragraph", "content": "Assign a menu from Navigation to make a column's links editable. Left blank, the column shows its built-in launch links." },
+    { "type": "text", "id": "heading_shop", "label": "Column 1 heading", "default": "Shop" },
+    { "type": "link_list", "id": "menu_shop", "label": "Column 1 menu" },
+    { "type": "text", "id": "heading_discover", "label": "Column 2 heading", "default": "Discover" },
+    { "type": "link_list", "id": "menu_discover", "label": "Column 2 menu" },
+    { "type": "text", "id": "heading_help", "label": "Column 3 heading", "default": "Help" },
+    { "type": "link_list", "id": "menu_help", "label": "Column 3 menu" },
+    { "type": "header", "content": "Legal" },
+    { "type": "text", "id": "copyright_line", "label": "Copyright line (after the year)", "default": "Chemistrie. All rights reserved." },
+    { "type": "text", "id": "privacy_label", "label": "Privacy link label", "default": "Privacy Policy" },
+    { "type": "url", "id": "privacy_url", "label": "Privacy link URL", "info": "Leave blank to use the store's Privacy Policy from Settings → Policies. The link is hidden if neither is set." },
+    { "type": "text", "id": "terms_label", "label": "Terms link label", "default": "Terms of Use" },
+    { "type": "url", "id": "terms_url", "label": "Terms link URL", "info": "Leave blank to use the store's Terms of Service from Settings → Policies. The link is hidden if neither is set." },
+    { "type": "header", "content": "Social" },
     { "type": "url", "id": "instagram", "label": "Instagram URL" },
     { "type": "url", "id": "tiktok", "label": "TikTok URL" },
-    { "type": "url", "id": "pinterest", "label": "Pinterest URL" },
-    { "type": "text", "id": "email", "label": "Contact email", "default": "hello@chemistrie.com" }
+    { "type": "url", "id": "pinterest", "label": "Pinterest URL" }
   ]
 }
 {% endschema %}
