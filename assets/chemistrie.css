@@ -2867,19 +2867,31 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ───────── Trust Signals (pillars) — tablet & phone image sizing ─────────
    The stacked breakpoints above re-declare `.pillar__crest` at the circle
-   badge's fixed 120/140px, which also hit the full-bleed image variant and
-   squashed it to a small square. These selectors carry two classes so they
-   win on specificity rather than source order — a later single-class
-   `.pillar__crest` rule can't undo them again. */
+   badge's fixed 120/140px, which also caught the photo variants and shrank
+   each pillar image to a small badge. Both photo variants are covered here
+   (`--fullimage` when the section is set to full-bleed, `--image` when it is
+   set to circle badge) so the image reads as a banner on small screens
+   whichever style the section is configured for. Two-class selectors, so
+   these win on specificity rather than source order — a later single-class
+   `.pillar__crest` rule can't quietly undo them again. */
 @media (max-width: 1024px) {
-  .pillar__visual--full .pillar__crest--fullimage {
+  .pillar__visual .pillar__crest--fullimage,
+  .pillar__visual .pillar__crest--image {
     width: 100%;
     max-width: 420px;
     height: auto;
     aspect-ratio: 4 / 3;
     border-radius: 18px;
   }
+  /* the badge variants draw an inset ring meant for a circle */
+  .pillar__visual .pillar__crest--fullimage::before,
+  .pillar__visual .pillar__crest--image::before { display: none; }
 }
 @media (max-width: 700px) {
-  .pillar__visual--full .pillar__crest--fullimage { max-width: none; }
+  .pillar__visual .pillar__crest--fullimage,
+  .pillar__visual .pillar__crest--image { max-width: none; }
+  /* This section already opts out of its entrance animations on phones
+     (see `.pillar { transform: none !important }` above); include the crest
+     so a scroll trigger that never fires can't leave it scaled down. */
+  .pillar__crest { transform: none !important; opacity: 1 !important; }
 }
