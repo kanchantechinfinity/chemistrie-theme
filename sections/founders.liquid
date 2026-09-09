@@ -3,9 +3,11 @@
   <div class="founders__head">
     <span class="eyebrow">— The Pharmacists —</span>
     <h2 class="display-h">{{ section.settings.heading }}</h2>
-    <p class="founders__lede">
-      {{ section.settings.lede }}
-    </p>
+    {%- if section.settings.lede != blank -%}
+      <p class="founders__lede">
+        {{ section.settings.lede }}
+      </p>
+    {%- endif -%}
   </div>
 
   <div class="founders__media">
@@ -64,9 +66,9 @@
     { "type": "image_picker", "id": "founder1_image", "label": "Founder 1 photo (optional)" },
     { "type": "text", "id": "founder2_name", "label": "Founder 2 name", "default": "Zach" },
     { "type": "image_picker", "id": "founder2_image", "label": "Founder 2 photo (optional)" },
-    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Harin and Zach, compounding pharmacists, formulating for the women they love." },
-    { "type": "textarea", "id": "paragraph1", "label": "Paragraph 1", "default": "Before Chemistrie existed, Harin and Zach spent years behind a pharmacy counter, measuring things for people who couldn't afford to be wrong." },
-    { "type": "textarea", "id": "paragraph2", "label": "Paragraph 2", "default": "Chemistrie carries the same standard onto a skin care shelf." },
+    { "type": "textarea", "id": "lede", "label": "Lede" },
+    { "type": "textarea", "id": "paragraph1", "label": "Paragraph 1", "default": "Before Chemistrie, Harin and Zach spent years as compounding pharmacists, where precision, formulation, and attention to detail were part of the job." },
+    { "type": "textarea", "id": "paragraph2", "label": "Paragraph 2", "default": "Chemistrie brings that same thoughtful approach to skincare." },
     { "type": "text", "id": "sig", "label": "Signature", "default": "Harin & Zach" },
     { "type": "text", "id": "sig_sub", "label": "Signature subtitle", "default": "Co-founders · Compounding Pharmacists" },
     { "type": "header", "content": "CTA (optional)" },
