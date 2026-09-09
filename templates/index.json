@@ -43,7 +43,8 @@
             "item2": "",
             "item3": "",
             "crest_mono": "Rx",
-            "crest_sub": ""
+            "crest_sub": "",
+            "image_asset": "pillar-pharmacist-formulated.png"
           }
         },
         "pillar_TyVrzy": {
@@ -68,7 +69,8 @@
             "item2": "",
             "item3": "",
             "crest_mono": "for her",
-            "crest_sub": ""
+            "crest_sub": "",
+            "image_asset": "pillar-designed-together.png"
           }
         }
       },
