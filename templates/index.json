@@ -92,9 +92,9 @@
       "type": "shop",
       "name": "Shop",
       "settings": {
-        "heading": "The Collection.",
-        "lede": "Everything a routine needs, and nothing it doesn't.",
-        "foot_link_label": "Explore the Full Collection",
+        "heading": "Individual formulas. Your ritual.",
+        "lede": "A focused collection designed to stand beautifully on its own and work intentionally together.",
+        "foot_link_label": "Explore the Collection",
         "collection": "home-page-products"
       }
     },
