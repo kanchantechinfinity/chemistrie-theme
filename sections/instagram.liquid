@@ -15,6 +15,7 @@
       <a class="insta__handle" href="{{ section.settings.instagram_url | default: '#' }}" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg>
         <span>{{ section.settings.handle }}</span>
+        <em>· {{ section.settings.follower_count }}</em>
       </a>
       <div class="insta__nav" aria-label="Slider navigation">
         <button class="insta__arrow" data-dir="-1" aria-label="Previous">
@@ -70,12 +71,13 @@
   "name": "Instagram",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Follow Chemistrie —" },
-    { "type": "html", "id": "heading", "label": "Heading", "default": "Behind the formulas. Inside the ritual." },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Follow the<br/><em>Formulary.</em>" },
     { "type": "text", "id": "sub", "label": "Subheadline" },
     { "type": "textarea", "id": "body", "label": "Body copy" },
     { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Follow on Instagram" },
     { "type": "url", "id": "instagram_url", "label": "Instagram profile URL" },
-    { "type": "text", "id": "handle", "label": "Handle", "default": "@chemistrie.co" }
+    { "type": "text", "id": "handle", "label": "Handle", "default": "@chemistrie.co" },
+    { "type": "text", "id": "follower_count", "label": "Follower count", "default": "21.4k" }
   ],
   "blocks": [
     {

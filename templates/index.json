@@ -466,12 +466,13 @@
       "name": "Instagram",
       "settings": {
         "eyebrow": "— Follow Chemistrie —",
-        "heading": "Behind the formulas. Inside the ritual.",
+        "heading": "Follow the<br><em>Formulary.</em>",
         "sub": "",
         "body": "",
         "cta_label": "Follow on Instagram",
         "instagram_url": "https://www.instagram.com/chemistrie.co/",
-        "handle": "@chemistrie.co"
+        "handle": "@chemistrie.co",
+        "follower_count": "21.4k"
       }
     },
     "newsletter_cta_bQgTWH": {
