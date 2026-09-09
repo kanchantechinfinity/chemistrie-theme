@@ -2561,8 +2561,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .founders__head { order: 1; }
   .founders__media { order: 2; }
   .founders__body { order: 3; }
-  .founders__media { min-height: 480px; max-width: 560px; margin: 0 auto; width: 100%; }
+  .founders__media { min-height: 480px; max-width: 560px; margin: 0; width: 100%; padding-bottom: 44px; }
   .founders__photo img { object-position: center 22%; }
+  .founders__caption { bottom: 0; left: 0; max-width: none; }
 
   .proof__grid { grid-template-columns: repeat(2, 1fr); }
   .proof__cell:nth-child(3) { border-left: 0; }
@@ -2645,11 +2646,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .founders__head { order: 1; }
   .founders__media { order: 2; margin: 8px 0; }
   .founders__body { order: 3; margin-top: 40px; }
-  .founders__media { min-height: 380px; }
-  .founders__photo--a { width: 58%; height: 60%; top: 0; left: 0; }
-  .founders__photo--b { width: 50%; height: 52%; top: auto; bottom: 0; left: auto; right: 0; }
+  .founders__media { min-height: 420px; max-width: none; padding-bottom: 0; }
+  .founders__photo--a { width: 58%; height: 56%; top: 0; left: 0; }
+  .founders__photo--b { width: 50%; height: 48%; top: 34%; bottom: auto; left: auto; right: 0; }
   .founders__photo img { object-position: center 22%; }
-  .founders__caption { font-size: 12px; bottom: -24px; left: 0; }
+  .founders__caption { font-size: 12px; bottom: 0; left: 0; max-width: none; }
   .founders__lede { font-size: 18px; }
   .founders__sig { font-size: 22px; }
 
