@@ -1,0 +1,25 @@
+{%- comment -%}
+  Outputs a product's short descriptor for cards. A custom.descriptor
+  metafield wins, then the approved launch copy, then the Shopify product
+  type — never a truncated description paragraph.
+{%- endcomment -%}
+{%- liquid
+  assign _ph = product.handle | downcase
+  assign _pt = product.title | downcase
+  assign meta_descriptor = product.metafields.custom.descriptor.value
+  if meta_descriptor != blank
+    echo meta_descriptor
+  elsif _ph contains 'velvet' or _pt contains 'velvet'
+    echo 'Foaming Facial Cleanser'
+  elsif _ph contains 'veil' or _pt contains 'veil'
+    echo 'Weightless Hydrating Serum'
+  elsif _ph contains 'cashmere' or _pt contains 'cashmere'
+    echo 'Lightweight Hydrating Lotion'
+  elsif _ph contains 'aura' or _pt contains 'aura'
+    echo 'Advanced Renewal Cream'
+  elsif _ph contains 'silken' or _pt contains 'silken'
+    echo 'Scar Refining Gel'
+  else
+    echo product.type
+  endif
+-%}
