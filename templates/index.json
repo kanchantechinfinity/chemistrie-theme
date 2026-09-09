@@ -405,17 +405,73 @@
     },
     "instagram_GV7ThA": {
       "type": "instagram",
+      "blocks": {
+        "post_bench": {
+          "type": "post",
+          "settings": {
+            "image_asset": "pillar-pharmacist-formulated.png",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "post_velvet": {
+          "type": "post",
+          "settings": {
+            "image_asset": "product-velvet.png",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "post_veil": {
+          "type": "post",
+          "settings": {
+            "image_asset": "product-veil.png",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "post_aura": {
+          "type": "post",
+          "settings": {
+            "image_asset": "product-aura.png",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "post_silken": {
+          "type": "post",
+          "settings": {
+            "image_asset": "product-silken.png",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "post_cashmere": {
+          "type": "post",
+          "settings": {
+            "image_asset": "product-cashmere.png",
+            "caption": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "post_bench",
+        "post_velvet",
+        "post_veil",
+        "post_aura",
+        "post_silken",
+        "post_cashmere"
+      ],
       "name": "Instagram",
       "settings": {
-        "eyebrow": "— The Bench, on Instagram —",
-        "heading": "Follow the<br><em>Formulary.</em>",
-        "sub": "Behind-the-scenes formulation notes, the founders' letters, and the earliest look at what's next.",
-        "body": "Shared occasionally, on Instagram.",
+        "eyebrow": "— Follow Chemistrie —",
+        "heading": "Behind the formulas. Inside the ritual.",
+        "sub": "",
+        "body": "",
         "cta_label": "Follow on Instagram",
-        "instagram_url": "",
-        "handle": "@chemistrie.co",
-        "follower_count": "21.4k",
-        "feed_embed": ""
+        "instagram_url": "https://www.instagram.com/chemistrie.co/",
+        "handle": "@chemistrie.co"
       }
     },
     "newsletter_cta_bQgTWH": {

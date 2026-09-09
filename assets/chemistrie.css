@@ -2427,7 +2427,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   cursor: pointer;
 }
 .reel__media {
-  aspect-ratio: 9/16;
+  aspect-ratio: 4/5;
   border-radius: 14px;
   overflow: hidden;
   position: relative;
@@ -2445,36 +2445,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,.4) 100%);
   pointer-events: none;
 }
-.reel__play {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(.85);
-  width: 54px; height: 54px;
-  border-radius: 50%;
-  background: rgba(249,244,237,.92);
-  color: var(--c-forest);
-  display: grid;
-  place-items: center;
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  transition: all .3s var(--ease-out);
-  z-index: 2;
-}
-.reel:hover .reel__play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-.reel__duration {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  font-family: var(--ff-body);
-  font-size: 11px;
-  letter-spacing: .04em;
-  background: rgba(0,0,0,.55);
-  color: var(--c-cream);
-  padding: 4px 8px;
-  border-radius: 4px;
-  z-index: 2;
-  backdrop-filter: blur(4px);
-}
 .reel__meta {
   display: flex;
   flex-direction: column;
@@ -2487,19 +2457,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   line-height: 1.5;
   color: var(--c-ink);
 }
-.reel__stats {
-  display: flex;
-  gap: 16px;
-  font-size: 11px;
-  letter-spacing: .04em;
-  color: var(--c-ink-mute);
-}
-.reel__stats span {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.reel__stats svg { color: var(--c-tan); }
 
 .insta__cta {
   display: flex;
