@@ -38,7 +38,7 @@
           "type": "pillar",
           "settings": {
             "title": "Pharmacist-Formulated",
-            "lede": "Every formula answers to two pharmacists, by name, not a lab Chemistrie doesn't own.",
+            "lede": "Every formula is developed with the precision, intention, and accountability we bring to pharmacy.",
             "item1": "",
             "item2": "",
             "item3": "",
@@ -50,8 +50,8 @@
         "pillar_TyVrzy": {
           "type": "pillar",
           "settings": {
-            "title": "Pharmacist-Selected Sourcing",
-            "lede": "Ingredients sourced through PCCA's ExoBlue platform, chosen deliberately, never developed in-house and never claimed as Chemistrie's own technology.",
+            "title": "Purposefully Formulated",
+            "lede": "Every ingredient earns its place, selected not for the label, but for what it contributes to the formula as a whole.",
             "item1": "",
             "item2": "",
             "item3": "",
@@ -63,8 +63,8 @@
         "pillar_cCqT3t": {
           "type": "pillar",
           "settings": {
-            "title": "Appearance-Language, Always",
-            "lede": "Every claim on this site is written to be checked, not simply believed.",
+            "title": "Designed to Work Together",
+            "lede": "A focused collection made to layer with intention, so your ritual includes what your skin needs and leaves out what it doesn't.",
             "item1": "",
             "item2": "",
             "item3": "",
