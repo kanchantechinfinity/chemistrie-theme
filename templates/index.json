@@ -44,7 +44,7 @@
             "item3": "",
             "crest_mono": "Rx",
             "crest_sub": "",
-            "image": "shopify://shop_images/high-angle-natural-cream-concept.jpg"
+            "image_asset": "pillar-pharmacist-formulated.png"
           }
         },
         "pillar_TyVrzy": {
@@ -57,7 +57,7 @@
             "item3": "",
             "crest_mono": "C.",
             "crest_sub": "",
-            "image": "shopify://shop_images/natural-products-arrangement-top-view.jpg"
+            "image_asset": "pillar-purposefully-formulated.png"
           }
         },
         "pillar_cCqT3t": {
@@ -70,7 +70,7 @@
             "item3": "",
             "crest_mono": "for her",
             "crest_sub": "",
-            "image": "shopify://shop_images/beach-skincare-product-still-life.jpg"
+            "image_asset": "pillar-designed-together.png"
           }
         }
       },

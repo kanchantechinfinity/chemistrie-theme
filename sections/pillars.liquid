@@ -46,6 +46,16 @@
           <img class="pillar__crest-img" src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
           <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
         </div>
+        {%- elsif block.settings.image_asset != blank and section.settings.crest_style == 'full' -%}
+        <div class="pillar__crest pillar__crest--fullimage{{ crest_mod }}">
+          <img class="pillar__crest-img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
+        </div>
+        {%- elsif block.settings.image_asset != blank -%}
+        <div class="pillar__crest pillar__crest--image{{ crest_mod }}">
+          <img class="pillar__crest-img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
+        </div>
         {%- else -%}
         <div class="pillar__crest{{ crest_mod }}">
           <span class="pillar__mono{{ mono_mod }}">{{ block.settings.crest_mono }}</span>
@@ -81,7 +91,8 @@
         { "type": "text", "id": "item3", "label": "List item 3" },
         { "type": "text", "id": "crest_mono", "label": "Crest mono", "default": "Rx" },
         { "type": "text", "id": "crest_sub", "label": "Crest sub" },
-        { "type": "image_picker", "id": "image", "label": "Crest image (optional — replaces the Rx/mono badge with a photo)" }
+        { "type": "image_picker", "id": "image", "label": "Crest image (optional — replaces the Rx/mono badge with a photo)" },
+        { "type": "text", "id": "image_asset", "label": "Crest image filename in /assets (fallback used only if Crest image above is empty)" }
       ]
     }
   ],
