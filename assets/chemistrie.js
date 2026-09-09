@@ -210,18 +210,21 @@
       opacity: 0, x: 40, scale: 0.92, duration: 1.2, ease: "power2.out", delay: 0.15,
       scrollTrigger: { trigger: ".founders", start: "top 70%" },
     });
-    gsap.from(".founders__copy > *", {
+    gsap.from(".founders__head > *, .founders__body > *", {
       opacity: 0, y: 30, duration: 1, ease: "power2.out", stagger: 0.08,
-      scrollTrigger: { trigger: ".founders__copy", start: "top 75%" },
+      scrollTrigger: { trigger: ".founders", start: "top 75%" },
     });
-    /* photo parallax inside founders */
-    gsap.to(".founders__photo--a", {
-      y: -40, ease: "none",
-      scrollTrigger: { trigger: ".founders", start: "top bottom", end: "bottom top", scrub: true },
-    });
-    gsap.to(".founders__photo--b", {
-      y: 40, ease: "none",
-      scrollTrigger: { trigger: ".founders", start: "top bottom", end: "bottom top", scrub: true },
+    /* Parallax only above 1024px: below that the photos are static grid items,
+       so shifting them vertically drags them over the headline and caption. */
+    gsap.matchMedia().add("(min-width: 1025px)", () => {
+      gsap.to(".founders__photo--a", {
+        y: -40, ease: "none",
+        scrollTrigger: { trigger: ".founders", start: "top bottom", end: "bottom top", scrub: true },
+      });
+      gsap.to(".founders__photo--b", {
+        y: 40, ease: "none",
+        scrollTrigger: { trigger: ".founders", start: "top bottom", end: "bottom top", scrub: true },
+      });
     });
   }
 
