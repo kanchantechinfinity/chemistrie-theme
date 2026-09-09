@@ -35,26 +35,23 @@
         </ul>
         {%- endif -%}
       </div>
-      <div class="pillar__visual{% if section.settings.crest_style == 'full' %} pillar__visual--full{% endif %}">
-        {%- if block.settings.image != blank and section.settings.crest_style == 'full' -%}
+      <div class="pillar__visual pillar__visual--full">
+        {%- comment -%}
+          A photo always uses the full-bleed treatment. The old markup also
+          keyed this off the section's "Crest image style" setting, which left
+          the photo rendering as a small circle badge whenever that setting
+          didn't say "full".
+        {%- endcomment -%}
+        {%- if block.settings.image != blank or block.settings.image_asset != blank -%}
         <div class="pillar__crest pillar__crest--fullimage{{ crest_mod }}">
-          <img class="pillar__crest-img" src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-          <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
-        </div>
-        {%- elsif block.settings.image != blank -%}
-        <div class="pillar__crest pillar__crest--image{{ crest_mod }}">
-          <img class="pillar__crest-img" src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-          <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
-        </div>
-        {%- elsif block.settings.image_asset != blank and section.settings.crest_style == 'full' -%}
-        <div class="pillar__crest pillar__crest--fullimage{{ crest_mod }}">
-          <img class="pillar__crest-img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-          <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
-        </div>
-        {%- elsif block.settings.image_asset != blank -%}
-        <div class="pillar__crest pillar__crest--image{{ crest_mod }}">
-          <img class="pillar__crest-img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-          <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
+          {%- if block.settings.image != blank -%}
+            <img class="pillar__crest-img" src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          {%- else -%}
+            <img class="pillar__crest-img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+          {%- endif -%}
+          {%- if block.settings.crest_sub != blank -%}
+            <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
+          {%- endif -%}
         </div>
         {%- else -%}
         <div class="pillar__crest{{ crest_mod }}">
@@ -68,6 +65,32 @@
 
   </div>
 </section>
+
+{% stylesheet %}
+/* Pillar photo sizing lives here, not in chemistrie.css, because that file
+   re-declares `.pillar__crest` at the circle badge's fixed 120-140px inside
+   several later breakpoints. !important is deliberate — it is the only way to
+   win against those without depending on file order. */
+.pillar__crest--fullimage { border-radius: 20px !important; }
+.pillar__crest--fullimage::before { display: none !important; }
+
+@media (max-width: 1024px) {
+  .pillar__visual { display: block !important; }
+  .pillar__crest--fullimage {
+    width: 100% !important;
+    max-width: 460px !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    /* the crest's scroll-triggered pop-in can strand it scaled down here */
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .pillar__crest--fullimage { max-width: none !important; }
+}
+{% endstylesheet %}
 
 {% schema %}
 {
