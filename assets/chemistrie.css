@@ -1336,7 +1336,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .founders__head { order: 1; }
   .founders__media { order: 2; }
   .founders__body { order: 3; }
-  .founders__media { min-height: 520px; }
 }
 
 /* ───────── Active Index — pinned horizontal showcase ───────── */
@@ -2561,9 +2560,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .founders__head { order: 1; }
   .founders__media { order: 2; }
   .founders__body { order: 3; }
-  .founders__media { min-height: 480px; max-width: 560px; margin: 0; width: 100%; padding-bottom: 44px; }
+  /* Stacked layouts can't hold the desktop overlap: two ovals side by side, caption in flow. */
+  .founders__media {
+    position: static;
+    min-height: 0; max-width: none; width: 100%; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(12px, 2.5vw, 24px);
+    align-items: start;
+  }
+  .founders__photo { position: static; width: 100%; height: auto; aspect-ratio: 4 / 5; }
   .founders__photo img { object-position: center 22%; }
-  .founders__caption { bottom: 0; left: 0; max-width: none; }
+  .founders__caption { position: static; grid-column: 1 / -1; max-width: none; margin: 6px 0 0; }
+  .founders__body { margin-top: 28px; }
 
   .proof__grid { grid-template-columns: repeat(2, 1fr); }
   .proof__cell:nth-child(3) { border-left: 0; }
@@ -2646,11 +2654,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .founders__head { order: 1; }
   .founders__media { order: 2; margin: 8px 0; }
   .founders__body { order: 3; margin-top: 40px; }
-  .founders__media { min-height: 420px; max-width: none; padding-bottom: 0; }
-  .founders__photo--a { width: 58%; height: 56%; top: 0; left: 0; }
-  .founders__photo--b { width: 50%; height: 48%; top: 34%; bottom: auto; left: auto; right: 0; }
-  .founders__photo img { object-position: center 22%; }
-  .founders__caption { font-size: 12px; bottom: 0; left: 0; max-width: none; }
+  .founders__caption { font-size: 12px; }
   .founders__lede { font-size: 18px; }
   .founders__sig { font-size: 22px; }
 
@@ -2825,8 +2829,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .product__price { font-size: 19px; }
 
   /* Founders */
-  .founders__media { min-height: 360px; max-width: 100%; }
-  .founders__caption { font-size: 11.5px; bottom: -22px; }
+  .founders__media { max-width: 100%; }
+  .founders__caption { font-size: 11.5px; }
 
   /* Actives — native horizontal scroll (CSS-guaranteed fallback, matches .ritual__pin's pattern — don't rely on JS alone) */
   .actives__intro { padding-top: 64px; padding-bottom: 28px; }
