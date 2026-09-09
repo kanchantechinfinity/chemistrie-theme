@@ -43,8 +43,7 @@
             "item2": "",
             "item3": "",
             "crest_mono": "Rx",
-            "crest_sub": "",
-            "image_asset": "pillar-pharmacist-formulated.png"
+            "crest_sub": ""
           }
         },
         "pillar_TyVrzy": {
@@ -56,8 +55,8 @@
             "item2": "",
             "item3": "",
             "crest_mono": "C.",
-            "crest_sub": "",
-            "image_asset": "pillar-purposefully-formulated.png"
+           "crest_sub": "",
+           "image_asset": "pillar-purposefully-formulated.png"
           }
         },
         "pillar_cCqT3t": {
@@ -69,8 +68,7 @@
             "item2": "",
             "item3": "",
             "crest_mono": "for her",
-            "crest_sub": "",
-            "image_asset": "pillar-designed-together.png"
+            "crest_sub": ""
           }
         }
       },
