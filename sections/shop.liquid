@@ -206,7 +206,33 @@
     </article>
 
     {% else %}
-      {% for product in section.settings.collection.products limit: 12 %}
+      {%- comment -%} Launch products render in ritual order; anything else follows in collection order. {%- endcomment -%}
+      {%- liquid
+        assign launch_keys = 'velvet,veil,aura,silken,cashmere' | split: ','
+        assign ordered = ','
+        for key in launch_keys
+          for p in section.settings.collection.products
+            assign _h = p.handle | downcase
+            assign _t = p.title | downcase
+            if _h contains key or _t contains key
+              assign _needle = p.handle | prepend: ',' | append: ','
+              unless ordered contains _needle
+                assign ordered = ordered | append: p.handle | append: ','
+              endunless
+            endif
+          endfor
+        endfor
+        for p in section.settings.collection.products
+          assign _needle = p.handle | prepend: ',' | append: ','
+          unless ordered contains _needle
+            assign ordered = ordered | append: p.handle | append: ','
+          endunless
+        endfor
+        assign ordered = ordered | remove_first: ',' | split: ','
+      -%}
+      {% for handle in ordered limit: 12 %}
+      {%- assign product = all_products[handle] -%}
+      {%- if product == blank -%}{%- continue -%}{%- endif -%}
       {%- liquid
         assign _pt = product.title | downcase
         assign _ph = product.handle | downcase
