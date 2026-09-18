@@ -284,9 +284,8 @@
 
     </div>
 
-    <!-- ───── Recommendations View (Background Page) ───── -->
+    <!-- ───── Recommendations View (Main Page) ───── -->
     <div class="rf-results-page" id="rfResultsPage" style="display: none;">
-      <div class="rf-results-page__inner">
         <div class="rf-result__header">
           <span class="eyebrow eyebrow--accent">— Your Personalized Routine —</span>
           <h2 class="display-h rf-result__title" id="rfResultTitle">The Pure Hydration &amp; Renewal Ritual</h2>
@@ -432,7 +431,10 @@
     function renderStep() {
       if (currentStep < questionSlides.length) {
         // Question View
-        card.classList.remove("is-results");
+        card.style.display = "block";
+        if (resultsPage) {
+          resultsPage.style.display = "none";
+        }
         slides.forEach(function(s, idx) {
           if (idx === currentStep) {
             s.classList.add("is-active");
@@ -442,10 +444,6 @@
             s.style.display = "none";
           }
         });
-
-        if (resultsPage) {
-          resultsPage.style.display = "none";
-        }
 
         if (cardFooter) cardFooter.style.display = "flex";
         if (eyebrowEl) eyebrowEl.textContent = "— {{ section.settings.eyebrow | default: 'Personalized Consultation' }} —";
@@ -483,18 +481,10 @@
     }
 
     function showResults() {
-      card.classList.add("is-results");
-      questionSlides.forEach(function(s) {
-        s.classList.remove("is-active");
-        s.style.display = "none";
-      });
+      card.style.display = "none";
       if (resultsPage) {
         resultsPage.style.display = "block";
       }
-      if (cardFooter) cardFooter.style.display = "none";
-      if (eyebrowEl) eyebrowEl.textContent = "— {{ section.settings.eyebrow | default: 'Personalized Consultation' }} —";
-      if (stepTextEl) stepTextEl.textContent = "Consultation Complete";
-      if (progressBar) progressBar.style.width = "100%";
 
       // Compute recommendation
       var ritualTitle = "The Pure Hydration & Renewal Ritual";
