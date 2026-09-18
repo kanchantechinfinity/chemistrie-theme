@@ -84,7 +84,7 @@
 
         {%- if block.settings.found_in != blank -%}
           {%- liquid
-            assign found_items = block.settings.found_in | split: '+'
+            assign found_items = block.settings.found_in | replace: '&', '+' | split: '+'
           -%}
           <div class="active-card__found">
             <span class="active-card__found-label">Found in:</span>
@@ -92,7 +92,7 @@
               {%- for item in found_items -%}
                 {%- assign prod_name = item | strip -%}
                 {%- assign prod_handle = prod_name | downcase -%}
-                <a class="active-card__product-link" href="/products/{{ prod_handle }}">{{ prod_name }}</a>{%- unless forloop.last -%} <span class="active-card__plus">+</span> {%- endunless -%}
+                <a class="active-card__product-link" href="/products/{{ prod_handle }}">{{ prod_name }}</a>{%- unless forloop.last -%} <span class="active-card__separator">&amp;</span> {%- endunless -%}
               {%- endfor -%}
             </span>
           </div>
@@ -137,7 +137,7 @@
         { "type": "text", "id": "name", "label": "Ingredient Name", "default": "Sodium Hyaluronate" },
         { "type": "text", "id": "category", "label": "Category", "default": "Hydration" },
         { "type": "textarea", "id": "description", "label": "Short Explanation", "default": "A humectant selected to help attract and retain moisture, supporting a hydrated, supple appearance." },
-        { "type": "text", "id": "found_in", "label": "Found in Product(s)", "default": "Velvet + Veil" }
+        { "type": "text", "id": "found_in", "label": "Found in Product(s)", "default": "Velvet & Veil" }
       ]
     }
   ],

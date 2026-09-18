@@ -1545,8 +1545,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .active-card__product-link:hover { color: var(--c-tan); }
 .active-card--hero .active-card__product-link { color: var(--c-cream); }
-.active-card--hero .active-card__product-link:hover { color: var(--c-tan); }
-.active-card__plus { color: var(--c-tan); font-style: normal; }
+.active-card__separator,
+.active-card__plus { color: var(--c-tan); font-style: normal; margin: 0 3px; }
 
 .actives__progress {
   position: absolute;

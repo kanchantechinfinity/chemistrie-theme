@@ -1595,7 +1595,7 @@ slot ready; it renders the moment the product is in the collection.
   - Headline: What's inside, and why it's there.
   - Supporting copy: A closer look at select ingredients behind our formulas, each chosen for the role it plays.
 - Replaced 12 placeholder active cards with the 6 verified cards:
-  1. Sodium Hyaluronate: Hydration | Velvet + Veil
+  1. Sodium Hyaluronate: Hydration | Velvet & Veil
   2. Beta-Glucan: Skin Conditioning | Veil
   3. Panthenol: Moisture Support | Velvet
   4. Centella Asiatica: Skin Conditioning | Aura
