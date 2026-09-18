@@ -444,11 +444,22 @@
 }
 
 /* ───── Results View ───── */
+.rf-form-card.is-results {
+  max-width: 960px;
+  transition: max-width .35s var(--ease-out);
+}
+.rf-slide--results {
+  display: none;
+}
+.rf-slide--results.is-active {
+  display: block;
+  animation: rfFadeIn .4s var(--ease-out) forwards;
+}
 .ritual-finder-app__result {
-  animation: rfFadeIn .6s var(--ease-out) forwards;
+  animation: rfFadeIn .4s var(--ease-out) forwards;
 }
 @keyframes rfFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
