@@ -274,16 +274,26 @@
       <div class="rf-result__regimen">
         <!-- Morning Sequence -->
         <div class="rf-result__routine">
-          <div class="rf-result__routine-label">AM</div>
+          <div class="rf-result__routine-head">
+            <div class="rf-result__routine-label">AM</div>
+            <div class="rf-result__routine-meta">
+              <h3 class="rf-result__routine-title">Morning Sequence</h3>
+              <span class="rf-result__routine-price" id="rfPriceAM"></span>
+            </div>
+          </div>
           <div class="rf-result__product-list" id="rfListAM"></div>
-          <div class="rf-result__routine-price" id="rfPriceAM"></div>
         </div>
 
         <!-- Evening Sequence -->
         <div class="rf-result__routine">
-          <div class="rf-result__routine-label">PM</div>
+          <div class="rf-result__routine-head">
+            <div class="rf-result__routine-label">PM</div>
+            <div class="rf-result__routine-meta">
+              <h3 class="rf-result__routine-title">Evening Sequence</h3>
+              <span class="rf-result__routine-price" id="rfPricePM"></span>
+            </div>
+          </div>
           <div class="rf-result__product-list" id="rfListPM"></div>
-          <div class="rf-result__routine-price" id="rfPricePM"></div>
         </div>
       </div>
 
@@ -554,7 +564,7 @@
           subtotal += (p.cents || 0);
         });
         container.innerHTML = html || '<div style="padding:20px; text-align:center; color:#999;">No products available</div>';
-        if (priceEl) priceEl.textContent = "$" + Math.round(subtotal / 100);
+        if (priceEl) priceEl.textContent = "· $" + Math.round(subtotal / 100);
       }
 
       buildList(amHandles, listAM, priceAMEl);
