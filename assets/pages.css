@@ -187,6 +187,19 @@
   margin: 0 auto clamp(32px, 5vw, 52px);
   max-width: 720px;
 }
+.rf-result__title {
+  font-family: var(--ff-display) !important;
+  font-size: clamp(32px, 4vw, 48px) !important;
+  font-weight: 400 !important;
+  color: var(--c-forest) !important;
+  margin: 16px 0 24px !important;
+}
+.rf-result__rationale {
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--c-ink-soft);
+}
 
 /* Card Header: Eyebrow, Step Meta & Progress Bar */
 .rf-form-card__header {
@@ -506,12 +519,22 @@
   flex-direction: column;
   gap: 16px;
 }
+.rf-result__routine .rf-result__routine-label {
+  margin-bottom: 12px;
+}
 
 .rf-result__routine-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--c-forest);
+  color: var(--c-cream);
   font-family: var(--ff-display);
-  font-size: clamp(18px, 2vw, 24px);
+  font-size: 16px;
   font-weight: 500;
-  color: var(--c-forest);
   text-transform: uppercase;
   letter-spacing: .08em;
 }
@@ -528,20 +551,22 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  min-height: 140px;
 }
 .rf-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  background: var(--c-cream);
-  border: 1px solid var(--c-line-soft);
-  border-radius: 14px;
-  padding: 12px;
-  min-width: 120px;
-  flex: 0 0 calc(25% - 12px);
-  transition: transform .25s ease, border-color .25s ease;
-  text-align: center;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: var(--c-cream) !important;
+  border: 1px solid var(--c-line-soft) !important;
+  border-radius: 14px !important;
+  padding: 12px !important;
+  min-width: 100px !important;
+  width: calc(25% - 12px) !important;
+  flex-shrink: 0 !important;
+  transition: transform .25s ease, border-color .25s ease !important;
+  text-align: center !important;
 }
 .rf-item:hover {
   transform: translateY(-2px);
@@ -666,6 +691,11 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  background: var(--c-forest) !important;
+  color: var(--c-cream) !important;
+}
+.rf-result__btn-add:hover {
+  background: var(--c-forest-2) !important;
 }
 .rf-result__retake-link {
   background: none;
