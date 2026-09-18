@@ -230,26 +230,18 @@
 
           <!-- AM / PM Routine Regimen -->
           <div class="rf-result__regimen">
-            <div class="rf-result__timeline">
-              <!-- Morning Sequence -->
-              <div class="rf-result__routine-col">
-                <div class="rf-result__col-head">
-                  <span class="rf-result__col-badge">AM</span>
-                  <h3 class="rf-result__col-title">Morning Routine</h3>
-                  <p class="rf-result__col-desc">Cleanse, treat, and seal in lightweight protective hydration for the day ahead.</p>
-                </div>
-                <div class="rf-result__product-list" id="rfListAM"></div>
-              </div>
+            <!-- Morning Sequence -->
+            <div class="rf-result__routine">
+              <div class="rf-result__routine-label">AM</div>
+              <div class="rf-result__product-list" id="rfListAM"></div>
+              <div class="rf-result__routine-price" id="rfPriceAM"></div>
+            </div>
 
-              <!-- Evening Sequence -->
-              <div class="rf-result__routine-col">
-                <div class="rf-result__col-head">
-                  <span class="rf-result__col-badge">PM</span>
-                  <h3 class="rf-result__col-title">Evening Routine</h3>
-                  <p class="rf-result__col-desc">Dissolve the day's stress and support nighttime recovery and deep renewal.</p>
-                </div>
-                <div class="rf-result__product-list" id="rfListPM"></div>
-              </div>
+            <!-- Evening Sequence -->
+            <div class="rf-result__routine">
+              <div class="rf-result__routine-label">PM</div>
+              <div class="rf-result__product-list" id="rfListPM"></div>
+              <div class="rf-result__routine-price" id="rfPricePM"></div>
             </div>
           </div>
 
@@ -492,34 +484,38 @@
       var rationaleEl = document.getElementById("rfResultRationale");
       var listAM = document.getElementById("rfListAM");
       var listPM = document.getElementById("rfListPM");
+      var priceAMEl = document.getElementById("rfPriceAM");
+      var pricePMEl = document.getElementById("rfPricePM");
       var totalPriceEl = document.getElementById("rfTotalPrice");
 
       if (titleEl) titleEl.textContent = ritualTitle;
       if (rationaleEl) rationaleEl.textContent = rationale;
 
-      function buildList(handles, container) {
+      function buildList(handles, container, priceEl) {
         if (!container) return;
         var html = "";
+        var subtotal = 0;
         handles.forEach(function(h, i) {
           var p = products[h] || {};
           html += '<div class="rf-item">' +
             '<div class="rf-item__thumb"><img src="' + p.image + '" alt="' + p.title + '" loading="lazy"></div>' +
             '<div class="rf-item__info">' +
-              '<span class="rf-item__step-tag">Step 0' + (i + 1) + ' · ' + p.role + '</span>' +
-              '<h4 class="rf-item__name"><a href="' + p.url + '">' + p.title + ' — ' + p.stepSubtitle + '</a></h4>' +
-              '<p class="rf-item__why">' + p.why + '</p>' +
+              '<span class="rf-item__step-tag">' + p.role + '</span>' +
+              '<h4 class="rf-item__name"><a href="' + p.url + '">' + p.title + '</a></h4>' +
             '</div>' +
             '<div class="rf-item__right">' +
               '<span class="rf-item__price">' + p.price + '</span>' +
               '<a class="rf-item__link" href="' + p.url + '">View</a>' +
             '</div>' +
           '</div>';
+          subtotal += (p.cents || 0);
         });
         container.innerHTML = html;
+        if (priceEl) priceEl.textContent = "$" + Math.round(subtotal / 100);
       }
 
-      buildList(amHandles, listAM);
-      buildList(pmHandles, listPM);
+      buildList(amHandles, listAM, priceAMEl);
+      buildList(pmHandles, listPM, pricePMEl);
 
       var total = 0;
       var added = [];
