@@ -536,20 +536,21 @@
         var subtotal = 0;
         handles.forEach(function(h, i) {
           var p = products[h] || {};
-          html += '<div class="rf-item">' +
-            '<div class="rf-item__thumb"><img src="' + p.image + '" alt="' + p.title + '" loading="lazy"></div>' +
+          if (!p.title) return;
+          html += '<div class="rf-item" data-product="' + h + '">' +
+            (p.image ? '<div class="rf-item__thumb"><img src="' + p.image + '" alt="' + p.title + '" loading="lazy"></div>' : '') +
             '<div class="rf-item__info">' +
-              '<span class="rf-item__step-tag">' + p.role + '</span>' +
-              '<h4 class="rf-item__name"><a href="' + p.url + '">' + p.title + '</a></h4>' +
+              '<span class="rf-item__step-tag">' + (p.role || '') + '</span>' +
+              '<h4 class="rf-item__name"><a href="' + (p.url || '#') + '">' + p.title + '</a></h4>' +
             '</div>' +
             '<div class="rf-item__right">' +
-              '<span class="rf-item__price">' + p.price + '</span>' +
-              '<a class="rf-item__link" href="' + p.url + '">View</a>' +
+              '<span class="rf-item__price">' + (p.price || '') + '</span>' +
+              '<a class="rf-item__link" href="' + (p.url || '#') + '">View</a>' +
             '</div>' +
           '</div>';
           subtotal += (p.cents || 0);
         });
-        container.innerHTML = html;
+        container.innerHTML = html || '<div style="padding:20px; text-align:center; color:#999;">No products available</div>';
         if (priceEl) priceEl.textContent = "$" + Math.round(subtotal / 100);
       }
 
