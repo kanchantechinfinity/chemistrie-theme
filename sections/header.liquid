@@ -1,7 +1,9 @@
 <!-- ───── Top utility strip ───── -->
+{%- if section.settings.show_announcement -%}
 <div class="utility-strip">
-  <span>{{ section.settings.announcement | default: 'Complimentary shipping on orders over $120 · Pharmacist-formulated in Houston, TX' }}</span>
+  <span>{{ section.settings.announcement }}</span>
 </div>
+{%- endif -%}
 
 <!-- ───── Nav ───── -->
 <header class="nav" id="nav">
@@ -88,7 +90,8 @@
 {
   "name": "Header",
   "settings": [
-    { "type": "text", "id": "announcement", "label": "Announcement bar text", "default": "Complimentary shipping on orders over $120 · Pharmacist-formulated in Houston, TX" },
+    { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": false, "info": "Off by default at launch. Turn on for launches, promotions, or shipping offers once Chemistrie has approved the copy." },
+    { "type": "text", "id": "announcement", "label": "Announcement bar text", "default": "Pharmacist-formulated skincare, thoughtfully made." },
     { "type": "link_list", "id": "menu", "label": "Primary menu (optional — falls back to default links)" },
     { "type": "image_picker", "id": "mobile_logo", "label": "Mobile menu logo", "info": "Optional — falls back to CHEMISTRIE wordmark." }
   ]

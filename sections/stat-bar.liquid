@@ -1,3 +1,4 @@
+{%- if section.settings.show_bar -%}
 <section class="statbar" style="--statbar-cols: {{ section.blocks.size }};">
   <div class="statbar__inner">
     {%- for block in section.blocks -%}
@@ -8,10 +9,14 @@
     {%- endfor -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "Stat Bar",
+  "settings": [
+    { "type": "checkbox", "id": "show_bar", "label": "Show this bar", "default": false, "info": "Off by default. Turn on only once Chemistrie has supplied verified numbers for the stats below." }
+  ],
   "blocks": [
     {
       "type": "stat",

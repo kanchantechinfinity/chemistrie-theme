@@ -12,10 +12,11 @@
     "page-hero": {
       "type": "page-hero",
       "settings": {
-        "eyebrow": "— The Collection —",
+        "eyebrow": "THE COLLECTION",
         "heading": "The Collection.",
-        "deck": "Five products, formulated to be used together.",
-        "deck2": "Each one has a single job. None of them try to do another's.",
+        "deck": "Thoughtfully formulated skincare designed to work beautifully on its own or as part of your ritual.",
+        "deck2": "",
+        "show_visual": false,
         "hero_fallback_asset": "stock-lineup.jpg"
       }
     },
@@ -25,29 +26,29 @@
         "s1": {
           "type": "stat",
           "settings": {
-            "number": "6,000+",
-            "label": "Women served"
+            "number": "",
+            "label": ""
           }
         },
         "s2": {
           "type": "stat",
           "settings": {
-            "number": "1–2 Days",
-            "label": "Average ship time"
+            "number": "",
+            "label": ""
           }
         },
         "s3": {
           "type": "stat",
           "settings": {
-            "number": "★ 4.96",
-            "label": "Verified buyer rating"
+            "number": "",
+            "label": ""
           }
         },
         "s4": {
           "type": "stat",
           "settings": {
-            "number": "200",
-            "label": "Bottles per hand-numbered batch"
+            "number": "",
+            "label": ""
           }
         }
       },
@@ -57,7 +58,9 @@
         "s3",
         "s4"
       ],
-      "settings": {}
+      "settings": {
+        "show_bar": false
+      }
     },
     "main-collection": {
       "type": "main-collection",
@@ -66,12 +69,14 @@
     "page-cta": {
       "type": "page-cta",
       "settings": {
-        "eyebrow": "— Build Your Ritual —",
-        "heading": "Start with one. Add as you're ready.",
-        "sub": "Every product here is formulated to layer cleanly with the others, in whatever order your routine already runs.",
-        "button_label": "Build Your Ritual",
-        "button2_label": "Learn the Full Ritual",
-        "button2_url": "/pages/the-ritual"
+        "eyebrow": "THE RITUAL FINDER",
+        "heading": "Find your considered ritual.",
+        "sub": "A few thoughtful questions. A skincare ritual selected around what matters most to you.",
+        "sub2": "",
+        "button_label": "FIND YOUR RITUAL",
+        "button_url": "/pages/the-ritual",
+        "button2_label": "",
+        "button2_url": ""
       }
     },
     "closing-statement": {
