@@ -481,7 +481,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero__visual-frame {
   position: relative;
   width: 100%;
-  max-width: 680px;
   aspect-ratio: 16 / 9.5;
   border-radius: 20px;
   overflow: hidden;
