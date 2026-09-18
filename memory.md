@@ -1586,12 +1586,23 @@ slot ready; it renders the moment the product is in the collection.
 ## Build log — 2026-09-18: The Ritual Finder section
 - Replaced the horizontal pinned Cleanse / Hydrate / Renew / Repeat steps module with the new Ritual Finder section.
 - Moved `ritual_raGNG4` directly above `shop_jAJymM` (The Collection) in `templates/index.json` and `templates/page.home.json`.
-- Applied final copy:
-  - Eyebrow: THE RITUAL FINDER
-  - Headline: Your skin. Your ritual.
-  - Body: A considered routine starts with knowing what belongs in it. Answer a few questions and we'll help you build a Chemistrie ritual around your skin and your priorities.
-  - CTA: FIND YOUR RITUAL
-- Visuals: Dark forest-green treatment (`linear-gradient(135deg, #163628 0%, #0c1e15 65%, #143024 100%)`) with ambient glow, apothecary corner accents, and fallback image `hero-ritual.jpg`.
-- CMS editable: Headline, body, CTA, and image (plus eyebrow and badge) are editable in the theme customizer.
-- Cleaned up obsolete pinned scroller styles in `assets/chemistrie.css` and updated ScrollTrigger animations in `assets/chemistrie.js`.
+- Applied final copy: Eyebrow: THE RITUAL FINDER, Headline: Your skin. Your ritual., Body: A considered routine starts with knowing what belongs in it. Answer a few questions and we'll help you build a Chemistrie ritual around your skin and your priorities., CTA: FIND YOUR RITUAL.
+- Visuals: Dark forest-green treatment with ambient glow, apothecary corner accents, and fallback image `hero-ritual.jpg`.
+
+## Build log — 2026-09-18: The Ingredient Index
+- Updated Active Index to The Ingredient Index with final approved copy:
+  - Eyebrow: THE INGREDIENT INDEX
+  - Headline: What's inside, and why it's there.
+  - Supporting copy: A closer look at select ingredients behind our formulas, each chosen for the role it plays.
+- Replaced 12 placeholder active cards with the 6 verified cards:
+  1. Sodium Hyaluronate: Hydration | Velvet + Veil
+  2. Beta-Glucan: Skin Conditioning | Veil
+  3. Panthenol: Moisture Support | Velvet
+  4. Centella Asiatica: Skin Conditioning | Aura
+  5. Copper Tripeptide-1: Peptide | Aura
+  6. Pracaxi + Patauá Oils: Botanical Conditioning Oils | Silken
+- Implemented card hierarchy: ingredient name -> category -> short explanation -> Found in product(s).
+- Product names in "Found in" link to their respective product pages (`/products/velvet`, `/products/veil`, `/products/aura`, `/products/silken`).
+- Preserved existing site typography and horizontal scroll interaction.
+
 

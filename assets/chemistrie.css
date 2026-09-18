@@ -1410,9 +1410,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border: 1px solid var(--c-line);
   border-radius: 22px;
   padding: clamp(28px, 2.6vw, 40px);
-  display: grid;
-  grid-template-rows: auto auto auto auto auto 1fr auto;
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
   position: relative;
   overflow: hidden;
   transition: transform .6s var(--ease-out), box-shadow .6s var(--ease-out), border-color .6s var(--ease-out);
@@ -1467,29 +1466,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .active-card--hero .active-card__num { color: var(--c-tan); }
 .active-card__mol {
-  width: 88px;
-  height: 88px;
-  margin: 4px 0;
+  width: 80px;
+  height: 80px;
+  margin: 12px 0 16px;
   color: var(--c-tan);
   position: relative;
   z-index: 1;
 }
 .active-card--hero .active-card__mol { color: var(--c-tan); opacity: .9; }
 .active-card__mol svg { width: 100%; height: 100%; }
-.active-card__tier {
-  font-family: var(--ff-display);
-  font-style: italic;
-  font-size: 14px;
-  color: var(--c-tan-2);
-  position: relative;
-  z-index: 1;
-}
-.active-card--hero .active-card__tier { color: var(--c-tan); }
 .active-card__name {
   font-family: var(--ff-display);
   font-weight: 500;
-  font-size: clamp(28px, 2.6vw, 36px);
-  line-height: 1.05;
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.08;
   letter-spacing: -.015em;
   margin: 0;
   color: var(--c-forest);
@@ -1497,59 +1487,66 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   z-index: 1;
 }
 .active-card--hero .active-card__name { color: var(--c-cream); }
-.active-card__dose {
+.active-card__category {
   font-family: var(--ff-display);
   font-style: italic;
-  font-size: clamp(26px, 2.5vw, 36px);
-  color: var(--c-tan);
-  letter-spacing: -.01em;
+  font-size: 15px;
+  color: var(--c-tan-2);
+  margin: 4px 0 16px;
   position: relative;
   z-index: 1;
-  line-height: 1;
+  display: block;
 }
+.active-card--hero .active-card__category { color: var(--c-tan); }
 .active-card__desc {
   font-family: var(--ff-body);
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 1.7;
-  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 0 20px;
   color: var(--c-ink-soft);
   position: relative;
   z-index: 1;
-  max-width: 32ch;
+  max-width: 34ch;
 }
 .active-card--hero .active-card__desc { color: rgba(249,244,237,.78); }
-.active-card__specs {
-  margin: 8px 0 0;
-  padding: 16px 0 0;
+.active-card__found {
+  margin-top: auto;
+  padding-top: 14px;
   border-top: 1px solid var(--c-line);
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
+  font-family: var(--ff-body);
+  font-size: 12px;
+  letter-spacing: .08em;
+  color: var(--c-ink-mute);
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
-.active-card--hero .active-card__specs { border-top-color: rgba(249,244,237,.18); }
-.active-card__specs > div { display: flex; flex-direction: column; gap: 4px; }
-.active-card__specs dt {
-  font-family: var(--ff-body);
-  font-size: 9px;
-  letter-spacing: .2em;
+.active-card--hero .active-card__found { border-top-color: rgba(249,244,237,.18); color: rgba(249,244,237,.6); }
+.active-card__found-label {
   text-transform: uppercase;
-  color: var(--c-ink-mute);
-  margin: 0;
+  font-size: 10px;
+  letter-spacing: .16em;
+  font-weight: 500;
 }
-.active-card--hero .active-card__specs dt { color: rgba(249,244,237,.5); }
-.active-card__specs dd {
+.active-card__product-link {
   font-family: var(--ff-display);
   font-style: italic;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--c-forest);
-  margin: 0;
-  line-height: 1.3;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--c-tan);
+  transition: color .25s ease;
 }
-.active-card--hero .active-card__specs dd { color: var(--c-cream); }
+.active-card__product-link:hover { color: var(--c-tan); }
+.active-card--hero .active-card__product-link { color: var(--c-cream); }
+.active-card--hero .active-card__product-link:hover { color: var(--c-tan); }
+.active-card__plus { color: var(--c-tan); font-style: normal; }
 
 .actives__progress {
   position: absolute;
