@@ -16,23 +16,6 @@
         <p class="ritual-finder__body">{{ section.settings.body }}</p>
       {%- endif -%}
 
-      <div class="ritual-finder__meta">
-        <div class="ritual-finder__meta-item">
-          <span class="ritual-finder__meta-num">01</span>
-          <span class="ritual-finder__meta-text">Skin Profile Analysis</span>
-        </div>
-        <div class="ritual-finder__meta-divider" aria-hidden="true"></div>
-        <div class="ritual-finder__meta-item">
-          <span class="ritual-finder__meta-num">02</span>
-          <span class="ritual-finder__meta-text">Targeted Actives</span>
-        </div>
-        <div class="ritual-finder__meta-divider" aria-hidden="true"></div>
-        <div class="ritual-finder__meta-item">
-          <span class="ritual-finder__meta-num">03</span>
-          <span class="ritual-finder__meta-text">Layered Daily Routine</span>
-        </div>
-      </div>
-
       {%- if section.settings.cta_label != blank -%}
         <div class="ritual-finder__action">
           <a class="btn btn--primary btn--light ritual-finder__cta" href="{{ section.settings.cta_link | default: '/pages/the-ritual' }}">
@@ -41,7 +24,6 @@
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>
           </a>
-          <span class="ritual-finder__time-note">Takes 2 minutes · Pharmacist-developed</span>
         </div>
       {%- endif -%}
     </div>
@@ -79,13 +61,6 @@
         {%- endif -%}
 
         <div class="ritual-finder__overlay" aria-hidden="true"></div>
-
-        {%- if section.settings.badge_text != blank -%}
-          <div class="ritual-finder__badge">
-            <span class="ritual-finder__badge-dot"></span>
-            <span class="ritual-finder__badge-text">{{ section.settings.badge_text }}</span>
-          </div>
-        {%- endif -%}
       </div>
     </div>
   </div>
@@ -135,12 +110,6 @@
       "label": "Image asset fallback filename",
       "default": "hero-ritual.jpg",
       "info": "Asset filename in assets/ folder, used if no image is uploaded above."
-    },
-    {
-      "type": "text",
-      "id": "badge_text",
-      "label": "Card badge text",
-      "default": "Custom Routine · 2 Min"
     }
   ],
   "presets": [
