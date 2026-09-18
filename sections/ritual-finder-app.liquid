@@ -5,6 +5,31 @@
 
 {%- liquid
   assign handles = 'velvet,veil,cashmere,aura,silken' | split: ','
+  assign velvet_prod = all_products['velvet']
+  assign veil_prod = all_products['veil']
+  assign cashmere_prod = all_products['cashmere']
+  assign aura_prod = all_products['aura']
+  assign silken_prod = all_products['silken']
+
+  if velvet_prod == blank or veil_prod == blank or cashmere_prod == blank or aura_prod == blank or silken_prod == blank
+    for col in collections
+      for p in col.products
+        assign ph = p.handle | downcase
+        assign pt = p.title | downcase
+        if velvet_prod == blank and ph contains 'velvet' or pt contains 'velvet'
+          assign velvet_prod = p
+        elsif veil_prod == blank and ph contains 'veil' or pt contains 'veil'
+          assign veil_prod = p
+        elsif cashmere_prod == blank and ph contains 'cashmere' or pt contains 'cashmere'
+          assign cashmere_prod = p
+        elsif aura_prod == blank and ph contains 'aura' or pt contains 'aura'
+          assign aura_prod = p
+        elsif silken_prod == blank and ph contains 'silken' or pt contains 'silken'
+          assign silken_prod = p
+        endif
+      endfor
+    endfor
+  endif
 -%}
 
 <section class="ritual-finder-app" id="ritual-finder-app" data-screen-label="Ritual Finder Consultation">
@@ -307,58 +332,63 @@
 
     var products = {
       velvet: {
-        handle: "velvet",
+        handle: {{ velvet_prod.handle | default: "velvet" | json }},
         title: "Velvet",
         stepSubtitle: "Conditioning Cleanser",
         role: "Cleanse",
-        price: "$48",
-        cents: 4800,
-        url: "/products/velvet",
+        price: {{ velvet_prod.price | money | default: "$48" | json }},
+        cents: {{ velvet_prod.price | default: 4800 }},
+        url: {{ velvet_prod.url | default: "/products/velvet" | json }},
         image: "{{ 'product-velvet.png' | asset_url }}",
+        variantId: {{ velvet_prod.selected_or_first_available_variant.id | default: velvet_prod.variants.first.id | json }},
         why: "Gentle morning and evening cleansing that purifies without disturbing the acid mantle."
       },
       veil: {
-        handle: "veil",
+        handle: {{ veil_prod.handle | default: "veil" | json }},
         title: "Veil",
         stepSubtitle: "Weightless Hydrating Serum",
         role: "Treat",
-        price: "$88",
-        cents: 8800,
-        url: "/products/veil",
+        price: {{ veil_prod.price | money | default: "$88" | json }},
+        cents: {{ veil_prod.price | default: 8800 }},
+        url: {{ veil_prod.url | default: "/products/veil" | json }},
         image: "{{ 'product-veil.png' | asset_url }}",
+        variantId: {{ veil_prod.selected_or_first_available_variant.id | default: veil_prod.variants.first.id | json }},
         why: "Plumping hydration delivered deep into epidermal layers with weightless precision."
       },
       cashmere: {
-        handle: "cashmere",
+        handle: {{ cashmere_prod.handle | default: "cashmere" | json }},
         title: "Cashmere",
         stepSubtitle: "Essential Barrier Cream",
         role: "Hydrate",
-        price: "$92",
-        cents: 9200,
-        url: "/products/cashmere",
+        price: {{ cashmere_prod.price | money | default: "$92" | json }},
+        cents: {{ cashmere_prod.price | default: 9200 }},
+        url: {{ cashmere_prod.url | default: "/products/cashmere" | json }},
         image: "{{ 'product-cashmere.png' | asset_url }}",
+        variantId: {{ cashmere_prod.selected_or_first_available_variant.id | default: cashmere_prod.variants.first.id | json }},
         why: "Essential lipid support to seal in hydration and defend against daily moisture evaporation."
       },
       aura: {
-        handle: "aura",
+        handle: {{ aura_prod.handle | default: "aura" | json }},
         title: "Aura",
         stepSubtitle: "Peptide Renewal Treatment",
         role: "Renew",
-        price: "$195",
-        cents: 19500,
-        url: "/products/aura",
+        price: {{ aura_prod.price | money | default: "$195" | json }},
+        cents: {{ aura_prod.price | default: 19500 }},
+        url: {{ aura_prod.url | default: "/products/aura" | json }},
         image: "{{ 'product-aura.png' | asset_url }}",
+        variantId: {{ aura_prod.selected_or_first_available_variant.id | default: aura_prod.variants.first.id | json }},
         why: "Overnight multi-peptide matrix to visibly refine texture, soften lines, and restore elasticity."
       },
       silken: {
-        handle: "silken",
+        handle: {{ silken_prod.handle | default: "silken" | json }},
         title: "Silken",
         stepSubtitle: "Botanical Conditioning Elixir",
         role: "Refine",
-        price: "$135",
-        cents: 13500,
-        url: "/products/silken",
+        price: {{ silken_prod.price | money | default: "$135" | json }},
+        cents: {{ silken_prod.price | default: 13500 }},
+        url: {{ silken_prod.url | default: "/products/silken" | json }},
         image: "{{ 'product-silken.png' | asset_url }}",
+        variantId: {{ silken_prod.selected_or_first_available_variant.id | default: silken_prod.variants.first.id | json }},
         why: "Targeted botanical conditioning selected for focused refinement and delicate zones."
       }
     };
@@ -368,6 +398,7 @@
     });
 
     var currentStep = 0;
+    var currentRitualHandles = ["velvet", "veil", "cashmere", "aura"];
     var answers = {
       skin_feel: null,
       primary_goal: null,
@@ -375,6 +406,28 @@
       sensitivity: null
     };
     var advanceTimer = null;
+
+    function getProductVariantId(handle) {
+      var prod = products[handle];
+      if (!prod) return Promise.resolve(null);
+      if (prod.variantId) return Promise.resolve(prod.variantId);
+      return fetch("/products/" + (prod.handle || handle) + ".js", {
+        headers: { "Accept": "application/json" }
+      })
+        .then(function(res) {
+          if (!res.ok) return null;
+          return res.json().then(function(data) {
+            if (data.variants && data.variants.length > 0) {
+              prod.variantId = data.variants[0].id;
+              return prod.variantId;
+            }
+            return null;
+          });
+        })
+        .catch(function() {
+          return null;
+        });
+    }
 
     if (totalStepsEl) totalStepsEl.textContent = questionSlides.length;
 
@@ -516,6 +569,7 @@
           if (p) total += (p.cents || 0);
         }
       });
+      currentRitualHandles = added.slice();
       if (totalPriceEl) totalPriceEl.textContent = "$" + Math.round(total / 100);
 
       // Safe scroll to top of results
@@ -610,10 +664,106 @@
     }
 
     // Add Complete Ritual button
+    var isAddingToBag = false;
     var btnAdd = (resultsPage && resultsPage.querySelector("#rfBtnAddRitual")) || document.getElementById("rfBtnAddRitual");
     if (btnAdd) {
-      btnAdd.addEventListener("click", function() {
-        window.location.href = "/collections/all";
+      btnAdd.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (isAddingToBag) return;
+
+        var handlesToAdd = (currentRitualHandles && currentRitualHandles.length > 0)
+          ? currentRitualHandles
+          : ["velvet", "veil", "cashmere", "aura"];
+
+        var origContent = btnAdd.innerHTML;
+        isAddingToBag = true;
+        btnAdd.disabled = true;
+        btnAdd.classList.add("is-loading");
+        btnAdd.innerHTML = '<span>Adding Ritual to Bag...</span>';
+
+        var variantPromises = handlesToAdd.map(function(h) {
+          return getProductVariantId(h);
+        });
+
+        Promise.all(variantPromises)
+          .then(function(ids) {
+            var items = [];
+            ids.forEach(function(vId) {
+              if (vId) {
+                items.push({ id: vId, quantity: 1 });
+              }
+            });
+
+            if (items.length > 0) {
+              return fetch("/cart/add.js", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json"
+                },
+                body: JSON.stringify({ items: items })
+              }).then(function(r) {
+                if (!r.ok) throw new Error("Add to cart response error");
+                return r.json();
+              });
+            } else {
+              return null;
+            }
+          })
+          .then(function() {
+            // Update bag count in header
+            return fetch("/cart.js", { headers: { "Accept": "application/json" } })
+              .then(function(r) { return r.json(); })
+              .then(function(cartData) {
+                if (cartData && typeof cartData.item_count !== "undefined") {
+                  document.querySelectorAll(".nav__bag-count").forEach(function(el) {
+                    el.textContent = cartData.item_count;
+                  });
+                }
+              })
+              .catch(function() {});
+          })
+          .then(function() {
+            btnAdd.classList.remove("is-loading");
+            btnAdd.classList.add("is-success");
+            btnAdd.innerHTML = '<span>Complete Ritual in Bag ✓</span>';
+
+            // Open the cart drawer
+            var bagOpener = document.querySelector("[data-cart-open]");
+            if (bagOpener) {
+              bagOpener.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+            } else {
+              var drawer = document.getElementById("cartDrawer");
+              if (drawer) {
+                drawer.classList.add("is-open");
+                var backdrop = document.getElementById("cartDrawerBackdrop");
+                if (backdrop) backdrop.classList.add("is-open");
+                document.body.classList.add("drawer-locked");
+              } else {
+                window.location.href = "/cart";
+              }
+            }
+
+            setTimeout(function() {
+              btnAdd.innerHTML = origContent;
+              btnAdd.classList.remove("is-success");
+              btnAdd.disabled = false;
+              isAddingToBag = false;
+            }, 3000);
+          })
+          .catch(function(err) {
+            console.warn("Cart add error:", err);
+            btnAdd.classList.remove("is-loading");
+            var bagOpener = document.querySelector("[data-cart-open]");
+            if (bagOpener) {
+              bagOpener.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+            } else {
+              window.location.href = "/cart";
+            }
+            btnAdd.innerHTML = origContent;
+            btnAdd.disabled = false;
+            isAddingToBag = false;
+          });
       });
     }
 

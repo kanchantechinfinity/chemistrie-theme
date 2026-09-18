@@ -694,9 +694,18 @@
   gap: 10px;
   background: var(--c-forest) !important;
   color: var(--c-cream) !important;
+  transition: background-color .3s ease, color .3s ease, opacity .3s ease, transform .2s ease !important;
 }
 .rf-result__btn-add:hover {
   background: var(--c-forest-2) !important;
+}
+.rf-result__btn-add.is-loading {
+  opacity: .8 !important;
+  cursor: wait !important;
+}
+.rf-result__btn-add.is-success {
+  background: #143527 !important;
+  color: var(--c-tan) !important;
 }
 .rf-result__retake-link {
   background: none;

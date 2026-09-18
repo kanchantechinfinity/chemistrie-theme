@@ -1841,3 +1841,20 @@ Fix:
 - Fixed the orphaned closing `</div>` tag.
 - Scoped all DOM selectors in `showResults()` and button bindings to `resultsPage` directly (e.g. `resultsPage.querySelector("#rfListAM")`).
 - Updated `.rf-item` in `assets/pages.css` to use proper flex and max-width sizing across desktop, tablet, and mobile so cards render crisply with zero clipping.
+
+### (3e) Add Complete Ritual to Bag CTA wired to Shopify cart API (commit pending)
+User: "add complete to ritual bag cta not working properly".
+Root cause:
+- Previously `#rfBtnAddRitual` only executed a dummy redirect `window.location.href = "/collections/all"`.
+- It did not add the recommended products to the shopping cart, did not update the header bag counter, and did not open the cart drawer.
+
+Fix:
+- Dynamically populated `variantId` for all 5 products via Liquid (`all_products` + collections search fallback) and asynchronous `/products/{handle}.js` fallback.
+- In `showResults()`, track all unique recommended products in `currentRitualHandles`.
+- On clicking "Add Complete Ritual to Bag":
+  - Button switches to loading state (`Adding Ritual to Bag...`, disabled).
+  - Resolves variant IDs for all items in the user's recommended ritual.
+  - Submits batch item add via Shopify's `/cart/add.js` API (`items: [{ id: vId, quantity: 1 }, ...]`).
+  - Updates the header bag count (`.nav__bag-count`) using `/cart.js`.
+  - Triggers the cart drawer (`[data-cart-open]` / `#cartDrawer`) so the customer sees their full ritual ready in the drawer.
+  - Button displays confirmation feedback (`Complete Ritual in Bag ✓`) with luxury styling before smoothly resetting.
