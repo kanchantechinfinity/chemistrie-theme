@@ -2866,11 +2866,29 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     padding: 0 0 32px;
   }
   .actives__track { transform: none !important; gap: 14px; padding: 0 var(--pad-x); }
-  .active-card { flex: 0 0 86vw; height: auto; min-height: 440px; padding: 26px 22px; border-radius: 16px; scroll-snap-align: start; }
-  .active-card__name { font-size: 26px; }
-  .active-card__dose { font-size: 22px; }
-  .active-card__desc { font-size: 16px; }
-  .active-card__mol { width: 72px; height: 72px; }
+  .active-card {
+    flex: 0 0 82vw;
+    max-width: 360px;
+    height: auto;
+    min-height: 420px;
+    padding: 28px 22px;
+    border-radius: 18px;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+  }
+  .active-card__name {
+    font-size: clamp(24px, 6vw, 28px);
+    line-height: 1.15;
+    word-break: break-word;
+  }
+  .active-card__desc {
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .active-card__mol { width: 68px; height: 68px; }
   .actives__progress { display: none; }
 
   /* Proof */
