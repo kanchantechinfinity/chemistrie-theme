@@ -724,3 +724,321 @@
   window.__chemistrie = { gsap, ScrollTrigger: window.ScrollTrigger, lenis };
 
 })();
+
+/* ──────────────────────────────────────────────
+   CHEMISTRIE — Ritual Finder Guided Consultation App
+   ────────────────────────────────────────────── */
+(function initRitualFinder() {
+  function setup() {
+    var app = document.getElementById("ritual-finder-app");
+    if (!app) return;
+
+    var flowEl = document.getElementById("rfFlow");
+    var resultEl = document.getElementById("rfResult");
+    var slides = Array.prototype.slice.call(app.querySelectorAll(".rf-slide"));
+    var btnNext = document.getElementById("rfBtnNext");
+    var btnBack = document.getElementById("rfBtnBack");
+    var currentStepEl = document.getElementById("rfCurrentStep");
+    var totalStepsEl = document.getElementById("rfTotalSteps");
+    var progressBar = document.getElementById("rfProgressBar");
+    var catalogEl = document.getElementById("rfProductCatalog");
+
+    if (!slides.length) return;
+
+    // Load or fallback product catalog
+    var catalog = {};
+    if (catalogEl) {
+      try {
+        catalog = JSON.parse(catalogEl.textContent);
+      } catch (e) {
+        console.warn("Failed parsing rfProductCatalog", e);
+      }
+    }
+
+    // Fallback dictionary for launch products
+    var fallbacks = {
+      velvet: { handle: "velvet", title: "Velvet", stepSubtitle: "Conditioning Cleanser", role: "Cleanse", defaultPrice: "$48", price: 4800, url: "/products/velvet", image: "", why: "Gentle morning and evening cleansing that purifies without disturbing the acid mantle." },
+      veil: { handle: "veil", title: "Veil", stepSubtitle: "Weightless Hydrating Serum", role: "Treat", defaultPrice: "$88", price: 8800, url: "/products/veil", image: "", why: "Plumping hydration delivered deep into epidermal layers with weightless precision." },
+      cashmere: { handle: "cashmere", title: "Cashmere", stepSubtitle: "Essential Barrier Cream", role: "Hydrate", defaultPrice: "$92", price: 9200, url: "/products/cashmere", image: "", why: "Essential lipid support to seal in hydration and defend against daily moisture evaporation." },
+      aura: { handle: "aura", title: "Aura", stepSubtitle: "Peptide Renewal Treatment", role: "Renew", defaultPrice: "$195", price: 19500, url: "/products/aura", image: "", why: "Overnight multi-peptide matrix to visibly refine texture, soften lines, and restore elasticity." },
+      silken: { handle: "silken", title: "Silken", stepSubtitle: "Botanical Conditioning Elixir", role: "Refine", defaultPrice: "$135", price: 13500, url: "/products/silken", image: "", why: "Targeted botanical conditioning selected for focused refinement and delicate zones." }
+    };
+
+    function getProd(handle) {
+      var item = catalog[handle] || fallbacks[handle] || {};
+      return Object.assign({}, fallbacks[handle] || {}, item);
+    }
+
+    var currentStepIndex = 0;
+    var answers = {
+      skin_feel: null,
+      primary_goal: null,
+      routine_pace: null,
+      sensitivity: null
+    };
+
+    if (totalStepsEl) totalStepsEl.textContent = slides.length;
+
+    function updateStepUI() {
+      slides.forEach(function (slide, idx) {
+        if (idx === currentStepIndex) {
+          slide.classList.add("is-active");
+          slide.style.display = "block";
+        } else {
+          slide.classList.remove("is-active");
+          slide.style.display = "none";
+        }
+      });
+
+      if (currentStepEl) currentStepEl.textContent = currentStepIndex + 1;
+      if (progressBar) {
+        var pct = ((currentStepIndex + 1) / slides.length) * 100;
+        progressBar.style.width = pct + "%";
+      }
+
+      if (btnBack) {
+        btnBack.style.visibility = currentStepIndex > 0 ? "visible" : "hidden";
+      }
+
+      var currentSlide = slides[currentStepIndex];
+      var questionKey = currentSlide.getAttribute("data-question");
+      var hasSelection = !!answers[questionKey];
+
+      if (btnNext) {
+        btnNext.disabled = !hasSelection;
+        if (currentStepIndex === slides.length - 1) {
+          btnNext.innerHTML = 'See My Ritual <span aria-hidden="true">→</span>';
+        } else {
+          btnNext.innerHTML = 'Continue <span aria-hidden="true">→</span>';
+        }
+      }
+    }
+
+    // Option card click handling
+    app.addEventListener("click", function (e) {
+      var card = e.target.closest(".rf-card");
+      if (!card) return;
+
+      var slide = card.closest(".rf-slide");
+      if (!slide) return;
+
+      var questionKey = slide.getAttribute("data-question");
+      var val = card.getAttribute("data-val");
+
+      slide.querySelectorAll(".rf-card").forEach(function (c) {
+        c.classList.remove("is-selected");
+      });
+      card.classList.add("is-selected");
+      answers[questionKey] = val;
+
+      if (btnNext) btnNext.disabled = false;
+
+      // Auto-advance smoothly after 300ms
+      setTimeout(function () {
+        if (currentStepIndex < slides.length - 1) {
+          currentStepIndex++;
+          updateStepUI();
+        } else {
+          showRecommendation();
+        }
+      }, 300);
+    });
+
+    // Next button
+    if (btnNext) {
+      btnNext.addEventListener("click", function () {
+        if (btnNext.disabled) return;
+        if (currentStepIndex < slides.length - 1) {
+          currentStepIndex++;
+          updateStepUI();
+        } else {
+          showRecommendation();
+        }
+      });
+    }
+
+    // Back button
+    if (btnBack) {
+      btnBack.addEventListener("click", function () {
+        if (currentStepIndex > 0) {
+          currentStepIndex--;
+          updateStepUI();
+        }
+      });
+    }
+
+    // Calculate and display recommendations
+    function showRecommendation() {
+      if (flowEl) flowEl.style.display = "none";
+      if (resultEl) {
+        resultEl.hidden = false;
+        resultEl.style.display = "block";
+      }
+
+      var titleEl = document.getElementById("rfResultTitle");
+      var rationaleEl = document.getElementById("rfResultRationale");
+      var listAM = document.getElementById("rfListAM");
+      var listPM = document.getElementById("rfListPM");
+      var totalPriceEl = document.getElementById("rfTotalPrice");
+
+      var ritualTitle = "The Pure Hydration & Renewal Ritual";
+      var rationale = "A high-efficacy foundation designed to balance baseline hydration, defend against moisture evaporation, and restore healthy skin radiance.";
+      var amHandles = ["velvet", "veil", "cashmere"];
+      var pmHandles = ["velvet", "veil", "aura"];
+      var allHandles = ["velvet", "veil", "cashmere", "aura"];
+
+      // Logic decision branches
+      if (answers.sensitivity === "reactive" || answers.primary_goal === "barrier") {
+        ritualTitle = "The Restorative Barrier Ritual";
+        rationale = "Formulated to calm reactivity, replenish lost lipid ceramides, and reinforce your skin's protective barrier without causing irritation.";
+        amHandles = ["velvet", "veil", "cashmere"];
+        pmHandles = ["velvet", "veil", "cashmere", "aura"];
+        allHandles = ["velvet", "veil", "cashmere", "aura"];
+      } else if (answers.skin_feel === "oily" || answers.primary_goal === "refine") {
+        ritualTitle = "The Clarifying & Refining Ritual";
+        rationale = "Designed to refine skin texture and balance midday shine through weightless hydration and nutrient-dense Amazonian botanicals.";
+        amHandles = ["velvet", "veil", "silken"];
+        pmHandles = ["velvet", "veil", "silken", "cashmere"];
+        allHandles = ["velvet", "veil", "silken", "cashmere"];
+      } else if (answers.primary_goal === "renewal" || answers.routine_pace === "complete") {
+        ritualTitle = "The Complete Pharmacist System";
+        rationale = "The comprehensive 5-step clinical protocol designed for maximum cellular renewal, peptide firming, and multi-molecular hydration.";
+        amHandles = ["velvet", "veil", "cashmere"];
+        pmHandles = ["velvet", "veil", "aura", "silken"];
+        allHandles = ["velvet", "veil", "cashmere", "aura", "silken"];
+      } else if (answers.routine_pace === "essential") {
+        ritualTitle = "The Essential Daily Ritual";
+        rationale = "A streamlined three-step regimen delivering clean, intentional nourishment morning and night.";
+        amHandles = ["velvet", "veil", "cashmere"];
+        pmHandles = ["velvet", "veil", "cashmere"];
+        allHandles = ["velvet", "veil", "cashmere"];
+      }
+
+      if (titleEl) titleEl.textContent = ritualTitle;
+      if (rationaleEl) rationaleEl.textContent = rationale;
+
+      function renderItems(handles, container) {
+        if (!container) return;
+        var html = "";
+        handles.forEach(function (h, i) {
+          var p = getProd(h);
+          var stepNum = "Step 0" + (i + 1);
+          var imgTag = p.image ? '<img src="' + p.image + '" alt="' + p.title + '" loading="lazy">' : '<div style="background:var(--c-cream);width:100%;height:100%;"></div>';
+          html += '<div class="rf-item">' +
+            '<div class="rf-item__thumb">' + imgTag + '</div>' +
+            '<div class="rf-item__info">' +
+              '<span class="rf-item__step-tag">' + stepNum + ' · ' + p.role + '</span>' +
+              '<h4 class="rf-item__name"><a href="' + p.url + '">' + p.title + ' — ' + p.stepSubtitle + '</a></h4>' +
+              '<p class="rf-item__why">' + p.why + '</p>' +
+            '</div>' +
+            '<div class="rf-item__right">' +
+              '<span class="rf-item__price">' + (p.priceFormatted || p.defaultPrice) + '</span>' +
+              '<a class="rf-item__link" href="' + p.url + '">View</a>' +
+            '</div>' +
+          '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      renderItems(amHandles, listAM);
+      renderItems(pmHandles, listPM);
+
+      // Compute total sum
+      var totalCents = 0;
+      var addedHandles = [];
+      allHandles.forEach(function (h) {
+        if (addedHandles.indexOf(h) === -1) {
+          addedHandles.push(h);
+          var p = getProd(h);
+          totalCents += (p.price || 0);
+        }
+      });
+      if (totalPriceEl) {
+        totalPriceEl.textContent = totalCents > 0 ? "$" + (totalCents / 100).toFixed(0) : "$228";
+      }
+
+      // Add to bag button
+      var btnAdd = document.getElementById("rfBtnAddRitual");
+      if (btnAdd) {
+        btnAdd.onclick = function () {
+          var itemsToAdd = [];
+          addedHandles.forEach(function (h) {
+            var p = getProd(h);
+            if (p.variantId && p.variantId > 0) {
+              itemsToAdd.push({ id: p.variantId, quantity: 1 });
+            }
+          });
+
+          if (itemsToAdd.length > 0) {
+            var orig = btnAdd.innerHTML;
+            btnAdd.disabled = true;
+            btnAdd.innerHTML = '<span>Adding Ritual…</span>';
+
+            fetch("/cart/add.js", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify({ items: itemsToAdd })
+            })
+            .then(function (r) { return r.json(); })
+            .then(function () {
+              var bagBtn = document.querySelector("[data-cart-open]");
+              if (bagBtn) bagBtn.click();
+              else window.location.href = "/cart";
+            })
+            .catch(function () {
+              window.location.href = "/collections/all";
+            })
+            .finally(function () {
+              btnAdd.disabled = false;
+              btnAdd.innerHTML = orig;
+            });
+          } else {
+            // If development mock store has no live variant IDs, link to collection
+            window.location.href = "/collections/all";
+          }
+        };
+      }
+
+      // Retake button
+      var btnRetake = document.getElementById("rfBtnRetake");
+      if (btnRetake) {
+        btnRetake.onclick = function () {
+          answers = { skin_feel: null, primary_goal: null, routine_pace: null, sensitivity: null };
+          app.querySelectorAll(".rf-card").forEach(function (c) {
+            c.classList.remove("is-selected");
+          });
+          currentStepIndex = 0;
+          if (resultEl) {
+            resultEl.hidden = true;
+            resultEl.style.display = "none";
+          }
+          if (flowEl) {
+            flowEl.style.display = "block";
+          }
+          updateStepUI();
+          app.scrollIntoView({ behavior: "smooth", block: "start" });
+        };
+      }
+
+      // Smooth scroll to top of recommendation
+      app.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    // Hero "START MY RITUAL" smooth scroll anchor listener
+    document.querySelectorAll('a[href="#ritual-finder-app"]').forEach(function (anchor) {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        app.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    updateStepUI();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup);
+  } else {
+    setup();
+  }
+})();
+

@@ -1605,4 +1605,26 @@ slot ready; it renders the moment the product is in the collection.
 - Product names in "Found in" link to their respective product pages (`/products/velvet`, `/products/veil`, `/products/aura`, `/products/silken`).
 - Preserved existing site typography and horizontal scroll interaction.
 
+## Build log — 2026-09-18: Chemistrie Ritual Finder Page Rebuild
+- Replaced the educational "The Ritual" page with the customer-facing interactive Chemistrie Ritual Finder (`/pages/the-ritual`).
+- Removed obsolete sections:
+  - Statistic strip (`stat-bar`)
+  - "Why This Order" section (`ritual-why`)
+  - Static routine steps scroller (`ritual-steps`)
+  - Static product carousel (`ritual-shop`)
+  - Generic page CTA (`page-cta`)
+- Updated `page-hero`:
+  - Eyebrow: THE RITUAL FINDER
+  - Heading: Your skin. Your ritual.
+  - Deck: A considered routine starts with knowing what belongs in it. Answer a few questions and we'll help you build a Chemistrie ritual around your skin and your priorities.
+  - CTA: START MY RITUAL (smooth-scrolls to `#ritual-finder-app`).
+- Built new `sections/ritual-finder-app.liquid`:
+  - 4-question luxury consultation (Skin Feel, Primary Goal, Routine Pace, Sensitivity).
+  - One-question-at-a-time slide cards with progress bar and auto-advance.
+  - Dynamic client-side recommendation engine generating personalized AM & PM regimens across Chemistrie's 5 launch products (`Velvet`, `Veil`, `Cashmere`, `Aura`, `Silken`).
+  - Dynamic pricing summary and direct "Add Complete Ritual to Bag" button via Shopify cart API + "Retake Consultation" link.
+- Replaced static routine FAQ with 3 focused Ritual Finder FAQs in `templates/page.the-ritual.json`.
+- Added quiet luxury styling in `assets/pages.css` and interaction engine in `assets/chemistrie.js`.
+
+
 
