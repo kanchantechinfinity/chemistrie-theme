@@ -24,11 +24,11 @@
         </div>
       </div>
 
-      <!-- Slides Container -->
+      <!-- Slides Container (Questions Only) -->
       <div class="ritual-finder-app__slides" id="rfSlides">
-        
+
         <!-- Slide 1: Skin Baseline -->
-        <article class="rf-slide is-active" data-step="1" data-question="skin_feel">
+        <article class="rf-slide is-active" data-step="1" data-question="skin_feel" data-is-question="true">
           <div class="rf-slide__head">
             <span class="rf-slide__tag">01 / Baseline</span>
             <h2 class="rf-slide__title">How does your skin typically feel by midday?</h2>
@@ -284,6 +284,57 @@
 
     </div>
 
+    <!-- ───── Recommendations View (Background Page) ───── -->
+    <div class="rf-results-page" id="rfResultsPage" style="display: none;">
+      <div class="rf-results-page__inner">
+        <div class="rf-result__header">
+          <span class="eyebrow eyebrow--accent">— Your Personalized Routine —</span>
+          <h2 class="display-h rf-result__title" id="rfResultTitle">The Pure Hydration &amp; Renewal Ritual</h2>
+          <p class="rf-result__rationale" id="rfResultRationale">
+            Based on your consultation, your ritual pairs gentle cleansing with multi-depth hydration and nighttime cellular peptide renewal.
+          </p>
+        </div>
+
+        <!-- AM / PM Routine Regimen -->
+        <div class="rf-result__regimen">
+          <!-- Morning Sequence -->
+          <div class="rf-result__routine">
+            <div class="rf-result__routine-label">AM</div>
+            <div class="rf-result__product-list" id="rfListAM"></div>
+            <div class="rf-result__routine-price" id="rfPriceAM"></div>
+          </div>
+
+          <!-- Evening Sequence -->
+          <div class="rf-result__routine">
+            <div class="rf-result__routine-label">PM</div>
+            <div class="rf-result__product-list" id="rfListPM"></div>
+            <div class="rf-result__routine-price" id="rfPricePM"></div>
+          </div>
+        </div>
+
+        <!-- Actions Strip -->
+        <div class="rf-result__actions">
+          <div class="rf-result__pricing">
+            <span class="rf-result__price-label">Recommended Ritual Total:</span>
+            <span class="rf-result__price-val" id="rfTotalPrice">$228</span>
+          </div>
+          <div class="rf-result__cta-group">
+            <button type="button" class="btn btn--primary btn--dark rf-result__btn-add" id="rfBtnAddRitual">
+              <span>Add Complete Ritual to Bag</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <a href="/collections/all" class="btn btn--outline rf-result__btn-shop">
+              Explore All Formulas
+            </a>
+          </div>
+          <button type="button" class="rf-result__retake-link" id="rfBtnRetake">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6"/><path d="M20 10l-4.5-4.5A9 9 0 0 0 4 12m0 0a9 9 0 0 0 15.5 4.5L20 16"/></svg>
+            <span>Retake Consultation</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -303,7 +354,7 @@
     var cardFooter = document.getElementById("rfCardFooter");
     var eyebrowEl = document.getElementById("rfEyebrow");
     var stepTextEl = document.getElementById("rfStepText");
-    var resultSlide = document.getElementById("rfResult");
+    var resultsPage = document.getElementById("rfResultsPage");
 
     var products = {
       velvet: {
@@ -392,9 +443,8 @@
           }
         });
 
-        if (resultSlide) {
-          resultSlide.classList.remove("is-active");
-          resultSlide.style.display = "none";
+        if (resultsPage) {
+          resultsPage.style.display = "none";
         }
 
         if (cardFooter) cardFooter.style.display = "flex";
@@ -438,12 +488,11 @@
         s.classList.remove("is-active");
         s.style.display = "none";
       });
-      if (resultSlide) {
-        resultSlide.classList.add("is-active");
-        resultSlide.style.display = "block";
+      if (resultsPage) {
+        resultsPage.style.display = "block";
       }
       if (cardFooter) cardFooter.style.display = "none";
-      if (eyebrowEl) eyebrowEl.textContent = "— YOUR PERSONALIZED ROUTINE —";
+      if (eyebrowEl) eyebrowEl.textContent = "— {{ section.settings.eyebrow | default: 'Personalized Consultation' }} —";
       if (stepTextEl) stepTextEl.textContent = "Consultation Complete";
       if (progressBar) progressBar.style.width = "100%";
 

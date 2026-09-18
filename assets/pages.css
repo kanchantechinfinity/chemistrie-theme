@@ -161,9 +161,10 @@
 .ritual-finder-app__inner {
   max-width: 920px;
   margin: 0 auto;
+  position: relative;
 }
 
-/* ───── Form Card Container ───── */
+/* ───── Form Card & Results Page Container ───── */
 .rf-form-card {
   max-width: 720px;
   margin: 0 auto;
@@ -173,6 +174,21 @@
   box-shadow: 0 24px 50px -15px rgba(26,58,45,.09);
   padding: clamp(32px, 4.5vw, 52px) clamp(24px, 4vw, 48px);
   position: relative;
+  z-index: 10;
+}
+
+.rf-results-page {
+  position: absolute;
+  inset: 0;
+  background: var(--c-paper);
+  z-index: 1;
+  overflow-y: auto;
+  padding: clamp(48px, 6vw, 96px) var(--pad-x);
+}
+
+.rf-results-page__inner {
+  max-width: 920px;
+  margin: 0 auto;
 }
 
 /* Card Header: Eyebrow, Step Meta & Progress Bar */
