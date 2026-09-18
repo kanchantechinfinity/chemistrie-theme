@@ -13,192 +13,226 @@
     <!-- ───── Consultation View (Step by Step) ───── -->
     <div class="ritual-finder-app__flow" id="rfFlow">
       
-      <!-- Progress & Step Header -->
-      <div class="ritual-finder-app__nav-meta">
-        <span class="ritual-finder-app__eyebrow">— {{ section.settings.eyebrow | default: 'Personalized Consultation' }} —</span>
-        <div class="ritual-finder-app__step-indicator">
-          <span class="ritual-finder-app__step-text">Question <strong id="rfCurrentStep">1</strong> of <span id="rfTotalSteps">4</span></span>
+    <!-- ───── Consultation View (Form Card) ───── -->
+    <div class="ritual-finder-app__flow" id="rfFlow">
+      <div class="rf-form-card">
+
+        <!-- Card Header: Eyebrow + Progress -->
+        <div class="rf-form-card__header">
+          <div class="rf-form-card__meta">
+            <span class="ritual-finder-app__eyebrow">— {{ section.settings.eyebrow | default: 'Personalized Consultation' }} —</span>
+            <span class="ritual-finder-app__step-text">Question <strong id="rfCurrentStep">1</strong> of <span id="rfTotalSteps">4</span></span>
+          </div>
+          <div class="ritual-finder-app__progress-track" aria-hidden="true">
+            <div class="ritual-finder-app__progress-bar" id="rfProgressBar" style="width: 25%;"></div>
+          </div>
         </div>
-        <div class="ritual-finder-app__progress-track" aria-hidden="true">
-          <div class="ritual-finder-app__progress-bar" id="rfProgressBar" style="width: 25%;"></div>
+
+        <!-- Question Slides Container -->
+        <div class="ritual-finder-app__slides" id="rfSlides">
+          
+          <!-- Slide 1: Skin Baseline -->
+          <article class="rf-slide is-active" data-step="1" data-question="skin_feel">
+            <div class="rf-slide__head">
+              <span class="rf-slide__tag">01 / Baseline</span>
+              <h2 class="rf-slide__title">How does your skin typically feel by midday?</h2>
+              <p class="rf-slide__sub">Select the description that most closely mirrors your skin's natural baseline.</p>
+            </div>
+            <div class="rf-options rf-options--stacked">
+              <button type="button" class="rf-card" data-val="dry" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Dry or Tight</h3>
+                    <span class="rf-card__cue">Needs barrier lipids &amp; deep hydration</span>
+                  </div>
+                  <p class="rf-card__desc">Feels parched, tight after cleansing, or craving rich, lasting moisture.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="balanced" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Balanced &amp; Comfortable</h3>
+                    <span class="rf-card__cue">Needs daily barrier maintenance</span>
+                  </div>
+                  <p class="rf-card__desc">Generally even throughout the day, neither excessively shiny nor dry.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="combination" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Combination</h3>
+                    <span class="rf-card__cue">Needs layered, weightless hydration</span>
+                  </div>
+                  <p class="rf-card__desc">Oil across the T-zone while the perimeter or cheeks remain normal or dry.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="oily" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Oil-Prone or Congested</h3>
+                    <span class="rf-card__cue">Needs weightless hydration &amp; targeted clarifying</span>
+                  </div>
+                  <p class="rf-card__desc">Prone to midday shine, visible pores, or texture that needs refinement.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+            </div>
+          </article>
+
+          <!-- Slide 2: Primary Goal -->
+          <article class="rf-slide" data-step="2" data-question="primary_goal">
+            <div class="rf-slide__head">
+              <span class="rf-slide__tag">02 / Primary Focus</span>
+              <h2 class="rf-slide__title">What is your primary skincare priority right now?</h2>
+              <p class="rf-slide__sub">Your ritual will be formulated to support and emphasize this goal.</p>
+            </div>
+            <div class="rf-options rf-options--stacked">
+              <button type="button" class="rf-card" data-val="hydration" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Deep Hydration &amp; Suppleness</h3>
+                    <span class="rf-card__cue">Multi-molecular hydration focus</span>
+                  </div>
+                  <p class="rf-card__desc">Plumping moisture that cushions the skin without a single ounce of heaviness.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="renewal" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Cellular Renewal &amp; Firming</h3>
+                    <span class="rf-card__cue">Peptide-led renewal focus</span>
+                  </div>
+                  <p class="rf-card__desc">Smoothing fine lines, improving elasticity, and supporting overnight rejuvenation.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="barrier" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Barrier Calm &amp; Resilience</h3>
+                    <span class="rf-card__cue">Conditioning &amp; protective focus</span>
+                  </div>
+                  <p class="rf-card__desc">Soothing irritation, reducing flushing, and rebuilding delicate skin barriers.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="refine" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Targeted Refinement &amp; Smoothing</h3>
+                    <span class="rf-card__cue">Botanical lipid &amp; botanical focus</span>
+                  </div>
+                  <p class="rf-card__desc">Refining rough texture, dullness, and targeted areas needing extra focus.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+            </div>
+          </article>
+
+          <!-- Slide 3: Routine Philosophy -->
+          <article class="rf-slide" data-step="3" data-question="routine_pace">
+            <div class="rf-slide__head">
+              <span class="rf-slide__tag">03 / Routine Style</span>
+              <h2 class="rf-slide__title">Which routine structure fits your daily lifestyle best?</h2>
+              <p class="rf-slide__sub">Chemistrie formulas are designed to work harmoniously as a complete system or as standalone steps.</p>
+            </div>
+            <div class="rf-options rf-options--stacked">
+              <button type="button" class="rf-card" data-val="essential" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Essential Foundation (3 Steps)</h3>
+                    <span class="rf-card__cue">Quick 2-minute daily rhythm</span>
+                  </div>
+                  <p class="rf-card__desc">Cleanse, Treat, Hydrate. High-efficiency daily simplicity done well.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="complete" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Complete Pharmacist System (4–5 Steps)</h3>
+                    <span class="rf-card__cue">Maximum clinical efficacy</span>
+                  </div>
+                  <p class="rf-card__desc">The full restorative protocol: daytime hydration defense plus evening peptide renewal.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="targeted" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Targeted &amp; Modular</h3>
+                    <span class="rf-card__cue">Customizable focus zones</span>
+                  </div>
+                  <p class="rf-card__desc">Core hydration layered with targeted botanical treatment where needed most.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+            </div>
+          </article>
+
+          <!-- Slide 4: Sensitivity Level -->
+          <article class="rf-slide" data-step="4" data-question="sensitivity">
+            <div class="rf-slide__head">
+              <span class="rf-slide__tag">04 / Tolerance</span>
+              <h2 class="rf-slide__title">How does your skin typically respond to active ingredients?</h2>
+              <p class="rf-slide__sub">Formulated by compounding pharmacists, all Chemistrie products are sensitive-skin respectful.</p>
+            </div>
+            <div class="rf-options rf-options--stacked">
+              <button type="button" class="rf-card" data-val="resilient" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Resilient &amp; Adaptable</h3>
+                  </div>
+                  <p class="rf-card__desc">Rarely experiences sensitivity, flaking, or redness when introducing new formulas.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="mild" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Mildly Sensitive</h3>
+                  </div>
+                  <p class="rf-card__desc">Can feel sensitized by seasonal changes, heavy fragrances, or over-exfoliation.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+
+              <button type="button" class="rf-card" data-val="reactive" data-next>
+                <div class="rf-card__content">
+                  <div class="rf-card__row-top">
+                    <h3 class="rf-card__title">Highly Sensitive or Reactive</h3>
+                  </div>
+                  <p class="rf-card__desc">Prone to flushing, tightness, or stinging; benefits from gentle barrier-reinforcing ingredients.</p>
+                </div>
+                <div class="rf-card__radio" aria-hidden="true"><span class="rf-card__radio-dot"></span></div>
+              </button>
+            </div>
+          </article>
         </div>
-      </div>
 
-      <!-- Question Slides Container -->
-      <div class="ritual-finder-app__slides" id="rfSlides">
-        
-        <!-- Slide 1: Skin Baseline -->
-        <article class="rf-slide is-active" data-step="1" data-question="skin_feel">
-          <div class="rf-slide__head">
-            <span class="rf-slide__tag">01 / Baseline</span>
-            <h2 class="rf-slide__title">How does your skin typically feel by midday?</h2>
-            <p class="rf-slide__sub">Select the description that most closely mirrors your skin's natural baseline.</p>
-          </div>
-          <div class="rf-options rf-options--grid">
-            <button type="button" class="rf-card" data-val="dry" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Dry or Tight</h3>
-                <p class="rf-card__desc">Feels parched, tight after cleansing, or craving rich, lasting moisture.</p>
-                <span class="rf-card__cue">Needs barrier lipids & deep hydration</span>
-              </div>
-            </button>
+        <!-- Form Card Footer: Controls sitting directly on the card -->
+        <div class="rf-form-card__footer">
+          <button type="button" class="btn btn--outline ritual-finder-app__btn-back" id="rfBtnBack" style="visibility: hidden;">
+            <span aria-hidden="true">←</span> Previous
+          </button>
+          <button type="button" class="btn btn--primary btn--dark ritual-finder-app__btn-next" id="rfBtnNext" disabled>
+            Continue <span aria-hidden="true">→</span>
+          </button>
+        </div>
 
-            <button type="button" class="rf-card" data-val="balanced" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Balanced & Comfortable</h3>
-                <p class="rf-card__desc">Generally even throughout the day, neither excessively shiny nor dry.</p>
-                <span class="rf-card__cue">Needs daily barrier maintenance</span>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="combination" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Combination</h3>
-                <p class="rf-card__desc">Oil across the T-zone while the perimeter or cheeks remain normal or dry.</p>
-                <span class="rf-card__cue">Needs layered, weightless hydration</span>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="oily" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Oil-Prone or Congested</h3>
-                <p class="rf-card__desc">Prone to midday shine, visible pores, or texture that needs refinement.</p>
-                <span class="rf-card__cue">Needs weightless hydration & targeted clarifying</span>
-              </div>
-            </button>
-          </div>
-        </article>
-
-        <!-- Slide 2: Primary Goal -->
-        <article class="rf-slide" data-step="2" data-question="primary_goal">
-          <div class="rf-slide__head">
-            <span class="rf-slide__tag">02 / Primary Focus</span>
-            <h2 class="rf-slide__title">What is your primary skincare priority right now?</h2>
-            <p class="rf-slide__sub">Your ritual will be formulated to support and emphasize this goal.</p>
-          </div>
-          <div class="rf-options rf-options--grid">
-            <button type="button" class="rf-card" data-val="hydration" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Deep Hydration & Suppleness</h3>
-                <p class="rf-card__desc">Plumping moisture that cushions the skin without a single ounce of heaviness.</p>
-                <span class="rf-card__cue">Multi-molecular hydration focus</span>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="renewal" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Cellular Renewal & Firming</h3>
-                <p class="rf-card__desc">Smoothing fine lines, improving elasticity, and supporting overnight rejuvenation.</p>
-                <span class="rf-card__cue">Peptide-led renewal focus</span>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="barrier" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Barrier Calm & Resilience</h3>
-                <p class="rf-card__desc">Soothing irritation, reducing flushing, and rebuilding delicate skin barriers.</p>
-                <span class="rf-card__cue">Conditioning & protective focus</span>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="refine" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Targeted Refinement & Smoothing</h3>
-                <p class="rf-card__desc">Refining rough texture, dullness, and targeted areas needing extra focus.</p>
-                <span class="rf-card__cue">Botanical lipid & botanical focus</span>
-              </div>
-            </button>
-          </div>
-        </article>
-
-        <!-- Slide 3: Routine Philosophy -->
-        <article class="rf-slide" data-step="3" data-question="routine_pace">
-          <div class="rf-slide__head">
-            <span class="rf-slide__tag">03 / Routine Style</span>
-            <h2 class="rf-slide__title">Which routine structure fits your daily lifestyle best?</h2>
-            <p class="rf-slide__sub">Chemistrie formulas are designed to work harmoniously as a complete system or as standalone steps.</p>
-          </div>
-          <div class="rf-options rf-options--grid">
-            <button type="button" class="rf-card" data-val="essential" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Essential Foundation (3 Steps)</h3>
-                <p class="rf-card__desc">Cleanse, Treat, Hydrate. High-efficiency daily simplicity done well.</p>
-                <span class="rf-card__cue">Quick 2-minute daily rhythm</span>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="complete" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Complete Pharmacist System (4–5 Steps)</h3>
-                <p class="rf-card__desc">The full restorative protocol: daytime hydration defense plus evening peptide renewal.</p>
-                <span class="rf-card__cue">Maximum clinical efficacy</span>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="targeted" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Targeted & Modular</h3>
-                <p class="rf-card__desc">Core hydration layered with targeted botanical treatment where needed most.</p>
-                <span class="rf-card__cue">Customizable focus zones</span>
-              </div>
-            </button>
-          </div>
-        </article>
-
-        <!-- Slide 4: Sensitivity Level -->
-        <article class="rf-slide" data-step="4" data-question="sensitivity">
-          <div class="rf-slide__head">
-            <span class="rf-slide__tag">04 / Tolerance</span>
-            <h2 class="rf-slide__title">How does your skin typically respond to active ingredients?</h2>
-            <p class="rf-slide__sub">Formulated by compounding pharmacists, all Chemistrie products are sensitive-skin respectful.</p>
-          </div>
-          <div class="rf-options rf-options--grid">
-            <button type="button" class="rf-card" data-val="resilient" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Resilient & Adaptable</h3>
-                <p class="rf-card__desc">Rarely experiences sensitivity, flaking, or redness when introducing new formulas.</p>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="mild" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Mildly Sensitive</h3>
-                <p class="rf-card__desc">Can feel sensitized by seasonal changes, heavy fragrances, or over-exfoliation.</p>
-              </div>
-            </button>
-
-            <button type="button" class="rf-card" data-val="reactive" data-next>
-              <div class="rf-card__check" aria-hidden="true">✓</div>
-              <div class="rf-card__content">
-                <h3 class="rf-card__title">Highly Sensitive or Reactive</h3>
-                <p class="rf-card__desc">Prone to flushing, tightness, or stinging; benefits from gentle barrier-reinforcing ingredients.</p>
-              </div>
-            </button>
-          </div>
-        </article>
-      </div>
-
-      <!-- Controls -->
-      <div class="ritual-finder-app__controls">
-        <button type="button" class="btn btn--outline ritual-finder-app__btn-back" id="rfBtnBack" style="visibility: hidden;">
-          <span aria-hidden="true">←</span> Previous Question
-        </button>
-        <button type="button" class="btn btn--primary btn--dark ritual-finder-app__btn-next" id="rfBtnNext" disabled>
-          Continue <span aria-hidden="true">→</span>
-        </button>
       </div>
     </div>
 

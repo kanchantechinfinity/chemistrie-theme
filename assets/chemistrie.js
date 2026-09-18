@@ -814,6 +814,8 @@
       }
     }
 
+    var advanceTimer = null;
+
     // Option card click handling
     app.addEventListener("click", function (e) {
       var card = e.target.closest(".rf-card");
@@ -833,21 +835,23 @@
 
       if (btnNext) btnNext.disabled = false;
 
-      // Auto-advance smoothly after 300ms
-      setTimeout(function () {
+      // Auto-advance smoothly after 380ms
+      if (advanceTimer) clearTimeout(advanceTimer);
+      advanceTimer = setTimeout(function () {
         if (currentStepIndex < slides.length - 1) {
           currentStepIndex++;
           updateStepUI();
         } else {
           showRecommendation();
         }
-      }, 300);
+      }, 380);
     });
 
     // Next button
     if (btnNext) {
       btnNext.addEventListener("click", function () {
         if (btnNext.disabled) return;
+        if (advanceTimer) clearTimeout(advanceTimer);
         if (currentStepIndex < slides.length - 1) {
           currentStepIndex++;
           updateStepUI();
@@ -860,6 +864,7 @@
     // Back button
     if (btnBack) {
       btnBack.addEventListener("click", function () {
+        if (advanceTimer) clearTimeout(advanceTimer);
         if (currentStepIndex > 0) {
           currentStepIndex--;
           updateStepUI();
