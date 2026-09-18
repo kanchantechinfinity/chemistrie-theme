@@ -561,11 +561,12 @@
   background: var(--c-cream) !important;
   border: 1px solid var(--c-line-soft) !important;
   border-radius: 14px !important;
-  padding: 12px !important;
-  min-width: 100px !important;
-  width: calc(25% - 12px) !important;
-  flex-shrink: 0 !important;
-  transition: transform .25s ease, border-color .25s ease !important;
+  padding: 14px 12px !important;
+  min-width: 120px !important;
+  flex: 0 0 calc(25% - 12px) !important;
+  max-width: calc(25% - 12px) !important;
+  box-sizing: border-box !important;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease !important;
   text-align: center !important;
 }
 .rf-item:hover {
@@ -718,12 +719,14 @@
 
 @media (max-width: 900px) {
   .rf-item {
-    flex: 0 0 calc(33.333% - 11px);
+    flex: 0 0 calc(33.333% - 11px) !important;
+    max-width: calc(33.333% - 11px) !important;
   }
 }
 
 @media (max-width: 600px) {
   .rf-item {
-    flex: 0 0 calc(50% - 8px);
+    flex: 0 0 calc(50% - 8px) !important;
+    max-width: calc(50% - 8px) !important;
   }
 }

@@ -1626,5 +1626,218 @@ slot ready; it renders the moment the product is in the collection.
 - Replaced static routine FAQ with 3 focused Ritual Finder FAQs in `templates/page.the-ritual.json`.
 - Added quiet luxury styling in `assets/pages.css` and interaction engine in `assets/chemistrie.js`.
 
+## Build log — 2026-09-18 (2): Collection page rebuilt to the approved launch brief (commit `2695bbd`)
+Large multi-section brief covering `templates/collection.json` and its 5
+sections, plus two global elements (announcement bar, footer). **Session
+notice mid-task: another agent was concurrently editing
+`sections/ritual-finder-app.liquid`, `assets/chemistrie.js` and
+`assets/pages.css`** (an in-progress, uncommitted diff was already present
+on `ritual-finder-app.liquid` when this task started, plus a stray
+`.kilo/worktrees/spectacular-devourer/` directory holding an older copy of
+`main-collection.liquid` from a different tool/worktree). **Deliberately
+did not touch any of those three files or that directory** — committed only
+the 6 files this brief's sections actually live in, verified via `git
+status --short` before every `git add`, and used exact filenames rather
+than `git add -A`.
+
+**01 Announcement bar** (`sections/header.liquid` + `config/settings_data.json`):
+added `show_announcement` checkbox, default `false`. The $120 shipping
+claim is removed from the code entirely (was previously baked into a
+Liquid `default:` filter as a fallback even without a schema default) —
+not just hidden — so switching the bar on later can't resurrect it. New
+schema default and the live `settings_data.json` value both changed to
+"Pharmacist-formulated skincare, thoughtfully made." Confirmed this is the
+file Shopify actually reads for the header's static-section settings
+(`templates/index.json`/`page.home.json` have no header entry — header is
+rendered directly in `layout/theme.liquid`, config-driven).
+
+**02 Collection hero** (`templates/collection.json` `page-hero` block):
+eyebrow → "THE COLLECTION", both old five-product deck lines removed,
+single new deck copy in their place. **`show_visual` set to `false`**
+rather than picking a different stock photo for `hero_fallback_asset` —
+the brief explicitly bans "developer-selected stock product imagery" as a
+substitute, and every option here would have been exactly that. Flagged to
+user: needs the real Collection hero asset from Chemistrie; until then the
+hero renders text-only (no image, so no stock-photo risk).
+
+**03 Statistics bar** (`sections/stat-bar.liquid` + `collection.json`):
+added `show_bar` checkbox, default `false`. Also cleared all four blocks'
+`number`/`label` values in the template (not just hidden the section) —
+defense in depth, so an early/accidental toggle-on can't publish the named
+unverified figures (6,000+ Women Served, 1–2 Days, ★4.96, 200/batch). The 4
+empty block slots stay in place as the "preserve as optional module"
+structure Chemistrie can fill in later.
+
+**04 Product grid** (`sections/main-collection.liquid` — largest change):
+deleted the entire `<aside class="col-side">` filter sidebar (availability
++ price filters, the whole `.col-layout` two-column grid) and the
+`col-toolbar__count`/`col-side__count` "N formulas" displays — sort
+dropdown kept, now alone in the toolbar. Grid went from `240px 1fr`
+sidebar+content to a single full-width `.col-body`, gap widened
+(`clamp(20px,2.4vw,32px)` → `clamp(24px,2.8vw,40px)`) rather than adding a
+4th column, to read as "more generous" per the brief rather than smaller
+cards — a judgment call, flagged to user. Card markup, CTA format ("View
+{{ name }} →", CSS-uppercased to "VIEW NAME"), dynamic price, and the
+already-correct `product.available` sold-out branch were untouched — all
+already compliant with this brief's requirements from earlier work.
+Removed `.col-callouts` (the two below-grid links) entirely — the brief
+explicitly names both for removal and replaces them with the grid card
+below, not a new below-grid link.
+
+**05 Ritual Finder grid card** — new `snippets/ritual-finder-card.liquid`,
+rendered via `{% render %}` inside the product loop. Position is a
+**number setting** (`ritual_finder_position`, default 6) on
+`main-collection.liquid`'s schema, not a hard-coded slot: the loop tracks
+`forloop.index` and inserts the card the instant it matches, or appends it
+after the loop if the position exceeds the current product count (handles
+"fewer than 6 products" and "more than 6 products" without any code
+change — this is the actual mechanism satisfying "repositionable... final
+position does not need to be determined now"). Styled visibly dark/forest
+(`.rfcard`) against the light `.pcard` product cards specifically so it
+can't be mistaken for a sixth product, per the brief's explicit warning.
+CTA destination `/pages/the-ritual` — **not a TBD**, since that page is now
+the real built Ritual Finder experience (see the two entries above this
+one) rather than the old educational Ritual page it used to be. Copy,
+eyebrow and CTA label are all section settings, independently editable
+from position.
+
+**06 Ritual Finder CTA** (`collection.json` `page-cta` block): swapped
+"Start with one, add as you're ready" two-button copy for the approved
+single-CTA version. `button2_label`/`button2_url` cleared so
+`{% render 'page-cta' %}`'s existing `if button2_label != blank` guard
+hides the second button automatically — no template edit needed there,
+the snippet already supported single- or dual-button use.
+
+**07 Pre-footer statement**: unchanged — `closing-statement.liquid`'s
+schema default already exactly matches the approved copy, `collection.json`
+already used `settings: {}` (schema default), brief says Keep.
+
+**08 Footer** (`sections/footer.liquid`): single change — removed
+"Compounded with care in Houston." from the copyright line entirely
+(brief: "Do not describe Chemistrie cosmetics as 'compounded.'"). Nav
+columns (Shop/Discover/Help with exactly the approved links, all
+`link_list`-editable), `brand_line` default, and Founders' Circle already
+pointing at `/pages/founders-circle` (built and live) were **already
+correct from the earlier footer rebuild** — nothing else needed changing.
+Left the `.footer__seal` "Pharmacist-formulated · Houston, TX" badge alone
+(judgment call, flagged to user): it doesn't use the word "compounded" and
+isn't named in this brief's removal list, and "Keep: Overall footer layout
+and styling" argues for preserving it as a brand mark rather than treating
+it as the "redundant Houston positioning" the Do-not clause targets.
+
+**No-em-dash rule**: this brief introduced a hard "no em dashes in
+consumer-facing copy" requirement. Applied it to every new/edited eyebrow
+on this page — dropped the sitewide "— X —" wrapping convention in favor
+of plain caps ("THE COLLECTION", "THE RITUAL FINDER"), matching the
+pattern the two most-recent 2026-09-18 builds (Ingredient Index, homepage
+Ritual Finder) already established as current house style. **Did not
+retroactively strip em dashes from older, unrelated sections** (e.g.
+Trust Signals' "— Trust Signals —", Follow Chemistrie's "— Follow
+Chemistrie —") — out of scope for a Collection-page brief; flagged as a
+possible future sitewide pass if the client wants full compliance.
+
+**Open items for the user, not fixable from code:**
+- Collection hero asset — needs the real photo from Chemistrie (`show_visual: false` until then).
+- Final product prices — already pull from live product data (`product.price | money`); the brief's own TBD list says confirming *approved* pricing is a Chemistrie/dev task, not a code gap.
+- Ritual Finder destination — resolved to `/pages/the-ritual` (built); confirm this is the intended final URL before launch.
+- Founders' Circle destination — resolved to `/pages/founders-circle` (built); same, confirm before launch.
+
+### (2b) Hero placeholder reverted back on (commit `625a1ad`)
+User: "use the older images that were already there." The `show_visual:
+false` judgment call from (2) was wrong — turned back to `true` in
+`templates/collection.json`'s `page-hero` settings. `hero_fallback_asset`
+was never changed (still `stock-lineup.jpg`), so this single-field flip is
+the whole fix: the pre-existing placeholder photo is visible again, same
+as before this brief, until Chemistrie supplies the real Collection hero
+asset. **Lesson: "do not substitute NEW stock imagery" ≠ "hide the
+existing placeholder" — when a brief says retain a temporary placeholder,
+default to keeping what's already there rather than removing it out of
+caution.**
 
 
+### (2c) Pre-footer statement given a real visual treatment (commit `374d392`)
+User: "I want this part better looks simple" with a screenshot of the
+plain closing-statement band (small sans-serif text, flat dark box). Note
+this overrides the brief's own "07 Pre-Footer Statement: Keep current
+visual treatment" line from (2) — direct user feedback in the moment beats
+a generic brief instruction. Copy untouched (brief still says keep it).
+
+`sections/closing-statement.liquid`: text switched from body sans
+(15-18px) to `--ff-display` italic serif at 20-28px — matches how the site
+already treats other single-line emphasis moments (testimonial
+blockquotes, founders signature). Added a small tan accent mark above
+the line (same character/color already used in `.founders__caption-mark`)
+and roughly tripled the vertical padding so it reads as a considered
+pause before the footer rather than a thin utility strip.
+
+## Build log — 2026-09-18 (3): Ritual Finder results view redesigned for simplified layout (commit `f17e4e5`)
+Restructured the results display from a two-column AM/PM card layout to a
+streamlined single-column view where product recommendations display as compact
+horizontal cards with clear AM/PM separation and individual routine pricing.
+
+**Visual & structural changes:**
+- Removed column headers describing "Morning Routine" and "Evening Routine" — replaced with simple "AM" and "PM" labels
+- Product cards now render horizontally (flex-wrap) instead of in vertical lists
+- Each product card shows thumbnail + product name + individual price + View link (description/why text hidden by default)
+- AM routine shows its subtotal price below its product row; PM routine shows its subtotal
+- Form card background changed from pure white (#ffffff) to theme cream (var(--c-cream)) for visual cohesion
+- Overall layout simplified to reduce visual density on the results screen
+
+**Responsive behavior:**
+- Desktop (>900px): 4 products per row
+- Tablet (≤900px): 3 products per row
+- Mobile (≤600px): 2 products per row
+- Products wrap naturally; no fixed-height containers that could clip on small screens
+
+**What stays the same:**
+- Dynamic recommendation engine (based on skin_feel/primary_goal/routine_pace/sensitivity answers)
+- Product data (prices, images, URLs, roles)
+- Action buttons (Add Complete Ritual to Bag, Retake Consultation, Explore All Formulas)
+- Total ritual price calculation across all unique products
+
+### (3b) Results recommendations moved to background page view (commit `1519b18`)
+User: "the recommendations should be on the background page not on the card view."
+Restructured recommendation display so results render on a separate full-page
+background element (using absolute positioning behind the form card) rather than
+swapping views inside the form card. Creates visual layer separation: form stays in
+focus on top (z-10), recommendations visible behind (z-1).
+
+Implementation:
+- Moved `rf-slide--results` article out of `.ritual-finder-app__slides`
+- Created new `.rf-results-page` element as direct child of `.ritual-finder-app__inner`
+- Positioned absolutely (inset: 0) to fill available space and sit behind card
+- `showResults()` now shows/hides `.rf-results-page` instead of swapping slides
+- Retake button resets state and calls `renderStep()`, which hides results page and
+  re-displays form card with fresh question flow
+- Z-index layering: results (1), form card (10), ensures card stays interactive on top
+
+### (3c) Ritual Finder simplified: close form, show results directly (commit `bb8f36f`)
+User: "wtf is this... once i done with question just close the card and display
+the recommendations on main page." Removed the layered overlay approach —
+now the form card simply hides when consultation completes, and recommendations
+display directly on the main page where the form was.
+
+Flow:
+1. User answers 4 questions → form card visible
+2. Clicks final "Reveal My Custom Ritual" → `showResults()` hides card, shows results
+3. Results render inline on the page (no absolute positioning)
+4. Click "Retake Consultation" → `renderStep()` shows card, hides results, resets answers
+
+Simplified styling: removed absolute positioning, z-index layering, and
+background-page wrapper — results are just a normal block-level sibling to the
+form card that gets hidden/shown together.
+
+### (3d) Fix recommendation product cards not appearing (commit pending)
+User: "the cards are not appearing please fix it".
+Root cause:
+- Previous commits added `.rf-results-page` outside the card while leaving the old `#rfResult` `<article>` inside `#rfSlides`.
+- Both blocks had identical IDs (`#rfResultTitle`, `#rfResultRationale`, `#rfListAM`, `#rfListPM`, `#rfPriceAM`, `#rfPricePM`, `#rfTotalPrice`, `#rfBtnAddRitual`, `#rfBtnRetake`).
+- When `showResults()` ran, `document.getElementById('rfListAM')` returned the element inside `#rfCard` (which had just been hidden with `card.style.display = "none"`).
+- The product HTML was injected into the hidden element, while the visible `#rfResultsPage` stayed empty.
+- Also, an orphaned `</div>` was present in the template.
+
+Fix:
+- Removed the old duplicate `<article class="rf-slide rf-slide--results" id="rfResult">` inside `#rfSlides` completely.
+- Fixed the orphaned closing `</div>` tag.
+- Scoped all DOM selectors in `showResults()` and button bindings to `resultsPage` directly (e.g. `resultsPage.querySelector("#rfListAM")`).
+- Updated `.rf-item` in `assets/pages.css` to use proper flex and max-width sizing across desktop, tablet, and mobile so cards render crisply with zero clipping.

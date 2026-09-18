@@ -218,55 +218,6 @@
           </div>
         </article>
 
-        <!-- Slide 5: Dynamic Recommendation View -->
-        <article class="rf-slide rf-slide--results" id="rfResult" data-step="5" style="display: none;">
-          <div class="rf-result__header">
-            <span class="eyebrow eyebrow--accent">— Your Personalized Routine —</span>
-            <h2 class="display-h rf-result__title" id="rfResultTitle">The Pure Hydration &amp; Renewal Ritual</h2>
-            <p class="rf-result__rationale" id="rfResultRationale">
-              Based on your consultation, your ritual pairs gentle cleansing with multi-depth hydration and nighttime cellular peptide renewal.
-            </p>
-          </div>
-
-          <!-- AM / PM Routine Regimen -->
-          <div class="rf-result__regimen">
-            <!-- Morning Sequence -->
-            <div class="rf-result__routine">
-              <div class="rf-result__routine-label">AM</div>
-              <div class="rf-result__product-list" id="rfListAM"></div>
-              <div class="rf-result__routine-price" id="rfPriceAM"></div>
-            </div>
-
-            <!-- Evening Sequence -->
-            <div class="rf-result__routine">
-              <div class="rf-result__routine-label">PM</div>
-              <div class="rf-result__product-list" id="rfListPM"></div>
-              <div class="rf-result__routine-price" id="rfPricePM"></div>
-            </div>
-          </div>
-
-          <!-- Actions Strip -->
-          <div class="rf-result__actions">
-            <div class="rf-result__pricing">
-              <span class="rf-result__price-label">Recommended Ritual Total:</span>
-              <span class="rf-result__price-val" id="rfTotalPrice">$228</span>
-            </div>
-            <div class="rf-result__cta-group">
-              <button type="button" class="btn btn--primary btn--dark rf-result__btn-add" id="rfBtnAddRitual">
-                <span>Add Complete Ritual to Bag</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </button>
-              <a href="/collections/all" class="btn btn--outline rf-result__btn-shop">
-                Explore All Formulas
-              </a>
-            </div>
-            <button type="button" class="rf-result__retake-link" id="rfBtnRetake">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6"/><path d="M20 10l-4.5-4.5A9 9 0 0 0 4 12m0 0a9 9 0 0 0 15.5 4.5L20 16"/></svg>
-              <span>Retake Consultation</span>
-            </button>
-          </div>
-        </article>
-
       </div>
 
       <!-- Form Card Footer: Navigation Buttons for questions 1-4 -->
@@ -286,51 +237,50 @@
 
     <!-- ───── Recommendations View (Main Page) ───── -->
     <div class="rf-results-page" id="rfResultsPage" style="display: none;">
-        <div class="rf-result__header">
-          <span class="eyebrow eyebrow--accent">— Your Personalized Routine —</span>
-          <h2 class="display-h rf-result__title" id="rfResultTitle">The Pure Hydration &amp; Renewal Ritual</h2>
-          <p class="rf-result__rationale" id="rfResultRationale">
-            Based on your consultation, your ritual pairs gentle cleansing with multi-depth hydration and nighttime cellular peptide renewal.
-          </p>
+      <div class="rf-result__header">
+        <span class="eyebrow eyebrow--accent">— Your Personalized Routine —</span>
+        <h2 class="display-h rf-result__title" id="rfResultTitle">The Pure Hydration &amp; Renewal Ritual</h2>
+        <p class="rf-result__rationale" id="rfResultRationale">
+          Based on your consultation, your ritual pairs gentle cleansing with multi-depth hydration and nighttime cellular peptide renewal.
+        </p>
+      </div>
+
+      <!-- AM / PM Routine Regimen -->
+      <div class="rf-result__regimen">
+        <!-- Morning Sequence -->
+        <div class="rf-result__routine">
+          <div class="rf-result__routine-label">AM</div>
+          <div class="rf-result__product-list" id="rfListAM"></div>
+          <div class="rf-result__routine-price" id="rfPriceAM"></div>
         </div>
 
-        <!-- AM / PM Routine Regimen -->
-        <div class="rf-result__regimen">
-          <!-- Morning Sequence -->
-          <div class="rf-result__routine">
-            <div class="rf-result__routine-label">AM</div>
-            <div class="rf-result__product-list" id="rfListAM"></div>
-            <div class="rf-result__routine-price" id="rfPriceAM"></div>
-          </div>
-
-          <!-- Evening Sequence -->
-          <div class="rf-result__routine">
-            <div class="rf-result__routine-label">PM</div>
-            <div class="rf-result__product-list" id="rfListPM"></div>
-            <div class="rf-result__routine-price" id="rfPricePM"></div>
-          </div>
+        <!-- Evening Sequence -->
+        <div class="rf-result__routine">
+          <div class="rf-result__routine-label">PM</div>
+          <div class="rf-result__product-list" id="rfListPM"></div>
+          <div class="rf-result__routine-price" id="rfPricePM"></div>
         </div>
+      </div>
 
-        <!-- Actions Strip -->
-        <div class="rf-result__actions">
-          <div class="rf-result__pricing">
-            <span class="rf-result__price-label">Recommended Ritual Total:</span>
-            <span class="rf-result__price-val" id="rfTotalPrice">$228</span>
-          </div>
-          <div class="rf-result__cta-group">
-            <button type="button" class="btn btn--primary btn--dark rf-result__btn-add" id="rfBtnAddRitual">
-              <span>Add Complete Ritual to Bag</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-            <a href="/collections/all" class="btn btn--outline rf-result__btn-shop">
-              Explore All Formulas
-            </a>
-          </div>
-          <button type="button" class="rf-result__retake-link" id="rfBtnRetake">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6"/><path d="M20 10l-4.5-4.5A9 9 0 0 0 4 12m0 0a9 9 0 0 0 15.5 4.5L20 16"/></svg>
-            <span>Retake Consultation</span>
+      <!-- Actions Strip -->
+      <div class="rf-result__actions">
+        <div class="rf-result__pricing">
+          <span class="rf-result__price-label">Recommended Ritual Total:</span>
+          <span class="rf-result__price-val" id="rfTotalPrice">$228</span>
+        </div>
+        <div class="rf-result__cta-group">
+          <button type="button" class="btn btn--primary btn--dark rf-result__btn-add" id="rfBtnAddRitual">
+            <span>Add Complete Ritual to Bag</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
+          <a href="/collections/all" class="btn btn--outline rf-result__btn-shop">
+            Explore All Formulas
+          </a>
         </div>
+        <button type="button" class="rf-result__retake-link" id="rfBtnRetake">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6"/><path d="M20 10l-4.5-4.5A9 9 0 0 0 4 12m0 0a9 9 0 0 0 15.5 4.5L20 16"/></svg>
+          <span>Retake Consultation</span>
+        </button>
       </div>
     </div>
 
@@ -414,7 +364,7 @@
     };
 
     var questionSlides = slides.filter(function(s) {
-      return s.getAttribute("data-step") !== "5";
+      return s.hasAttribute("data-question");
     });
 
     var currentStep = 0;
@@ -486,13 +436,13 @@
         resultsPage.style.display = "block";
       }
 
-      var titleEl = document.getElementById("rfResultTitle");
-      var rationaleEl = document.getElementById("rfResultRationale");
-      var listAM = document.getElementById("rfListAM");
-      var listPM = document.getElementById("rfListPM");
-      var priceAMEl = document.getElementById("rfPriceAM");
-      var pricePMEl = document.getElementById("rfPricePM");
-      var totalPriceEl = document.getElementById("rfTotalPrice");
+      var titleEl = resultsPage ? resultsPage.querySelector("#rfResultTitle") : document.getElementById("rfResultTitle");
+      var rationaleEl = resultsPage ? resultsPage.querySelector("#rfResultRationale") : document.getElementById("rfResultRationale");
+      var listAM = resultsPage ? resultsPage.querySelector("#rfListAM") : document.getElementById("rfListAM");
+      var listPM = resultsPage ? resultsPage.querySelector("#rfListPM") : document.getElementById("rfListPM");
+      var priceAMEl = resultsPage ? resultsPage.querySelector("#rfPriceAM") : document.getElementById("rfPriceAM");
+      var pricePMEl = resultsPage ? resultsPage.querySelector("#rfPricePM") : document.getElementById("rfPricePM");
+      var totalPriceEl = resultsPage ? resultsPage.querySelector("#rfTotalPrice") : document.getElementById("rfTotalPrice");
 
       // Compute recommendation
       var ritualTitle = "The Pure Hydration & Renewal Ritual";
@@ -568,10 +518,11 @@
       });
       if (totalPriceEl) totalPriceEl.textContent = "$" + Math.round(total / 100);
 
-      // Safe scroll to top of card if user was scrolled past
-      var cardBox = card.getBoundingClientRect();
-      if (cardBox.top < 0) {
-        card.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Safe scroll to top of results
+      var targetScroll = resultsPage || card;
+      var targetBox = targetScroll.getBoundingClientRect();
+      if (targetBox.top < 0) {
+        targetScroll.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
 
@@ -645,7 +596,7 @@
     }
 
     // Retake button
-    var btnRetake = document.getElementById("rfBtnRetake");
+    var btnRetake = (resultsPage && resultsPage.querySelector("#rfBtnRetake")) || document.getElementById("rfBtnRetake");
     if (btnRetake) {
       btnRetake.addEventListener("click", function() {
         answers = { skin_feel: null, primary_goal: null, routine_pace: null, sensitivity: null };
@@ -659,7 +610,7 @@
     }
 
     // Add Complete Ritual button
-    var btnAdd = document.getElementById("rfBtnAddRitual");
+    var btnAdd = (resultsPage && resultsPage.querySelector("#rfBtnAddRitual")) || document.getElementById("rfBtnAddRitual");
     if (btnAdd) {
       btnAdd.addEventListener("click", function() {
         window.location.href = "/collections/all";
