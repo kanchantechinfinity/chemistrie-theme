@@ -486,6 +486,14 @@
         resultsPage.style.display = "block";
       }
 
+      var titleEl = document.getElementById("rfResultTitle");
+      var rationaleEl = document.getElementById("rfResultRationale");
+      var listAM = document.getElementById("rfListAM");
+      var listPM = document.getElementById("rfListPM");
+      var priceAMEl = document.getElementById("rfPriceAM");
+      var pricePMEl = document.getElementById("rfPricePM");
+      var totalPriceEl = document.getElementById("rfTotalPrice");
+
       // Compute recommendation
       var ritualTitle = "The Pure Hydration & Renewal Ritual";
       var rationale = "A high-efficacy foundation designed to balance baseline hydration, defend against moisture evaporation, and restore healthy skin radiance.";
@@ -518,14 +526,6 @@
         pmHandles = ["velvet", "veil", "cashmere"];
         allHandles = ["velvet", "veil", "cashmere"];
       }
-
-      var titleEl = document.getElementById("rfResultTitle");
-      var rationaleEl = document.getElementById("rfResultRationale");
-      var listAM = document.getElementById("rfListAM");
-      var listPM = document.getElementById("rfListPM");
-      var priceAMEl = document.getElementById("rfPriceAM");
-      var pricePMEl = document.getElementById("rfPricePM");
-      var totalPriceEl = document.getElementById("rfTotalPrice");
 
       if (titleEl) titleEl.textContent = ritualTitle;
       if (rationaleEl) rationaleEl.textContent = rationale;
