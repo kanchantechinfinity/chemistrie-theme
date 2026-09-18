@@ -738,12 +738,22 @@
     var slides = Array.prototype.slice.call(app.querySelectorAll(".rf-slide"));
     var btnNext = document.getElementById("rfBtnNext");
     var btnBack = document.getElementById("rfBtnBack");
+    var btnInstant = document.getElementById("rfBtnInstant");
     var currentStepEl = document.getElementById("rfCurrentStep");
     var totalStepsEl = document.getElementById("rfTotalSteps");
     var progressBar = document.getElementById("rfProgressBar");
     var catalogEl = document.getElementById("rfProductCatalog");
 
     if (!slides.length) return;
+
+    function scrollToTarget(target) {
+      var tgt = target || app;
+      if (window.__chemistrie && window.__chemistrie.lenis) {
+        window.__chemistrie.lenis.scrollTo(tgt, { offset: -50, duration: 0.8 });
+      } else {
+        tgt.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
 
     // Load or fallback product catalog
     var catalog = {};
@@ -757,11 +767,11 @@
 
     // Fallback dictionary for launch products
     var fallbacks = {
-      velvet: { handle: "velvet", title: "Velvet", stepSubtitle: "Conditioning Cleanser", role: "Cleanse", defaultPrice: "$48", price: 4800, url: "/products/velvet", image: "", why: "Gentle morning and evening cleansing that purifies without disturbing the acid mantle." },
-      veil: { handle: "veil", title: "Veil", stepSubtitle: "Weightless Hydrating Serum", role: "Treat", defaultPrice: "$88", price: 8800, url: "/products/veil", image: "", why: "Plumping hydration delivered deep into epidermal layers with weightless precision." },
-      cashmere: { handle: "cashmere", title: "Cashmere", stepSubtitle: "Essential Barrier Cream", role: "Hydrate", defaultPrice: "$92", price: 9200, url: "/products/cashmere", image: "", why: "Essential lipid support to seal in hydration and defend against daily moisture evaporation." },
-      aura: { handle: "aura", title: "Aura", stepSubtitle: "Peptide Renewal Treatment", role: "Renew", defaultPrice: "$195", price: 19500, url: "/products/aura", image: "", why: "Overnight multi-peptide matrix to visibly refine texture, soften lines, and restore elasticity." },
-      silken: { handle: "silken", title: "Silken", stepSubtitle: "Botanical Conditioning Elixir", role: "Refine", defaultPrice: "$135", price: 13500, url: "/products/silken", image: "", why: "Targeted botanical conditioning selected for focused refinement and delicate zones." }
+      velvet: { handle: "velvet", title: "Velvet", stepSubtitle: "Conditioning Cleanser", role: "Cleanse", defaultPrice: "$48", price: 4800, url: "/products/velvet", image: "product-velvet.png", why: "Gentle morning and evening cleansing that purifies without disturbing the acid mantle." },
+      veil: { handle: "veil", title: "Veil", stepSubtitle: "Weightless Hydrating Serum", role: "Treat", defaultPrice: "$88", price: 8800, url: "/products/veil", image: "product-veil.png", why: "Plumping hydration delivered deep into epidermal layers with weightless precision." },
+      cashmere: { handle: "cashmere", title: "Cashmere", stepSubtitle: "Essential Barrier Cream", role: "Hydrate", defaultPrice: "$92", price: 9200, url: "/products/cashmere", image: "product-cashmere.png", why: "Essential lipid support to seal in hydration and defend against daily moisture evaporation." },
+      aura: { handle: "aura", title: "Aura", stepSubtitle: "Peptide Renewal Treatment", role: "Renew", defaultPrice: "$195", price: 19500, url: "/products/aura", image: "product-aura.png", why: "Overnight multi-peptide matrix to visibly refine texture, soften lines, and restore elasticity." },
+      silken: { handle: "silken", title: "Silken", stepSubtitle: "Botanical Conditioning Elixir", role: "Refine", defaultPrice: "$135", price: 13500, url: "/products/silken", image: "product-silken.png", why: "Targeted botanical conditioning selected for focused refinement and delicate zones." }
     };
 
     function getProd(handle) {
@@ -803,11 +813,20 @@
       var currentSlide = slides[currentStepIndex];
       var questionKey = currentSlide.getAttribute("data-question");
       var hasSelection = !!answers[questionKey];
+      var hasAnySelection = !!(answers.skin_feel || answers.primary_goal || answers.routine_pace || answers.sensitivity);
+
+      if (btnInstant) {
+        if (hasAnySelection && currentStepIndex < slides.length - 1) {
+          btnInstant.style.display = "inline-flex";
+        } else {
+          btnInstant.style.display = "none";
+        }
+      }
 
       if (btnNext) {
         btnNext.disabled = !hasSelection;
         if (currentStepIndex === slides.length - 1) {
-          btnNext.innerHTML = 'See My Ritual <span aria-hidden="true">→</span>';
+          btnNext.innerHTML = 'Reveal My Custom Ritual <span aria-hidden="true">→</span>';
         } else {
           btnNext.innerHTML = 'Continue <span aria-hidden="true">→</span>';
         }
@@ -834,6 +853,9 @@
       answers[questionKey] = val;
 
       if (btnNext) btnNext.disabled = false;
+      if (btnInstant && currentStepIndex < slides.length - 1) {
+        btnInstant.style.display = "inline-flex";
+      }
 
       // Auto-advance smoothly after 380ms
       if (advanceTimer) clearTimeout(advanceTimer);
@@ -861,6 +883,14 @@
       });
     }
 
+    // Instant recommendation button
+    if (btnInstant) {
+      btnInstant.addEventListener("click", function () {
+        if (advanceTimer) clearTimeout(advanceTimer);
+        showRecommendation();
+      });
+    }
+
     // Back button
     if (btnBack) {
       btnBack.addEventListener("click", function () {
@@ -874,8 +904,12 @@
 
     // Calculate and display recommendations
     function showRecommendation() {
-      if (flowEl) flowEl.style.display = "none";
+      if (advanceTimer) clearTimeout(advanceTimer);
+      if (flowEl) {
+        flowEl.style.display = "none";
+      }
       if (resultEl) {
+        resultEl.removeAttribute("hidden");
         resultEl.hidden = false;
         resultEl.style.display = "block";
       }
@@ -928,7 +962,8 @@
         handles.forEach(function (h, i) {
           var p = getProd(h);
           var stepNum = "Step 0" + (i + 1);
-          var imgTag = p.image ? '<img src="' + p.image + '" alt="' + p.title + '" loading="lazy">' : '<div style="background:var(--c-cream);width:100%;height:100%;"></div>';
+          var imgSrc = p.image || ('product-' + h + '.png');
+          var imgTag = '<img src="' + imgSrc + '" alt="' + p.title + '" loading="lazy" onerror="this.onerror=null;this.src=\'product-' + h + '.png\';">';
           html += '<div class="rf-item">' +
             '<div class="rf-item__thumb">' + imgTag + '</div>' +
             '<div class="rf-item__info">' +
@@ -1021,19 +1056,19 @@
             flowEl.style.display = "block";
           }
           updateStepUI();
-          app.scrollIntoView({ behavior: "smooth", block: "start" });
+          scrollToTarget(app);
         };
       }
 
       // Smooth scroll to top of recommendation
-      app.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToTarget(resultEl || app);
     }
 
     // Hero "START MY RITUAL" smooth scroll anchor listener
     document.querySelectorAll('a[href="#ritual-finder-app"]').forEach(function (anchor) {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();
-        app.scrollIntoView({ behavior: "smooth", block: "start" });
+        scrollToTarget(app);
       });
     });
 

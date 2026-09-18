@@ -10,9 +10,6 @@
 <section class="ritual-finder-app" id="ritual-finder-app" data-screen-label="Ritual Finder Consultation">
   <div class="ritual-finder-app__inner">
 
-    <!-- ───── Consultation View (Step by Step) ───── -->
-    <div class="ritual-finder-app__flow" id="rfFlow">
-      
     <!-- ───── Consultation View (Form Card) ───── -->
     <div class="ritual-finder-app__flow" id="rfFlow">
       <div class="rf-form-card">
@@ -228,6 +225,9 @@
           <button type="button" class="btn btn--outline ritual-finder-app__btn-back" id="rfBtnBack" style="visibility: hidden;">
             <span aria-hidden="true">←</span> Previous
           </button>
+          <button type="button" class="rf-form-card__instant-btn" id="rfBtnInstant" style="display: none;">
+            <span>See My Recommended Ritual</span> <span aria-hidden="true">→</span>
+          </button>
           <button type="button" class="btn btn--primary btn--dark ritual-finder-app__btn-next" id="rfBtnNext" disabled>
             Continue <span aria-hidden="true">→</span>
           </button>
@@ -237,7 +237,7 @@
     </div>
 
     <!-- ───── Dynamic Recommendation View (Hidden initially) ───── -->
-    <div class="ritual-finder-app__result" id="rfResult" hidden>
+    <div class="ritual-finder-app__result" id="rfResult" style="display: none;">
       <div class="rf-result__header">
         <span class="eyebrow eyebrow--accent">— Your Personalized Routine —</span>
         <h2 class="display-h rf-result__title" id="rfResultTitle">The Hydration & Renewal Ritual</h2>
