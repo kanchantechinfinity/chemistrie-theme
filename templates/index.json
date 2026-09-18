@@ -27,7 +27,8 @@
         "trust2_label": "Pharmacist-grade actives",
         "trust3_num": "★ 4.96",
         "trust3_label": "Verified buyer rating",
-        "bottle_image": "shopify://shop_images/dda85c0a-53f5-4881-bc23-c9d3314d64c7-removebg-preview_1_4000x4000_27444232-7a22-43d1-940f-5df673f489c4.png",
+        "hero_fallback_asset": "hero-home.jpg",
+        "bottle_image": "",
         "scroll_label": "Scroll"
       }
     },

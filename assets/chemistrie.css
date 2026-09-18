@@ -473,10 +473,40 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* Stage (right column) */
 .hero__stage {
   position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero__visual-frame {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  aspect-ratio: 16 / 9.5;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(240,232,219,.22);
+  box-shadow: 0 40px 80px -24px rgba(0,0,0,.65), 0 16px 32px -8px rgba(26,58,45,.4);
+  background: var(--c-forest-2);
+}
+.hero__visual-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+  pointer-events: none;
+}
+.hero__visual-img {
+  display: block;
+  width: 100%;
   height: 100%;
-  min-height: clamp(440px, 56vw, 600px);
-  display: grid;
-  place-items: center;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .7s var(--ease-out);
+}
+.hero__visual-frame:hover .hero__visual-img {
+  transform: scale(1.03);
 }
 .hero__bottle-wrap {
   position: relative;
@@ -691,7 +721,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* Responsive */
 @media (max-width: 1100px) {
   .hero__inner { grid-template-columns: 1fr; gap: 48px; }
-  .hero__stage { min-height: 420px; max-width: 420px; margin: 0 auto; width: 100%; }
+  .hero__stage { min-height: auto; max-width: 640px; margin: 0 auto; width: 100%; }
   .hero__title { text-align: left; }
   .hero__copy { max-width: 640px; }
   .hero__trust-num { font-size: 22px; }
@@ -2807,15 +2837,26 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__blob { filter: blur(80px); }
   .hero__noise { opacity: .04; }
 
-  /* Bottle stage — square frame, whole image visible, no overflow (wins: declared after the block above) */
-  .hero__stage { min-height: 0 !important; height: auto !important; aspect-ratio: 1 / 1 !important; width: 100% !important; max-width: 320px !important; margin: 24px auto 0 !important; }
-  .hero__bottle-wrap { width: 100% !important; height: 100% !important; max-width: 100% !important; display: flex; align-items: center; justify-content: center; }
-  .hero__bottle { width: auto !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; object-fit: contain; }
-
-  /* Bring bottle up into the top-right corner, tucked behind the copy (size unchanged, ok to crop) */
-  .hero__inner { position: relative; }
-  .hero__stage { position: absolute !important; top: 24px !important; right: -130px !important; margin: 0 !important; z-index: 1; pointer-events: none; }
-  .hero__copy { position: relative; z-index: 2; }
+  /* Hero visual stage — clean responsive frame below copy */
+  .hero__stage {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    margin: 28px auto 0 !important;
+    z-index: 2 !important;
+    pointer-events: auto !important;
+  }
+  .hero__visual-frame {
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 16 / 9.5 !important;
+    border-radius: 16px !important;
+  }
 }
 
 @media (max-width: 700px) {
