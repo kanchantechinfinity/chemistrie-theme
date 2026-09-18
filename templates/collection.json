@@ -16,7 +16,7 @@
         "heading": "The Collection.",
         "deck": "Thoughtfully formulated skincare designed to work beautifully on its own or as part of your ritual.",
         "deck2": "",
-        "show_visual": false,
+        "show_visual": true,
         "hero_fallback_asset": "stock-lineup.jpg"
       }
     },
