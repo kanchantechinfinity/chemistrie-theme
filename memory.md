@@ -1,12 +1,29 @@
 # Chemistrie Shopify Theme — Project Memory
 
 ## Repo / workflow
-- Working repo: `/Users/apple/Desktop/chemistrie-main/chemistrie-theme` (git repo, source of truth).
-- Mirror copy kept manually in sync: `/Users/apple/Desktop/chemistrie-main/chemistrie-main`.
+- Working repo (Windows machine, since 2026-09-09): `C:/Users/vedant/OneDrive/Desktop/chemistree` — fresh clone of origin/main, source of truth. No mirror copy here.
+- Prior macOS working repo: `/Users/apple/Desktop/chemistrie-main/chemistrie-theme` with a manually-synced mirror at `.../chemistrie-main` (historical; not present on Windows).
 - GitHub: `https://github.com/kanchantechinfinity/chemistrie-theme`, branch `main`, connected to the live Shopify theme via Shopify's GitHub integration.
 - **Important gotcha:** while the merchant has the Shopify theme customizer open, Shopify periodically autosaves its own in-memory section data back to GitHub as commits titled `Update from Shopify for theme chemistrie-theme/main`. Always `git fetch origin main` and check `git log --oneline origin/main` for these before pushing — merge them in, don't just force-push over them.
 - User has also manually pasted code directly into the Shopify "Edit code" editor in the past (bypassing git) when unsure the push was reaching the live theme. This can cause drift/breakage — e.g. a manual paste once landed CSS rules nested *inside* another rule's `{ }` block, producing invalid CSS. Always check for accidental duplication/nesting after a manual paste is reported.
 - Shopify schema validation gotchas learned the hard way: `url`-type settings can't have non-datasource string defaults (use `text` instead); `text` settings can't have blank `default: ""` (omit the key); `select` option `label` max length is 50 characters; any setting `label` max length is 70 characters — put longer explanatory text in `info` instead (hit this 2026-07-24 on `main-collection.liquid` "collection" and `header.liquid` "mobile_logo").
+
+## Build log — 2026-09-17: Local dev server setup (Windows)
+Goal: run the theme on localhost. This is a Liquid theme with no build step
+(no `package.json`, no bundler) — CSS/JS in `assets/` are served as-is, so the
+ONLY way to preview it is Shopify's own renderer via `shopify theme dev`.
+There is no static/offline preview path.
+- Installed Shopify CLI globally on Windows: `npm install -g @shopify/cli@latest`
+  → v4.8.0 at `C:/Users/vedant/AppData/Roaming/npm/shopify` (that dir may not be
+  on PATH in every shell; prepend it if `shopify` is not found).
+- No cached CLI auth session existed (`%LOCALAPPDATA%/shopify-cli-nodejs` absent)
+  and no `.myshopify.com` domain is recorded anywhere in the repo.
+- `shopify theme dev --path .` errors with "A store is required" — the store
+  domain must be passed via `--store=<store>.myshopify.com` or `SHOPIFY_FLAG_STORE`.
+  First run then opens a browser for OAuth, so it must be started from an
+  interactive terminal (a non-interactive agent session cannot complete login).
+- Once running it serves on `http://127.0.0.1:9292` with hot reload; after that
+  the in-app browser can be pointed at it for visual checks.
 
 ## Site structure
 - Homepage sections (in `templates/index.json` order): hero, vision, pillars, shop, founders, actives ("Active Index" / "Twelve ingredients"), proof, ritual, testimonials, story, instagram, cta, faq.
@@ -808,3 +825,773 @@ stock photos with something else, just swap the two asset files or the
 - User gets frustrated by slow/repetitive back-and-forth — when a fix is requested 2-3 times, look harder for a *root cause* (cascade order, dead breakpoints, missing CSS) rather than re-applying the same patch.
 - Always `git fetch`/check `origin/main` for Shopify autosync commits before pushing, and merge rather than force-push.
 - Desktop styles must never be touched when fixing mobile-only bugs — always scope fixes to `@media` queries unless explicitly told otherwise.
+
+## Build log — 2026-09-09: Homepage Trust Signals (Pillars) copy update
+Rewrote all 3 pillar cards' title + body in `templates/index.json`
+(`pillars_r7hExn` section, blocks `pillar_JQgt3h`/`pillar_TyVrzy`/`pillar_cCqT3t`)
+per user's exact wording — content only, no font/style/markup changes:
+- 01 "Pharmacist-Formulated" → lede: "Every formula is developed with the
+  precision, intention, and accountability we bring to pharmacy."
+- 02 title changed "Pharmacist-Selected Sourcing" → "Purposefully Formulated";
+  lede → "Every ingredient earns its place, selected not for the label, but
+  for what it contributes to the formula as a whole."
+- 03 title changed "Appearance-Language, Always" → "Designed to Work
+  Together"; lede → "A focused collection made to layer with intention, so
+  your ritual includes what your skin needs and leaves out what it doesn't."
+Committed `8bbb98a`, pushed to origin/main directly (no drift from Shopify
+autosave at time of push). Local `shopify theme dev` preview was requested
+but skipped — session is non-interactive and can't complete the browser
+OAuth login `theme dev` needs; user opted to review via Shopify theme
+editor/preview instead. No local Shopify CLI auth/config exists on this
+Windows machine yet.
+
+## Build log — 2026-09-09 (2): Trust Signals pillar images added, no Shopify Files access
+User provided 3 reference images for the 3 pillar cards. This session has no
+image-save tool and no Shopify Admin/API access — couldn't upload to Shopify
+Files or extract chat-pasted images to disk directly. Found the actual files
+already sitting in `~/Downloads` (`Pharmacist Formulated.png`, `Purposefully
+Formulated.png`, `Designed to Work Together.png`) and copied them into
+`assets/` instead — **worth checking `~/Downloads` for recently-added files
+matching a described image before asking the user to re-supply one.**
+
+Since the pillar block's `image` setting is a Shopify `image_picker` (only
+works with `shopify://shop_images/...` files already in Shopify's library,
+rendered via `image_url` filter — can't point it at a theme asset), added a
+parallel `image_asset` (plain text, filename in `/assets`) setting to the
+`pillar` block schema in `sections/pillars.liquid`, rendered via `asset_url`
+as a fallback only when `image` is blank. `image_picker` still wins if a
+merchant uploads a real photo through the theme editor later — this doesn't
+regress that path, just fills it in for now via git-controlled files.
+
+Files added: `assets/pillar-pharmacist-formulated.png`,
+`assets/pillar-purposefully-formulated.png`,
+`assets/pillar-designed-together.png` — mapped 1:1 to the 3 pillar titles.
+Committed `0f13e9b`, pushed to origin/main (checked for Shopify autosync
+drift first, none found).
+
+**How to apply:** this `image_asset` fallback pattern (image_picker + a
+text-based `/assets` filename fallback, `image_url` vs `asset_url`) is now
+available if another image_picker-only section needs a locally-supplied
+image without going through Shopify Files — same shape as the existing
+`hero_fallback_asset` pattern on `page-hero.liquid` (see 2026-07-27 entry).
+
+## Build log — 2026-09-09 (3): image_asset fix (0f13e9b) didn't render — schema label >70 chars
+User reported the live site (hard-refreshed) still showed the old plain
+mono-circle badge ("C.") instead of the new pillar image. Root cause: the
+new `image_asset` setting's `label` in `sections/pillars.liquid`'s
+`{% schema %}` was ~82 characters — over Shopify's **70-char setting label
+limit** (already documented at the top of this file, 2026-07-24 entry, and
+the exact same class of bug that blocked the Contact page deploy, commit
+`c3e1466`). A schema validation failure on one section can silently block
+that section's deploy while the rest of the theme still updates, so the
+copy/image-mapping change (`0f13e9b`) landed but the code path that would
+have used it never went live. Fixed by shortening the label to "Crest image
+filename (/assets)" and moving the explanation into `info` (commit
+`3a326c2`).
+
+**How to apply:** whenever a new/edited schema setting doesn't seem to take
+effect on the live site despite a clean push (no autosync drift), check
+setting `label`/option `label` lengths (label ≤70 chars, select option
+label ≤50 chars) before debugging the Liquid logic itself — a validation
+failure elsewhere in the same schema block can silently no-op the whole
+section's deploy. Locally: `awk '/{% schema %}/{flag=1;next}/{% endschema
+%}/{flag=0}flag' <file>.liquid | node -e "..."` (JSON.parse) catches syntax
+errors, but won't catch Shopify-specific limits like label length — no
+local tool currently checks those, so eyeball new/changed labels against
+the limits list at the top of this file before pushing.
+
+## Build log — 2026-09-09 (4): Pillar images fix — real root cause was GitHub↔Shopify JSON template drift
+The 70-char label fix (above) was real but not sufficient — after fixing it
+and pushing, the live `templates/index.json` (checked directly in Shopify's
+Edit code) was still missing `image_asset` for at least `pillar_TyVrzy`,
+even though GitHub's `templates/index.json` had it correctly (confirmed via
+`git show origin/main:templates/index.json`). **So the GitHub→Shopify sync
+had NOT applied that content change to the live theme's JSON template,
+despite applying the schema change to the Liquid section file in the same
+commit (`0f13e9b`)** — JSON templates and Liquid section files apparently
+don't always sync identically; a push touching `pillars.liquid` alone
+(`3a326c2`) didn't retroactively re-sync `index.json`'s stale content. User
+fixed it by directly editing `templates/index.json` in Shopify's Edit code
+UI, which produced two `Update from Shopify for theme chemistrie-theme/main`
+autosync commits (`2776e3c`, `8db4e3d`) — merged into git via `git merge
+origin/main --ff-only`, confirmed all 3 pillar blocks now have correct
+`image_asset` values in both places.
+
+**How to apply:** if a GitHub push updates a section's schema (adding a new
+setting) *and* a template JSON's content in the same or nearby commits, and
+the new field doesn't appear live even after confirming the schema landed in
+Shopify's Edit code, check the template JSON specifically next (not just the
+section file) — content and schema can desync across the GitHub integration.
+Fastest fix is a direct edit in Shopify's Edit code (then pull the resulting
+autosync commit back into git), same as documented at the top of this file
+for other drift scenarios.
+
+**Also received a "Do not" spec for the Trust Signals section** (mobile
+notes + hard constraints), confirmed already compliant: no PCCA/ExoBlue
+sourcing language, no "Appearance-Language, Always" heading, no generic
+stock-lab imagery substituted for the user's 3 specific provided photos.
+Cards must stay readable/balanced stacked or swiped on mobile — not
+separately audited yet, worth a mobile check next time this section is
+touched.
+
+## Build log — 2026-09-09 (5): Homepage Collection section — final copy applied (commit `c9ea2ce`)
+Client-approved final copy for the homepage "Collection" section
+(`shop_jAJymM` / `sections/shop.liquid`, real-collection branch since
+`collection: home-page-products` is set):
+- Heading (`templates/index.json`): "The Collection." → "Individual
+  formulas. Your ritual."
+- Lede: "Everything a routine needs, and nothing it doesn't." → "A focused
+  collection designed to stand beautifully on its own and work
+  intentionally together."
+- Footer CTA (`foot_link_label`): "Explore the Full Collection" → "Explore
+  the Collection".
+- Eyebrow left unchanged — hardcoded `— The Collection —` in the liquid
+  file (not a schema setting) already matched the requested "THE
+  COLLECTION" content.
+- Per-product subtitle (`card_copy`, the `<p>` under each product name,
+  matched via handle/title substring in the file's `{%- liquid -%}` block):
+  replaced the old descriptive sentences with short product-line subtitles
+  — Velvet→"Foaming Facial Cleanser", Veil→"Weightless Hydrating Serum",
+  Aura→"Advanced Renewal Cream", Silken→"Scar Refining Gel", Cashmere→
+  "Lightweight Hydrating Lotion". `card_role` tags (Cleanse/Treat/Hydrate/
+  Renew/Refine, shown as a small badge on the image) were NOT requested and
+  left unchanged.
+
+## Build log — 2026-09-09 (6): Collection cards restructured to card spec (commit `8790e8d`)
+Client "Developer changes" brief for the homepage Collection section: five
+launch cards, hierarchy = image → name → descriptor → price, no long
+marketing paragraphs, whole card links to the product, must scale past five
+products without redesign, prices from product data.
+- **Markup** (`sections/shop.liquid`, real-collection branch): dropped the
+  `.product__meta-top` flex row (name+descriptor left, price right) so the
+  meta stacks h3 → descriptor `<p>` → price → CTA in spec order. Card CTA
+  label "View X →" → "Shop X". Whole-card link (`.product__link` stretched
+  anchor) and `{{ product.price | money }}` were already in place.
+- **Scalability**: the per-product descriptor no longer dead-ends at
+  `product.description | truncatewords: 20` for unknown products (that was
+  the "long marketing paragraph" risk). Order is now: the 5 hardcoded
+  launch descriptors (handle/title substring match) → overridden by
+  `product.metafields.custom.descriptor` if set → else `product.type`. So a
+  6th product renders sensibly with zero code edits. Loop `limit: 6` → 12.
+- **Fixed card height removed** (`assets/chemistrie.css`): `.product` had
+  `height: 540px` (and `height: 460px` in the ≤~640px block) alongside
+  `min-height`. Stacking the price on its own row adds ~30px, which would
+  overflow a fixed-height card — both now `min-height` only, and the rail's
+  existing `align-items: stretch` keeps cards equal height. The mid
+  breakpoint (`min-height: 380px`) was already correct.
+- `.product__meta-top > div` rule removed from shop.liquid's
+  `{% stylesheet %}` since that element is gone there; **`ritual-shop.liquid`
+  still uses `.product__meta-top`** and carries its own scoped
+  `.ritual-shop .product__meta-top > div` copy, so the base rule in
+  `chemistrie.css` must stay. **Note `.product`/`.product__*` classes are
+  shared by `shop.liquid` AND `ritual-shop.liquid`** — any base-class CSS
+  change hits both; ritual-shop still uses the old meta-top layout and the
+  old long `card_copy` sentences (not in scope for this brief).
+- CTA destination left as `routes.all_products_collection_url` — already the
+  same target the header nav's "The Collection" link uses, so it satisfies
+  "EXPLORE THE COLLECTION → Collection page".
+
+**Open item — Veil card not rendering:** user reported the Veil card is
+missing from the live section. Nothing in the theme filters it out (the loop
+had room at `limit: 6`, and the Veil branch matches on handle/title
+containing "veil"), so it is almost certainly Shopify product data: the Veil
+product either doesn't exist yet, is unpublished/draft, or isn't in the
+`home-page-products` collection this section reads. **Not fixable from the
+theme code** — needs checking in Shopify Admin → Products / the
+`home-page-products` collection.
+
+## Build log — 2026-09-09 (7): Approved product card images (commit `12115ab`)
+User supplied 5 approved product card shots and reported they weren't
+showing — because the card image only ever came from
+`product.featured_image` (Shopify product data), not from anything in the
+theme. Same situation as the pillars: **the client supplies images to this
+session, but Shopify-side product/file data doesn't get updated**, so the
+practical fix is theme assets. Files were again waiting in `~/Downloads`
+("Velvet Card Image.png" etc.) — copied to `assets/product-velvet.png`,
+`-veil`, `-aura`, `-silken`, `-cashmere`.
+
+`sections/shop.liquid`'s per-product `{%- liquid -%}` chain now also assigns
+`card_asset`, and the media block prefers it: `card_asset` → else
+`product.featured_image` (+ its `images[1]` hover swap) → else the drawn
+SVG bottle. **The asset deliberately wins over `featured_image`** for the 5
+launch products, because real product photos in Shopify were either absent
+or not the approved shots; any other product still falls through to Shopify
+data, so scalability holds. Note the hover image-swap only exists on the
+`featured_image` branch, so these 5 cards have no second-image hover (only
+one approved shot each).
+
+The images are tall 2:3 lifestyle shots while `.product__media` is ~1:1.1,
+so `.product__photo`'s existing `object-fit: cover` crops ~13% off the top
+and bottom — the bottle and its label survive that crop, so the CSS was
+left alone. **If the crop is ever reported as wrong, adjust
+`object-position` (or switch these to `contain`) rather than resizing
+`.product__media`**, which is shared with `ritual-shop.liquid`.
+
+**Pattern worth remembering across this project:** when the client says "I
+can't see the new images", check whether that image slot reads from Shopify
+data (`image_picker`, `product.featured_image`, Files library) versus theme
+assets — and check `~/Downloads` for the actual files, which is where they
+keep landing.
+
+## Build log — 2026-09-09 (8): Approved product images sitewide via one snippet (commit `61ff5ba`)
+The homepage-only fix in (7) wasn't enough — user reported old images still
+showing when clicking into a product and on the Collection page. Every
+product-card surface reads `product.featured_image` independently, so each
+needed the approved-asset mapping.
+
+**Created `snippets/product-image-asset.liquid`** — takes `product:` and
+echoes the approved `/assets` filename (or nothing). Because `{% render %}`
+isolates scope, callers use:
+`{%- capture card_asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}`
+then `| strip`. This is the one place the handle→image mapping lives now;
+`shop.liquid`'s previously-inline `card_asset` assignments were removed in
+favour of it. **Add new approved product images there, not per section.**
+
+Wired into: `shop.liquid` (homepage), `main-collection.liquid`,
+`main-product.liquid` (gallery), `product-details.liquid` ("You May Also
+Love", loop var is `p`), `main-search.liquid` (loop var `item`, guarded by
+`object_type == 'product'` so non-products just fall through) and
+`ritual-shop.liquid`. Each keeps `featured_image` → stock-photo as
+fallbacks for unmapped products.
+
+**Product page gallery:** when an approved asset is used, the thumbnail
+strip AND the prev/next arrows are suppressed (`card_asset == blank and
+product.images.size > 1`) — otherwise clicking a thumb swapped the main
+image back to an old Shopify photo, which was the user's actual complaint.
+The `width="1000" height="1000"` attrs are omitted on the asset `<img>`
+since these shots are 2:3, not square (`.mprod__main img` is
+`object-fit: contain`, so it renders correctly).
+
+**Unresolved:** user reports the Aura card image specifically not visible
+while the other four work. Verified locally that `assets/product-aura.png`
+is a valid, non-truncated PNG (checked header + IEND chunk) and the
+matching logic is identical for all five, so it's not a file or code
+difference — suspect a transient Shopify asset-sync miss for that one file,
+or the Aura product's handle/title not containing "aura". **Diagnostic to
+use next time:** if the descriptor under the card name reads something
+other than "Advanced Renewal Cream", the handle/title match failed; if the
+descriptor is right but the image is missing, it's the asset sync.
+
+**Veil:** confirmed present on the Collection page, so the product exists
+and is published — it's missing from the homepage only because it isn't in
+the `home-page-products` collection that section reads. Shopify Admin fix,
+not code.
+
+## Build log — 2026-09-09 (14): Trust Signals images invisible on tablet/phone (commit `65a0f0e`)
+User: "fix the trust signal section for mobile view and tablet — cards must
+remain readable and visually balanced when stacked or swiped, the images
+also should be visible."
+
+**Root cause (same cascade trap as founders, third time in this file):**
+`.pillar__crest--fullimage` (line ~1045) sets `width/height: 100%` +
+`border-radius: 20px` and is even commented "Overrides the circle badge's
+fixed 220px/border-radius:50%". But **three later blocks re-declare plain
+`.pillar__crest` with the circle badge's fixed size** — `140px` at ≤1024
+(~2502), `120px` at ≤640 (~2593) and `120px` at ≤700 (~2772). Equal
+specificity (0,0,1,0), later source position → **they win**, so the
+full-bleed pillar photos rendered as ~120px squares in an otherwise empty
+full-width visual row. That's both complaints at once: image barely
+visible + card unbalanced.
+
+Compounding it: `.pillar__crest-img` is `position: absolute; inset: 0`, so
+it contributes no intrinsic height. `height: 100%` inside the stacked
+layout's auto-height grid row has nothing to resolve against — without the
+120px rescue it would have collapsed to zero. **A percentage height was
+never going to work once the visual moved to its own stacked row; it needs
+an `aspect-ratio`.**
+
+Fix appended at the END of `chemistrie.css` using **two-class selectors**
+(`.pillar__visual--full .pillar__crest--fullimage`, 0,0,2,0) so it wins on
+**specificity, not source order** — a future single-class `.pillar__crest`
+rule can't silently undo it again. ≤1024: `width: 100%; max-width: 420px;
+height: auto; aspect-ratio: 4/3; border-radius: 18px`. ≤700:
+`max-width: none` (full width on phones).
+
+**Why `max-width: 420px` on tablet rather than full width:** tablet keeps
+the sticky stack with `.pillar { min-height: 86vh; top: 14vh }`. A
+full-width 4:3 image on landscape iPad (944px content width) would be
+~708px tall, pushing the card past the 768px viewport — a sticky card
+taller than the viewport gets its bottom cut off. Capped at 420px the
+image is ~315px tall and the card lands ~555px, inside 86vh in both
+orientations. **If tablet cards are ever made non-sticky, the cap can go.**
+
+### (14b) First fix missed — live section renders the CIRCLE variant, not full-bleed (commit `862892a`)
+User re-reported "mobile view pics are not visible" with a screenshot
+showing a **~35px circular** photo badge. Two deductions from that image:
+1. **`border-radius: 50%` was winning**, which only happens if
+   `.pillar__crest--fullimage` is absent from the element — its
+   `border-radius: 20px` is declared after the base 50%. So the live
+   template is rendering **branch 4 of `pillars.liquid` (`--image`, the
+   circle badge), not branch 3 (`--fullimage`)** — i.e. the live
+   `crest_style` is NOT `full`, even though `git show
+   origin/main:templates/index.json` clearly says `"crest_style": "full"`.
+   **Another `templates/index.json` desync, same as (4).**
+2. The badge was also far smaller than the 120px the ≤640 block sets,
+   which the CSS alone doesn't explain — most likely the GSAP crest
+   entrance tween (`scale: 0.6`, `chemistrie.js` ~line 151) left stranded
+   by a trigger that never resolved in the stacked layout.
+
+**Fix made unknown-tolerant rather than chasing the branch:** the rule now
+targets **both** photo variants (`.pillar__visual .pillar__crest--image`
+*and* `--fullimage`), so the image is a 4:3 banner on small screens
+regardless of how `crest_style` is set live — removing the dependency on a
+JSON value that has proven unreliable. Also `display: none` on their
+`::before` (the inset ring is circle-only decoration), and
+`.pillar__crest { transform: none !important; opacity: 1 !important }` at
+≤700 so a stuck entrance tween can't shrink it — consistent with this
+section's existing phone policy of skipping its own entrance animations.
+
+**Lesson:** when a screenshot contradicts what the repo's JSON says should
+render, **read the rendered CSS effects as evidence of which Liquid branch
+ran** (here `border-radius` gave it away) — and prefer a fix that works for
+every branch over one that assumes the JSON synced.
+
+### (14c) ROOT CAUSE — markup keyed off the desynced setting (commit `7c4d963`)
+Third report ("still too small… idk what are you doing"). Stopped guessing
+at the cascade. **Tried to fetch the live DOM: `curl https://chemistrieco.com/`
+returns Shopify's "Please Log In" page — the storefront is password
+protected** (7995-byte password shell, zero `pillar` matches). Per the
+2026-07-24 (5) entry, do NOT ask for / enter the storefront password.
+**So live-DOM inspection is unavailable on this project — plan fixes to be
+correct without it.**
+
+Actual root cause: `pillars.liquid`'s photo branches each required
+`section.settings.crest_style == 'full'`, so with the live JSON's
+`crest_style` not being `full` (repo says `full`; live evidently doesn't —
+see (14b)), every photo fell through to the **`--image` circle-badge**
+branch, which chemistrie.css sizes at 120px. All three of my CSS attempts
+targeted the wrong element. **The bug was in the Liquid, not the CSS.**
+
+Fixes, chosen to be immune to the JSON desync:
+1. **Five crest branches collapsed to two** — a photo (image_picker *or*
+   `image_asset`) *always* renders `.pillar__crest--fullimage`, and
+   `.pillar__visual--full` is now unconditional. `crest_style` no longer
+   affects photo rendering at all. The `else` mono-badge branch is kept for
+   blocks with no photo. **The `crest_style` schema setting is now
+   effectively dead for photos — consider removing it if it confuses later.**
+2. **Sizing moved into a new `{% stylesheet %}` block inside
+   `pillars.liquid`** (the file had none before) rather than chemistrie.css,
+   so it ships with the Liquid file — which is the one file type PROVEN to
+   sync reliably in this project. Uses `!important` deliberately: it's the
+   only way to beat the six-plus scattered `.pillar__crest` declarations
+   without depending on file order. Removed the chemistrie.css block from
+   (14b) so there's a single source of truth.
+3. Empty `crest_sub` no longer renders `.pillar__crest-sub--onimg` — with
+   `crest_sub: ""` live it was painting a dark gradient band over the image
+   for no text.
+4. `transform: none !important; opacity: 1 !important` on the crest ≤1024,
+   killing the stuck-pop-in failure mode on tablet and phone.
+
+**Rule for this project going forward:** when a fix must survive, put it in
+a **`.liquid` file** (section markup or its `{% stylesheet %}`), never in a
+JSON template value or a shared CSS file's breakpoint — and **don't let
+markup branch on a JSON setting whose live value can't be verified.**
+
+**Deliberately NOT changed (flagged to user instead):** tablet still uses
+the desktop sticky-overlap with 86vh cards, and the JS stacking tween
+(`opacity: 0.06` on lower cards, `chemistrie.js` ~line 160) still runs
+there — phones neutralise it via `.pillar { opacity: 1 !important;
+transform: none !important }` in the ≤700/≤640 blocks (a documented,
+deliberate choice: "skip scroll-triggered fade/slide-in on phones"). Did
+not extend that to tablet because it would also kill the entrance
+animations the user explicitly asked to keep working on tablet in (11e).
+**If tablet cards still read as broken/faded, the next step is gating that
+stacking tween with `gsap.matchMedia("(min-width: 1025px)")`** — same fix
+shape as the founders parallax — rather than more CSS.
+
+## Build log — 2026-09-09 (13): Footer final copy + editable links (commit `d73f5bf`)
+Brief: final copy (brand line, SHOP/DISCOVER/HELP columns, legal line),
+"ensure all navigation/social/policy links are editable", "don't duplicate
+the Founders' Circle email form if it sits immediately above the footer",
+"all destinations must resolve to actual pages or be marked TBD", clean
+mobile collapse/tap targets, and a Do-not list: keep "Compounded with care
+in Houston." and keep the redundant Houston positioning.
+
+**Key architectural finding: the footer is a STATIC section** —
+`layout/theme.liquid` line 46 renders `{% section 'footer' %}`, so its
+settings live in **`config/settings_data.json`** (`current.sections.footer`),
+not in a template JSON. That's the same auto-generated file class as
+`templates/index.json`, which has already failed to sync from GitHub once
+in this project. **So I deliberately did NOT make the footer links schema
+blocks** — if the JSON didn't sync, a block-driven footer would render with
+zero links, a far worse failure than the pillar/instagram cases.
+
+Instead used **`link_list` settings + hardcoded fallback**, which is the
+pattern `header.liquid` already uses (`section.settings.menu` with an
+`{%- else -%}` hardcoded nav). Three columns, each
+`heading_*` (text) + `menu_*` (link_list): assign a menu from Shopify
+Navigation and labels/URLs become editable with **zero theme-JSON
+dependency**; leave it blank and the column renders its built-in approved
+links. Columns renamed Shop / **Discover** (was About) / **Help** (was
+Support), links per the brief — note "The Ritual" page is relabelled
+**"Ritual Finder"** in the footer while still pointing at
+`/pages/the-ritual`, and Shipping + Returns merged into one
+"Shipping & Returns" link (both already pointed at the same page).
+
+Other details:
+- **Legal moved from a 4th nav column into the bottom bar** as inline links
+  beside the copyright, using the **`.footer__legal` CSS class that already
+  existed in `chemistrie.css` but was never used in markup**. Removing the
+  4th column meant dropping the `footer__top--5col` modifier — and the
+  **base `.footer__top` is already `1.4fr repeat(3, 1fr)`**, i.e. exactly
+  brand + 3 columns, so no new CSS was needed. Deleted the now-unused
+  `--5col` rules (base already covers ≤900).
+- **Policy links use Shopify's native policy objects** —
+  `shop.privacy_policy.url` / `shop.terms_of_service.url` — with optional
+  `privacy_url`/`terms_url` overrides. **The links are hidden when neither
+  resolves**, rather than shipping a dead `#` href; same treatment applied
+  to the social icons (previously they defaulted to `'#'` and always
+  rendered). That's my reading of "must resolve to actual pages or be
+  marked TBD": don't print "TBD" on a live storefront, just don't ship dead
+  links — and report the unverified handles to the user.
+- **Copyright:** year stays Liquid-generated (`'now' | date: '%Y'`) with an
+  editable `copyright_line` after it → "© 2026 Chemistrie. All rights
+  reserved." The required **"Compounded with care in Houston." is hardcoded,
+  not a setting**, so it cannot be blanked away — and the redundant
+  `.footer__seal` "Pharmacist-formulated · Houston, TX" was **kept**, per
+  the Do-not list (this client's "Do not / Remove X" = keep X; see (12b)).
+- **No signup form added** — verified `newsletter-cta.liquid` (the section
+  immediately above the footer, last in `index.json`'s order) holds the
+  `{% form 'customer' %}`, and footer has zero `<form>` tags.
+- Mobile: kept the existing collapse (brand spans full row, 2-col nav at
+  ≤700) and added `padding: 7px 0` to `.footer__col a` / `6px 0` to
+  `.footer__legal a` for real tap targets (~32px) per the brief.
+- Removed the footer's own unused `email` setting + its dead `assign mail`
+  (never rendered in markup). **The global `settings.social_email` in
+  `config/settings_schema.json` is untouched.** Left the orphan `email` key
+  in `settings_data.json` alone — Shopify ignores unknown keys, and that
+  file is auto-generated so a spurious diff isn't worth it.
+
+**Flagged to the user, unverifiable from the repo:** page templates exist
+for the-ritual, the-pharmacists, founders-circle and contact, but there are
+**no templates for `faq` or `shipping-returns`** — which proves nothing,
+since a plain Shopify page uses the default `page.json`. I have no Admin
+access to confirm those two pages exist, so those two footer links are the
+ones to verify or mark TBD before launch.
+
+## Build log — 2026-09-09 (12): Follow Chemistrie / social section rebuilt as curated grid (commit `0bf4785`)
+Brief: final copy + "keep a curated social grid, manual CMS curation
+preferred over an uncontrolled live feed, tiles link to their posts, main
+CTA → official Instagram, content-driven assets (approved brand images may
+be temporary but **do not hard-code them permanently**), clean mobile grid
+rhythm / no awkward crops", and a Do-not list reading "Remove 'Follow the
+Formulary.' / Remove fabricated follower counts".
+
+**Reading of the "Do not" block:** as in the earlier briefs, the items are
+*don'ts* — i.e. remove that headline and remove the fabricated counts (not
+"do not remove"). "Follow the Formulary." was literally this section's
+`heading` in `templates/index.json`, replaced by the new headline, which
+confirms the reading. Note the **newsletter section's "The Formulary
+Journal." heading was left alone** — different section, not in this brief.
+
+`sections/instagram.liquid` rewritten:
+- Nine hard-coded `<article class="reel">` tiles (with `stock-*.jpg`
+  images) replaced by a `post` **schema block** loop: `image`
+  (image_picker) → `image_asset` (temporary /assets filename) → nothing,
+  plus `caption` and `link`. `max_blocks: 12`. Tiles get a stretched
+  `.reel__link` anchor (same pattern as `.product__link`) so a tile links
+  to its own post when a URL is set.
+- **Fabricated data removed:** `follower_count` setting ("21.4k"), the
+  per-tile like/comment `.reel__stats`, and the `.reel__play` badges +
+  `.reel__duration` labels ("0:42" etc.) — the tiles were never videos.
+  Their now-dead CSS was deleted from `chemistrie.css` too (verified unused
+  elsewhere first).
+- **`feed_embed` removed** — the section had an "paste an Instagram feed
+  app embed" escape hatch that replaced the curated tiles wholesale. Gone,
+  since curation is the intended source.
+- Unapproved `sub`/`body` copy cleared (per the (11) judgment call) and
+  their schema defaults dropped.
+- `.reel__media` aspect ratio **9/16 → 4/5** so portrait source images
+  aren't cropped hard (the "no awkward thumbnail crops" note).
+- Temporary tile content = the already-approved assets
+  (`pillar-pharmacist-formulated.png` + the five `product-*.png`), set via
+  block settings in `index.json` so they're editable, **not** hard-coded in
+  Liquid. Captions/links left blank deliberately — inventing social post
+  copy would be fabrication.
+
+**Flagged to the user, needs confirming:** `instagram_url` was empty, so I
+derived `https://www.instagram.com/chemistrie.co/` from the existing
+`handle` setting (`@chemistrie.co`). If the real handle differs, that link
+404s — it's a derivation, not a verified URL.
+
+### (12b) CORRECTED — misread the Do-not list, headline/follower count restored (commit `86582ea`)
+User re-sent the identical mobile-notes/Do-not fragment with no other
+comment. On inspection, the "Do not / Remove X / Remove Y" phrasing in
+*this* brief is structurally different from the other two Do-not blocks in
+this session's briefs (Trust Signals, Collection cards), which both used
+"No X" phrasing — a form that reads as a prohibition regardless of the
+header. "Remove X" under a "Do not" header instead reads as "do not remove
+X" = keep it. **(12)'s original read had this backwards** — treated
+"Remove 'Follow the Formulary.'" as an instruction to delete it, when it
+meant preserve it. Asked the user directly rather than re-guess; confirmed:
+keep both.
+
+This created a genuine conflict with the same message's own "Final copy"
+block, which explicitly set `Headline: Behind the formulas. Inside the
+ritual.` — that and "Follow the Formulary." can't both be the section's H2.
+Asked a second targeted question (replace headline vs. add as a secondary
+line); user chose **full revert of the headline** — "Follow the Formulary."
+is the H2 again, the approved eyebrow ("Follow Chemistrie") stands, and
+"Behind the formulas. Inside the ritual." is dropped entirely, not kept as
+a subline anywhere.
+
+Reverted in `sections/instagram.liquid`: `heading` schema default back to
+`Follow the<br/><em>Formulary.</em>`, `follower_count` setting restored
+(`"21.4k"` default) and its `<em>· {{ follower_count }}</em>` markup back
+next to the handle. Same in `templates/index.json`. **Everything else from
+(12) stands** — curated block-based grid, removed fake per-tile
+like/comment counts and video play/duration badges (not named in the
+Do-not list, and structurally a different kind of fabrication — actual
+video metadata on tiles that were never videos — so not reinstated), 4:5
+crop ratio, no live-feed-embed escape hatch, images sourced via editable
+block settings rather than hard-coded Liquid.
+
+**Pattern worth remembering for the rest of this project:** this client's
+briefs are not internally consistent in how they phrase "Do not" — some
+use "No X" (prohibition), at least one uses bare action verbs ("Remove X")
+that invert meaning under the "Do not" header. **Don't pattern-match
+phrasing across different brief messages — parse each "Do not" block on
+its own grammar**, and when a brief's own sections conflict (e.g. Final
+copy vs. Do-not), stop and ask rather than pick one silently.
+
+### (12c) FINAL — headline flip-flopped a third time, settled on Final Copy wording (commit `19dc301`)
+Immediately after (12b) restored "Follow the Formulary." as the H2 (per the
+user's explicit "replace headline (revert)" choice), user resent just the
+"Final copy / Eyebrow: FOLLOW CHEMISTRIE / Headline: Behind the formulas.
+Inside the ritual" fragment standalone, with no other text — a direct
+reversal of the choice made one message earlier. Asked once more rather
+than silently flip again (a second reversal in two turns warranted
+confirming intent was real, not a stray re-paste); user confirmed **this**
+is the real final answer. `heading` schema default and
+`templates/index.json` both set to `"Behind the formulas. Inside the
+ritual."` (H2, not HTML-formatted like the old Formulary heading was —
+plain sentence, matches how it was specified). Eyebrow ("— Follow
+Chemistrie —"), follower count ("21.4k"), and handle were **not** part of
+this decision and were left untouched from (12b).
+
+**If "Follow the Formulary." comes up again:** this project's actual
+current/live headline is "Behind the formulas. Inside the ritual." as of
+`19dc301` — the (12b) restore was superseded, not merged. Don't assume
+(12b)'s memory entry reflects current state without checking this one.
+
+## Build log — 2026-09-09 (9): Homepage card order forced to ritual sequence (commit `7fe9a1e`)
+Live screenshot showed cards rendering Aura → Velvet → Silken → Cashmere,
+i.e. the Shopify collection's own sort order. Client wants Velvet → Veil →
+Aura → Silken → Cashmere (ritual order). Rather than depend on the merchant
+dragging the collection into order (Shopify-side edits keep not sticking in
+this project), `sections/shop.liquid` now computes the order itself: a
+`launch_keys` list ('velvet,veil,aura,silken,cashmere') is matched against
+the collection's products to build a comma-delimited `ordered` handle
+string, then any remaining collection products are appended, and the card
+loop iterates handles via `all_products[handle]` instead of
+`collection.products` directly.
+
+Details that matter if this is touched again:
+- Handles are stored comma-wrapped (`,handle,`) and membership tested with
+  `contains ,handle,` to avoid one handle matching another as a substring.
+- `all_products` is capped at **20 lookups per template** by Shopify, so the
+  card loop keeps `limit: 12`. Don't raise it near/over 20 without switching
+  to a nested-loop + card-snippet approach instead.
+- `{%- if product == blank -%}{%- continue -%}` guards a nil lookup.
+- Unmapped products still append after the five, so scalability holds.
+
+**Also confirmed this round:** the live `index.json` shop_jAJymM block DID
+sync this time (heading/lede/CTA/collection all correct), so the JSON
+desync in (4) was not a permanent condition — always verify rather than
+assume either way. Aura's image also resolved itself with no code change
+(was deploy/cache lag), and the (6) card hierarchy + product-data prices
+render correctly live.
+
+## Build log — 2026-09-09 (10): Collection card "Do not" constraints (commit `6b6e3c7`)
+Client constraint list for the Collection section: cards may carousel on
+mobile but all text must stay fully visible and tappable; no fictional
+products; no Cleanse/Hydrate/Renew/Refine micro-labels; no truncated
+descriptive paragraphs. All four applied:
+- **Micro-labels removed** — `card_role` and its `.product__tag` badge
+  deleted from `shop.liquid`, `.pcard__badge` from `main-collection.liquid`.
+  The `.product__tag` / `.pcard__badge` CSS was left in place because
+  **`ritual-shop.liquid` still renders those labels** — deliberately not
+  touched, since on The Ritual page the step language is the page's whole
+  premise. Flag it if the client wants labels gone sitewide.
+- **Fictional products removed** — deleted the entire ~197-line
+  `{% if section.settings.collection == blank %}` demo branch from
+  `shop.liquid` (Renewal Serum, Vitamin C Elixir, Golden Oil, Velvet Cream,
+  Clarifying Tonic, Eye Concentrate + their hand-drawn SVG bottles). It only
+  rendered when no collection was picked, but that was a latent way for
+  fictional names to reach the storefront. **The section now renders an
+  empty rail if the collection setting is ever blank** — that's intended.
+- **No truncation** — removed `-webkit-line-clamp: 2` from
+  `.product__meta p` (`chemistrie.css`) and `.pcard__copy` (`pages.css`),
+  and the `white-space: nowrap` + ellipsis on `.product__meta h3` (added
+  back in the 2026-07-24 (18) build to stop 2-line names — no longer needed
+  now that names are single words, and it directly violated this brief).
+- **New `snippets/product-descriptor.liquid`** — metafield → approved
+  launch copy → `product.type`, never a truncated description. Both
+  `shop.liquid` and `main-collection.liquid` now capture it, which also
+  killed the Collection page's `truncatewords: 20` fallback and its old
+  long marketing sentences. Companion to
+  `snippets/product-image-asset.liquid`; **descriptor edits go in that one
+  file now.** `ritual-shop.liquid` still has its own long copy +
+  `truncatewords: 20` — out of scope, not changed.
+- Also updated `shop.liquid`'s `foot_link_label` schema default to "Explore
+  the Collection" so a theme-editor reset can't restore "Explore the Full
+  Collection".
+
+## Build log — 2026-09-09 (11): Homepage Pharmacists section final copy (commit `381fd1a`)
+Client final copy for the Pharmacists (Founders) section. Eyebrow
+(`— The Pharmacists —`, hardcoded in `founders.liquid`), headline and CTA
+label already matched exactly — only the body changed:
+- `paragraph1` → "Before Chemistrie, Harin and Zach spent years as
+  compounding pharmacists, where precision, formulation, and attention to
+  detail were part of the job."
+- `paragraph2` → "Chemistrie brings that same thoughtful approach to
+  skincare."
+- **`lede` cleared** ("Harin and Zach, compounding pharmacists, formulating
+  for the women they love.") — it wasn't in the approved copy and repeated
+  the body's opening. `.founders__lede`'s `<p>` was unguarded, so
+  `founders.liquid` now wraps it in `{%- if section.settings.lede != blank -%}`
+  to avoid an empty paragraph's margins leaving a visible gap.
+- Schema defaults updated to match (and the `lede` default key omitted
+  rather than set to `""`, per the blank-default validation gotcha at the
+  top of this file), so a merchant "reset to default" can't bring back
+  unapproved copy.
+
+### (11b) Pharmacists CTA + mobile crop (commit `34dbca4`)
+- **CTA destination verified, no change:** brief said "dedicated
+  Pharmacists/About page if built, else mark TBD". `templates/page.the-pharmacists.json`
+  exists, and `button_url` is already `/pages/the-pharmacists` — so it's
+  built and correctly wired. Not TBD.
+- **Mobile/tablet face crop:** `.founders__photo` frames are absolutely
+  positioned percentage boxes inside `.founders__media`, whose phone
+  `min-height` was only 260px — a 58%×60% box is then ~156px tall, so
+  `object-fit: cover` on a portrait source cut into the faces. Raised the
+  phone `min-height` to 380px and added
+  `.founders__photo img { object-position: center 22%; }` in the ≤1024 and
+  ≤640 blocks only. **Desktop base rule deliberately untouched** (faces
+  render fine there at 680px media height) per this project's rule about
+  never touching desktop for a mobile fix.
+- Cascade note for next time: founders has **three** stacking blocks —
+  ≤900 (line ~1333, next to the base rules), ≤1024 (~2559) and ≤640
+  (~2642). Because ≤1024 is declared *after* ≤900, it wins at 900px wide.
+  Check all three when changing founders responsive behaviour.
+
+### (11c) Founders caption overlap + left-edge alignment (commit `25632f4`)
+User asked to "fix the text alignments, make it same as desktop" for
+mobile/tablet and sent screenshots. Two real bugs, found only from the
+screenshots (no alignment rule actually differed — resist diagnosing this
+one from CSS alone):
+1. **Tablet: caption overlapped the body copy.** `.founders__caption` is
+   `position: absolute; bottom: -32px`, i.e. deliberately hanging *below*
+   `.founders__media`. On desktop it hangs into the left column's empty
+   space harmlessly; once the layout stacks, that overflow lands directly
+   on top of the body paragraphs. Fixed by pulling it inside the frame
+   (`bottom: 0`) and reserving space beneath the photos —
+   `padding-bottom: 44px` on tablet, and on phone by moving photo B up
+   (`top: 34%`, was `bottom: 0`) so the full-width caption has ~76px of
+   clear space at the bottom.
+2. **Photos/caption not sharing the text's left edge.** Tablet had
+   `.founders__media { max-width: 560px; margin: 0 auto }` — centring the
+   photo frame so photo A and the caption were indented relative to the
+   headline and body. Changed to `margin: 0` (kept the 560px cap so the
+   photo boxes stay near-square and don't crop hard). Phone gets
+   `max-width: none`.
+
+**Why the caption is absolute at all:** `.founders__media` contains only
+absolutely-positioned overlapping ovals, so a `position: static` caption
+would render at the *top* of the frame, on top of the photos — don't
+"fix" it that way. Reserve bottom space and keep it absolute.
+
+**Deliberately NOT changed:** on mobile the stack is headline → photos →
+body (`order: 1/2/3`), so the photos interrupt the headline-to-body flow
+that is contiguous on desktop. Left as-is because on desktop the photos
+span *both* text rows (`grid-row: 1 / span 2`), so stacking them between
+the two is a faithful flattening. Flagged to the user as an option rather
+than changed unasked.
+
+### (11d) Founders photo block rebuilt for stacked layouts (commit `a175041`)
+The (11c) offset tweaks weren't enough — user: "overall the images are
+overlapped, the text looks not proper, check yourself once… fix for all
+view". **Root cause: the whole photo block is the wrong mechanism below
+desktop.** `.founders__photo--a/--b` are `position: absolute` boxes sized
+in *percentages of `.founders__media`* and deliberately overlapped
+(`top: 40%; left: 20%`), which only reads correctly inside desktop's tall
+680px column. Stacked, it produces overlapping ovals, dead space to the
+right, and a caption that has nowhere to go.
+
+Replaced offset-nudging with a mechanism change in the ≤1024 block (so it
+covers tablet *and* phone): `.founders__media` becomes
+`position: static` + `display: grid; grid-template-columns: 1fr 1fr`,
+`.founders__photo` becomes `position: static; width: 100%; aspect-ratio: 4/5`,
+and `.founders__caption` becomes `position: static; grid-column: 1 / -1`.
+Result: two equal ovals side by side filling the width, caption on its own
+row, everything on the section's left edge. No absolute positioning below
+1024px at all.
+
+### (11e) Founders parallax was the overlap; dead animation selector (commit `3364fa6`)
+User still saw image/text overlap after (11d), and asked that desktop
+animations also run on mobile/tablet. Two JS bugs in `assets/chemistrie.js`:
+1. **The overlap was the parallax, not the CSS.** Two ungated
+   `gsap.to('.founders__photo--a/--b', { y: ∓40, scrub: true })` tweens run
+   at every viewport. On desktop the photos are absolutely positioned in
+   their own tall column so a ±40px drift is invisible; after (11d) they're
+   **static grid items**, so the same drift drags photo A up into the
+   headline and photo B down into the caption/body. Wrapped both in
+   `gsap.matchMedia().add("(min-width: 1025px)", …)` — desktop keeps the
+   effect, stacked layouts don't get shifted. **Lesson: when converting an
+   absolutely-positioned element to normal flow, grep the JS for transforms
+   on that selector** — CSS-only reasoning missed this twice.
+2. **`.founders__copy` does not exist in the markup** — only in
+   `chemistrie.css` (now deleted). `founders.liquid` renders
+   `.founders__head` / `.founders__body`, so
+   `gsap.from('.founders__copy > *', …)` matched nothing and the headline
+   and body text **never animated on any device**, desktop included. Now
+   targets `.founders__head > *, .founders__body > *` with `.founders` as
+   the trigger.
+
+**Audited for a global mobile animation gate — there is none.** GSAP +
+ScrollTrigger initialise at all widths; Lenis is created with
+`smoothTouch: false` (native touch scrolling, ScrollTrigger still fires).
+The only intentional small-screen animation gates are the two pinned
+horizontal sections — Actives (`isPhone` ≤700) and Ritual (`isPhone` ≤640)
+— which fall back to native horizontal scroll on phones; per the 2026-07-24
+(5)/(16) entries that fallback is a deliberate bug fix, **do not "restore"
+pinning on phones**. Both still pin normally on tablet (768–1024), so
+tablet already matches desktop there.
+
+**Cascade cleanup this required — there are FOUR founders blocks, not
+three** (the (11b) note undercounted): ≤900 (~1333), ≤1024 (~2559), ≤640
+(~2653) and one inside the **≤700** block (~2833) that I had missed
+entirely. Both ≤700 (`min-height: 360px`) and ≤640 (`min-height: 420px`,
+plus `--a`/`--b` percentage overrides) are declared *after* ≤1024 and were
+overriding the new grid — removed. Also deleted ≤900's now-dead
+`min-height: 520px`. **Before editing founders responsive CSS, grep
+`\.founders` across the whole file and check every match's line number
+against the block you're editing** — last-declared wins, and this file
+hides a founders rule inside an unrelated ≤700 block.
+
+**Judgment call worth repeating:** when the client sends a "Final copy"
+block listing only Eyebrow/Headline/Body/CTA, treat copy in that section
+that isn't on the list as unapproved and clear it, rather than leaving it
+alongside. They run strict copy compliance (they send "Do not" lists), so
+stray old lines are the bigger risk.
+
+**Still Shopify-side, still open:** Veil renders nowhere on the homepage
+because it is not in `home-page-products` on the storefront. User believes
+they added it, so the live suspicion is that the collection is an
+**automated/smart collection** (products join by matching conditions, can't
+be added by hand) — asked them to check the collection type and, if
+automated, tag Veil to match. The ordering code above already has Veil's
+slot ready; it renders the moment the product is in the collection.
+
+## Build log — 2026-09-18: The Ritual Finder section
+- Replaced the horizontal pinned Cleanse / Hydrate / Renew / Repeat steps module with the new Ritual Finder section.
+- Moved `ritual_raGNG4` directly above `shop_jAJymM` (The Collection) in `templates/index.json` and `templates/page.home.json`.
+- Applied final copy:
+  - Eyebrow: THE RITUAL FINDER
+  - Headline: Your skin. Your ritual.
+  - Body: A considered routine starts with knowing what belongs in it. Answer a few questions and we'll help you build a Chemistrie ritual around your skin and your priorities.
+  - CTA: FIND YOUR RITUAL
+- Visuals: Dark forest-green treatment (`linear-gradient(135deg, #163628 0%, #0c1e15 65%, #143024 100%)`) with ambient glow, apothecary corner accents, and fallback image `hero-ritual.jpg`.
+- CMS editable: Headline, body, CTA, and image (plus eyebrow and badge) are editable in the theme customizer.
+- Cleaned up obsolete pinned scroller styles in `assets/chemistrie.css` and updated ScrollTrigger animations in `assets/chemistrie.js`.
+

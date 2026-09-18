@@ -13,5 +13,5 @@
     "instagram": { "type": "instagram" },
     "newsletter-cta": { "type": "newsletter-cta" }
   },
-  "order": ["hero","vision","pillars","shop","founders","actives","proof","ritual","testimonials","story","instagram","newsletter-cta"]
+  "order": ["hero","vision","pillars","ritual","shop","founders","actives","proof","testimonials","story","instagram","newsletter-cta"]
 }

@@ -330,62 +330,15 @@
     },
     "ritual_raGNG4": {
       "type": "ritual",
-      "blocks": {
-        "step_gmjaAk": {
-          "type": "step",
-          "settings": {
-            "num": "i.",
-            "name": "Cleanse",
-            "time": "90 seconds",
-            "description": "A milk that lifts without stripping. Worked into dry skin with both hands, eyes closed, breath slow.",
-            "chip": "Velvet Milk · No. 00"
-          }
-        },
-        "step_9LXN7A": {
-          "type": "step",
-          "settings": {
-            "num": "ii.",
-            "name": "Tone",
-            "time": "A pause",
-            "description": "Mandelic acid at 8%, low and weekly. Sweep across the T-zone with a cotton round. Then wait, dignified, for sixty seconds.",
-            "chip": "Clarifying Tonic · No. 05"
-          }
-        },
-        "step_TxY76t": {
-          "type": "step",
-          "settings": {
-            "num": "iii.",
-            "name": "Treat",
-            "time": "2 drops",
-            "description": "Retinaldehyde at night. L-Ascorbic in morning. Press, do not rub. The face is not a counter to be wiped down.",
-            "chip": "Renewal Serum · No. 01"
-          }
-        },
-        "step_nkpb7w": {
-          "type": "step",
-          "settings": {
-            "num": "iv.",
-            "name": "Seal",
-            "time": "One pearl",
-            "description": "The Velvet Cream, warmed between the palms. Pressed upward along the jaw, the cheekbones, the brow. A small ceremony, every night.",
-            "chip": "Velvet Cream · No. 04"
-          }
-        }
-      },
-      "block_order": [
-        "step_gmjaAk",
-        "step_9LXN7A",
-        "step_TxY76t",
-        "step_nkpb7w"
-      ],
-      "name": "The Ritual",
+      "name": "The Ritual Finder",
       "settings": {
-        "eyebrow": "— The Ritual —",
-        "heading": "Cleanse. Hydrate.<br><em>Renew. Repeat.</em>",
-        "sub": "Built to layer, not to compete with itself.",
-        "body": "Morning and evening, in the same order, for as long as it takes to stop feeling like a decision.",
-        "cta_label": "Learn the Full Ritual",
-        "cta_link": "/pages/the-ritual"
+        "eyebrow": "THE RITUAL FINDER",
+        "heading": "Your skin. Your ritual.",
+        "body": "A considered routine starts with knowing what belongs in it. Answer a few questions and we'll help you build a Chemistrie ritual around your skin and your priorities.",
+        "cta_label": "FIND YOUR RITUAL",
+        "cta_link": "/pages/the-ritual",
+        "image_asset": "hero-ritual.jpg",
+        "badge_text": "Custom Routine · 2 Min"
       }
     },
     "story_88GJLB": {
@@ -488,11 +441,11 @@
   "order": [
     "hero_YGMYfA",
     "pillars_r7hExn",
+    "ritual_raGNG4",
     "shop_jAJymM",
     "founders_cch8nz",
     "actives_WHF8yt",
     "proof_iDTz9Y",
-    "ritual_raGNG4",
     "story_88GJLB",
     "instagram_GV7ThA",
     "newsletter_cta_bQgTWH"

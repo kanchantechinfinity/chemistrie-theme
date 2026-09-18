@@ -601,28 +601,23 @@
     });
   }
 
-  /* ───── Ritual — pinned horizontal scroll ───── */
+  /* ───── The Ritual Finder ───── */
   if (window.ScrollTrigger) {
-    const track = $("#ritualTrack");
-    const isPhone = window.matchMedia("(max-width: 640px)").matches;
-    if (track && !isPhone) {
-      const totalScroll = () => track.scrollWidth - window.innerWidth + 80;
-      gsap.to(track, {
-        x: () => -totalScroll(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".ritual__pin",
-          start: "top top",
-          end: () => "+=" + totalScroll(),
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-    }
-    gsap.from(".ritual__intro > *:not(.ritual__cta)", {
-      opacity: 0, y: 30, duration: 1, ease: "power2.out", stagger: 0.1,
-      scrollTrigger: { trigger: ".ritual__intro", start: "top 75%" },
+    gsap.from(".ritual-finder__content > *", {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: "power2.out",
+      stagger: 0.08,
+      scrollTrigger: { trigger: ".ritual-finder", start: "top 78%", once: true },
+    });
+    gsap.from(".ritual-finder__media", {
+      opacity: 0,
+      y: 40,
+      scale: 0.96,
+      duration: 1.2,
+      ease: "power2.out",
+      scrollTrigger: { trigger: ".ritual-finder", start: "top 78%", once: true },
     });
   }
 

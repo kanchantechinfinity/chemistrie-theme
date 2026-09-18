@@ -1,70 +1,151 @@
-<!-- ───── The Ritual — horizontal ───── -->
-<section class="ritual" id="ritual" data-screen-label="08 Ritual">
-  <div class="ritual__intro">
-    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-    <h2 class="display-h">{{ section.settings.heading }}</h2>
-    {%- if section.settings.sub != blank -%}
-      <p class="ritual__sub">{{ section.settings.sub }}</p>
-    {%- endif -%}
-    {%- if section.settings.body != blank -%}
-      <p class="ritual__body">{{ section.settings.body }}</p>
-    {%- endif -%}
-    {%- if section.settings.cta_label != blank -%}
-      <a class="btn btn--ghost ritual__cta" href="{{ section.settings.cta_link }}">
-        <span>{{ section.settings.cta_label }}</span>
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    {%- endif -%}
-  </div>
+<!-- ───── The Ritual Finder — dark forest treatment ───── -->
+<section class="ritual-finder" id="ritual-finder" data-screen-label="04 Ritual Finder">
+  <div class="ritual-finder__ambient" aria-hidden="true"></div>
+  
+  <div class="ritual-finder__inner">
+    <div class="ritual-finder__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow eyebrow--light ritual-finder__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
 
-  <div class="ritual__pin">
-    <div class="ritual__track" id="ritualTrack">
-{% for block in section.blocks %}
-      <div class="ritual-step" {{ block.shopify_attributes }}>
-        <span class="ritual-step__num">{{ block.settings.num }}</span>
-        <h3>{{ block.settings.name }}</h3>
-        <p class="ritual-step__time">{{ block.settings.time }}</p>
-        <p>{{ block.settings.description }}</p>
-        <div class="ritual-step__chip">{{ block.settings.chip }}</div>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="display-h display-h--light ritual-finder__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <p class="ritual-finder__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+
+      <div class="ritual-finder__meta">
+        <div class="ritual-finder__meta-item">
+          <span class="ritual-finder__meta-num">01</span>
+          <span class="ritual-finder__meta-text">Skin Profile Analysis</span>
+        </div>
+        <div class="ritual-finder__meta-divider" aria-hidden="true"></div>
+        <div class="ritual-finder__meta-item">
+          <span class="ritual-finder__meta-num">02</span>
+          <span class="ritual-finder__meta-text">Targeted Actives</span>
+        </div>
+        <div class="ritual-finder__meta-divider" aria-hidden="true"></div>
+        <div class="ritual-finder__meta-item">
+          <span class="ritual-finder__meta-num">03</span>
+          <span class="ritual-finder__meta-text">Layered Daily Routine</span>
+        </div>
       </div>
-{% endfor %}
+
+      {%- if section.settings.cta_label != blank -%}
+        <div class="ritual-finder__action">
+          <a class="btn btn--primary btn--light ritual-finder__cta" href="{{ section.settings.cta_link | default: '/pages/the-ritual' }}">
+            <span>{{ section.settings.cta_label }}</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </a>
+          <span class="ritual-finder__time-note">Takes 2 minutes · Pharmacist-developed</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="ritual-finder__visual">
+      <div class="ritual-finder__media">
+        <span class="ritual-finder__corner ritual-finder__corner--tl" aria-hidden="true"></span>
+        <span class="ritual-finder__corner ritual-finder__corner--tr" aria-hidden="true"></span>
+        <span class="ritual-finder__corner ritual-finder__corner--bl" aria-hidden="true"></span>
+        <span class="ritual-finder__corner ritual-finder__corner--br" aria-hidden="true"></span>
+
+        {%- if section.settings.image != blank -%}
+          <img 
+            class="ritual-finder__img" 
+            src="{{ section.settings.image | image_url: width: 1400 }}" 
+            alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" 
+            loading="lazy"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+          >
+        {%- elsif section.settings.image_asset != blank -%}
+          <img 
+            class="ritual-finder__img" 
+            src="{{ section.settings.image_asset | asset_url }}" 
+            alt="Chemistrie Ritual Routine" 
+            loading="lazy"
+          >
+        {%- else -%}
+          <img 
+            class="ritual-finder__img" 
+            src="{{ 'hero-ritual.jpg' | asset_url }}" 
+            alt="Chemistrie Ritual Routine" 
+            loading="lazy"
+          >
+        {%- endif -%}
+
+        <div class="ritual-finder__overlay" aria-hidden="true"></div>
+
+        {%- if section.settings.badge_text != blank -%}
+          <div class="ritual-finder__badge">
+            <span class="ritual-finder__badge-dot"></span>
+            <span class="ritual-finder__badge-text">{{ section.settings.badge_text }}</span>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "The Ritual",
+  "name": "The Ritual Finder",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— The Ritual —" },
-    { "type": "html", "id": "heading", "label": "Heading", "default": "Four<br/><em>quiet</em> steps." },
-    { "type": "text", "id": "sub", "label": "Subheadline", "default": "Built to layer, not to compete with itself." },
-    { "type": "textarea", "id": "body", "label": "Body copy", "default": "Morning and evening, in the same order, for as long as it takes to stop feeling like a decision." },
-    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Learn the Full Ritual" },
-    { "type": "url", "id": "cta_link", "label": "CTA link" }
-  ],
-  "blocks": [
     {
-      "type": "step",
-      "name": "Step",
-      "settings": [
-        { "type": "text", "id": "num", "label": "Step numeral", "default": "i." },
-        { "type": "text", "id": "name", "label": "Name", "default": "Cleanse" },
-        { "type": "text", "id": "time", "label": "Time", "default": "90 seconds" },
-        { "type": "textarea", "id": "description", "label": "Description", "default": "A milk that lifts without stripping. Worked into dry skin with both hands, eyes closed, breath slow." },
-        { "type": "text", "id": "chip", "label": "Product chip", "default": "Velvet Milk · No. 00" }
-      ]
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE RITUAL FINDER"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Headline",
+      "default": "Your skin. Your ritual."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body copy",
+      "default": "A considered routine starts with knowing what belongs in it. Answer a few questions and we'll help you build a Chemistrie ritual around your skin and your priorities."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "FIND YOUR RITUAL"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Image asset fallback filename",
+      "default": "hero-ritual.jpg",
+      "info": "Asset filename in assets/ folder, used if no image is uploaded above."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Card badge text",
+      "default": "Custom Routine · 2 Min"
     }
   ],
   "presets": [
     {
-      "name": "The Ritual",
-      "blocks": [
-        { "type": "step", "settings": { "num": "i.", "name": "Cleanse", "time": "90 seconds", "description": "A milk that lifts without stripping. Worked into dry skin with both hands, eyes closed, breath slow.", "chip": "Velvet Milk · No. 00" } },
-        { "type": "step", "settings": { "num": "ii.", "name": "Tone", "time": "A pause", "description": "Mandelic acid at 8%, low and weekly. Sweep across the T-zone with a cotton round. Then wait, dignified, for sixty seconds.", "chip": "Clarifying Tonic · No. 05" } },
-        { "type": "step", "settings": { "num": "iii.", "name": "Treat", "time": "2 drops", "description": "Retinaldehyde at night. L-Ascorbic in morning. Press, do not rub. The face is not a counter to be wiped down.", "chip": "Renewal Serum · No. 01" } },
-        { "type": "step", "settings": { "num": "iv.", "name": "Seal", "time": "One pearl", "description": "The Velvet Cream, warmed between the palms. Pressed upward along the jaw, the cheekbones, the brow. A small ceremony, every night.", "chip": "Velvet Cream · No. 04" } }
-      ]
+      "name": "The Ritual Finder"
     }
   ]
 }
