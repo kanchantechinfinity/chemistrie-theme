@@ -200,6 +200,15 @@
     });
   }
 
+  /* ───── Stat Bar ───── */
+  if (window.ScrollTrigger) {
+    gsap.fromTo(".statbar__cell",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.9, ease: "power2.out", stagger: 0.12,
+        scrollTrigger: { trigger: ".statbar", start: "top 80%", once: true } }
+    );
+  }
+
   /* ───── Founders ───── */
   if (window.ScrollTrigger) {
     gsap.from(".founders__photo--a", {
