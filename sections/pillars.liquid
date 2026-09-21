@@ -80,18 +80,22 @@
 .pillars--chain {
   overflow: hidden;
   position: relative;
-  padding-bottom: clamp(32px, 4vw, 56px);
+  padding-top: clamp(36px, 4vw, 56px);
+  padding-bottom: clamp(90px, 10vw, 130px) !important;
+}
+.pillars--chain .pillars__intro {
+  margin: 0 0 clamp(20px, 3vw, 32px) !important;
 }
 
 .pillars-chain {
   max-width: 1360px;
-  margin: 20px auto 0;
+  margin: 0 auto;
   position: relative;
 }
 
 .pillars-chain__stage {
   position: relative;
-  height: clamp(430px, 50vh, 485px);
+  height: clamp(400px, 47vh, 460px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,31 +109,33 @@
   left: 50%;
   transform: translate(-50%, -50%);
   transition: transform .65s cubic-bezier(.2,.8,.2,1), opacity .55s ease, width .65s cubic-bezier(.2,.8,.2,1), height .65s cubic-bezier(.2,.8,.2,1), box-shadow .55s ease;
-  border-radius: 32px;
+  border-radius: 28px;
   overflow: hidden;
   box-sizing: border-box;
 }
 
 /* ───── Active Center Card ───── */
 .pchain-card.is-active {
-  width: clamp(340px, 66vw, 840px);
+  width: clamp(340px, 64vw, 780px);
   height: 100%;
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   z-index: 10;
   background: var(--c-cream);
   border: 1px solid var(--c-line);
-  box-shadow: 0 30px 70px -25px rgba(26,58,45,.22), 0 10px 30px -15px rgba(26,58,45,.1);
+  box-shadow: 0 24px 60px -20px rgba(26,58,45,.2), 0 8px 24px -10px rgba(26,58,45,.08);
   pointer-events: auto;
 }
 .pchain-card.is-active .pchain-card__body {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
-  padding: 28px 28px 28px 48px;
-  gap: 36px;
+  padding: 24px 28px 24px 40px;
+  gap: 32px;
   opacity: 1;
+  box-sizing: border-box;
   transition: opacity .4s ease .15s;
 }
 .pchain-card.is-active .pchain-card__pill {
@@ -140,8 +146,8 @@
 .pchain-card:not(.is-active) {
   cursor: pointer;
   z-index: 4;
-  border-radius: 28px;
-  border: 2px solid rgba(249,244,237,.9);
+  border-radius: 24px;
+  border: 2px solid rgba(249,244,237,.95);
   box-shadow: 0 16px 36px -12px rgba(26,58,45,.18);
   background: var(--c-forest);
 }
@@ -153,41 +159,47 @@
   display: none;
 }
 .pchain-card:not(.is-active) .pchain-card__pill {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
 }
 
-/* Immediate Left / Right Flank */
+/* Immediate Left / Right Flank (Native 2:3 aspect ratio) */
 .pchain-card.is-prev-1 {
-  width: clamp(90px, 10vw, 130px);
-  height: clamp(320px, 42vh, 410px);
-  transform: translate(calc(-50% - clamp(230px, 38vw, 490px)), -50%) scale(1);
+  height: clamp(270px, 34vh, 330px);
+  aspect-ratio: 2 / 3;
+  width: auto;
+  transform: translate(calc(-50% - clamp(220px, 36vw, 460px)), -50%) scale(1);
   opacity: 0.95;
   z-index: 6;
 }
 .pchain-card.is-next-1 {
-  width: clamp(90px, 10vw, 130px);
-  height: clamp(320px, 42vh, 410px);
-  transform: translate(calc(-50% + clamp(230px, 38vw, 490px)), -50%) scale(1);
+  height: clamp(270px, 34vh, 330px);
+  aspect-ratio: 2 / 3;
+  width: auto;
+  transform: translate(calc(-50% + clamp(220px, 36vw, 460px)), -50%) scale(1);
   opacity: 0.95;
   z-index: 6;
 }
 
 /* Far Left / Right Flank (for 4+ items) */
 .pchain-card.is-prev-2 {
-  width: clamp(70px, 7vw, 100px);
-  height: clamp(260px, 34vh, 330px);
-  transform: translate(calc(-50% - clamp(310px, 47vw, 610px)), -50%) scale(0.95);
+  height: clamp(220px, 28vh, 270px);
+  aspect-ratio: 2 / 3;
+  width: auto;
+  transform: translate(calc(-50% - clamp(290px, 44vw, 560px)), -50%) scale(0.95);
   opacity: 0.65;
   z-index: 3;
 }
 .pchain-card.is-next-2 {
-  width: clamp(70px, 7vw, 100px);
-  height: clamp(260px, 34vh, 330px);
-  transform: translate(calc(-50% + clamp(310px, 47vw, 610px)), -50%) scale(0.95);
+  height: clamp(220px, 28vh, 270px);
+  aspect-ratio: 2 / 3;
+  width: auto;
+  transform: translate(calc(-50% + clamp(290px, 44vw, 560px)), -50%) scale(0.95);
   opacity: 0.65;
   z-index: 3;
 }
@@ -201,10 +213,11 @@
 
 /* ───── Card Content Internals ───── */
 .pchain-card__content {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 12px 0;
+  padding: 8px 0;
   min-width: 0;
 }
 .pchain-card__content .pillar__num {
@@ -217,34 +230,40 @@
   display: block;
 }
 .pchain-card__content .pillar__title {
-  font-size: clamp(26px, 2.6vw, 40px);
+  font-size: clamp(24px, 2.3vw, 36px);
   line-height: 1.1;
   letter-spacing: -.01em;
-  margin: 0 0 18px;
+  margin: 0 0 14px;
 }
 .pchain-card__content .pillar__lede {
-  font-size: clamp(16.5px, 1.4vw, 20px);
+  font-size: clamp(15.5px, 1.3vw, 18.5px);
   line-height: 1.45;
   margin: 0;
-  max-width: 44ch;
+  max-width: 42ch;
 }
 .pchain-card__content .pillar__list {
-  margin-top: 18px;
+  margin-top: 14px;
 }
 
-/* ───── Card Media (Right Column) ───── */
+/* ───── Card Media (Right Column - Exact 2:3 uncropped ratio) ───── */
 .pchain-card__media {
+  flex: 0 0 auto;
   position: relative;
   height: 100%;
-  border-radius: 22px;
+  aspect-ratio: 2 / 3;
+  border-radius: 20px;
   overflow: hidden;
   background: var(--c-forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .pchain-card__img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+  border-radius: 20px;
 }
 .pchain-card__placeholder {
   width: 100%;
@@ -258,12 +277,13 @@
   font-size: 56px;
 }
 
-/* ───── Flanking Pill Image ───── */
+/* ───── Flanking Pill Image (Exact 2:3 uncropped ratio) ───── */
 .pchain-card__pill-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+  border-radius: 22px;
 }
 .pchain-card__pill-fallback {
   width: 100%;
@@ -324,13 +344,13 @@
 /* ───── Responsive Breakpoints ───── */
 @media (max-width: 1024px) {
   .pillars-chain__stage {
-    height: 520px;
+    height: 420px;
   }
   .pchain-card.is-active {
-    width: 84vw;
+    width: 86vw;
   }
   .pchain-card.is-active .pchain-card__body {
-    padding: 20px 20px 20px 28px;
+    padding: 20px 20px 20px 24px;
     gap: 20px;
   }
   .pchain-card.is-prev-1,
@@ -340,9 +360,11 @@
 }
 
 @media (max-width: 768px) {
+  .pillars--chain {
+    padding-bottom: 72px !important;
+  }
   .pillars-chain__stage {
     height: auto;
-    min-height: 480px;
   }
   .pchain-card.is-active {
     width: 100%;
@@ -354,12 +376,15 @@
     border-radius: 24px;
   }
   .pchain-card.is-active .pchain-card__body {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     padding: 24px 20px;
-    gap: 24px;
+    gap: 20px;
   }
   .pchain-card__media {
-    height: 280px;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    aspect-ratio: 2 / 3;
     order: -1;
   }
   .pchain-card:not(.is-active) {
