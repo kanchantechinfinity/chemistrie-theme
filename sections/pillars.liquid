@@ -1,5 +1,5 @@
-<!-- ───── Pillars — Tabs card ───── -->
-<section class="pillars" data-screen-label="03 Pillars">
+<!-- ───── Pillars — Testimonial Chain ───── -->
+<section class="pillars pillars--chain" data-screen-label="03 Pillars">
   <div class="pillars__intro">
     <span class="eyebrow">{{ section.settings.eyebrow }}</span>
     <h2 class="display-h">{{ section.settings.intro_heading }}</h2>
@@ -11,156 +11,346 @@
     {%- endif -%}
   </div>
 
-  <div class="pillars__tabcard" id="pillarsTabCard">
-
-    <div class="pillars__tablist" role="tablist">
+  <div class="pillars-chain" id="pillarsChain" data-autoplay-speed="5000">
+    <div class="pillars-chain__stage" id="pillarsChainStage">
       {%- for block in section.blocks -%}
-        <button type="button" class="pillars__tab{% if forloop.first %} is-active{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-tab-index="{{ forloop.index0 }}" id="pillarsTab{{ forloop.index0 }}" aria-controls="pillarsPanel{{ forloop.index0 }}">
-          <span class="pillars__tab-num">0{{ forloop.index }}</span>
-          <span class="pillars__tab-title">{{ block.settings.title }}</span>
-        </button>
+        <article class="pchain-card{% if forloop.first %} is-active{% elsif forloop.index == 2 %} is-next-1{% elsif forloop.last %} is-prev-1{% else %} is-hidden{% endif %}" data-chain-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          
+          <!-- Active Card: Original content only (title, lede, items, image) -->
+          <div class="pchain-card__body">
+            <div class="pchain-card__content">
+              <h3 class="pillar__title">{{ block.settings.title }}</h3>
+              <p class="pillar__lede">{{ block.settings.lede }}</p>
+              
+              {%- if block.settings.item1 != blank or block.settings.item2 != blank or block.settings.item3 != blank -%}
+                <ul class="pillar__list">
+                  {%- if block.settings.item1 != blank -%}<li>{{ block.settings.item1 }}</li>{%- endif -%}
+                  {%- if block.settings.item2 != blank -%}<li>{{ block.settings.item2 }}</li>{%- endif -%}
+                  {%- if block.settings.item3 != blank -%}<li>{{ block.settings.item3 }}</li>{%- endif -%}
+                </ul>
+              {%- endif -%}
+            </div>
+
+            <div class="pchain-card__media">
+              {%- if block.settings.image != blank -%}
+                <img class="pchain-card__img" src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+              {%- elsif block.settings.image_asset != blank -%}
+                <img class="pchain-card__img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+              {%- else -%}
+                <div class="pchain-card__placeholder">
+                  <span>{{ block.settings.crest_mono | default: "Rx" }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+
+          <!-- Flanking Pill: Image preview only -->
+          <div class="pchain-card__pill">
+            {%- if block.settings.image != blank -%}
+              <img class="pchain-card__pill-img" src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+            {%- elsif block.settings.image_asset != blank -%}
+              <img class="pchain-card__pill-img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+            {%- else -%}
+              <div class="pchain-card__pill-fallback">
+                <span>{{ block.settings.crest_mono | default: "Rx" }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+
+        </article>
       {%- endfor -%}
     </div>
 
-    <div class="pillars__panels">
-      {% for block in section.blocks %}
-      {%- case forloop.index -%}
-      {%- when 1 -%}{%- assign pillar_mod = 'pillar--trust' -%}{%- assign crest_mod = '' -%}{%- assign mono_mod = '' -%}
-      {%- when 2 -%}{%- assign pillar_mod = 'pillar--luxury' -%}{%- assign crest_mod = ' pillar__crest--alt' -%}{%- assign mono_mod = ' pillar__mono--serif' -%}
-      {%- else -%}{%- assign pillar_mod = 'pillar--warmth' -%}{%- assign crest_mod = ' pillar__crest--warm' -%}{%- assign mono_mod = ' pillar__mono--script' -%}
-      {%- endcase -%}
-      <article class="pillars__panel {{ pillar_mod }}{% if forloop.first %} is-active{% endif %}" data-panel-index="{{ forloop.index0 }}" id="pillarsPanel{{ forloop.index0 }}" role="tabpanel" aria-labelledby="pillarsTab{{ forloop.index0 }}"{{ block.shopify_attributes }}>
-        <div class="pillar__body">
-          <h3 class="pillar__title">{{ block.settings.title }}</h3>
-          <p class="pillar__lede">{{ block.settings.lede }}</p>
-          {%- if block.settings.item1 != blank or block.settings.item2 != blank or block.settings.item3 != blank -%}
-          <ul class="pillar__list">
-            {%- if block.settings.item1 != blank -%}<li>{{ block.settings.item1 }}</li>{%- endif -%}
-            {%- if block.settings.item2 != blank -%}<li>{{ block.settings.item2 }}</li>{%- endif -%}
-            {%- if block.settings.item3 != blank -%}<li>{{ block.settings.item3 }}</li>{%- endif -%}
-          </ul>
-          {%- endif -%}
-        </div>
-        <div class="pillar__visual pillar__visual--full">
-          {%- comment -%}
-            A photo always uses the full-bleed treatment. The old markup also
-            keyed this off the section's "Crest image style" setting, which left
-            the photo rendering as a small circle badge whenever that setting
-            didn't say "full".
-          {%- endcomment -%}
-          {%- if block.settings.image != blank or block.settings.image_asset != blank -%}
-          <div class="pillar__crest pillar__crest--fullimage{{ crest_mod }}">
-            {%- if block.settings.image != blank -%}
-              <img class="pillar__crest-img" src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-            {%- else -%}
-              <img class="pillar__crest-img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-            {%- endif -%}
-            {%- if block.settings.crest_sub != blank -%}
-              <span class="pillar__crest-sub pillar__crest-sub--onimg">{{ block.settings.crest_sub }}</span>
-            {%- endif -%}
-          </div>
-          {%- else -%}
-          <div class="pillar__crest{{ crest_mod }}">
-            <span class="pillar__mono{{ mono_mod }}">{{ block.settings.crest_mono }}</span>
-            <span class="pillar__crest-sub">{{ block.settings.crest_sub }}</span>
-          </div>
-          {%- endif -%}
-        </div>
-      </article>
-      {% endfor %}
+    <!-- Automated Progress Indicators -->
+    <div class="pillars-chain__controls" aria-label="Story carousel progress">
+      <div class="pillars-chain__dots" id="pillarsChainDots" role="tablist">
+        {%- for block in section.blocks -%}
+          <button type="button" class="pillars-chain__dot{% if forloop.first %} is-active{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Slide {{ forloop.index }}" data-dot-index="{{ forloop.index0 }}">
+            <span class="pillars-chain__dot-fill"></span>
+          </button>
+        {%- endfor -%}
+      </div>
     </div>
-
   </div>
 </section>
 
 {% stylesheet %}
-/* Pillar photo sizing lives here, not in chemistrie.css, because that file
-   re-declares `.pillar__crest` at the circle badge's fixed 120-140px inside
-   several later breakpoints. !important is deliberate — it is the only way to
-   win against those without depending on file order. */
-.pillar__crest--fullimage { border-radius: 20px !important; }
-.pillar__crest--fullimage::before { display: none !important; }
-
-/* ───── Tabs card shell ───── */
-.pillars__tabcard {
-  max-width: 1320px;
-  margin: clamp(32px, 4vw, 56px) auto 0;
-  display: flex;
-  align-items: stretch;
-  border-radius: 28px;
+/* ───── Testimonial Chain Shell ───── */
+.pillars--chain {
   overflow: hidden;
-  border: 1px solid var(--c-line);
-  box-shadow: 0 30px 60px -30px rgba(26,58,45,.18);
+  position: relative;
 }
 
-.pillars__tablist {
-  flex: 0 0 280px;
-  display: flex;
-  flex-direction: column;
-  background: var(--c-forest);
+.pillars-chain {
+  max-width: 1360px;
+  margin: 40px auto 0;
+  position: relative;
 }
-.pillars__tab {
+
+.pillars-chain__stage {
+  position: relative;
+  height: clamp(480px, 58vh, 540px);
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 24px 28px;
-  background: none;
-  border: 0;
-  border-bottom: 1px solid rgba(249,244,237,.1);
-  cursor: pointer;
-  text-align: left;
-  color: rgba(249,244,237,.5);
-  transition: background .3s var(--ease-out), color .3s var(--ease-out);
-}
-.pillars__tab:last-child { border-bottom: 0; }
-.pillars__tab:hover { color: var(--c-cream); }
-.pillars__tab.is-active { background: rgba(249,244,237,.07); color: var(--c-cream); }
-.pillars__tab-num {
-  font-family: var(--ff-display);
-  font-style: italic;
-  font-size: 20px;
-  color: var(--c-tan);
-  flex: 0 0 auto;
-}
-.pillars__tab-title {
-  font-family: var(--ff-display);
-  font-size: 17px;
-  line-height: 1.3;
+  justify-content: center;
+  perspective: 1200px;
 }
 
-.pillars__panels { position: relative; flex: 1; min-width: 0; }
-.pillars__panel {
+/* ───── Base Card ───── */
+.pchain-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform .65s cubic-bezier(.2,.8,.2,1), opacity .55s ease, width .65s cubic-bezier(.2,.8,.2,1), height .65s cubic-bezier(.2,.8,.2,1), box-shadow .55s ease;
+  border-radius: 32px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ───── Active Center Card ───── */
+.pchain-card.is-active {
+  width: clamp(340px, 66vw, 840px);
+  height: 100%;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  z-index: 10;
+  background: var(--c-cream);
+  border: 1px solid var(--c-line);
+  box-shadow: 0 30px 70px -25px rgba(26,58,45,.22), 0 10px 30px -15px rgba(26,58,45,.1);
+  pointer-events: auto;
+}
+.pchain-card.is-active .pchain-card__body {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  width: 100%;
+  height: 100%;
+  padding: 28px 28px 28px 48px;
+  gap: 36px;
+  opacity: 1;
+  transition: opacity .4s ease .15s;
+}
+.pchain-card.is-active .pchain-card__pill {
   display: none;
-  grid-template-columns: 1fr 320px;
-  gap: clamp(28px, 4vw, 60px);
-  align-items: stretch;
-  padding: clamp(40px, 5vw, 72px);
-  min-height: 480px;
 }
-.pillars__panel.is-active { display: grid; }
 
+/* ───── Flanking Cards ("The Chain") ───── */
+.pchain-card:not(.is-active) {
+  cursor: pointer;
+  z-index: 4;
+  border-radius: 28px;
+  border: 2px solid rgba(249,244,237,.9);
+  box-shadow: 0 16px 36px -12px rgba(26,58,45,.18);
+  background: var(--c-forest);
+}
+.pchain-card:not(.is-active):hover {
+  filter: brightness(1.05);
+  box-shadow: 0 20px 42px -10px rgba(26,58,45,.28);
+}
+.pchain-card:not(.is-active) .pchain-card__body {
+  display: none;
+}
+.pchain-card:not(.is-active) .pchain-card__pill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Immediate Left / Right Flank */
+.pchain-card.is-prev-1 {
+  width: clamp(90px, 10vw, 130px);
+  height: clamp(320px, 42vh, 410px);
+  transform: translate(calc(-50% - clamp(230px, 38vw, 490px)), -50%) scale(1);
+  opacity: 0.95;
+  z-index: 6;
+}
+.pchain-card.is-next-1 {
+  width: clamp(90px, 10vw, 130px);
+  height: clamp(320px, 42vh, 410px);
+  transform: translate(calc(-50% + clamp(230px, 38vw, 490px)), -50%) scale(1);
+  opacity: 0.95;
+  z-index: 6;
+}
+
+/* Far Left / Right Flank (for 4+ items) */
+.pchain-card.is-prev-2 {
+  width: clamp(70px, 7vw, 100px);
+  height: clamp(260px, 34vh, 330px);
+  transform: translate(calc(-50% - clamp(310px, 47vw, 610px)), -50%) scale(0.95);
+  opacity: 0.65;
+  z-index: 3;
+}
+.pchain-card.is-next-2 {
+  width: clamp(70px, 7vw, 100px);
+  height: clamp(260px, 34vh, 330px);
+  transform: translate(calc(-50% + clamp(310px, 47vw, 610px)), -50%) scale(0.95);
+  opacity: 0.65;
+  z-index: 3;
+}
+
+.pchain-card.is-hidden {
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ───── Card Content Internals ───── */
+.pchain-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 0;
+  min-width: 0;
+}
+.pchain-card__content .pillar__title {
+  font-size: clamp(26px, 2.6vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  margin: 0 0 18px;
+}
+.pchain-card__content .pillar__lede {
+  font-size: clamp(16.5px, 1.4vw, 20px);
+  line-height: 1.45;
+  margin: 0;
+  max-width: 44ch;
+}
+.pchain-card__content .pillar__list {
+  margin-top: 18px;
+}
+
+/* ───── Card Media (Right Column) ───── */
+.pchain-card__media {
+  position: relative;
+  height: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--c-forest);
+}
+.pchain-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pchain-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, var(--c-forest) 0%, #1e4534 100%);
+  color: var(--c-cream);
+  font-family: var(--ff-display);
+  font-size: 56px;
+}
+
+/* ───── Flanking Pill Image ───── */
+.pchain-card__pill-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pchain-card__pill-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-forest);
+  color: var(--c-cream);
+  font-family: var(--ff-display);
+  font-size: 24px;
+}
+
+/* ───── Automated Progress Indicators ───── */
+.pillars-chain__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 36px;
+}
+.pillars-chain__dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pillars-chain__dot {
+  padding: 0;
+  border: 0;
+  background: rgba(26,58,45,.2);
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: width .35s cubic-bezier(.2,.8,.2,1), background .3s ease;
+}
+.pillars-chain__dot:hover {
+  background: rgba(26,58,45,.4);
+}
+.pillars-chain__dot.is-active {
+  width: 38px;
+  background: rgba(26,58,45,.15);
+}
+.pillars-chain__dot-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--c-forest);
+  border-radius: 4px;
+}
+
+/* ───── Responsive Breakpoints ───── */
 @media (max-width: 1024px) {
-  .pillars__tabcard { flex-direction: column; }
-  .pillars__tablist { flex-direction: row; overflow-x: auto; }
-  .pillars__tab { border-bottom: 0; border-right: 1px solid rgba(249,244,237,.1); flex: 1 0 auto; }
-  .pillars__tab:last-child { border-right: 0; }
-  .pillars__panel { grid-template-columns: 1fr; min-height: 0; }
-  .pillar__visual { display: block !important; }
-  .pillar__crest--fullimage {
-    width: 100% !important;
-    max-width: 460px !important;
-    height: auto !important;
-    aspect-ratio: 4 / 3 !important;
-    transform: none !important;
-    opacity: 1 !important;
+  .pillars-chain__stage {
+    height: 520px;
+  }
+  .pchain-card.is-active {
+    width: 84vw;
+  }
+  .pchain-card.is-active .pchain-card__body {
+    padding: 20px 20px 20px 28px;
+    gap: 20px;
+  }
+  .pchain-card.is-prev-1,
+  .pchain-card.is-next-1 {
+    display: none;
   }
 }
 
-@media (max-width: 700px) {
-  .pillars__tab { padding: 16px 18px; gap: 10px; }
-  .pillars__tab-title { font-size: 14px; }
-  .pillars__panel { padding: 28px 22px; }
-  .pillar__crest--fullimage { max-width: none !important; }
+@media (max-width: 768px) {
+  .pillars-chain__stage {
+    height: auto;
+    min-height: 480px;
+  }
+  .pchain-card.is-active {
+    width: 100%;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    height: auto;
+    border-radius: 24px;
+  }
+  .pchain-card.is-active .pchain-card__body {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+    gap: 24px;
+  }
+  .pchain-card__media {
+    height: 280px;
+    order: -1;
+  }
+  .pchain-card:not(.is-active) {
+    display: none;
+  }
 }
 {% endstylesheet %}
 
@@ -171,8 +361,7 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Trust Signals —" },
     { "type": "html", "id": "intro_heading", "label": "Intro heading", "default": "Nothing here was<br/><em>rounded up.</em>" },
     { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Read the Ingredient Philosophy" },
-    { "type": "url", "id": "cta_link", "label": "CTA link" },
-    { "type": "select", "id": "crest_style", "label": "Crest image style", "options": [ { "value": "circle", "label": "Circle badge" }, { "value": "full", "label": "Full-bleed (no circle)" } ], "default": "circle" }
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
   ],
   "blocks": [
     {
@@ -186,19 +375,19 @@
         { "type": "text", "id": "item3", "label": "List item 3" },
         { "type": "text", "id": "crest_mono", "label": "Crest mono", "default": "Rx" },
         { "type": "text", "id": "crest_sub", "label": "Crest sub" },
-        { "type": "image_picker", "id": "image", "label": "Crest image (optional — replaces the Rx/mono badge with a photo)" },
-        { "type": "text", "id": "image_asset", "label": "Crest image filename (/assets)", "info": "Fallback used only if Crest image above is blank." }
+        { "type": "image_picker", "id": "image", "label": "Story image" },
+        { "type": "text", "id": "image_asset", "label": "Story image filename (/assets)", "info": "Fallback used only if Story image above is blank." }
       ]
     }
   ],
-  "max_blocks": 3,
+  "max_blocks": 6,
   "presets": [
     {
       "name": "Pillars",
       "blocks": [
-        { "type": "pillar", "settings": { "title": "Pharmacist-Formulated", "lede": "Every formula answers to two pharmacists, by name, not a lab Chemistrie doesn't own.", "crest_mono": "Rx" } },
-        { "type": "pillar", "settings": { "title": "Pharmacist-Selected Sourcing", "lede": "Ingredients sourced through PCCA's ExoBlue platform, chosen deliberately, never developed in-house and never claimed as Chemistrie's own technology.", "crest_mono": "C." } },
-        { "type": "pillar", "settings": { "title": "Appearance-Language, Always", "lede": "Every claim on this site is written to be checked, not simply believed.", "crest_mono": "for her" } }
+        { "type": "pillar", "settings": { "title": "Pharmacist-Formulated", "lede": "Every formula answers to two pharmacists, by name, not a lab Chemistrie doesn't own.", "crest_mono": "Rx", "image_asset": "pillar-pharmacist-formulated.png" } },
+        { "type": "pillar", "settings": { "title": "Purposefully Formulated", "lede": "Every ingredient earns its place, selected not for the label, but for what it contributes to the formula as a whole.", "crest_mono": "C.", "image_asset": "pillar-purposefully-formulated.png" } },
+        { "type": "pillar", "settings": { "title": "Designed to Work Together", "lede": "A focused collection made to layer with intention, so your ritual includes what your skin needs and leaves out what it doesn't.", "crest_mono": "for her", "image_asset": "pillar-designed-together.png" } }
       ]
     }
   ]

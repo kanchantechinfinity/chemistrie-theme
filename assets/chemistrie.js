@@ -116,50 +116,169 @@
         scrollTrigger: { trigger: ".vision__grid", start: "top 85%" } });
   }
 
-  /* ───── Pillars — tabs card ─────
-     Replaced the old sticky-stack scroll effect with a click-driven tab
-     interface (matching the "Tabs card" reference component). Entrance is
-     a simple one-time reveal of the whole card; switching tabs is a plain
-     click handler, deliberately NOT gated behind window.ScrollTrigger since
-     it's basic UI interaction, not a scroll-tied effect. */
+  /* ───── Pillars — Testimonial Chain ───── */
   if (window.ScrollTrigger) {
-    gsap.fromTo(".pillars__tabcard",
-      { opacity: 0, y: 50 },
+    gsap.fromTo(".pillars-chain",
+      { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 1, ease: "power3.out",
-        scrollTrigger: { trigger: ".pillars__tabcard", start: "top 85%", once: true } }
+        scrollTrigger: { trigger: ".pillars-chain", start: "top 85%", once: true } }
     );
   }
 
-  (function initPillarsTabs() {
-    var card = document.getElementById("pillarsTabCard");
-    if (!card) return;
-    var tabs = $$(".pillars__tab", card);
-    var panels = $$(".pillars__panel", card);
+  (function initPillarsChain() {
+    var container = document.getElementById("pillarsChain");
+    if (!container) return;
 
-    function activate(index) {
-      tabs.forEach(function(t, i) {
-        var active = i === index;
-        t.classList.toggle("is-active", active);
-        t.setAttribute("aria-selected", active ? "true" : "false");
-      });
-      panels.forEach(function(p, i) {
-        if (i === index) {
-          p.classList.add("is-active");
-          if (window.gsap) {
-            gsap.fromTo(p, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" });
-          }
+    var cards = $$(".pchain-card", container);
+    var dots = $$(".pillars-chain__dot", container);
+    var total = cards.length;
+    if (total === 0) return;
+
+    var activeIndex = 0;
+    var autoplayInterval = parseInt(container.getAttribute("data-autoplay-speed"), 10) || 5000;
+    var startTime = null;
+    var isPaused = false;
+    var animFrame = null;
+
+    function updateCardClasses(idx) {
+      cards.forEach(function(card, i) {
+        card.classList.remove("is-active", "is-prev-1", "is-next-1", "is-prev-2", "is-next-2", "is-hidden");
+
+        // Distance from active index with wrapping
+        var diff = (i - idx + total) % total;
+        if (diff > total / 2) diff -= total;
+
+        if (diff === 0) {
+          card.classList.add("is-active");
+        } else if (diff === -1 || (total === 2 && diff === 1)) {
+          card.classList.add("is-prev-1");
+        } else if (diff === 1) {
+          card.classList.add("is-next-1");
+        } else if (diff === -2) {
+          card.classList.add("is-prev-2");
+        } else if (diff === 2) {
+          card.classList.add("is-next-2");
         } else {
-          p.classList.remove("is-active");
+          card.classList.add("is-hidden");
         }
+      });
+
+      dots.forEach(function(dot, i) {
+        var isActive = i === idx;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-selected", isActive ? "true" : "false");
+        var fill = dot.querySelector(".pillars-chain__dot-fill");
+        if (fill) fill.style.width = "0%";
       });
     }
 
-    tabs.forEach(function(tab, i) {
-      tab.addEventListener("click", function() {
-        if (tab.classList.contains("is-active")) return;
-        activate(i);
+    function setSlide(idx) {
+      activeIndex = (idx + total) % total;
+      updateCardClasses(activeIndex);
+      resetTimer();
+    }
+
+    function tick() {
+      if (isPaused) return;
+      var elapsed = Date.now() - startTime;
+      var progress = Math.min(1, elapsed / autoplayInterval);
+
+      var activeDot = dots[activeIndex];
+      if (activeDot) {
+        var fill = activeDot.querySelector(".pillars-chain__dot-fill");
+        if (fill) fill.style.width = (progress * 100) + "%";
+      }
+
+      if (progress >= 1) {
+        setSlide(activeIndex + 1);
+      } else {
+        animFrame = requestAnimationFrame(tick);
+      }
+    }
+
+    function startTimer() {
+      cancelAnimationFrame(animFrame);
+      startTime = Date.now();
+      animFrame = requestAnimationFrame(tick);
+    }
+
+    function resetTimer() {
+      cancelAnimationFrame(animFrame);
+      startTime = Date.now();
+      if (!isPaused) {
+        animFrame = requestAnimationFrame(tick);
+      }
+    }
+
+    function pauseTimer() {
+      isPaused = true;
+      cancelAnimationFrame(animFrame);
+    }
+
+    function resumeTimer() {
+      if (!isPaused) return;
+      isPaused = false;
+      var activeDot = dots[activeIndex];
+      var currentWidth = 0;
+      if (activeDot) {
+        var fill = activeDot.querySelector(".pillars-chain__dot-fill");
+        if (fill && fill.style.width) {
+          currentWidth = parseFloat(fill.style.width) || 0;
+        }
+      }
+      var elapsed = (currentWidth / 100) * autoplayInterval;
+      startTime = Date.now() - elapsed;
+      animFrame = requestAnimationFrame(tick);
+    }
+
+    // Hover pause/resume on the entire chain container
+    container.addEventListener("mouseenter", pauseTimer);
+    container.addEventListener("mouseleave", resumeTimer);
+
+    // Clicking flanking cards switches directly
+    cards.forEach(function(card) {
+      card.addEventListener("click", function() {
+        if (card.classList.contains("is-active")) return;
+        var idx = parseInt(card.getAttribute("data-chain-index"), 10);
+        setSlide(idx);
       });
     });
+
+    // Clicking progress dots
+    dots.forEach(function(dot) {
+      dot.addEventListener("click", function() {
+        var idx = parseInt(dot.getAttribute("data-dot-index"), 10);
+        setSlide(idx);
+      });
+    });
+
+    // Touch swipe support for mobile
+    var touchStartX = 0;
+    var touchEndX = 0;
+    var stage = document.getElementById("pillarsChainStage");
+    if (stage) {
+      stage.addEventListener("touchstart", function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        pauseTimer();
+      }, { passive: true });
+
+      stage.addEventListener("touchend", function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        var swipeDist = touchEndX - touchStartX;
+        if (Math.abs(swipeDist) > 40) {
+          if (swipeDist < 0) {
+            setSlide(activeIndex + 1);
+          } else {
+            setSlide(activeIndex - 1);
+          }
+        }
+        resumeTimer();
+      }, { passive: true });
+    }
+
+    // Initialize state & start automatic cycling
+    updateCardClasses(0);
+    startTimer();
   })();
 
   /* ───── Shop — product reveal ───── */

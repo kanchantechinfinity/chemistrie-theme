@@ -1858,3 +1858,726 @@ Fix:
   - Updates the header bag count (`.nav__bag-count`) using `/cart.js`.
   - Triggers the cart drawer (`[data-cart-open]` / `#cartDrawer`) so the customer sees their full ritual ready in the drawer.
   - Button displays confirmation feedback (`Complete Ritual in Bag ✓`) with luxury styling before smoothly resetting.
+
+## Build log — 2026-09-21: Ritual Finder result cards enlarged, pill AM/PM badges (commit `d80b7b4`)
+User screenshot showed products finally rendering correctly (the earlier
+missing-DOM-query bug from 2026-09-18 was fixed by another session in the
+interim — `e6aeeb0` and prior commits). Follow-up visual request: cards
+should fill the full horizontal width of the section, images/text bigger,
+AM/PM badges changed from circles to capsule/pill buttons.
+
+`assets/pages.css` `.rf-item`: switched from `flex: 0 0 250px; max-width: 260px`
+(fixed-width cards that left dead space after the last card in a row) to
+`flex: 1 1 220px; max-width: none` — items now flex-grow to fill their row
+evenly, whether AM has 3 products or PM has 4. Same pattern applied to the
+1100px/768px/480px breakpoints (was percentage-based `flex: 0 0 calc(33%/50%...)`,
+now flex-basis + grow so rows still stretch full-width at every size).
+
+`.rf-item__thumb`: 116px fixed → `clamp(140px, 16vw, 200px)`.
+Text bumped: `.rf-item__name` 18px → `clamp(20px,2vw,24px)`, `.rf-item__price`
+14.5px → 17px, `.rf-item__step-tag` 10px → 12px.
+
+`.rf-result__routine-label` (AM/PM badge): was a fixed 48×48 circle
+(`border-radius: 50%`); changed to `padding: 11px 28px; min-width: 72px;
+border-radius: 999px` — a pill that sizes to its own text instead of a
+fixed square.
+
+### Follow-up: image filled to card width, mobile fixed-px overrides removed (commit `85cc178`)
+User screenshot showed the real cause of "lots of empty space": the
+thumbnail was a fixed `clamp(140px,16vw,200px)` square, so once cards grew
+wide to fill their row (previous commit), the small square sat centered
+with big gutters left/right, disconnected from the text below it. Fixed
+by making `.rf-item__thumb` `width: 100%; aspect-ratio: 1/1` — it now
+spans the same edges as the card's padding, matching the text block width
+exactly. **Also had to delete the 768px/480px breakpoints' fixed-pixel
+thumb overrides** (`width: 120px`/`92px` etc, both `!important`) — those
+would have won at mobile widths and reintroduced the identical small-square
+bug there. Text sizes bumped again (name → clamp(26,2.6vw,32px), price →
+21px) since the card now reads as a bigger, more premium tile.
+
+### Follow-up: PM row not filling, white thumb background removed (commit `0431034`)
+User: PM (4 products) had a gap on the right side that AM (3 products) didn't.
+Root cause: the flex-grow approach filled the row correctly only when items
+wrapped/didn't-wrap the same way for both counts; with a fixed flex-basis,
+AM's 3 items and PM's 4 items could hit different wrap points in the same
+container width, leaving a partially-filled last line un-stretched for one
+of them.
+
+**Fix — dynamic per-routine grid, not flex:** `.rf-result__product-list`
+changed to `display: grid; grid-template-columns: repeat(var(--rf-cols, 3), 1fr)`.
+`buildList()` in `sections/ritual-finder-app.liquid` now counts how many
+items it actually rendered and calls
+`container.style.setProperty('--rf-cols', count)` on that specific list
+element. Each routine's row is therefore always an exact N-column grid
+matching its own real product count — guaranteed full width, identical
+padding, regardless of whether AM and PM have the same or different counts.
+**Lesson: don't rely on flex-wrap to "just work" for two sibling rows with
+different item counts — a fixed flex-basis can wrap them at different
+points. A dynamic explicit column count sidesteps the whole class of bug.**
+
+Mobile (`≤768px`/`≤480px`) forces a fixed `repeat(2, 1fr)` regardless of
+`--rf-cols`, both as a legibility call and to avoid the "lone odd item
+alone in a row" look at very narrow widths — grid's per-row fill trick
+doesn't extend to catch that case, and 2-up is an accepted card-grid
+pattern.
+
+Also removed `.rf-item__thumb`'s `background: var(--c-paper)` (was
+creating a visible off-white box behind each product photo) — set to
+`transparent`, and thumb padding removed (`16px` → `0`) since the photos
+already have breathing room baked into the source images.
+
+### Follow-up: right-side-only gap on result rows was a container width bug (commit `e5dc011`)
+User screenshots of AM and PM both showed the exact same problem: cards
+filled maybe 65% of the section width with a large empty strip on the
+right only (not symmetric — ruled out a centering/padding issue and
+pointed at a hard max-width). Found it: `.rf-results-page` had
+`max-width: 1240px; margin: 0;` (not `0 auto`) sitting inside its parent
+`.ritual-finder-app__inner` (`max-width: 1320px`, centered) — so the
+results page itself was flush-left and ~80px narrower than the section
+around it, and every grid row (AM/PM) computed its columns against that
+too-narrow box. The previous `--rf-cols` fix (0431034) was correct for
+*even column distribution* but couldn't fix this, since the container
+those columns filled was itself the wrong width. Removed the max-width
+cap entirely (`.rf-results-page` now `max-width: none`, filling its
+parent 100%) — rows now bound to the same edges as the rest of the
+section.
+
+## Build log — 2026-09-21: Pharmacists page rebuilt to credibility-first brief (commit `630d346`)
+Full-page brief for `templates/page.the-pharmacists.json` (8 numbered
+sections). Note: user's IDE had `page.the-ritual.json` open when this brief
+arrived, but the brief content is unambiguously about the Pharmacists page —
+didn't touch page.the-ritual.json (that page belongs to the other
+concurrently-running agent's in-progress Ritual Finder work, per the
+"don't interfere" instruction from earlier this session).
+
+**Hero** (`page-hero`): eyebrow/heading/deck already matched the approved
+copy exactly, untouched. `show_visual` set to `false` — the brief itself
+flags the current `stock-lab.jpg` as looking like "a lab/vape cartridge"
+and explicitly bans a developer-picked replacement photo ("Until supplied,
+retain clean placeholders without using AI-generated people"). Same
+judgment as the Collection hero situation, but this time the direction is
+reversed: there the existing placeholder was fine to keep, here the brief
+itself says the existing image is wrong, so hiding it (not swapping it for
+another guess) is the correct read of "clean placeholder."
+
+**Stat bar**: this is the first page in the project where a stat bar was
+turned **on** rather than off — replaced 6,000+/ship-time/rating/batch-count
+(unverifiable) with 3 blocks the brief calls out as real: "2" / Pharmacists,
+"23 Years" / Combined Pharmacist Experience, "Pharmacist-Formulated" /
+"Thoughtfully Selected & Refined". `show_bar: true` set specifically on
+this template's stat-bar settings (global schema default from the
+Collection-page work is still `false`, unaffected — each page's block
+independently opts in). **Gotcha caught before commit:** first draft used
+`&amp;` in the label field, but `label` is a Shopify `text` setting (not
+`html`/`richtext`), which doesn't unescape entities — would have rendered
+literal "&amp;" on the page. Fixed to a plain `&` character.
+
+**Founder profiles**: only the `body` field changed on both blocks — new
+approved bios verbatim. `eyebrow`, `role`, `name`, and the
+no-photo-uploaded fallback (cycles through `founder-1/2/3.jpg`, confirmed
+real stock photos already in `assets/`, not AI-generated — per
+2026-07-24 memory entry) were already correct/compliant, left untouched.
+
+**Origin story** (`pharmacists-credentials`): cut from 6 blocks to the
+approved 3 (The Beginning / The Reunion / The Idea) — dropped the old
+"Two Careers," "What Their Wives Actually Wanted," and "Why Chemistrie"
+cards. The old card 6 had the Harin/Zach quote baked into its body text;
+the brief keeps that quote only in the final CTA, so it's not duplicated
+anywhere now. Section's grid CSS was already `repeat(3,1fr)` — 3 blocks
+is literally its preset shape, no CSS change needed.
+
+**New section — "why pharmacists matter"**: `sections/pharmacists-statement.liquid`,
+inserted between credentials and the final CTA. Checked for an existing
+fit first — `pharmacists-philosophy.liquid` exists in the theme but is
+unused anywhere and built as a 4-icon value-grid, wrong shape for the
+brief's single flowing paragraph (and a 1-block grid would leave 3 empty
+grid cells, the same visual bug fixed in the Ritual Finder cards this
+session). Built a small new section instead: eyebrow + heading + one
+richtext paragraph, centered, reusing existing `--ff-display`/`--ff-body`/
+`--c-forest`/`--c-ink-soft` tokens — no new visual system, matches "no
+major redesign requested."
+
+**Final CTA** (`page-cta`): `button_label`/`button_url` → "Find Your
+Ritual" / `/pages/the-ritual` (was "Explore the Collection"); `button2_label`/
+`button2_url` → "Explore the Collection" / `/collections/all` (was "Read a
+Letter from the Founders" → `/pages/founders-circle`). Quote and dark-green
+`page-cta` snippet treatment untouched — brief says keep both.
+
+**Section 7 (global Houston/compounding corrections)**: already fully
+satisfied by the earlier Collection-page work this session (announcement
+bar off-by-default with no $120/Houston text, footer copyright's
+"Compounded with care in Houston." removed) — verified, no new changes
+needed. Did not touch the footer's `.footer__seal` "Pharmacist-formulated ·
+Houston, TX" badge, same standing judgment call as before (not literally
+"compounded," not named in either brief's removal list, "Keep: standard
+legal/company info" argues for it staying).
+
+### Follow-up: real hero photo supplied for Pharmacists page (commit `f63429e`)
+User provided the compounding/formulation photo directly (hands mixing a
+cream in a beaker on a lab bench) and asked to add it as the hero image —
+overrides the earlier `show_visual:false` placeholder decision from the
+main rebuild. Saved as `assets/hero-pharmacists.jpg` (following the
+existing `hero-*.jpg` naming convention), `show_visual` set back to
+`true`, `hero_fallback_asset` updated from `stock-lab.jpg` to
+`hero-pharmacists.jpg`. Also flagged to the user separately: this is a
+compounding-bench photo, not literally "Harin + Zach together" as the
+original brief specified — if a portrait of the two founders is supplied
+later, swap `hero_fallback_asset` again the same way.
+
+### Follow-up: stat bar scroll-in animation added (commit `0c6da3f`)
+User screenshot confirmed the new 3-stat credibility strip is live (sync
+delay from the previous "can't see changes" report resolved itself — no
+code fix was needed, just time/cache). Asked for it to animate in on
+scroll. Added a `gsap.fromTo(".statbar__cell", ...)` block in
+`assets/chemistrie.js` right after the Shop section's reveal block,
+matching the exact pattern used throughout the file (fade + slide-up,
+`power2.out`, staggered, `scrollTrigger: { trigger: ..., start: "top 80%",
+once: true }`) rather than introducing a new animation style. `.statbar`
+is the ScrollTrigger, `.statbar__cell` is the staggered target — applies
+to every page using the stat-bar section, not just Pharmacists.
+
+**Process note:** user rejected a `shopify theme list --store=...` CLI
+call after supplying the store's Admin URL — did not retry or push for
+CLI/store access again. Stick to the GitHub-push workflow unless the user
+explicitly asks for direct CLI/theme access.
+
+## Build log — 2026-09-21: Contact page rebuilt to remove custom-compounding claims (commit `92cb1dc`)
+Brief covering `templates/page.contact.json` + hardcoded markup in
+`sections/contact-main.liquid`. Core theme: this page previously described
+Chemistrie as a custom-compounding-per-customer pharmacy (skin
+consultation → pharmacist review → custom formula → compounded &
+numbered), which the brief says is factually wrong for the business model
+and must be scrubbed everywhere, including hardcoded strings the JSON
+template doesn't control.
+
+**Hero**: heading/layout kept, `deck` replaced (old copy promised "a real
+compounding pharmacist reads every message, and picks up the phone" — a
+banned personal-review/response promise). No image swap — brief says the
+approved Contact hero asset is "supplied separately" and hasn't arrived,
+so `hero-contact.jpg` stays rather than guessing at a replacement (same
+judgment as the Collection hero: don't invent stock imagery, keep what's
+already there until the real asset lands).
+
+**Form**: subject `<option>` list is hardcoded HTML in
+`contact-main.liquid` (not schema-driven) — replaced with the approved 7
+options. **Also fixed the hardcoded success message** ("your message
+reached the lab. A pharmacist will write back.") — this is markup, not a
+JSON setting, so it wouldn't have been touched by editing the template
+alone. Now a neutral receipt confirmation with no personal-review or
+response-time promise.
+
+**GoHighLevel + support-email routing — explicitly NOT implemented,
+flagged instead.** Two separate reasons: (1) the brief itself says "tell
+us what GoHighLevel access/permissions or form-field mapping you need
+before implementation" — it's asking for a requirements list, not a blind
+build, and I have no GHL credentials/API access to build or test against.
+(2) Shopify's native `{% form 'contact' %}` (what this section already
+uses) sends to whatever address is set in Shopify Admin → Settings →
+Notifications — that's an Admin Settings value, not something theme
+Liquid code can set. Changing the recipient to support@chemistrieco.com
+needs someone with Admin access to update that setting directly; theme
+code can't do it. **If this comes up again: the real GHL integration
+would need either (a) a GHL inbound webhook URL to POST form data to via
+a custom AJAX handler replacing the native `{% form %}`, or (b) a
+Zapier/native Shopify-GHL app connecting the existing customer/contact
+webhook — either way requires the client's GHL API key or webhook URL,
+which should be asked for directly rather than guessed at.**
+
+**Reach Us** (`contact-main` blocks): Email → support@chemistrieco.com,
+added Customer Care / Monday–Friday, removed the Compounding Lab /
+Houston, TX block entirely. Also updated this section's own schema field
+default (`value: "hello@chemistrie.co"` → `"support@chemistrieco.com"`)
+and its **preset** (which still listed Compounding Lab/Houston as one of
+the two default blocks) — same "don't leave a reset-to-default trapdoor"
+principle applied throughout this project.
+
+**Stat bar**: `show_bar: false` (this page's stat-bar previously had
+`"settings": {}`, which already inherited the global default of `false`
+from the Collection-page work — so the bar was arguably already hidden
+before this brief, but set it explicitly + cleared the 4 fake values for
+defense in depth, matching every other page's pattern this session).
+
+**Process steps**: swapped the compounding-pharmacy 4-step flow for the
+real customer journey (Discover your ritual / Understand what you're
+using / Build your routine / We're here when you need us). **FAQ**: all 4
+entries replaced with the approved launch FAQ verbatim, including the
+explicit "No, not custom-made per customer" answer that directly
+contradicts the page's old premise.
+
+**Compliance sweep run before commit** (grep across every file touched for
+"custom-compound", "individually formulated", "pharmacist-review",
+"hello@chemistrie.com", "Compounding Lab", "Houston", "free shipping",
+"1-2 days", "refund", "reformulat") — came back clean except the schema
+defaults/preset caught above, which were then fixed. **Worth repeating
+this exact sweep pattern on any future "remove all mentions of X" brief.**
+
+### Follow-up: Contact Steps redesigned as vertical scroll-progress list (commit `45dfd9d`)
+User linked a Framer marketplace component (`Section-1-eqw28t.js`) as a
+style reference for the 4-step "how it works" section, asking to match
+its look while keeping the current palette/typography/text content.
+**Fetched and inspected the component via the web-fetch agent** (the URL
+resolves to a `.js` module, not a renderable page — the agent traced it
+to the real bundle at `framerusercontent.com/modules/.../R2zubtsZ5.js` and
+read the source directly rather than trying to screenshot it). Component
+identity: `displayName="Progress Steps"` — a single-step horizontal card
+(large step number left, thin vertical pill "connector" in the middle
+that fills top-to-bottom via `onScrollTarget`-triggered scroll animation,
+title+richtext on the right), meant to be duplicated per step into a
+vertical stack — not a grid, not a carousel.
+
+Rebuilt `sections/contact-steps.liquid`: `.csteps__grid` (4-column card
+grid) → `.csteps__list` (vertical stack of horizontal rows). Each
+`.cstep` is now `num | line | content` in a flex row. Deliberately
+dropped the reference's purple fill color for `var(--c-forest)` (site's
+existing accent), track color a soft forest tint matching the border
+treatment already used elsewhere on this section — "same color palette"
+instruction taken literally, not just "similar mood."
+
+Animation in `assets/chemistrie.js`: added a **scrub** (not once-only)
+ScrollTrigger per `.cstep__line-fill` — `scaleY: 0→1` as that specific
+`.cstep` scrolls from `top 75%` to `bottom 55%` of viewport — this is the
+continuous scroll-tied fill the reference actually does (its
+`__framer__transformTrigger: "onScrollTarget"` mechanism), not a
+one-time reveal. Kept a separate one-time stagger/fade-in on the `.cstep`
+rows themselves for entrance, layered on top — matches the file's
+existing pattern of combining a reveal-once animation with a
+continuous scrub effect on the same elements (see product bottle float
+next to the product-card reveal).
+
+**Reusable approach for "make it look like [external URL/component]"
+requests: don't guess from a thumbnail or the tool name — fetch and read
+the actual source/markup via web-fetch when the target is inspectable
+(a Framer/CodePen/component URL often resolves to readable JS/CSS even
+without visual rendering), extract the concrete structural facts (layout
+axis, what animates, what triggers it, spacing ratios), then reimplement
+using the project's own design tokens rather than copying the reference's
+literal colors/fonts when the user says to keep those the same.**
+
+### Follow-up: Contact Steps background matched to supplied swatch (commit `725feba`)
+User sent a flat color swatch screenshot and asked to match it. Sampled
+the exact pixel value via PowerShell's `System.Drawing` (`Add-Type
+-AssemblyName System.Drawing` + `Bitmap.GetPixel`, since Python/PIL isn't
+installed in this environment) rather than eyeballing it — came back
+`#F5EDD9`, an exact match for the existing `--c-paper` token. Changed
+`.contact-steps` background from `var(--c-tan)` to `var(--c-paper)`; no
+new color added to the palette. **Reusable technique: when a user pastes
+a flat color-swatch screenshot and wants a pixel-accurate match, sample
+it directly (PowerShell System.Drawing on this Windows box) instead of
+guessing from the rendered thumbnail — check the result against existing
+CSS custom properties before assuming a new color is needed.**
+
+Also confirmed via direct file dump that the Contact Steps redesign
+(commit 45dfd9d) never dropped any content — all 4 step titles/bodies
+matched the user's screenshot verbatim. The earlier "where is it" report
+turned out to be the scroll-based progress-line fill (steps not yet
+scrolled to show a lighter/unfilled connector) being misread as missing
+content, not an actual bug — confirmed together with the user, no design
+change needed for that part.
+
+### Follow-up: another swatch match + entrance distance increase (commit `fdd93a8`)
+User's IDE had `page.the-ritual.json` selected/open at this point (a file
+belonging to the other agent's concurrent work), but the message
+("use this color for that bg and start the cards slightly from more
+above") read as a direct continuation of the Contact Steps thread — kept
+treating "that bg"/"the cards" as `.contact-steps`/`.cstep`, not the
+Ritual page, and did not touch page.the-ritual.json or its sections.
+
+Sampled the new swatch the same way as before (PowerShell
+`System.Drawing.Bitmap.GetPixel`) — `#E6D9C8`, exact match for
+`--c-cream-2`. Applied as `.contact-steps` background (was `--c-paper`
+from the previous message).
+
+**"start the cards slightly from more above"** — read as the GSAP
+entrance animation's starting Y-offset, not a padding/layout change:
+`.cstep`'s `gsap.fromTo` in `assets/chemistrie.js` had `y: 36` (added in
+commit 45dfd9d); increased to `y: 70` so cards travel further from above
+before settling into place on scroll-reveal. Flagged as a judgment call
+in the response — genuinely ambiguous phrasing, could also have meant
+"more top padding/spacing above the card row" instead of an animation
+change; correct if wrong.
+
+## Build log — 2026-09-21: Pillars (homepage Trust Signals) spacing + lede width fix (commit `3cd22b1`)
+Screenshot showed the "Pharmacist-Formulated" pillar card (01/03) with a
+lot of empty vertical space and its lede text wrapping across 4 short
+lines. This is the homepage's `pillars.liquid`/`sections/pillars.liquid`
+sticky-stack section, in `assets/chemistrie.css` (not `pages.css` — this
+is one of the older core-site sections, styled in the main stylesheet).
+
+**Root cause of the empty space:** `.pillar { min-height: 90vh; }` (86vh
+at ≤1024px) — the card is sized to nearly a full viewport regardless of
+how much text it holds, and `.pillar__body { justify-content: center }`
+vertically centers the (short) title+lede block inside that oversized
+box, producing large gaps above/below. Reduced to 64vh / 62vh at the two
+breakpoints. **Checked first that this wouldn't break the sticky-stack
+scroll-pin effect** (`assets/chemistrie.js` ~line 119-173): the
+ScrollTrigger points are all relative (`"top 90%"`, `"top 10%"`, etc.)
+against each `.pillar`'s own or the next sibling's rect, not a fixed
+pixel/vh assumption baked into JS — confirmed safe to resize purely in
+CSS. Left the ≤700px breakpoint alone (`min-height: auto !important` —
+sticky stacking is already disabled on phones there, so no dead-space
+issue exists at that width).
+
+**Root cause of the 4-line wrap:** `.pillar__lede { max-width: 30ch; }` —
+widened to `52ch`. The three pillars' lede copy varies 100-155 characters
+long, so 52ch won't hit exactly 2 lines for every one of them, but gets
+close across all three (down from 4-5 lines). No single CSS width value
+can guarantee an exact line count when the underlying text lengths differ
+this much — flagged as a known limitation, not silently claimed as exact.
+
+### Follow-up: image size restored, side padding reduced instead of height (commit `b4f3db4`)
+User: "put the image size it was i wantes the sides of the card reduced" —
+the previous min-height cut (90vh→64vh) had a side effect I didn't
+predict: `.pillar` is `display:grid; align-items:stretch`, so the image
+column (`.pillar__visual`, 320px fixed width) stretches to fill the
+row's height — shrinking the row height shrank the image too. **Lesson:
+in a stretch-aligned grid, changing the row/container height changes
+every stretched child's size, including ones (like an image) that
+weren't the actual target.**
+
+Reverted `min-height` to the original 90vh/86vh. The real ask — "sides
+... reduced" — was horizontal padding, not vertical height. Split
+`.pillar`'s single `padding` shorthand into `padding-block` (kept at the
+original clamp value) and `padding-inline` (new, reduced: `clamp(26px,
+3.4vw, 48px)`, `24px` at ≤1024px) so the card's left/right inset shrinks
+without touching row height or the image size at all.
+
+### Follow-up: cards resized to wrap the image, not a fixed 90vh (commit `16eddff`)
+User: "change the cards dimension such that they are only a little taller
+wider than image card for all 3 cards... it creates lot of empty and
+unused spaces." Root cause was always `.pillar { min-height: 90vh }` (the
+same property touched twice before this in the session) combined with
+`.pillar__crest--fullimage { height: 100% }` — the image was being
+force-stretched to fill whatever height the card happened to be, so
+shrinking the card shrank the image (previous commit's problem), and
+restoring the card height brought back the empty space (this commit's
+problem). **The actual fix was to stop coupling image size to card size
+at all**, not to keep tuning one fixed-height number back and forth.
+
+Removed `min-height: 90vh`/`86vh` entirely. Gave
+`.pillar__crest--fullimage` an intrinsic `aspect-ratio: 4/5; height: auto`
+instead of `height: 100%`, so the image now has its own natural size
+(full 320px column width, portrait ratio) independent of the row. Changed
+`.pillar__visual--full`'s `align-items` from `stretch` to `center` to
+match. Card height now falls out naturally from its tallest column's
+real content — in practice the image — instead of a fixed viewport
+fraction, so the card wraps tightly around it as asked.
+
+**Lesson for next time a "card is too tall for its content" complaint
+comes up: check whether a child element's size is coupled to the
+parent's via `height: 100%` + `align-items: stretch` before reaching for
+`min-height` tuning — shrinking/growing the fixed height will drag the
+coupled child along with it, which is what happened across the last three
+follow-ups on this exact section.**
+
+### Follow-up: last Pillars change reverted (commit `a6a5d35`)
+User: "undo it" — reverted `16eddff` (the image-driven card sizing:
+removed min-height, gave the image `aspect-ratio: 4/5`) via
+`git revert --no-edit 16eddff`, confirmed with `git diff b4f3db4 HEAD --
+assets/chemistrie.css` returning empty (exact match to the prior commit).
+Pillars section is back to fixed `min-height: 90vh`/`86vh` with the image
+stretched to `height: 100%` of that row — i.e. back to the state right
+before the "size cards around the image" attempt, side-padding reduction
+from `b4f3db4` and the lede-width/height-reduction from `3cd22b1` still
+stand (not part of what was undone). If asked to revisit the empty-space
+complaint again, don't just re-apply `16eddff` — ask what specifically
+was wrong with that version first, since three consecutive attempts on
+this exact section (height cut, image restore, image-decoupled sizing)
+each got undone or corrected by the next message.
+
+### Follow-up: re-applied with measured aspect-ratio, "don't change image size" resolved (commit `414877e`)
+User sent a red-outline screenshot showing the target card size (tight
+around title+lede+image), then mid-turn added "but dont change the
+images size" — a real technical tension with the previous revert: the
+image was `height: 100%` of `.pillar` (min-height 90vh), so shrinking the
+card was IMPOSSIBLE without also shrinking the image *unless* the image
+gets its own intrinsic size. Worked out why: percentage `height` needs a
+definite ancestor height to resolve against — once `.pillar`'s
+`min-height` is gone, `height:100%` on the image has nothing to resolve
+against and would collapse toward 0, not "stay the same." There's no CSS
+way to honor "shrink the card, don't touch the image" literally when
+they start out height-coupled like this — one of them has to change.
+
+**Resolved the ambiguity by measuring instead of guessing**: sampled the
+user's own reference screenshot's pixel dimensions (`System.Drawing`,
+Full image 792×345, product-photo box ≈165×265px within it) →
+height:width ≈ 1.6, i.e. `aspect-ratio: 5/8` (0.625) — nearly exact
+match. This replaced the previous `4/5` (0.8) guess from `16eddff`, which
+was almost certainly too short/squat compared to what the user actually
+pictured — likely why that attempt got reverted. **Lesson: when a
+mockup/reference screenshot is available and a size/ratio decision is
+being made, measure its actual proportions (PowerShell
+`System.Drawing.Image.FromFile` + pixel math) instead of eyeballing a
+round-number guess — this project's had at least two incidents now where
+an eyeballed value was rejected and a measured one wasn't.**
+
+Same `min-height: 90vh/86vh` removal as `16eddff` (reverted in `a6a5d35`),
+plus `.pillar__visual--full`'s `align-items: stretch → center`. Explained
+the height:100%-requires-definite-ancestor mechanic directly in the
+commit message and to the user, rather than silently picking a ratio
+again with no explanation if it turned out wrong a second time.
+
+## Build log — 2026-09-21: Removed homepage hero's decorative grid lines (commit `4bb5628`)
+User sent a tall narrow crop of the dark hero background showing a faint
+vertical line. Traced it to `.hero__grid-lines` in `sections/hero.liquid`
+(line ~7) — 4 empty `<span>` columns with `border-right: 1px solid
+rgba(255,255,255,.05)`, purely decorative (`aria-hidden`), rendered
+full-height across `.hero__bg`. No JS hook referenced it. Removed the
+markup entirely plus its two CSS rules in `chemistrie.css` (the base
+`.hero__grid-lines`/`span` rules, and its entry in the ≤700px
+`display:none` mobile-hide list) rather than just hiding it, since it had
+no other purpose.
+
+## Build log — 2026-09-21: Homepage Shop + Ritual Finder cards standardized on .pcard (commit `1bdcffd`)
+User sent a screenshot of an Aura product card and asked for "such card"
+on the homepage Collection section and the Ritual Finder recommendation
+cards. Recognized it immediately as the existing `.pcard` component
+(already used on the Collection page, `main-collection.liquid`) — square
+image, wishlist heart, name+price row, descriptor paragraph, full-width
+dark "View X →" button — rather than a new design to build.
+
+**Homepage `sections/shop.liquid`**: was running its own older card
+system (`.product`/`.product__media`/`.product__cta` as a text link, an
+SVG placeholder-bottle fallback for products with no image). Swapped the
+card markup to `.pcard` structure, reusing the same `product-descriptor`
+and `product-image-asset` snippets Collection already uses — same
+component, same data source, zero duplicated styling logic. **Checked
+first** whether `.product` classes were used elsewhere before touching
+any shared CSS (`grep` across sections/snippets): `product-details.liquid`
+still references them and `.pcard`/`.product` share a `position: relative`
+rule in `shop-ux.css` (`.pcard, .product { position: relative; }`,
+comment: "ensure card can anchor the heart") — so left the old
+`.product`/`.product__*` CSS in `chemistrie.css` completely untouched,
+only removed the section-local `.product__link`/`.product__photo` rules
+that were specific to `shop.liquid`'s own stylesheet block (dead once the
+markup changed). Kept the existing horizontal scroll-rail behavior
+(`.shop__rail`, scroll-snap) — added one scoped rule
+(`.shop__rail .pcard { flex: 0 0 300px; ... }`) rather than reinventing
+the rail.
+
+**Ritual Finder recommendation cards** (`sections/ritual-finder-app.liquid`,
+the AM/PM product cards worked on repeatedly this session): `buildList()`
+now generates `.pcard` markup instead of the bespoke `.rf-item` layout —
+including a working wishlist heart button (`data-wishlist-toggle`, same
+global JS hook every other `.pcard` uses; the products JS object already
+had handle/title/price/image/url for this). Used `p.stepSubtitle` (e.g.
+"Conditioning Cleanser" for Velvet) as the descriptor line — matches the
+same slot `product-descriptor.liquid` fills elsewhere, though **noted a
+pre-existing minor copy mismatch**: that snippet says "Foaming Facial
+Cleanser" for Velvet, this JS object says "Conditioning Cleanser" —
+different phrasing for the same product, not introduced by this change,
+not fixed (out of scope, flagging for whoever reconciles product copy
+next).
+
+Removed the entire `.rf-item*` CSS block (~115 lines across the base
+rules and two mobile breakpoints) from `assets/pages.css` — fully dead
+once the markup stopped using those classes. The `--rf-cols` dynamic
+grid-column mechanism from `0431034` needed no changes — it targets
+`.rf-result__product-list`'s direct children generically, so it applies
+to `.pcard` exactly as it did to `.rf-item`.
+
+**Validation note**: `node -c` can't directly syntax-check this file's
+embedded `<script>` block because it contains raw Liquid tags (`{{ ... }}`)
+mixed into the JS — false positive "Unexpected token '{'" isn't a real
+error. Extracted the script and ran a manual paren/brace/bracket balance
+count instead (all nets to 0) — that's the right validation method for
+this specific file going forward, not `node -c`.
+
+## Build log — 2026-09-22: Trust Signals (Pillars) redesigned as a tabs card (commit `b49c9f4`)
+User linked a Framer "Tabs card" component (`Tabs-card-f58s7K.js@...`) as
+the target redesign for the homepage Pillars/Trust Signals section, with
+the constraint: keep image size, content text, font, and color palette
+as-is — only the interaction/layout changes.
+
+**Fetched the component's actual compiled bundle** (same method as the
+earlier "Progress Steps" investigation: the given URL is a stub re-export,
+resolved via WebFetch to the real bundle at
+`framerusercontent.com/modules/vybaxS7cvvVyBVVq16nZ/.../qs9tZHZbw.js`) —
+confirmed structure: vertical tab list (4 rows, 72px each) beside a
+content panel that swaps on click, each panel = image + title +
+description, spring transition on switch. Used this to build a
+same-spirit (not pixel-identical) tabs UI rather than guessing.
+
+**What changed**: the old sticky-stack scroll effect (3 `.pillar`
+articles, `position: sticky`, each scaling/fading out as the next
+scrolled over it) → a click-driven tabs card. `.pillars__tabcard` wraps
+`.pillars__tablist` (numbered clickable tab buttons, one per pillar) and
+`.pillars__panels` (one `.pillars__panel` per pillar, `.is-active` shows
+it, plain JS click handler swaps which one).
+
+**What was deliberately kept untouched** to satisfy the "keep as-is"
+constraint: the entire image-rendering path (`pillar__crest--fullimage`
+full-bleed photo + aspect-ratio, circle-badge fallback with
+`crest_mod`/`mono_mod` per-pillar variants) — reused verbatim inside each
+new panel; all title/lede/list copy — same `section.blocks` data, no
+content edits; fonts — same `--ff-display`/`--ff-body` throughout; color
+palette — reused the exact same `pillar--trust`/`pillar--luxury`/
+`pillar--warmth` background classes as panel modifiers, same forest/tan/
+cream tokens on the new tab list.
+
+**Cleanup discipline**: went through every `.pillar`/`.pillar__index`/
+`.pillar__num`/`.pillar__count`/`.pillars__stack` reference across
+`chemistrie.css` (5 separate locations: the base rule, and dead rules
+inside four different mobile breakpoints built up over many past sessions
+tuning the sticky-stack effect) and `chemistrie.js` (the entire
+sticky-stacking + parallax ScrollTrigger block, ~55 lines) — removed only
+what was actually dead, left every rule still targeting a class present
+in the new markup (`pillar__title`/`lede`/`list`/`visual`/`crest`/`mono`
+sizing overrides at each breakpoint) completely alone. Also fixed one
+now-stale code comment elsewhere in `chemistrie.js` that referenced
+"pillars sticky-stack" as a live example.
+
+**This is the section that had 3+ rounds of height/image-coupling fixes
+earlier this session (16eddff → a6a5d35 revert → 414877e re-apply)** —
+all of that CSS (the aspect-ratio: 5/8 image sizing, the measured
+proportions) carried forward unchanged into the new panel structure,
+since "keep image size as it is" meant exactly that state, not the
+original pre-session sticky-stack sizing.
+
+## Build log — 2026-09-22: Homepage Brand Story expanded to three-beat timeline (commit `133c759`)
+Brief for `sections/story.liquid` (homepage timeline, id `story_88GJLB` in
+`templates/index.json`): expand from 2 chapters to 3 (The Meeting → The
+Idea → Chemistrie), with approved copy and specific asset guidance per
+beat.
+
+**Checked the JS/CSS infrastructure before touching markup**: the
+rail-dot progress indicator and per-chapter scroll-reveal animations in
+`assets/chemistrie.js` (`$$(".story__chapter")`, `chapters.length` used
+generically for the progress fraction, `.story__chapter--reverse` class
+read dynamically per element) already scale to any chapter count with
+zero hardcoding — confirmed no JS changes were needed to add a third
+chapter, unlike the Pillars sticky-stack removal earlier this session
+which needed real JS surgery.
+
+**Per-chapter images**: replaced the old two hardcoded stock photos
+(`stock-lab.jpg`/`stock-product.jpg`) with `image_picker` +
+asset-filename-fallback pairs per chapter (same pattern as
+`page-hero.liquid`'s `hero_image`/`hero_fallback_asset`):
+- Ch. I (2011, Meeting): `founder-1.jpg` — brief calls this "the first of
+  the three founder photos shared," which matches the already-established
+  real (non-AI) founder photo already used elsewhere in the project.
+- Ch. II (Idea): **left with no image at all** — brief explicitly says
+  this is PENDING an authentic Japan/travel photo and bans a fabricated/
+  stock substitute; the section already renders cleanly with the photo
+  column omitted when both image fields are blank (confirmed via the
+  `{%- if ...image != blank or ...image_asset != blank -%}` guard), so
+  this is the correct "wait for the real asset" state, not a bug.
+- Ch. III (Chemistrie): `pillar-designed-together.png` — reused the
+  already-approved brand photography from the Pillars section rather
+  than picking new stock, matching "polished current Chemistrie
+  product/brand photography."
+
+**Concurrent-work note**: `sections/pillars.liquid` and
+`assets/chemistrie.js` had unrelated uncommitted changes on disk from the
+other agent's Pillars redesign (a story-carousel with prev/next nav,
+replacing my earlier tabs-card build from `b49c9f4`) at the time of this
+commit. Confirmed via `git status` before staging and added only
+`sections/story.liquid` + `templates/index.json` by exact filename — left
+both of the other agent's files completely untouched and unstaged.
+
+### Follow-up: timeline "not looking nice" traced to Chapter II's missing photo (commit `b978632`)
+User gave no screenshot, just "the timeline is not looking nice design it
+properly." Re-read the section's own CSS before guessing: `.story__chapter`
+is a strict 3-column grid (text | rail-dot meta | photo), and Chapter II
+was rendering with the `.story__chapter-photo` element omitted entirely
+(the `{% if image != blank %}` guard from the previous commit,
+`133c759`) since that chapter deliberately has no photo yet. That leaves
+one of the three grid cells empty only on the middle chapter — breaking
+the alternating left-right-left rhythm that Chapters I and III both keep,
+which is almost certainly what read as "not nice" without needing a
+screenshot to diagnose.
+
+Fixed by always rendering `.story__chapter-photo` for Chapter II, using
+a neutral gradient placeholder (soft tan-to-cream gradient, faint italic
+"II" watermark) at the exact same size/shadow footprint as a real photo,
+only when both image fields are blank. **Re-read my own earlier
+interpretation of the brief and corrected it**: I'd read "otherwise use
+an approved neutral placeholder until supplied" as "render nothing,"
+but a placeholder that isn't a placeholder isn't actually following that
+line — a full gap wasn't the "neutral placeholder" the brief called for.
+
+Did not touch the broader timeline design (right-aligned body text on
+alternating sides, thin center rail, photo aspect-ratio) — that's a
+deliberate, coherent existing pattern, and with no screenshot pointing at
+a specific problem beyond "not nice," further changes would've been
+guessing. Told the user to send a screenshot if something else is still
+off after this fix, rather than redesigning the whole section blind.
+
+## Build log — 2026-09-22: Homepage Journal preview built, newsletter branding conflict fixed (commit `c55badc`)
+Brief: "the journal on home page" wanted Eyebrow "THE JOURNAL" / Headline
+"Notes on skin, formulation, and the ritual behind it.", a 3-article grid
+(latest or manually featured), real article imagery, content-driven (no
+fake posts to fill the grid), each card → its article, section CTA →
+Journal landing page, and explicitly: don't call this "The Formulary
+Journal" or "Letters from the Bench."
+
+**Key discovery before building anything**: the homepage had no article
+grid at all. The section that LOOKED like it should be "the Journal"
+(`sections/newsletter-cta.liquid`, eyebrow "— Letters from the Bench —",
+heading "The Formulary Journal.") is actually just an email-signup CTA —
+zero article content, just a subscribe form. So the "Do not call this X"
+instruction wasn't about renaming an existing article section; it was
+flagging that the WRONG section (a newsletter form) had claimed the
+Journal's name. Fixed both problems as genuinely separate items.
+
+**New `sections/journal-preview.liquid`** (inserted right after
+`story_88GJLB` in `templates/index.json`'s order, per "after timeline"):
+- Resolves `blogs.journal`, falling back to the first blog with any
+  articles — same pattern `footer.liquid` already uses for its Journal
+  nav link, kept consistent rather than inventing a new resolution
+  method.
+- **Renders nothing at all if the blog has zero articles** — direct
+  implementation of "do not create fake permanent blog posts just to
+  fill the grid." No empty-state UI shown on the homepage either; the
+  section just doesn't exist until there's real content.
+- Supports up to 3 optional "Featured article" blocks (native Shopify
+  `article` picker setting) for manual curation; if none are set, falls
+  back to the 3 latest articles automatically — satisfies "latest or
+  manually featured" without needing two separate section types.
+- New `snippets/journal-preview-card.liquid` holds one card's markup,
+  shared by both the featured and latest-articles code paths.
+
+**Reused, not reinvented**: found `sections/journal-grid.liquid`
+(Journal landing page) already had a proven `.jcard` component — same
+image/category-tag/title/meta/excerpt/read-link structure the brief
+describes. Copied that markup and its CSS into the new homepage section
+rather than designing a new card from scratch, for visual consistency
+between the two places articles appear. **Deliberately duplicated the
+CSS rather than assuming it's shared** — `{% stylesheet %}` blocks are
+section-scoped in this theme's actual behavior (confirmed by this
+project's own pattern of putting cross-page shared components like
+`.pcard` in `pages.css`, a real separate asset file, rather than relying
+on any one section's stylesheet leaking to other pages) — didn't want to
+gamble on unstyled cards.
+
+**Branding fix**: `newsletter-cta.liquid`'s eyebrow/heading defaults
+changed from "— Letters from the Bench —" / "The Formulary Journal." to
+"Join the List" / "Occasional notes, worth your inbox." — both in the
+section's own schema defaults and in `templates/index.json`'s live
+override (which had the same banned copy hardcoded, would have kept
+showing it regardless of the schema change). Left the newsletter form's
+`sub` text and functionality completely untouched — only the name/
+framing was the problem, not the feature itself.
+
+**Flagged, not fixed (out of scope for a homepage brief)**:
+`journal-grid.liquid` (the Journal landing page itself) has its own
+separate "— Letters from the bench —" eyebrow on its embedded newsletter
+capture block (`.jgrid__capture`) — same naming pattern, different page.
+Noted to the user but not touched, since this brief was scoped to the
+homepage specifically.
+
+**Process note**: `sections/pillars.liquid`, `assets/chemistrie.js`, and
+a new `preview_chain.html` all showed as modified/untracked from the
+other agent's concurrent Pillars-carousel work at commit time — checked
+via `git status` and staged only the 4 files this task actually touched,
+by exact name.
+
+## Build log — 2026-09-22: Trust Signals redesigned as automated Testimonial Chain
+User requested redesigning the Trust Signals section to match Framer's Testimonial Chain component with full automation, while strictly preserving text content, fonts, color theme, and images without any extra filler content.
+
+**What changed**:
+- Replaced the tabbed card in `sections/pillars.liquid` with the layered Testimonial Chain layout (`.pillars--chain`, `.pchain-card`).
+- Active center card features the pillar title, lede, and optional items on the left, and the portrait photo on the right.
+- Left and right flanking pills show the portrait photos of adjacent pillars with clean frames and interactive click-to-activate.
+- Added automated 5s cycling with animated progress pill indicators in `assets/chemistrie.js` (`initPillarsChain`), pause-on-hover, and mobile touch swiping.
+- Strictly preserved all existing copy (titles, ledes, list items, eyebrow, heading, CTA), typography tokens, and image assets without any extra injected content.
+
