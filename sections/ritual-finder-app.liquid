@@ -547,9 +547,11 @@
         if (!container) return;
         var html = "";
         var subtotal = 0;
+        var count = 0;
         handles.forEach(function(h, i) {
           var p = products[h] || {};
           if (!p.title) return;
+          count++;
           html += '<div class="rf-item" data-product="' + h + '">' +
             (p.image ? '<div class="rf-item__thumb"><img src="' + p.image + '" alt="' + p.title + '" loading="lazy"></div>' : '') +
             '<div class="rf-item__info">' +
@@ -564,6 +566,7 @@
           subtotal += (p.cents || 0);
         });
         container.innerHTML = html || '<div style="padding:20px; text-align:center; color:#999;">No products available</div>';
+        container.style.setProperty('--rf-cols', count || 1);
         if (priceEl) priceEl.textContent = "· $" + Math.round(subtotal / 100);
       }
 
