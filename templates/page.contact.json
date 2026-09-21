@@ -14,7 +14,7 @@
       "settings": {
         "eyebrow": "— Get in touch —",
         "heading": "The pharmacist<br/><em>is on the line.</em>",
-        "deck": "Questions about actives, a skin concern, or an order, a real compounding pharmacist reads every message, and picks up the phone Monday through Friday.",
+        "deck": "Questions about ingredients, your ritual, or an order? We're here to help. Your message goes directly to the Chemistrie team, with pharmacists behind the products you use.",
         "hero_fallback_asset": "hero-contact.jpg"
       }
     },
@@ -24,29 +24,29 @@
         "s1": {
           "type": "stat",
           "settings": {
-            "number": "6,000+",
-            "label": "Women served"
+            "number": "",
+            "label": ""
           }
         },
         "s2": {
           "type": "stat",
           "settings": {
-            "number": "1–2 Days",
-            "label": "Average ship time"
+            "number": "",
+            "label": ""
           }
         },
         "s3": {
           "type": "stat",
           "settings": {
-            "number": "★ 4.96",
-            "label": "Verified buyer rating"
+            "number": "",
+            "label": ""
           }
         },
         "s4": {
           "type": "stat",
           "settings": {
-            "number": "200",
-            "label": "Bottles per hand-numbered batch"
+            "number": "",
+            "label": ""
           }
         }
       },
@@ -56,7 +56,9 @@
         "s3",
         "s4"
       ],
-      "settings": {}
+      "settings": {
+        "show_bar": false
+      }
     },
     "contact-main": {
       "type": "contact-main",
@@ -66,21 +68,21 @@
           "settings": {
             "icon": "email",
             "label": "Email",
-            "value": "hello@chemistrie.com"
+            "value": "support@chemistrieco.com"
           }
         },
-        "item_3": {
+        "item_2": {
           "type": "item",
           "settings": {
-            "icon": "location",
-            "label": "Compounding Lab",
-            "value": "Houston, TX"
+            "icon": "hours",
+            "label": "Customer Care",
+            "value": "Monday–Friday"
           }
         }
       },
       "block_order": [
         "item_1",
-        "item_3"
+        "item_2"
       ],
       "settings": {}
     },
@@ -90,29 +92,29 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "title": "Take the skin consultation",
-            "body": "A short questionnaire on your skin type, concerns, and any actives you've tried before."
+            "title": "Discover your ritual",
+            "body": "Start with our focused collection or use the Ritual Finder to understand which products fit your goals."
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
-            "title": "A pharmacist reviews your answers",
-            "body": "A licensed compounding pharmacist matches you to the right formulas and concentrations."
+            "title": "Understand what you're using",
+            "body": "We make the role of each product and its place in your ritual clear, so skincare does not have to feel complicated."
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
-            "title": "Your formula is compounded & numbered",
-            "body": "Hand-poured in Houston, in batches capped at 200, and numbered before it ships."
+            "title": "Build your routine",
+            "body": "Choose the products that fit your ritual, whether that is a streamlined foundation or a more complete regimen."
           }
         },
         "step_4": {
           "type": "step",
           "settings": {
-            "title": "Shipped to your door",
-            "body": "Out within 1–2 business days, with complimentary shipping on orders over $120."
+            "title": "We're here when you need us",
+            "body": "Have a question about a product, ingredient, or your order? Reach us at support@chemistrieco.com."
           }
         }
       },
@@ -130,29 +132,29 @@
         "faq_1": {
           "type": "faq",
           "settings": {
-            "question": "How fast is shipping, and what does it cost?",
-            "answer": "<p>Orders leave the Houston lab within 1–2 business days. Standard shipping is complimentary on orders over $120; below that it's a flat $6. You'll get a tracking number the moment your bottle is numbered and boxed.</p>"
+            "question": "How do I know which Chemistrie products are right for me?",
+            "answer": "<p>Start with our Ritual Finder. Answer a few simple questions about your skin, concerns, and preferences, and we'll recommend a Chemistrie ritual designed to make choosing your skincare straightforward.</p>"
           }
         },
         "faq_2": {
           "type": "faq",
           "settings": {
-            "question": "What's your return policy?",
-            "answer": "<p>Because every formula is compounded to order, we can't resell returns — but if a formula isn't right for your skin, write to the pharmacist within 30 days and we'll make it right, whether that's a reformulation or a refund.</p>"
+            "question": "What does \"pharmacist-formulated\" mean?",
+            "answer": "<p>Chemistrie was created by pharmacists who designed the collection around one goal: make a premium skincare ritual easier to understand without sacrificing quality. We evaluate each formula as a whole, including the ingredients, vehicle, compatibility, and how the product fits into the larger ritual.</p>"
           }
         },
         "faq_3": {
           "type": "faq",
           "settings": {
-            "question": "Are your ingredients really pharmaceutical-grade?",
-            "answer": "<p>Yes. Every active is sourced at pharmaceutical grade and compounded in a licensed facility, at the concentration on the label — never a proprietary blend hiding a trace amount.</p>"
+            "question": "Are Chemistrie products custom-made for each customer?",
+            "answer": "<p>No. Chemistrie products are thoughtfully developed cosmetic formulas, not individually customized prescriptions. The Ritual Finder helps identify which products fit your goals and routine preferences.</p>"
           }
         },
         "faq_4": {
           "type": "faq",
           "settings": {
-            "question": "What does the batch number on my bottle mean?",
-            "answer": "<p>Each batch is capped at 200 bottles and hand-numbered. Your number tells you exactly which small run your formula came from, and lets us trace it back to the day and pharmacist who poured it.</p>"
+            "question": "Can I use Chemistrie products with my current skincare products?",
+            "answer": "<p>In many cases, yes. How products fit together depends on what you are already using and your individual skin. Follow the directions provided with each Chemistrie product, introduce new products thoughtfully, and contact us at support@chemistrieco.com if you have a question about combining products.</p>"
           }
         }
       },

@@ -37,7 +37,7 @@
     <div class="contact-main__col contact-main__col--right">
       {%- form 'contact' -%}
         {%- if form.posted_successfully? -%}
-          <p class="cform__success">Thank you — your message reached the lab. A pharmacist will write back.</p>
+          <p class="cform__success">Thank you. Your message has been received, and the Chemistrie team will follow up soon.</p>
         {%- endif -%}
         {%- if form.errors -%}
           <p class="cform__error">{{ form.errors | default_errors }}</p>
@@ -54,10 +54,12 @@
           <div class="cform__field">
             <label class="cform__label" for="cform-subject">Subject</label>
             <select class="cform__input cform__select" id="cform-subject" name="contact[subject]">
-              <option value="Order question" selected>Order question</option>
-              <option value="Product / skin question">Product / skin question</option>
-              <option value="Press">Press</option>
-              <option value="Wholesale">Wholesale</option>
+              <option value="Order Question" selected>Order Question</option>
+              <option value="Product Question">Product Question</option>
+              <option value="Ritual Finder">Ritual Finder</option>
+              <option value="Ingredients &amp; Formulation">Ingredients &amp; Formulation</option>
+              <option value="Shipping &amp; Returns">Shipping &amp; Returns</option>
+              <option value="Partnerships &amp; Wholesale">Partnerships &amp; Wholesale</option>
               <option value="Other">Other</option>
             </select>
           </div>
@@ -140,7 +142,7 @@
           { "value": "info", "label": "Info" }
         ], "default": "email" },
         { "type": "text", "id": "label", "label": "Label", "default": "Email" },
-        { "type": "text", "id": "value", "label": "Value", "default": "hello@chemistrie.com" }
+        { "type": "text", "id": "value", "label": "Value", "default": "support@chemistrieco.com" }
       ]
     }
   ],
@@ -148,8 +150,8 @@
     {
       "name": "Contact Main",
       "blocks": [
-        { "type": "item", "settings": { "icon": "email", "label": "Email", "value": "hello@chemistrie.com" } },
-        { "type": "item", "settings": { "icon": "location", "label": "Compounding Lab", "value": "Houston, TX" } }
+        { "type": "item", "settings": { "icon": "email", "label": "Email", "value": "support@chemistrieco.com" } },
+        { "type": "item", "settings": { "icon": "hours", "label": "Customer Care", "value": "Monday–Friday" } }
       ]
     }
   ]
