@@ -262,17 +262,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background-image: radial-gradient(circle at 0 0, rgba(255,255,255,.6) 1px, transparent 1px);
   background-size: 4px 4px;
 }
-.hero__grid-lines {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-.hero__grid-lines span {
-  border-right: 1px solid rgba(255,255,255,.05);
-}
-.hero__grid-lines span:last-child { border-right: 0; }
-
 /* Meta strips */
 .hero__meta {
   position: absolute;
@@ -2827,7 +2816,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__pill--1 { left: -2%; top: 36%; }
   .hero__pill--2 { right: -2%; top: 58%; }
   .hero__pill--3 { left: 0; bottom: 18%; }
-  .hero__scroll-cue, .hero__meta--right, .hero__deco, .hero__grid-lines { display: none; }
+  .hero__scroll-cue, .hero__meta--right, .hero__deco { display: none; }
   .hero__live { padding: 6px 10px; }
   .hero__meta { font-size: 9px; letter-spacing: .14em; }
   .hero__trust { gap: 12px; flex-wrap: wrap; }
