@@ -927,58 +927,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   margin: 0 0 64px;
 }
 .pillars__cta { margin-top: 28px; display: inline-flex; opacity: 1 !important; transform: none !important; visibility: visible !important; }
-.pillars__stack {
-  max-width: none;
-  margin: 0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.pillar {
-  position: sticky;
-  top: 10vh;
-  display: grid;
-  grid-template-columns: 80px 1fr 320px;
-  gap: clamp(28px, 5vw, 60px);
-  align-items: stretch;
-  padding-block: clamp(48px, 6vw, 80px);
-  padding-inline: clamp(26px, 3.4vw, 48px);
-  border-radius: 28px;
-  margin-bottom: 36px;
-  box-shadow: 0 30px 60px -30px rgba(26,58,45,.18);
-  border: 1px solid var(--c-line);
-  background: var(--c-paper);
-  color: var(--c-forest);
-  transform-origin: center top;
-  will-change: transform, opacity;
-}
-.pillar:nth-child(1) { z-index: 1; }
-.pillar:nth-child(2) { z-index: 2; }
-.pillar:nth-child(3) { z-index: 3; }
-.pillar--trust  { background: var(--c-tan-3); }
-.pillar--luxury { background: var(--c-sage-3); }
-.pillar--warmth { background: linear-gradient(160deg, #e8d9bf 0%, #dfd0b0 100%); }
-
-.pillar__index {
-  display: flex; flex-direction: column;
-  gap: 6px;
-  border-right: 1px solid var(--c-line);
-  padding-right: 24px;
-}
-.pillar__num {
-  font-family: var(--ff-display);
-  font-style: italic;
-  font-size: clamp(48px, 6vw, 80px);
-  line-height: 1;
-  color: var(--c-forest);
-}
-.pillar__count {
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--c-ink-mute);
-}
+.pillar--trust  { background: var(--c-tan-3); color: var(--c-forest); }
+.pillar--luxury { background: var(--c-sage-3); color: var(--c-forest); }
+.pillar--warmth { background: linear-gradient(160deg, #e8d9bf 0%, #dfd0b0 100%); color: var(--c-forest); }
 
 .pillar__body { display: flex; flex-direction: column; justify-content: center; }
 .pillar__title {
@@ -1092,14 +1043,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 @media (max-width: 980px) {
-  .pillar { grid-template-columns: 1fr; gap: 28px; }
-  .pillar__index { flex-direction: row; align-items: baseline; gap: 12px; border-right: 0; padding-right: 0; }
   .pillar__visual { border-left: 0; padding-left: 0; }
-}
-
-/* Spacer below stack so the last sticky has time to release */
-.pillars__stack::after {
-  content: ""; display: block; height: 30vh;
 }
 
 /* ───────── Shop ───────── */
@@ -2595,8 +2539,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__title { font-size: clamp(64px, 14vw, 200px); }
   .hero[data-layout="split"] .hero__inner { max-width: 100%; text-align: center; }
 
-  .pillar { grid-template-columns: 60px 1fr; padding-block: 40px; padding-inline: 24px; top: 14vh; }
-  .pillar__visual { grid-column: 1 / -1; border-left: 0; padding-left: 0; padding-top: 20px; border-top: 1px solid var(--c-line); justify-content: flex-start; }
+  .pillar__visual { border-left: 0; padding-left: 0; padding-top: 20px; border-top: 1px solid var(--c-line); justify-content: flex-start; }
   .pillar__crest { width: 140px; height: 140px; }
   .pillar__mono { font-size: 44px; }
   .pillar__mono--script { font-size: 28px; }
@@ -2676,19 +2619,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .vision__attribution { font-size: 10.5px; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
   .vision__grid { margin-top: 56px; }
 
-  /* Pillars — drop the sticky stacking for phones (saves CPU + scroll confusion) */
-  .pillar {
-    position: relative; top: 0; min-height: auto; padding: 32px 24px;
-    grid-template-columns: 1fr; gap: 18px; margin-bottom: 16px; border-radius: 18px;
-  }
-  .pillar__index { flex-direction: row; align-items: baseline; gap: 10px; border-right: 0; padding-right: 0; }
-  .pillar__num { font-size: 56px; }
+  /* Pillars — phone text/crest sizing (tab-card shell sizing lives in pillars.liquid) */
   .pillar__title { font-size: 38px; }
   .pillar__lede { font-size: 17px; }
   .pillar__visual { border-top: 1px solid var(--c-line); padding-top: 24px; margin-top: 8px; }
   .pillar__crest { width: 120px; height: 120px; }
   .pillar__mono { font-size: 36px; }
-  .pillars__stack::after { display: none; }
 
   /* Shop */
   .shop__grid { grid-template-columns: 1fr; }
@@ -2748,11 +2684,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__title { font-size: clamp(48px, 20vw, 90px); }
   .pillar__title { font-size: 30px; }
   .testimonial { flex: 0 0 86vw; }
-}
-
-/* ── Pause sticky pillars on phones (motion sensitivity) ── */
-@media (max-width: 640px) {
-  .pillar { transform: none !important; }
 }
 
 /* ── Skip scroll-triggered fade/slide-in on phones (was appearing mid-scroll,
@@ -2852,19 +2783,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 700px) {
   :root { --section-pad-y: clamp(56px, 10vw, 80px); }
 
-  /* Pillars — disable sticky stacking on phones, use simple stack */
-  .pillar {
-    position: relative !important;
-    top: 0 !important;
-    min-height: auto !important;
-    grid-template-columns: 1fr !important;
-    padding: 30px 22px !important;
-    margin-bottom: 16px !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .pillar__index { flex-direction: row; align-items: baseline; gap: 12px; border-right: 0; padding: 0 0 10px; }
-  .pillar__num { font-size: 50px; }
+  /* Pillars — phone text sizing (tab-card shell sizing lives in pillars.liquid) */
   .pillar__title { font-size: clamp(26px, 8vw, 40px); }
   .pillar__lede { font-size: 17px; }
   .pillar__visual { border-left: 0; padding: 18px 0 0; border-top: 1px solid var(--c-line); justify-content: flex-start; }

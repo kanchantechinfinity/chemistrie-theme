@@ -116,61 +116,51 @@
         scrollTrigger: { trigger: ".vision__grid", start: "top 85%" } });
   }
 
-  /* ───── Pillars — sticky stacking + parallax ─────
-     IMPORTANT: each .pillar is position:sticky, which makes it an unreliable
-     ScrollTrigger *trigger* for its own animations (once "stuck", its rect
-     stops updating the normal way, so self-referencing triggers fire
-     inconsistently). It's ALSO risky to run two separate tweens that both
-     animate `opacity` on the same element (one entrance, one exit-fade) —
-     GSAP/ScrollTrigger can end up with the two fighting over the property,
-     which is exactly what caused pillars to render inconsistently (a card
-     stuck invisible, or not reappearing when scrolling back up).
-     Fix: opacity is now controlled by exactly ONE tween per pillar (the
-     exit-fade, driven by the NEXT sibling entering — a normal, non-sticky
-     trigger reference, and fully reversible since it's `scrub`). No separate
-     self-triggered opacity entrance. Only a `y` slide-in remains on load,
-     which never touches opacity so it can't conflict. */
+  /* ───── Pillars — tabs card ─────
+     Replaced the old sticky-stack scroll effect with a click-driven tab
+     interface (matching the "Tabs card" reference component). Entrance is
+     a simple one-time reveal of the whole card; switching tabs is a plain
+     click handler, deliberately NOT gated behind window.ScrollTrigger since
+     it's basic UI interaction, not a scroll-tied effect. */
   if (window.ScrollTrigger) {
-    const pillars = $$(".pillar");
-    pillars.forEach((p, i) => {
-      gsap.fromTo(p,
-        { y: 80 },
-        { y: 0, duration: 1.1, ease: "power3.out",
-          scrollTrigger: { trigger: p, start: "top 90%" } });
-
-      /* Inner content stagger */
-      const inner = p.querySelectorAll(".pillar__title, .pillar__lede, .pillar__list li");
-      gsap.fromTo(inner,
-        { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.8, ease: "power3.out", stagger: 0.07, delay: 0.2,
-          scrollTrigger: { trigger: p, start: "top 80%" } });
-
-      /* Crest entrance */
-      const crest = p.querySelector(".pillar__crest");
-      if (crest) {
-        gsap.fromTo(crest,
-          { opacity: 0, scale: 0.6, rotate: -10 },
-          { opacity: 1, scale: 1, rotate: 0, duration: 1.0, ease: "back.out(1.5)", delay: 0.25,
-            scrollTrigger: { trigger: p, start: "top 80%" } });
-      }
-
-      /* Scale + fade lower cards as the next one stacks over — the SOLE
-         opacity controller for this element. Fully reversible (scrub). */
-      if (i < pillars.length - 1) {
-        gsap.to(p, {
-          scale: 0.9 - (i * 0.03),
-          opacity: 0.06,
-          ease: "none",
-          scrollTrigger: {
-            trigger: pillars[i + 1],
-            start: "top 90%",
-            end: "top 10%",
-            scrub: true,
-          },
-        });
-      }
-    });
+    gsap.fromTo(".pillars__tabcard",
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out",
+        scrollTrigger: { trigger: ".pillars__tabcard", start: "top 85%", once: true } }
+    );
   }
+
+  (function initPillarsTabs() {
+    var card = document.getElementById("pillarsTabCard");
+    if (!card) return;
+    var tabs = $$(".pillars__tab", card);
+    var panels = $$(".pillars__panel", card);
+
+    function activate(index) {
+      tabs.forEach(function(t, i) {
+        var active = i === index;
+        t.classList.toggle("is-active", active);
+        t.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      panels.forEach(function(p, i) {
+        if (i === index) {
+          p.classList.add("is-active");
+          if (window.gsap) {
+            gsap.fromTo(p, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" });
+          }
+        } else {
+          p.classList.remove("is-active");
+        }
+      });
+    }
+
+    tabs.forEach(function(tab, i) {
+      tab.addEventListener("click", function() {
+        if (tab.classList.contains("is-active")) return;
+        activate(i);
+      });
+    });
+  })();
 
   /* ───── Shop — product reveal ───── */
   if (window.ScrollTrigger) {
@@ -729,7 +719,7 @@
      Web fonts (Cormorant Garamond) and any section images (e.g. pillar crest
      photos) load asynchronously and reflow the page after ScrollTrigger's
      initial measurements are taken — without a refresh, every scroll-linked
-     effect (pillars sticky-stack, actives/ritual pin, etc.) keeps using stale
+     effect (actives/ritual pin, pillars tab-card reveal, etc.) keeps using stale
      start/end positions, causing exactly this "right for a moment, then
      drifts" symptom. Refresh once fonts are ready, once the window has fully
      loaded (images included), and again shortly after as a safety net. ───── */
