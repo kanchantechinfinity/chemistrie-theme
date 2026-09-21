@@ -41,36 +41,33 @@
       {%- assign card_copy = card_copy | strip -%}
       {%- capture card_asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}
       {%- assign card_asset = card_asset | strip -%}
-      <article class="product" data-color="forest">
-        <a class="product__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
-        <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>
-        <div class="product__media">
+      <article class="pcard">
+        <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
+        </button>
+        <a class="pcard__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
           {%- if card_asset != blank -%}
-            <img class="product__photo" src="{{ card_asset | asset_url }}" alt="{{ card_name | escape }}" loading="lazy">
+            <img class="pcard__img" src="{{ card_asset | asset_url }}" alt="{{ card_name | escape }}" loading="lazy">
           {%- elsif product.featured_image -%}
-            <img class="product__photo" src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
+            {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', class: 'pcard__img', alt: product.featured_image.alt | default: product.title }}
             {%- if product.images.size > 1 -%}
-              <img class="product__photo product__photo--alt" src="{{ product.images[1] | image_url: width: 500 }}" alt="" loading="lazy">
+              {{ product.images[1] | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', class: 'pcard__img pcard__img--alt', alt: '' }}
             {%- endif -%}
           {%- else -%}
-          <svg class="product__bottle" viewBox="0 0 140 220" aria-hidden="true">
-            <defs>
-              <linearGradient id="g{{ forloop.index }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a5a44"/><stop offset="1" stop-color="#1a3a2d"/></linearGradient>
-            </defs>
-            <rect x="56" y="6" width="28" height="26" rx="2" fill="#c8aa7a"/>
-            <rect x="40" y="32" width="60" height="180" rx="6" fill="url(#g{{ forloop.index }})"/>
-            <rect x="50" y="100" width="40" height="68" fill="#f9f4ed"/>
-            <text x="70" y="124" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="10" fill="#1a3a2d">No. 0{{ forloop.index }}</text>
-            <line x1="58" y1="130" x2="82" y2="130" stroke="#c8aa7a" stroke-width="0.5"/>
-            <text x="70" y="146" text-anchor="middle" font-family="Cormorant Garamond" font-size="8" letter-spacing="2" fill="#1a3a2d">{{ product.title | truncate: 14, '' | upcase }}</text>
-          </svg>
+            <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy" class="pcard__ph">
           {%- endif -%}
-        </div>
-        <div class="product__meta">
-          <h3>{{ card_name }}</h3>
-          {%- if card_copy != blank -%}<p>{{ card_copy }}</p>{%- endif -%}
-          <span class="product__price">{{ product.price | money }}</span>
-          <a class="product__cta" href="{{ product.url }}">Shop {{ card_name }}</a>
+        </a>
+        <div class="pcard__body">
+          <div class="pcard__row">
+            <a class="pcard__name" href="{{ product.url }}">{{ card_name }}</a>
+            <span class="pcard__price">{{ product.price | money }}</span>
+          </div>
+          {%- if card_copy != blank -%}<p class="pcard__copy">{{ card_copy }}</p>{%- endif -%}
+          {%- if product.available -%}
+            <a class="pcard__btn" href="{{ product.url }}">View {{ card_name }} →</a>
+          {%- else -%}
+            <span class="pcard__btn pcard__btn--soldout">Sold Out</span>
+          {%- endif -%}
         </div>
       </article>
       {% endfor %}
@@ -87,12 +84,12 @@
 </section>
 
 {% stylesheet %}
-.product__link { position: absolute; inset: 0; z-index: 1; }
-.product .wish-btn, .product .product__cta { position: relative; z-index: 2; }
-.product__photo { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; border-radius: 12px; transition: transform .6s var(--ease-out), opacity .4s var(--ease-out); }
-.product:hover .product__photo { transform: scale(1.04); }
-.product__photo--alt { opacity: 0; }
-.product:hover .product__photo--alt { opacity: 1; }
+.shop__rail .pcard {
+  flex: 0 0 300px;
+  width: 300px;
+  scroll-snap-align: start;
+  align-self: stretch;
+}
 {% endstylesheet %}
 
 {% schema %}

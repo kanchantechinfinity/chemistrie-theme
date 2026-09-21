@@ -552,17 +552,22 @@
           var p = products[h] || {};
           if (!p.title) return;
           count++;
-          html += '<div class="rf-item" data-product="' + h + '">' +
-            (p.image ? '<div class="rf-item__thumb"><img src="' + p.image + '" alt="' + p.title + '" loading="lazy"></div>' : '') +
-            '<div class="rf-item__info">' +
-              '<span class="rf-item__step-tag">' + (p.role || '') + '</span>' +
-              '<h4 class="rf-item__name"><a href="' + (p.url || '#') + '">' + p.title + '</a></h4>' +
+          html += '<article class="pcard" data-product="' + h + '">' +
+            '<button class="wish-btn" type="button" data-wishlist-toggle data-handle="' + h + '" data-title="' + p.title + '" data-price="' + (p.price || '') + '" data-image="' + (p.image || '') + '" data-url="' + (p.url || '#') + '" aria-label="Save to wishlist">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>' +
+            '</button>' +
+            '<a class="pcard__media" href="' + (p.url || '#') + '" aria-label="' + p.title + '">' +
+              (p.image ? '<img class="pcard__img" src="' + p.image + '" alt="' + p.title + '" loading="lazy">' : '') +
+            '</a>' +
+            '<div class="pcard__body">' +
+              '<div class="pcard__row">' +
+                '<a class="pcard__name" href="' + (p.url || '#') + '">' + p.title + '</a>' +
+                '<span class="pcard__price">' + (p.price || '') + '</span>' +
+              '</div>' +
+              (p.stepSubtitle ? '<p class="pcard__copy">' + p.stepSubtitle + '</p>' : '') +
+              '<a class="pcard__btn" href="' + (p.url || '#') + '">View ' + p.title + ' →</a>' +
             '</div>' +
-            '<div class="rf-item__right">' +
-              '<span class="rf-item__price">' + (p.price || '') + '</span>' +
-              '<a class="rf-item__link" href="' + (p.url || '#') + '">View</a>' +
-            '</div>' +
-          '</div>';
+          '</article>';
           subtotal += (p.cents || 0);
         });
         container.innerHTML = html || '<div style="padding:20px; text-align:center; color:#999;">No products available</div>';
