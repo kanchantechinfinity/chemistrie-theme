@@ -15,8 +15,8 @@
         "eyebrow": "— The Pharmacists —",
         "heading": "The Pharmacists.",
         "deck": "Harin and Zach have been comparing notes since 2011.",
-        "show_visual": false,
-        "hero_fallback_asset": "stock-lab.jpg"
+        "show_visual": true,
+        "hero_fallback_asset": "hero-pharmacists.jpg"
       }
     },
     "stat-bar": {
