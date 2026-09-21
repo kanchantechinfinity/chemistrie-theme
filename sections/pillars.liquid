@@ -19,6 +19,7 @@
           <!-- Active Card: Original content only (title, lede, items, image) -->
           <div class="pchain-card__body">
             <div class="pchain-card__content">
+              <span class="pillar__num">0{{ forloop.index }}</span>
               <h3 class="pillar__title">{{ block.settings.title }}</h3>
               <p class="pillar__lede">{{ block.settings.lede }}</p>
               
@@ -79,17 +80,18 @@
 .pillars--chain {
   overflow: hidden;
   position: relative;
+  padding-bottom: clamp(32px, 4vw, 56px);
 }
 
 .pillars-chain {
   max-width: 1360px;
-  margin: 40px auto 0;
+  margin: 20px auto 0;
   position: relative;
 }
 
 .pillars-chain__stage {
   position: relative;
-  height: clamp(480px, 58vh, 540px);
+  height: clamp(430px, 50vh, 485px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -205,6 +207,15 @@
   padding: 12px 0;
   min-width: 0;
 }
+.pchain-card__content .pillar__num {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: clamp(19px, 1.8vw, 22px);
+  color: var(--c-tan);
+  letter-spacing: .06em;
+  margin-bottom: 8px;
+  display: block;
+}
 .pchain-card__content .pillar__title {
   font-size: clamp(26px, 2.6vw, 40px);
   line-height: 1.1;
@@ -271,31 +282,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 24px;
+  position: relative;
+  z-index: 20;
 }
 .pillars-chain__dots {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 .pillars-chain__dot {
   padding: 0;
   border: 0;
-  background: rgba(26,58,45,.2);
-  width: 8px;
-  height: 8px;
-  border-radius: 4px;
+  background: rgba(26,58,45,.28);
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: width .35s cubic-bezier(.2,.8,.2,1), background .3s ease;
 }
 .pillars-chain__dot:hover {
-  background: rgba(26,58,45,.4);
+  background: rgba(26,58,45,.5);
 }
 .pillars-chain__dot.is-active {
-  width: 38px;
-  background: rgba(26,58,45,.15);
+  width: 48px;
+  height: 10px;
+  background: rgba(26,58,45,.16);
 }
 .pillars-chain__dot-fill {
   position: absolute;
@@ -304,7 +318,7 @@
   height: 100%;
   width: 0%;
   background: var(--c-forest);
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 /* ───── Responsive Breakpoints ───── */
