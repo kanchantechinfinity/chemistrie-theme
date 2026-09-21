@@ -2,7 +2,7 @@
 {%- liquid
   assign privacy_url = shop.privacy_policy.url
 -%}
-<section class="cta" data-screen-label="12 Founders' Circle">
+<section class="cta cta--circle" data-screen-label="12 Founders' Circle">
   <div class="cta__card">
     <span class="cta__corner cta__corner--tl"></span>
     <span class="cta__corner cta__corner--tr"></span>
@@ -17,18 +17,21 @@
       <input type="hidden" name="contact[tags]" value="founders-circle">
 
       {% if form.errors and form.errors.size > 0 %}
-        <p class="cta__sub cta__error">{{ form.errors.messages['email'] | default: 'Please enter a valid email address.' }}</p>
+        <p class="cta__error" role="alert">{{ form.errors.messages['email'] | default: 'Please enter a valid email address.' }}</p>
       {% endif %}
 
-      <label class="cta__field">
-        <span>Your email</span>
-        <input type="email" name="contact[email]" placeholder="you@elsewhere.com" required maxlength="100" title="Please enter a valid email address." />
-      </label>
-      <button class="btn btn--primary btn--light" type="submit">
-        <span>{{ section.settings.cta_label }}</span>
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-      <p class="cta__sent"{% if form.posted_successfully? %} style="opacity:1;"{% endif %}>{{ section.settings.success_message }}</p>
+      <div class="cta__form-row">
+        <label class="cta__field" for="founders-circle-email">
+          <span class="visually-hidden">Your email</span>
+          <input id="founders-circle-email" type="email" name="contact[email]" placeholder="Your email address" required maxlength="100" title="Please enter a valid email address." />
+        </label>
+        <button class="btn btn--primary btn--light cta__submit" type="submit">
+          <span>{{ section.settings.cta_label }}</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="cta__sent"{% if form.posted_successfully? %} style="opacity:1;"{% endif %}>{{ section.settings.success_message }}</p>
+      </div>
+
       {%- if section.settings.consent_text != blank -%}
         <p class="cta__consent">
           {{ section.settings.consent_text }}
@@ -40,16 +43,109 @@
 </section>
 
 {% stylesheet %}
-.cta__error { color: #c0392b; }
-.cta__consent {
-  flex-basis: 100%;
-  margin-top: 4px;
-  font-size: 12px;
-  line-height: 1.6;
-  color: rgba(240,232,219,.6);
+/* The base .cta__form was a single pill sized for exactly two children
+   (field + button). This section adds an error line and a consent line,
+   so the form becomes a plain column and only the input/button pair
+   keeps the pill treatment — otherwise the extra children squeeze the
+   input down to a few characters wide. */
+.cta--circle .cta__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 620px;
+  margin: clamp(32px, 4vw, 48px) auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
 }
-.cta__consent a { color: rgba(240,232,219,.85); text-decoration: underline; }
-.cta__consent a:hover { color: var(--c-cream); }
+
+.cta--circle .cta__form-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 8px 8px 12px;
+  border: 1px solid rgba(249,244,237,.22);
+  border-radius: 999px;
+  background: rgba(249,244,237,.05);
+  transition: border-color .3s var(--ease-out), background .3s var(--ease-out);
+}
+.cta--circle .cta__form-row:focus-within {
+  border-color: var(--c-tan);
+  background: rgba(249,244,237,.08);
+}
+
+.cta--circle .cta__field {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
+  padding: 0 14px;
+  text-align: left;
+}
+.cta--circle .cta__field input {
+  width: 100%;
+  background: none;
+  border: 0;
+  outline: none;
+  padding: 14px 0;
+  color: var(--c-cream);
+  font-family: var(--ff-body);
+  font-size: 16px;
+}
+.cta--circle .cta__field input::placeholder { color: rgba(249,244,237,.45); }
+
+.cta--circle .cta__submit { flex: 0 0 auto; white-space: nowrap; }
+
+.cta--circle .cta__sent {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: var(--c-forest);
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: var(--c-tan);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+
+.cta--circle .cta__error {
+  margin: 0;
+  font-size: 14px;
+  color: #f0b4ac;
+}
+
+.cta--circle .cta__consent {
+  margin: 0;
+  max-width: 52ch;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: rgba(249,244,237,.55);
+}
+.cta--circle .cta__consent a { color: rgba(249,244,237,.8); text-decoration: underline; text-underline-offset: 2px; }
+.cta--circle .cta__consent a:hover { color: var(--c-cream); }
+
+@media (max-width: 620px) {
+  .cta--circle .cta__form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 22px;
+  }
+  .cta--circle .cta__field { padding: 0 10px; }
+  .cta--circle .cta__submit { width: 100%; justify-content: center; }
+  .cta--circle .cta__sent { border-radius: 22px; }
+}
 {% endstylesheet %}
 
 {% schema %}
