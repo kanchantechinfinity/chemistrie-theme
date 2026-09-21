@@ -447,7 +447,7 @@
 /* ───── Results View (Personalized Recommendations) ───── */
 .rf-results-page {
   width: 100%;
-  max-width: 1240px;
+  max-width: none;
   margin: 0;
   padding: 0;
   animation: rfFadeIn .4s var(--ease-out) forwards;
