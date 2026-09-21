@@ -1,0 +1,125 @@
+<!-- ───── Homepage Journal preview ─────
+     Content-driven: renders nothing if the Journal blog has no articles
+     yet, rather than padding the grid with placeholder posts. Merchants
+     can either let it show the 3 latest articles automatically, or add
+     up to 3 "Featured article" blocks to hand-pick which ones show. -->
+{%- liquid
+  assign journal_blog = blogs.journal
+  if journal_blog == blank or journal_blog.articles_count == 0
+    for b in blogs
+      if b[1].articles_count > 0
+        assign journal_blog = b[1]
+        break
+      endif
+    endfor
+  endif
+-%}
+{%- if journal_blog != blank and journal_blog.articles_count > 0 -%}
+<section class="jpreview page-section" data-screen-label="Journal">
+  <div class="page-section__inner">
+    <div class="jpreview__head">
+      <div class="jpreview__head-copy">
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="display-h">{{ section.settings.heading }}</h2>
+      </div>
+      <a class="jpreview__cta" href="{{ journal_blog.url }}">
+        <span>{{ section.settings.cta_label }}</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="jpreview__grid">
+      {%- assign featured_articles = section.blocks | where: 'type', 'featured' -%}
+      {%- if featured_articles.size > 0 -%}
+        {%- for block in featured_articles -%}
+          {%- assign article = block.settings.article -%}
+          {%- if article != blank -%}
+            {%- render 'journal-preview-card', article: article -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for article in journal_blog.articles limit: 3 -%}
+          {%- render 'journal-preview-card', article: article -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% stylesheet %}
+.jpreview { background: var(--c-cream); }
+.jpreview__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+.jpreview__head-copy .display-h { margin-top: 12px; }
+.jpreview__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--c-forest);
+  border-bottom: 1px solid var(--c-line);
+  padding-bottom: 4px;
+  white-space: nowrap;
+  transition: color .3s, border-color .3s;
+}
+.jpreview__cta:hover { color: var(--c-tan-2); border-color: var(--c-tan-2); }
+
+.jpreview__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 44px); }
+
+/* Reuses the .jcard component's visual language from the Journal landing
+   page (sections/journal-grid.liquid) so both places read as one system —
+   duplicated here rather than assumed shared, since section stylesheets
+   aren't guaranteed to load on pages that don't render that section. */
+.jcard { display: flex; flex-direction: column; }
+.jcard__media { display: block; position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: var(--grad-cream); }
+.jcard__img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease-out); }
+.jcard__media:hover .jcard__img { transform: scale(1.05); }
+.jcard__cat { position: absolute; top: 14px; left: 14px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; background: var(--c-cream); color: var(--c-forest); padding: 6px 12px; border-radius: 999px; }
+.jcard__body { padding: 20px 2px 0; display: flex; flex-direction: column; gap: 10px; }
+.jcard__title { font-family: var(--ff-display); font-size: clamp(21px, 2vw, 26px); line-height: 1.15; color: var(--c-forest); transition: color .3s; }
+.jcard__title:hover { color: var(--c-tan-2); }
+.jcard__meta { display: flex; gap: 8px; font-size: 12px; letter-spacing: .04em; color: var(--c-ink-mute); }
+.jcard__excerpt { color: var(--c-ink-soft); font-size: 17px; line-height: 1.6; }
+.jcard__read { margin-top: 4px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-forest); border-bottom: 1px solid var(--c-line); padding-bottom: 4px; align-self: flex-start; transition: color .3s, border-color .3s; }
+.jcard__read:hover { color: var(--c-tan-2); border-color: var(--c-tan-2); }
+
+@media (max-width: 900px) {
+  .jpreview__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .jpreview__head { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+@media (max-width: 560px) {
+  .jpreview__grid { grid-template-columns: 1fr; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Journal Preview",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE JOURNAL" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Notes on skin, formulation, and the ritual behind it." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Visit the Journal" }
+  ],
+  "blocks": [
+    {
+      "type": "featured",
+      "name": "Featured article",
+      "settings": [
+        { "type": "article", "id": "article", "label": "Article" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [{ "name": "Journal Preview" }]
+}
+{% endschema %}

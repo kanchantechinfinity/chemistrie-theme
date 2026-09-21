@@ -1,0 +1,32 @@
+{%- comment -%}
+  One article card for the homepage Journal preview. Params: article.
+{%- endcomment -%}
+{%- if article != blank -%}
+  {%- assign words = article.content | strip_html | split: ' ' | size -%}
+  {%- assign rt = words | divided_by: 200 | at_least: 1 -%}
+  <article class="jcard">
+    <a class="jcard__media" href="{{ article.url }}" aria-label="{{ article.title | escape }}">
+      {%- if article.image -%}
+        {{ article.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,800', alt: article.image.alt | default: article.title, class: 'jcard__img' }}
+      {%- else -%}
+        <img src="{{ 'stock-lifestyle.jpg' | asset_url }}" alt="{{ article.title | escape }}" loading="lazy" class="jcard__img jcard__ph">
+        {%- comment -%} Temporary Unsplash stock photo — replace with a real article image in Shopify admin {%- endcomment -%}
+      {%- endif -%}
+      {%- if article.tags.size > 0 -%}
+        <span class="jcard__cat">{{ article.tags.first }}</span>
+      {%- endif -%}
+    </a>
+    <div class="jcard__body">
+      <a class="jcard__title" href="{{ article.url }}">{{ article.title }}</a>
+      <div class="jcard__meta">
+        <span>{{ article.published_at | date: '%b %-d, %Y' }}</span>
+        <span aria-hidden="true">·</span>
+        <span>{{ rt }} min read</span>
+      </div>
+      {%- if article.excerpt_or_content != blank -%}
+        <p class="jcard__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+      {%- endif -%}
+      <a class="jcard__read" href="{{ article.url }}">Read &rarr;</a>
+    </div>
+  </article>
+{%- endif -%}

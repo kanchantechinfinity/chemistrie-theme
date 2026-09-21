@@ -325,12 +325,17 @@
         "follower_count": "21.4k"
       }
     },
+    "journal_preview_hN3vQx": {
+      "type": "journal-preview",
+      "name": "Journal Preview",
+      "settings": {}
+    },
     "newsletter_cta_bQgTWH": {
       "type": "newsletter-cta",
       "name": "Newsletter CTA",
       "settings": {
-        "eyebrow": "— Letters from the Bench —",
-        "heading": "The Formulary<br><em>Journal.</em>",
+        "eyebrow": "Join the List",
+        "heading": "Occasional notes,<br><em>worth your inbox.</em>",
         "sub": "Formulation notes, new releases, and what our pharmacists are working on next occasionally, and only when it's worth your inbox."
       }
     }
@@ -344,6 +349,7 @@
     "actives_WHF8yt",
     "proof_iDTz9Y",
     "story_88GJLB",
+    "journal_preview_hN3vQx",
     "instagram_GV7ThA",
     "newsletter_cta_bQgTWH"
   ]
