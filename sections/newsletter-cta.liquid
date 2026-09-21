@@ -1,5 +1,8 @@
-<!-- ───── Newsletter CTA ───── -->
-<section class="cta" data-screen-label="12 Newsletter">
+<!-- ───── Founders' Circle — email capture CTA ───── -->
+{%- liquid
+  assign privacy_url = shop.privacy_policy.url
+-%}
+<section class="cta" data-screen-label="12 Founders' Circle">
   <div class="cta__card">
     <span class="cta__corner cta__corner--tl"></span>
     <span class="cta__corner cta__corner--tr"></span>
@@ -10,11 +13,11 @@
     <h2 class="display-h display-h--light">{{ section.settings.heading }}</h2>
     <p class="cta__sub">{{ section.settings.sub }}</p>
 
-    {% form 'customer', id: 'newsletter-form', class: 'cta__form' %}
-      <input type="hidden" name="contact[tags]" value="newsletter">
+    {% form 'customer', id: 'founders-circle-form', class: 'cta__form' %}
+      <input type="hidden" name="contact[tags]" value="founders-circle">
 
       {% if form.errors and form.errors.size > 0 %}
-        <p class="cta__sub" style="color:#c0392b;">{{ form.errors.messages['email'] | default: 'Please enter a valid email address.' }}</p>
+        <p class="cta__sub cta__error">{{ form.errors.messages['email'] | default: 'Please enter a valid email address.' }}</p>
       {% endif %}
 
       <label class="cta__field">
@@ -22,24 +25,46 @@
         <input type="email" name="contact[email]" placeholder="you@elsewhere.com" required maxlength="100" title="Please enter a valid email address." />
       </label>
       <button class="btn btn--primary btn--light" type="submit">
-        <span>Subscribe</span>
+        <span>{{ section.settings.cta_label }}</span>
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </button>
-      <p class="cta__sent"{% if form.posted_successfully? %} style="opacity:1;"{% endif %}>Thank you. The first letter arrives at the start of next month. ✦</p>
+      <p class="cta__sent"{% if form.posted_successfully? %} style="opacity:1;"{% endif %}>{{ section.settings.success_message }}</p>
+      {%- if section.settings.consent_text != blank -%}
+        <p class="cta__consent">
+          {{ section.settings.consent_text }}
+          {%- if privacy_url != blank -%} <a href="{{ privacy_url }}">Privacy Policy</a>.{%- endif -%}
+        </p>
+      {%- endif -%}
     {% endform %}
   </div>
 </section>
 
+{% stylesheet %}
+.cta__error { color: #c0392b; }
+.cta__consent {
+  flex-basis: 100%;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(240,232,219,.6);
+}
+.cta__consent a { color: rgba(240,232,219,.85); text-decoration: underline; }
+.cta__consent a:hover { color: var(--c-cream); }
+{% endstylesheet %}
+
 {% schema %}
 {
-  "name": "Newsletter CTA",
+  "name": "Founders' Circle CTA",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the List" },
-    { "type": "html", "id": "heading", "label": "Heading", "default": "Occasional notes,<br/>worth your <em>inbox.</em>" },
-    { "type": "textarea", "id": "sub", "label": "Subheading", "default": "Formulation notes, new releases, and what our pharmacists are working on next occasionally, and only when it's worth your inbox." }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE FOUNDERS' CIRCLE" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Come closer." },
+    { "type": "textarea", "id": "sub", "label": "Body", "default": "Join the Founders' Circle for early access to new formulas, first looks behind the brand, and the occasional note from the pharmacists behind Chemistrie." },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "JOIN THE CIRCLE" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Welcome to the Circle. Watch your inbox for what's next." },
+    { "type": "textarea", "id": "consent_text", "label": "Consent / privacy line", "info": "The store's Privacy Policy link is appended automatically when one is set in Settings > Policies.", "default": "By joining, you agree to receive marketing emails from Chemistrie. Unsubscribe anytime. See our" }
   ],
   "presets": [
-    { "name": "Newsletter CTA" }
+    { "name": "Founders' Circle CTA" }
   ]
 }
 {% endschema %}

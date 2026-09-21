@@ -332,11 +332,14 @@
     },
     "newsletter_cta_bQgTWH": {
       "type": "newsletter-cta",
-      "name": "Newsletter CTA",
+      "name": "Founders' Circle CTA",
       "settings": {
-        "eyebrow": "Join the List",
-        "heading": "Occasional notes,<br><em>worth your inbox.</em>",
-        "sub": "Formulation notes, new releases, and what our pharmacists are working on next occasionally, and only when it's worth your inbox."
+        "eyebrow": "THE FOUNDERS' CIRCLE",
+        "heading": "Come closer.",
+        "sub": "Join the Founders' Circle for early access to new formulas, first looks behind the brand, and the occasional note from the pharmacists behind Chemistrie.",
+        "cta_label": "JOIN THE CIRCLE",
+        "success_message": "Welcome to the Circle. Watch your inbox for what's next.",
+        "consent_text": "By joining, you agree to receive marketing emails from Chemistrie. Unsubscribe anytime. See our"
       }
     }
   },
