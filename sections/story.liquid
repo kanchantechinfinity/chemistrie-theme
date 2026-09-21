@@ -17,10 +17,15 @@
         <h3>{{ section.settings.chapter_1_heading }}</h3>
         <p>{{ section.settings.chapter_1_body }}</p>
       </div>
+      {%- if section.settings.chapter_1_image != blank or section.settings.chapter_1_image_asset != blank -%}
       <div class="story__chapter-photo">
-        <img src="{{ 'stock-lab.jpg' | asset_url }}" alt="{{ section.settings.chapter_1_heading | escape }}" loading="lazy">
-        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+        {%- if section.settings.chapter_1_image != blank -%}
+          {{ section.settings.chapter_1_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '450,900', alt: section.settings.chapter_1_heading | escape }}
+        {%- else -%}
+          <img src="{{ section.settings.chapter_1_image_asset | asset_url }}" alt="{{ section.settings.chapter_1_heading | escape }}" loading="lazy">
+        {%- endif -%}
       </div>
+      {%- endif -%}
     </li>
 
     <li class="story__chapter story__chapter--reverse">
@@ -32,10 +37,35 @@
         <h3>{{ section.settings.chapter_2_heading }}</h3>
         <p>{{ section.settings.chapter_2_body }}</p>
       </div>
+      {%- if section.settings.chapter_2_image != blank or section.settings.chapter_2_image_asset != blank -%}
       <div class="story__chapter-photo">
-        <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ section.settings.chapter_2_heading | escape }}" loading="lazy">
-        {%- comment -%} Temporary Unsplash stock photo — replace via Shopify admin {%- endcomment -%}
+        {%- if section.settings.chapter_2_image != blank -%}
+          {{ section.settings.chapter_2_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '450,900', alt: section.settings.chapter_2_heading | escape }}
+        {%- else -%}
+          <img src="{{ section.settings.chapter_2_image_asset | asset_url }}" alt="{{ section.settings.chapter_2_heading | escape }}" loading="lazy">
+        {%- endif -%}
       </div>
+      {%- endif -%}
+    </li>
+
+    <li class="story__chapter">
+      <div class="story__chapter-meta">
+        <span class="story__year">{{ section.settings.chapter_3_year }}</span>
+        <span class="story__roman">— III —</span>
+      </div>
+      <div class="story__chapter-body">
+        <h3>{{ section.settings.chapter_3_heading }}</h3>
+        <p>{{ section.settings.chapter_3_body }}</p>
+      </div>
+      {%- if section.settings.chapter_3_image != blank or section.settings.chapter_3_image_asset != blank -%}
+      <div class="story__chapter-photo">
+        {%- if section.settings.chapter_3_image != blank -%}
+          {{ section.settings.chapter_3_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '450,900', alt: section.settings.chapter_3_heading | escape }}
+        {%- else -%}
+          <img src="{{ section.settings.chapter_3_image_asset | asset_url }}" alt="{{ section.settings.chapter_3_heading | escape }}" loading="lazy">
+        {%- endif -%}
+      </div>
+      {%- endif -%}
     </li>
 
   </ol>
@@ -69,15 +99,26 @@
     { "type": "html", "id": "heading", "label": "Heading" },
     { "type": "textarea", "id": "lede", "label": "Lede" },
 
-    { "type": "header", "content": "Chapter I" },
+    { "type": "header", "content": "Chapter I — The Meeting" },
     { "type": "text", "id": "chapter_1_year", "label": "Year", "default": "2011" },
     { "type": "text", "id": "chapter_1_heading", "label": "Heading", "default": "The Meeting" },
-    { "type": "textarea", "id": "chapter_1_body", "label": "Body", "default": "Harin and Zach met in 2011, at the University of Houston College of Pharmacy — not as business partners, and not yet as anything resembling founders, but as two students in the same pharmacy fraternity, Phi Delta Chi." },
+    { "type": "textarea", "id": "chapter_1_body", "label": "Body", "default": "Zach and Harin met in pharmacy school in 2011. What began as a friendship grew into years spent working in pharmacy, learning to think carefully about formulation, ingredients, and the details that matter." },
+    { "type": "image_picker", "id": "chapter_1_image", "label": "Photo (optional)" },
+    { "type": "text", "id": "chapter_1_image_asset", "label": "Photo filename (/assets)", "info": "Fallback used only if the photo above is blank.", "default": "founder-1.jpg" },
 
-    { "type": "header", "content": "Chapter II" },
+    { "type": "header", "content": "Chapter II — The Idea" },
     { "type": "text", "id": "chapter_2_year", "label": "Year" },
-    { "type": "text", "id": "chapter_2_heading", "label": "Heading", "default": "The Conversation" },
-    { "type": "textarea", "id": "chapter_2_body", "label": "Body", "default": "The two careers came back together when Zach took a position at The Chemist Pharmacy — Harin's pharmacy. Working alongside each other again, they did what old fraternity brothers tend to do: started comparing the decade they'd just spent apart." }
+    { "type": "text", "id": "chapter_2_heading", "label": "Heading", "default": "The Idea" },
+    { "type": "textarea", "id": "chapter_2_body", "label": "Body", "default": "Years later, skincare kept finding its way into the conversation. Zach's wife was exploring products while they traveled through Japan. Harin watched his wife piece together a routine from products she found online. The question became simple: why couldn't we make something ourselves?" },
+    { "type": "image_picker", "id": "chapter_2_image", "label": "Photo (optional)", "info": "Pending an authentic Japan/travel photo. Left blank until Chemistrie supplies one — do not substitute a stock or AI-generated image." },
+    { "type": "text", "id": "chapter_2_image_asset", "label": "Photo filename (/assets)", "info": "Fallback used only if the photo above is blank." },
+
+    { "type": "header", "content": "Chapter III — Chemistrie" },
+    { "type": "text", "id": "chapter_3_year", "label": "Year" },
+    { "type": "text", "id": "chapter_3_heading", "label": "Heading", "default": "Chemistrie" },
+    { "type": "textarea", "id": "chapter_3_body", "label": "Body", "default": "Skincare felt like a natural extension of what they already understood as pharmacists: ingredients, formulation, precision, and the importance of getting the details right. They weren't trying to reinvent skincare. They simply believed they could do it better, creating skincare with the thoughtful formulation and elevated experience they wanted to give the people closest to them." },
+    { "type": "image_picker", "id": "chapter_3_image", "label": "Photo (optional)" },
+    { "type": "text", "id": "chapter_3_image_asset", "label": "Photo filename (/assets)", "info": "Fallback used only if the photo above is blank.", "default": "pillar-designed-together.png" }
   ],
   "presets": [
     { "name": "Brand Story" }
