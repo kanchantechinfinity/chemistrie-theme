@@ -5,13 +5,16 @@
       <h2 class="display-h">{{ section.settings.heading }}</h2>
     </div>
 
-    <div class="csteps__grid">
+    <div class="csteps__list">
       {%- for block in section.blocks -%}
         {%- if block.type == 'step' -%}
         <article class="cstep" {{ block.shopify_attributes }}>
-          <span class="cstep__num">{{ forloop.index }}</span>
-          <h3 class="cstep__title">{{ block.settings.title }}</h3>
-          <p class="cstep__body">{{ block.settings.body }}</p>
+          <span class="cstep__num">{{ forloop.index | prepend: '0' }}</span>
+          <span class="cstep__line" aria-hidden="true"><span class="cstep__line-fill"></span></span>
+          <div class="cstep__content">
+            <h3 class="cstep__title">{{ block.settings.title }}</h3>
+            <p class="cstep__body">{{ block.settings.body }}</p>
+          </div>
         </article>
         {%- endif -%}
       {%- endfor -%}
@@ -21,30 +24,53 @@
 
 {% stylesheet %}
 .contact-steps { background: var(--c-tan); color: var(--c-forest); }
-.csteps__grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: clamp(20px, 2.4vw, 32px);
+.csteps__list {
+  display: flex; flex-direction: column;
+  gap: clamp(18px, 2.2vw, 26px);
 }
 .cstep {
-  display: flex; flex-direction: column; gap: 14px;
+  display: flex; align-items: center; gap: clamp(24px, 4vw, 56px);
   background: var(--c-cream);
   border: 1px solid rgba(26,58,45,.12);
-  border-radius: 16px;
-  padding: clamp(24px, 2.6vw, 32px) clamp(20px, 2.4vw, 28px);
+  border-radius: 20px;
+  padding: clamp(26px, 3vw, 40px) clamp(24px, 3.4vw, 48px);
   box-shadow: 0 20px 40px -28px rgba(26,58,45,.35);
-  transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
 }
-.cstep:hover { transform: translateY(-4px); box-shadow: 0 28px 50px -26px rgba(26,58,45,.4); }
 .cstep__num {
-  width: 40px; height: 40px; border-radius: 999px; flex: 0 0 auto;
-  display: grid; place-items: center;
-  background: var(--c-forest); color: var(--c-cream);
-  font-family: var(--ff-display); font-size: 18px; font-weight: 500;
+  flex: 0 0 auto;
+  min-width: 56px;
+  font-family: var(--ff-display);
+  font-size: clamp(32px, 3.6vw, 48px);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--c-tan-2);
 }
-.cstep__title { font-family: var(--ff-display); font-size: clamp(19px, 1.8vw, 22px); font-weight: 500; line-height: 1.25; }
+.cstep__line {
+  flex: 0 0 auto;
+  align-self: stretch;
+  min-height: 60px;
+  width: 4px;
+  border-radius: 999px;
+  background: rgba(26,58,45,.14);
+  overflow: hidden;
+  position: relative;
+}
+.cstep__line-fill {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  background: var(--c-forest);
+  border-radius: 999px;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.cstep__content { flex: 1; min-width: 0; }
+.cstep__title { font-family: var(--ff-display); font-size: clamp(19px, 1.8vw, 22px); font-weight: 500; line-height: 1.25; margin: 0 0 8px; }
 .cstep__body { font-size: 16.5px; line-height: 1.7; color: rgba(26,58,45,.78); margin: 0; }
-@media (max-width: 900px) { .csteps__grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 540px) { .csteps__grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .cstep { gap: 20px; padding: 22px 20px; }
+  .cstep__num { font-size: 26px; min-width: 38px; }
+  .cstep__line { min-height: 46px; }
+}
 {% endstylesheet %}
 
 {% schema %}
