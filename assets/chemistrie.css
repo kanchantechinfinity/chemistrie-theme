@@ -956,7 +956,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding: clamp(48px, 6vw, 80px);
   border-radius: 28px;
   margin-bottom: 36px;
-  min-height: 90vh;
+  min-height: 64vh;
   box-shadow: 0 30px 60px -30px rgba(26,58,45,.18);
   border: 1px solid var(--c-line);
   background: var(--c-paper);
@@ -1008,7 +1008,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   line-height: 1.4;
   margin: 0 0 28px;
   color: var(--c-ink-soft);
-  max-width: 30ch;
+  max-width: 52ch;
 }
 .pillar__list {
   list-style: none;
@@ -2604,7 +2604,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__title { font-size: clamp(64px, 14vw, 200px); }
   .hero[data-layout="split"] .hero__inner { max-width: 100%; text-align: center; }
 
-  .pillar { grid-template-columns: 60px 1fr; padding: 40px; min-height: 86vh; top: 14vh; }
+  .pillar { grid-template-columns: 60px 1fr; padding: 40px; min-height: 62vh; top: 14vh; }
   .pillar__visual { grid-column: 1 / -1; border-left: 0; padding-left: 0; padding-top: 20px; border-top: 1px solid var(--c-line); justify-content: flex-start; }
   .pillar__crest { width: 140px; height: 140px; }
   .pillar__mono { font-size: 44px; }
