@@ -564,12 +564,12 @@
 .rf-item {
   display: flex !important;
   flex-direction: column !important;
-  align-items: center !important;
-  gap: 20px !important;
+  align-items: stretch !important;
+  gap: 22px !important;
   background: var(--c-cream) !important;
   border: 1px solid var(--c-line-soft) !important;
   border-radius: 20px !important;
-  padding: 32px 24px 28px !important;
+  padding: 28px 28px 32px !important;
   min-width: 180px !important;
   flex: 1 1 220px !important;
   max-width: none !important;
@@ -586,8 +586,9 @@
 }
 
 .rf-item__thumb {
-  width: clamp(140px, 16vw, 200px) !important;
-  height: clamp(140px, 16vw, 200px) !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
   border-radius: 14px !important;
   background: var(--c-paper) !important;
   display: flex !important;
@@ -595,7 +596,7 @@
   justify-content: center !important;
   overflow: hidden !important;
   position: relative !important;
-  padding: 10px !important;
+  padding: 16px !important;
 }
 
 .rf-item__thumb img {
@@ -615,22 +616,22 @@
 }
 
 .rf-item__step-tag {
-  font-size: 12px !important;
+  font-size: 13px !important;
   letter-spacing: .14em !important;
   text-transform: uppercase !important;
   color: var(--c-tan-2) !important;
   font-weight: 600 !important;
   display: block !important;
-  margin-bottom: 6px !important;
+  margin-bottom: 8px !important;
 }
 
 .rf-item__name {
   font-family: var(--ff-display) !important;
-  font-size: clamp(20px, 2vw, 24px) !important;
+  font-size: clamp(26px, 2.6vw, 32px) !important;
   font-weight: 500 !important;
-  line-height: 1.25 !important;
+  line-height: 1.2 !important;
   color: var(--c-forest) !important;
-  margin: 0 0 4px !important;
+  margin: 0 0 6px !important;
 }
 
 .rf-item__name a {
@@ -653,15 +654,15 @@
 
 .rf-item__price {
   font-family: var(--ff-body) !important;
-  font-size: 17px !important;
+  font-size: 21px !important;
   color: var(--c-forest) !important;
   display: block !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 10px !important;
   font-weight: 600 !important;
 }
 
 .rf-item__link {
-  font-size: 12px !important;
+  font-size: 13px !important;
   letter-spacing: .1em !important;
   text-transform: uppercase !important;
   color: var(--c-tan-2) !important;
@@ -782,13 +783,12 @@
   .rf-item {
     flex: 1 1 calc(50% - 11px) !important;
     min-width: 150px !important;
-    padding: 24px 16px !important;
-  }
-  .rf-item__thumb {
-    width: 120px !important;
-    height: 120px !important;
+    padding: 22px 20px 24px !important;
   }
   .rf-item__name {
+    font-size: 22px !important;
+  }
+  .rf-item__price {
     font-size: 18px !important;
   }
 }
@@ -799,15 +799,14 @@
   }
   .rf-item {
     flex: 1 1 calc(50% - 6px) !important;
-    padding: 18px 12px !important;
+    padding: 16px 16px 18px !important;
     min-width: 0 !important;
     border-radius: 14px !important;
   }
-  .rf-item__thumb {
-    width: 92px !important;
-    height: 92px !important;
-  }
   .rf-item__name {
+    font-size: 18px !important;
+  }
+  .rf-item__price {
     font-size: 16px !important;
   }
 }
