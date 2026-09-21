@@ -212,7 +212,7 @@
   /* ───── Contact Steps — vertical progress line fills as each step scrolls past ───── */
   if (window.ScrollTrigger) {
     gsap.fromTo(".cstep",
-      { opacity: 0, y: 36 },
+      { opacity: 0, y: 70 },
       { opacity: 1, y: 0, duration: 0.9, ease: "power2.out", stagger: 0.15,
         scrollTrigger: { trigger: ".csteps__list", start: "top 80%", once: true } }
     );
