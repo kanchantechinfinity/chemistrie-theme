@@ -25,6 +25,50 @@
   </div>
 </section>
 
+{% stylesheet %}
+/* Scaled-down revamp. The base rules in chemistrie.css sized this for a
+   full-bleed statement moment (up to 160px section padding, 140px
+   numerals, 80px head gap), which left the stats stranded in a very tall
+   band with dead space beside each numeral. Selectors are .proof-prefixed
+   so they beat those base rules on specificity regardless of load order.
+   Type, colour and copy are unchanged — this is purely scale + alignment. */
+.proof.proof { padding: clamp(56px, 7vw, 92px) var(--pad-x); }
+
+.proof .proof__head { margin-bottom: clamp(32px, 4vw, 52px); }
+
+.proof .proof__grid {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.proof .proof__cell {
+  padding: clamp(18px, 2vw, 26px) clamp(16px, 2vw, 28px);
+  align-items: center;
+  text-align: center;
+}
+
+/* Centred cells remove the void that sat to the right of every numeral
+   when they were left-aligned inside wide columns. */
+.proof .proof__num {
+  font-size: clamp(42px, 4.8vw, 68px);
+  margin-bottom: 10px;
+  gap: 8px;
+  justify-content: center;
+}
+
+.proof .proof__label {
+  font-size: 15.5px;
+  line-height: 1.5;
+  max-width: 24ch;
+  margin-inline: auto;
+}
+
+@media (max-width: 900px) {
+  .proof .proof__num { font-size: clamp(38px, 8vw, 56px); }
+  .proof .proof__label { font-size: 14.5px; }
+}
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Proof stats",
