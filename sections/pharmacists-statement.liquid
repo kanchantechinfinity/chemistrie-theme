@@ -1,0 +1,31 @@
+<section class="page-section pstate">
+  <div class="page-section__inner">
+    <div class="pstate__inner">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-h pstate__heading">{{ section.settings.heading }}</h2>
+      <div class="pstate__body">{{ section.settings.body }}</div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.pstate { background: var(--c-paper); }
+.pstate__inner { max-width: 760px; margin: 0 auto; text-align: center; }
+.pstate__heading { margin: 16px 0 0; }
+.pstate__body { margin: 24px 0 0; color: var(--c-ink-soft); line-height: 1.8; font-size: clamp(16px, 1.3vw, 18px); }
+.pstate__body p { margin: 0; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Pharmacists Statement",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "Skincare doesn't need more complexity.<br/>It needs better <em>judgment.</em>" },
+    { "type": "richtext", "id": "body", "label": "Body" }
+  ],
+  "presets": [{ "name": "Pharmacists Statement" }]
+}
+{% endschema %}

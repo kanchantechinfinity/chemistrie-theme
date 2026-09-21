@@ -15,6 +15,7 @@
         "eyebrow": "— The Pharmacists —",
         "heading": "The Pharmacists.",
         "deck": "Harin and Zach have been comparing notes since 2011.",
+        "show_visual": false,
         "hero_fallback_asset": "stock-lab.jpg"
       }
     },
@@ -24,39 +25,33 @@
         "s1": {
           "type": "stat",
           "settings": {
-            "number": "6,000+",
-            "label": "Women served"
+            "number": "2",
+            "label": "Pharmacists"
           }
         },
         "s2": {
           "type": "stat",
           "settings": {
-            "number": "1–2 Days",
-            "label": "Average ship time"
+            "number": "23 Years",
+            "label": "Combined Pharmacist Experience"
           }
         },
         "s3": {
           "type": "stat",
           "settings": {
-            "number": "★ 4.96",
-            "label": "Verified buyer rating"
-          }
-        },
-        "s4": {
-          "type": "stat",
-          "settings": {
-            "number": "200",
-            "label": "Bottles per hand-numbered batch"
+            "number": "Pharmacist-Formulated",
+            "label": "Thoughtfully Selected & Refined"
           }
         }
       },
       "block_order": [
         "s1",
         "s2",
-        "s3",
-        "s4"
+        "s3"
       ],
-      "settings": {}
+      "settings": {
+        "show_bar": true
+      }
     },
     "pharmacists-profiles": {
       "type": "pharmacists-profiles",
@@ -67,7 +62,7 @@
             "eyebrow": "— Co-founder —",
             "name": "Harin",
             "role": "Co-founder · Compounding Pharmacist",
-            "body": "<p>Harin's pharmacy career moved through long-term care, specialty pharmacy, infusion, and compounding, learning to formulate precisely, to a standard with no room for a claim that turned out to be almost true. He and Zach met in 2011 at the University of Houston College of Pharmacy, in the same pharmacy fraternity, Phi Delta Chi.</p>",
+            "body": "<p>Harin has practiced pharmacy since 2014, with experience spanning long-term care, specialty pharmacy, infusion, and compounding. His career has centered on precision, formulation, and evaluating products through a pharmacist's lens. When he and Zach began developing Chemistrie, that same approach became the standard: start with strong professional formulations, evaluate them critically, and refine them where needed.</p>",
             "quote": "",
             "avatar_style": "forest"
           }
@@ -78,7 +73,7 @@
             "eyebrow": "— Co-founder —",
             "name": "Zach",
             "role": "Co-founder · Compounding Pharmacist",
-            "body": "<p>Zach spent over a decade in community pharmacy, building deep expertise in over-the-counter and dermatological products, and no shortage of opinions about which ones actually worked. He and Harin reunited years later at The Chemist Pharmacy, comparing the decade they'd spent apart.</p>",
+            "body": "<p>Zach has practiced pharmacy since 2015, spending more than a decade in community pharmacy before moving into compounding. Years of answering questions about over-the-counter skincare and dermatologic products gave him a front-row seat to what consumers were buying, what they expected, and where those expectations often fell short. After joining The Chemist Pharmacy, he reconnected professionally with Harin, and the conversations that eventually became Chemistrie began.</p>",
             "quote": "",
             "avatar_style": "tan"
           }
@@ -97,62 +92,43 @@
           "type": "cred",
           "settings": {
             "number": "01",
-            "title": "The Meeting",
-            "body": "Harin and Zach met in 2011, at the University of Houston College of Pharmacy, not as business partners, and not yet as anything resembling founders, but as two students in the same pharmacy fraternity, Phi Delta Chi. Both went on to serve as chapter president: Harin in 2012, Zach in 2013."
+            "title": "The Beginning",
+            "body": "Harin and Zach met in 2011 at the University of Houston College of Pharmacy through Phi Delta Chi. Both later served as chapter president, Harin in 2012 and Zach in 2013, before their careers moved into different areas of pharmacy."
           }
         },
         "cred_2": {
           "type": "cred",
           "settings": {
             "number": "02",
-            "title": "Two Careers",
-            "body": "Zach spent the next ten-plus years in community pharmacy, building expertise in over-the-counter products, including the dermatological aisle, and every overpriced bottle in it that promised more than it delivered. Harin moved through long-term care, specialty pharmacy, infusion, and compounding, learning to formulate to a standard with no room for a claim that turned out to be almost true."
+            "title": "The Reunion",
+            "body": "More than a decade later, their careers came back together when Zach joined The Chemist Pharmacy. They began comparing what they had learned across community pharmacy, specialty care, infusion, compounding, dermatologic products, and formulation."
           }
         },
         "cred_3": {
           "type": "cred",
           "settings": {
             "number": "03",
-            "title": "The Conversation",
-            "body": "Their careers came back together when Zach took a position at The Chemist Pharmacy, Harin's pharmacy. Working alongside each other again, they did what old fraternity brothers tend to do: started comparing the decade they'd just spent apart, and found a strange amount of overlap."
-          }
-        },
-        "cred_4": {
-          "type": "cred",
-          "settings": {
-            "number": "04",
-            "title": "What Their Wives Actually Wanted",
-            "body": "Both married to accountants. Both raising two kids. And both married to women who had spent real money on dermatological products they didn't fully trust and didn't think were worth what they cost. Neither wife was asking for a miracle, they wanted skincare formulated by someone who understood what they were doing, not just someone skilled at selling it."
-          }
-        },
-        "cred_5": {
-          "type": "cred",
-          "settings": {
-            "number": "05",
-            "title": "The Bench",
-            "body": "So Harin and Zach did the thing they'd spent over a decade training to do, applying the same formulation standards they'd apply to anything touching a prescription pad, building products for their wives specifically. Their wives loved what came out of it. That was the moment the idea stopped being personal and started becoming Chemistrie."
-          }
-        },
-        "cred_6": {
-          "type": "cred",
-          "settings": {
-            "number": "06",
-            "title": "Why Chemistrie",
-            "body": "Harin and Zach decided the same standard that worked for two women shouldn't stay limited to two women. “We didn't set out to build a skincare brand. We set out to make something our wives could actually trust. Everything else followed from that.” (Harin & Zach)"
+            "title": "The Idea",
+            "body": "The idea for Chemistrie became real through conversations at home. Zach's wife, Tyra, was exploring skincare while in Japan and wanted products they could make with confidence. Harin's wife was buying skincare online but faced the same problem many consumers do: endless options, complicated routines, and uncertainty about what to buy or who to trust. Harin and Zach saw an opportunity to simplify that experience with high-quality skincare, clear routines, and pharmacist-led judgment. They selected and refined the formulas with their wives in mind, then used their feedback on the products and packaging before launch."
           }
         }
       },
       "block_order": [
         "cred_1",
         "cred_2",
-        "cred_3",
-        "cred_4",
-        "cred_5",
-        "cred_6"
+        "cred_3"
       ],
       "settings": {
         "eyebrow": "— How Chemistrie began —",
         "heading": "Two careers,<br/>one <em>conversation.</em>"
+      }
+    },
+    "pharmacists-statement": {
+      "type": "pharmacists-statement",
+      "settings": {
+        "eyebrow": "Why Pharmacists",
+        "heading": "Skincare doesn't need more complexity.<br/>It needs better <em>judgment.</em>",
+        "body": "<p>Chemistrie was built around a simple idea: a skincare routine should be easy to understand without sacrificing quality. Our formulations begin with professionally developed PCCA formulas. Harin and Zach evaluate the available options together, prepare and critique them, and refine them where needed before selecting the final version for production. The goal is not to give customers more products. It is to give them a clear, considered routine and help them understand what they need and why.</p>"
       }
     },
     "page-cta": {
@@ -161,10 +137,10 @@
         "eyebrow": "— What They Made —",
         "heading": "Harin & Zach",
         "sub": "<em>“We didn't set out to build a skincare brand. We set out to make something our wives could actually trust. Everything else followed from that.”</em>",
-        "button_label": "Explore the Collection",
-        "button_url": "/collections/all",
-        "button2_label": "Read a Letter from the Founders",
-        "button2_url": "/pages/founders-circle"
+        "button_label": "Find Your Ritual",
+        "button_url": "/pages/the-ritual",
+        "button2_label": "Explore the Collection",
+        "button2_url": "/collections/all"
       }
     }
   },
@@ -173,6 +149,7 @@
     "stat-bar",
     "pharmacists-profiles",
     "pharmacists-credentials",
+    "pharmacists-statement",
     "page-cta"
   ]
 }
