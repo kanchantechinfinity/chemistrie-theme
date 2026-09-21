@@ -513,16 +513,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  padding: 11px 28px;
+  min-width: 72px;
+  border-radius: 999px;
   background: var(--c-forest);
   color: var(--c-cream);
   font-family: var(--ff-display);
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: .08em;
+  letter-spacing: .12em;
   flex-shrink: 0;
 }
 
@@ -565,14 +565,14 @@
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 16px !important;
+  gap: 20px !important;
   background: var(--c-cream) !important;
   border: 1px solid var(--c-line-soft) !important;
   border-radius: 20px !important;
-  padding: 24px 20px 22px !important;
-  min-width: 200px !important;
-  flex: 0 0 250px !important;
-  max-width: 260px !important;
+  padding: 32px 24px 28px !important;
+  min-width: 180px !important;
+  flex: 1 1 220px !important;
+  max-width: none !important;
   box-sizing: border-box !important;
   box-shadow: 0 8px 24px -6px rgba(26,58,45,.06) !important;
   transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease !important;
@@ -586,16 +586,16 @@
 }
 
 .rf-item__thumb {
-  width: 116px !important;
-  height: 116px !important;
-  border-radius: 12px !important;
+  width: clamp(140px, 16vw, 200px) !important;
+  height: clamp(140px, 16vw, 200px) !important;
+  border-radius: 14px !important;
   background: var(--c-paper) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   overflow: hidden !important;
   position: relative !important;
-  padding: 6px !important;
+  padding: 10px !important;
 }
 
 .rf-item__thumb img {
@@ -615,18 +615,18 @@
 }
 
 .rf-item__step-tag {
-  font-size: 10px !important;
+  font-size: 12px !important;
   letter-spacing: .14em !important;
   text-transform: uppercase !important;
   color: var(--c-tan-2) !important;
   font-weight: 600 !important;
   display: block !important;
-  margin-bottom: 4px !important;
+  margin-bottom: 6px !important;
 }
 
 .rf-item__name {
   font-family: var(--ff-display) !important;
-  font-size: 18px !important;
+  font-size: clamp(20px, 2vw, 24px) !important;
   font-weight: 500 !important;
   line-height: 1.25 !important;
   color: var(--c-forest) !important;
@@ -653,7 +653,7 @@
 
 .rf-item__price {
   font-family: var(--ff-body) !important;
-  font-size: 14.5px !important;
+  font-size: 17px !important;
   color: var(--c-forest) !important;
   display: block !important;
   margin-bottom: 8px !important;
@@ -661,7 +661,7 @@
 }
 
 .rf-item__link {
-  font-size: 11px !important;
+  font-size: 12px !important;
   letter-spacing: .1em !important;
   text-transform: uppercase !important;
   color: var(--c-tan-2) !important;
@@ -774,23 +774,22 @@
 /* Responsive Media Queries for Cards */
 @media (max-width: 1100px) {
   .rf-item {
-    flex: 0 0 calc(33.333% - 15px) !important;
-    max-width: calc(33.333% - 15px) !important;
+    flex: 1 1 200px !important;
   }
 }
 
 @media (max-width: 768px) {
   .rf-item {
-    flex: 0 0 calc(50% - 11px) !important;
-    max-width: calc(50% - 11px) !important;
-    padding: 20px 14px !important;
+    flex: 1 1 calc(50% - 11px) !important;
+    min-width: 150px !important;
+    padding: 24px 16px !important;
   }
   .rf-item__thumb {
-    width: 96px !important;
-    height: 96px !important;
+    width: 120px !important;
+    height: 120px !important;
   }
   .rf-item__name {
-    font-size: 16px !important;
+    font-size: 18px !important;
   }
 }
 
@@ -799,17 +798,16 @@
     gap: 12px;
   }
   .rf-item {
-    flex: 0 0 calc(50% - 6px) !important;
-    max-width: calc(50% - 6px) !important;
-    padding: 16px 10px !important;
+    flex: 1 1 calc(50% - 6px) !important;
+    padding: 18px 12px !important;
     min-width: 0 !important;
     border-radius: 14px !important;
   }
   .rf-item__thumb {
-    width: 80px !important;
-    height: 80px !important;
+    width: 92px !important;
+    height: 92px !important;
   }
   .rf-item__name {
-    font-size: 14.5px !important;
+    font-size: 16px !important;
   }
 }
