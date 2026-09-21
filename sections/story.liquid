@@ -45,6 +45,11 @@
           <img src="{{ section.settings.chapter_2_image_asset | asset_url }}" alt="{{ section.settings.chapter_2_heading | escape }}" loading="lazy">
         {%- endif -%}
       </div>
+      {%- else -%}
+      {%- comment -%} No approved photo supplied yet — a neutral placeholder keeps the timeline's alternating rhythm intact rather than leaving a gap. Replace by setting Chapter II's photo once Chemistrie supplies one. {%- endcomment -%}
+      <div class="story__chapter-photo story__chapter-photo--placeholder" aria-hidden="true">
+        <span class="story__chapter-photo-mark">II</span>
+      </div>
       {%- endif -%}
     </li>
 
@@ -88,6 +93,23 @@
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+/* Neutral placeholder for a chapter with no approved photo yet — keeps
+   the same footprint/shadow as a real .story__chapter-photo so the
+   alternating rhythm doesn't break, without faking an image. */
+.story__chapter-photo--placeholder {
+  background: linear-gradient(155deg, var(--c-tan-3) 0%, var(--c-cream-2) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.story__chapter-photo-mark {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: clamp(48px, 6vw, 72px);
+  color: rgba(26, 58, 45, .18);
+  line-height: 1;
 }
 {% endstylesheet %}
 
