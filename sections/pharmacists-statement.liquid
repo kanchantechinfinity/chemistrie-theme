@@ -11,11 +11,53 @@
 </section>
 
 {% stylesheet %}
-.pstate { background: var(--c-paper); }
-.pstate__inner { max-width: 760px; margin: 0 auto; text-align: center; }
-.pstate__heading { margin: 16px 0 0; }
-.pstate__body { margin: 24px 0 0; color: var(--c-ink-soft); line-height: 1.8; font-size: clamp(16px, 1.3vw, 18px); }
+/* Editorial two-column statement. The previous single centred column ran
+   the .display-h heading at full size over a 760px measure, so it wrapped
+   to four enormous lines and dwarfed the paragraph under it, in a very
+   tall band. Splitting heading and body into paired columns lets the
+   heading sit at a sane size while still carrying the section, and gives
+   the body a left-aligned measure that's actually readable. */
+.pstate {
+  background: var(--c-paper);
+  padding-block: clamp(56px, 7vw, 96px);
+}
+.pstate__inner {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(32px, 5vw, 76px);
+  align-items: start;
+  max-width: 1120px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.pstate__heading {
+  margin: 14px 0 0;
+  font-size: clamp(30px, 3.3vw, 46px);
+  line-height: 1.14;
+}
+
+.pstate__body {
+  margin: 0;
+  padding-left: clamp(20px, 2.6vw, 40px);
+  border-left: 1px solid var(--c-line);
+  color: var(--c-ink-soft);
+  line-height: 1.8;
+  font-size: clamp(15.5px, 1.2vw, 17px);
+  max-width: 60ch;
+}
 .pstate__body p { margin: 0; }
+
+@media (max-width: 860px) {
+  .pstate__inner { grid-template-columns: 1fr; gap: 28px; }
+  .pstate__body {
+    padding-left: 0;
+    padding-top: 24px;
+    border-left: 0;
+    border-top: 1px solid var(--c-line);
+    max-width: none;
+  }
+}
 {% endstylesheet %}
 
 {% schema %}
