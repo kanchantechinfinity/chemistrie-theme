@@ -87,9 +87,15 @@
           </nav>
         {%- endif -%}
       {%- else -%}
+        {%- comment -%}
+          Reached only when the collection itself is empty. The old copy here
+          ("No formulas match your filters" / "Clear filters") was left over
+          from the removed sidebar filters and pointed at functionality that
+          no longer exists.
+        {%- endcomment -%}
         <div class="col-empty">
-          <p class="col-empty__title">No formulas match your filters.</p>
-          <a href="{{ collection.url }}" class="btn btn--primary">Clear filters</a>
+          <p class="col-empty__title">Nothing here yet.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Browse all products</a>
         </div>
       {%- endif -%}
     </div>
