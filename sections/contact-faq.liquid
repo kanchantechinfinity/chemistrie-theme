@@ -19,11 +19,29 @@
         {%- endif -%}
       {%- endfor -%}
     </div>
+
+    {%- if section.settings.footer_heading != blank or section.settings.footer_body != blank -%}
+      <div class="contact-faq__footer">
+        {%- if section.settings.footer_heading != blank -%}
+          <p class="contact-faq__footer-heading">{{ section.settings.footer_heading }}</p>
+        {%- endif -%}
+        {%- if section.settings.footer_body != blank -%}
+          <p class="contact-faq__footer-body">{{ section.settings.footer_body }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
 {% stylesheet %}
 .contact-faq { background: var(--c-cream); }
+.contact-faq__footer { text-align: center; margin-top: clamp(32px, 5vw, 52px); }
+.contact-faq__footer-heading { margin: 0 0 6px; font-family: var(--ff-display); font-size: clamp(19px, 2vw, 23px); color: var(--c-forest); }
+.contact-faq__footer-body { margin: 0; color: var(--c-ink-soft); font-size: 15.5px; }
+.contact-faq__footer-body a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 700px) {
+  .page-section.contact-faq { padding-bottom: clamp(28px, 6vw, 44px); }
+}
 .faq-list { width: 100%; max-width: none; display: flex; flex-direction: column; gap: 12px; }
 .faq-item {
   border: 1px solid var(--c-line-soft, rgba(26,58,45,.18));
@@ -82,7 +100,10 @@ document.querySelectorAll('.faq-item__q').forEach(function (btn) {
 {
   "name": "Contact FAQ",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" }
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "header", "content": "Footer prompt (optional)" },
+    { "type": "text", "id": "footer_heading", "label": "Footer heading", "default": "Still have a question?" },
+    { "type": "richtext", "id": "footer_body", "label": "Footer body", "default": "<p>We're here to help. Contact us at <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> or send us a message using the form above.</p>" }
   ],
   "blocks": [
     {

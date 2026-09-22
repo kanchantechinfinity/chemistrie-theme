@@ -156,23 +156,58 @@
             "question": "Can I use Chemistrie products with my current skincare products?",
             "answer": "<p>In many cases, yes. How products fit together depends on what you are already using and your individual skin. Follow the directions provided with each Chemistrie product, introduce new products thoughtfully, and contact us at support@chemistrieco.com if you have a question about combining products.</p>"
           }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "What if I have sensitive skin?",
+            "answer": "<p>Everyone's skin is different. Review the ingredient list before use and introduce new skincare products gradually, particularly if you know your skin is sensitive. Discontinue use if significant irritation occurs and consult an appropriate healthcare professional if you have concerns.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "How quickly will my order ship?",
+            "answer": "<p>Shipping options and estimated delivery timing are displayed at checkout. Once your order ships, you'll receive tracking information by email.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "What if a product isn't right for me or there is a problem with my order?",
+            "answer": "<p>We want you to feel confident in your Chemistrie ritual. If something does not feel right or there is an issue with your order, contact support@chemistrieco.com. Our team will review the situation and work with you on an appropriate resolution, which may include product guidance, replacement, or store credit.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "Are Chemistrie products prescription medications?",
+            "answer": "<p>No. Chemistrie is a skincare brand, and the products in our cosmetic collection are not prescription medications. Our pharmacists' experience influences how we approach formulation and product selection, but Chemistrie skincare is designed for cosmetic use.</p>"
+          }
         }
       },
       "block_order": [
         "faq_1",
         "faq_2",
         "faq_3",
-        "faq_4"
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8"
       ],
       "settings": {}
     },
     "page-cta": {
       "type": "page-cta",
       "settings": {
-        "eyebrow": "— Ready when you are —",
-        "heading": "Begin your <em>ritual.</em>",
-        "sub": "Start with the collection.",
-        "button_label": "Shop the Collection"
+        "eyebrow": "",
+        "heading": "Not sure where to start?",
+        "sub": "Answer a few thoughtful questions and we'll help you find the Chemistrie ritual that fits your skin and your routine.",
+        "button_label": "Find Your Ritual",
+        "button_url": "/pages/the-ritual",
+        "button2_label": "Explore the Collection",
+        "button2_url": "/collections/all"
       }
     }
   },
