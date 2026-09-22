@@ -1,5 +1,5 @@
-<!-- ───── Pillars — Testimonial Chain ───── -->
-<section class="pillars pillars--chain" data-screen-label="03 Pillars">
+<!-- ───── Pillars — scroll rail ───── -->
+<section class="pillars pillars--rail" data-screen-label="03 Pillars">
   <div class="pillars__intro">
     <span class="eyebrow">{{ section.settings.eyebrow }}</span>
     <h2 class="display-h">{{ section.settings.intro_heading }}</h2>
@@ -11,18 +11,21 @@
     {%- endif -%}
   </div>
 
-  <div class="pillars-chain" id="pillarsChain" data-autoplay-speed="5000">
-    <div class="pillars-chain__stage" id="pillarsChainStage">
+  {%- comment -%}
+    Horizontal scroll rail, mirroring the homepage Collection rail
+    (.shop__rail): native overflow-x scrolling with snap points, no JS.
+    Scroll, trackpad swipe or touch moves the cards continuously.
+  {%- endcomment -%}
+  <div class="pillars-rail-wrap">
+    <div class="pillars-rail" id="pillarsRail">
       {%- for block in section.blocks -%}
-        <article class="pchain-card{% if forloop.first %} is-active{% elsif forloop.index == 2 %} is-next-1{% elsif forloop.last %} is-prev-1{% else %} is-hidden{% endif %}" data-chain-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-          
-          <!-- Active Card: Original content only (title, lede, items, image) -->
+        <article class="pchain-card" {{ block.shopify_attributes }}>
           <div class="pchain-card__body">
             <div class="pchain-card__content">
               <span class="pillar__num">0{{ forloop.index }}</span>
               <h3 class="pillar__title">{{ block.settings.title }}</h3>
               <p class="pillar__lede">{{ block.settings.lede }}</p>
-              
+
               {%- if block.settings.item1 != blank or block.settings.item2 != blank or block.settings.item3 != blank -%}
                 <ul class="pillar__list">
                   {%- if block.settings.item1 != blank -%}<li>{{ block.settings.item1 }}</li>{%- endif -%}
@@ -44,195 +47,77 @@
               {%- endif -%}
             </div>
           </div>
-
-          <!-- Flanking Pill: Image preview only -->
-          <div class="pchain-card__pill">
-            {%- if block.settings.image != blank -%}
-              <img class="pchain-card__pill-img" src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-            {%- elsif block.settings.image_asset != blank -%}
-              <img class="pchain-card__pill-img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-            {%- else -%}
-              <div class="pchain-card__pill-fallback">
-                <span>{{ block.settings.crest_mono | default: "Rx" }}</span>
-              </div>
-            {%- endif -%}
-          </div>
-
         </article>
       {%- endfor -%}
-    </div>
-
-    <!-- Automated Progress Indicators -->
-    <div class="pillars-chain__controls" aria-label="Story carousel progress">
-      <div class="pillars-chain__dots" id="pillarsChainDots" role="tablist">
-        {%- for block in section.blocks -%}
-          <button type="button" class="pillars-chain__dot{% if forloop.first %} is-active{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Slide {{ forloop.index }}" data-dot-index="{{ forloop.index0 }}">
-            <span class="pillars-chain__dot-fill"></span>
-          </button>
-        {%- endfor -%}
-      </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
-/* ───── Testimonial Chain Shell ───── */
-.pillars--chain {
+/* ───── Scroll rail shell ─────
+   Same mechanics as the homepage Collection rail (.shop__rail): native
+   horizontal overflow with snap points and a hidden scrollbar. No JS —
+   scroll, trackpad swipe and touch all move it directly. */
+.pillars--rail {
   overflow: hidden;
   position: relative;
   padding-top: clamp(36px, 4vw, 56px);
-  padding-bottom: clamp(90px, 10vw, 130px) !important;
+  padding-bottom: clamp(56px, 7vw, 88px) !important;
 }
-.pillars--chain .pillars__intro {
+.pillars--rail .pillars__intro {
   margin: 0 0 clamp(20px, 3vw, 32px) !important;
 }
 
-.pillars-chain {
-  max-width: 1360px;
-  margin: 0 auto;
+.pillars-rail-wrap {
+  margin: 0 calc(var(--pad-x) * -1);
   position: relative;
+  /* Softens the cards as they run off each edge, same as the Collection rail. */
+  mask-image: linear-gradient(90deg, transparent 0, black 2%, black 98%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 2%, black 98%, transparent 100%);
 }
-
-.pillars-chain__stage {
-  position: relative;
-  height: clamp(400px, 47vh, 460px);
+.pillars-rail {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1200px;
-  /* Drag-to-slide. The live offset is applied to the stage rather than
-     to individual cards, so it can't fight the per-state transforms each
-     card already carries (is-active / is-prev-1 / is-next-1 / …). */
-  cursor: grab;
-  touch-action: pan-y;
-  user-select: none;
-  -webkit-user-select: none;
-  transition: transform .45s cubic-bezier(.2,.8,.2,1);
+  gap: clamp(18px, 2vw, 28px);
+  padding: 8px var(--pad-x) 28px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--pad-x);
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  align-items: stretch;
 }
-.pillars-chain__stage.is-dragging {
-  cursor: grabbing;
-  transition: none;
-}
-/* Browsers natively drag images, which hijacks the gesture. */
-.pillars-chain__stage img {
-  -webkit-user-drag: none;
-  user-drag: none;
-  pointer-events: none;
-}
+.pillars-rail::-webkit-scrollbar { display: none; }
 
-/* ───── Base Card ───── */
+/* ───── Card ───── */
 .pchain-card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform .65s cubic-bezier(.2,.8,.2,1), opacity .55s ease, width .65s cubic-bezier(.2,.8,.2,1), height .65s cubic-bezier(.2,.8,.2,1), box-shadow .55s ease;
-  border-radius: 28px;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-/* ───── Active Center Card ───── */
-.pchain-card.is-active {
-  width: clamp(340px, 64vw, 780px);
-  height: 100%;
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-  z-index: 10;
+  flex: 0 0 clamp(300px, 78vw, 620px);
+  scroll-snap-align: start;
+  height: clamp(340px, 42vh, 420px);
   background: var(--c-cream);
   border: 1px solid var(--c-line);
-  box-shadow: 0 24px 60px -20px rgba(26,58,45,.2), 0 8px 24px -10px rgba(26,58,45,.08);
-  pointer-events: auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 20px 45px -20px rgba(26,58,45,.16);
+  transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
 }
-.pchain-card.is-active .pchain-card__body {
+.pchain-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 54px -18px rgba(26,58,45,.24);
+}
+.pchain-card__body {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  padding: 24px 28px 24px 40px;
-  gap: 32px;
-  opacity: 1;
+  padding: 24px 24px 24px 32px;
+  gap: clamp(20px, 2.4vw, 32px);
   box-sizing: border-box;
-  transition: opacity .4s ease .15s;
-}
-.pchain-card.is-active .pchain-card__pill {
-  display: none;
 }
 
-/* ───── Flanking Cards ("The Chain") ───── */
-.pchain-card:not(.is-active) {
-  cursor: pointer;
-  z-index: 4;
-  border-radius: 24px;
-  border: 2px solid rgba(249,244,237,.95);
-  box-shadow: 0 16px 36px -12px rgba(26,58,45,.18);
-  /* Transparent for the same reason as .pchain-card__media — the pill
-     image is contain-fitted, so a dark fill shows as an edge. The
-     no-image fallback carries its own background. */
-  background: transparent;
-}
-.pchain-card:not(.is-active):hover {
-  filter: brightness(1.05);
-  box-shadow: 0 20px 42px -10px rgba(26,58,45,.28);
-}
-.pchain-card:not(.is-active) .pchain-card__body {
-  display: none;
-}
-.pchain-card:not(.is-active) .pchain-card__pill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Immediate Left / Right Flank (Native 2:3 aspect ratio) */
-.pchain-card.is-prev-1 {
-  height: clamp(270px, 34vh, 330px);
-  aspect-ratio: 2 / 3;
-  width: auto;
-  transform: translate(calc(-50% - clamp(220px, 36vw, 460px)), -50%) scale(1);
-  opacity: 0.95;
-  z-index: 6;
-}
-.pchain-card.is-next-1 {
-  height: clamp(270px, 34vh, 330px);
-  aspect-ratio: 2 / 3;
-  width: auto;
-  transform: translate(calc(-50% + clamp(220px, 36vw, 460px)), -50%) scale(1);
-  opacity: 0.95;
-  z-index: 6;
-}
-
-/* Far Left / Right Flank (for 4+ items) */
-.pchain-card.is-prev-2 {
-  height: clamp(220px, 28vh, 270px);
-  aspect-ratio: 2 / 3;
-  width: auto;
-  transform: translate(calc(-50% - clamp(290px, 44vw, 560px)), -50%) scale(0.95);
-  opacity: 0.65;
-  z-index: 3;
-}
-.pchain-card.is-next-2 {
-  height: clamp(220px, 28vh, 270px);
-  aspect-ratio: 2 / 3;
-  width: auto;
-  transform: translate(calc(-50% + clamp(290px, 44vw, 560px)), -50%) scale(0.95);
-  opacity: 0.65;
-  z-index: 3;
-}
-
-.pchain-card.is-hidden {
-  transform: translate(-50%, -50%) scale(0.7);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ───── Card Content Internals ───── */
+/* ───── Card content ───── */
 .pchain-card__content {
   flex: 1 1 auto;
   display: flex;
@@ -251,33 +136,30 @@
   display: block;
 }
 .pchain-card__content .pillar__title {
-  font-size: clamp(24px, 2.3vw, 36px);
+  font-size: clamp(24px, 2.3vw, 34px);
   line-height: 1.1;
   letter-spacing: -.01em;
   margin: 0 0 14px;
 }
 .pchain-card__content .pillar__lede {
-  font-size: clamp(15.5px, 1.3vw, 18.5px);
-  line-height: 1.45;
+  font-size: clamp(15.5px, 1.3vw, 17.5px);
+  line-height: 1.5;
   margin: 0;
   max-width: 42ch;
 }
-.pchain-card__content .pillar__list {
-  margin-top: 14px;
-}
+.pchain-card__content .pillar__list { margin-top: 14px; }
 
-/* ───── Card Media (Right Column - Exact 2:3 uncropped ratio) ───── */
+/* ───── Card media (exact 2:3, uncropped) ─────
+   No dark fill behind the image: the photos are exactly 2:3 like this
+   box, but object-fit: contain still letterboxes by a sub-pixel sliver
+   on fractional heights, and a dark fill makes that read as a black edge. */
 .pchain-card__media {
   flex: 0 0 auto;
   position: relative;
   height: 100%;
   aspect-ratio: 2 / 3;
-  border-radius: 20px;
+  border-radius: 18px;
   overflow: hidden;
-  /* No dark fill behind the image. The photos are exactly 2:3, same as
-     this box, but object-fit: contain still letterboxes by a sub-pixel
-     sliver once the computed height lands on a fractional value — with a
-     forest fill behind it that sliver reads as a thin black edge. */
   background: transparent;
   display: flex;
   align-items: center;
@@ -288,7 +170,7 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  border-radius: 20px;
+  border-radius: 18px;
 }
 .pchain-card__placeholder {
   width: 100%;
@@ -300,121 +182,29 @@
   color: var(--c-cream);
   font-family: var(--ff-display);
   font-size: 56px;
+  border-radius: 18px;
 }
 
-/* ───── Flanking Pill Image (Exact 2:3 uncropped ratio) ───── */
-.pchain-card__pill-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  border-radius: 22px;
-}
-.pchain-card__pill-fallback {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--c-forest);
-  color: var(--c-cream);
-  font-family: var(--ff-display);
-  font-size: 24px;
-}
-
-/* ───── Automated Progress Indicators ───── */
-.pillars-chain__controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 24px;
-  position: relative;
-  z-index: 20;
-}
-.pillars-chain__dots {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.pillars-chain__dot {
-  padding: 0;
-  border: 0;
-  background: rgba(26,58,45,.28);
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: width .35s cubic-bezier(.2,.8,.2,1), background .3s ease;
-}
-.pillars-chain__dot:hover {
-  background: rgba(26,58,45,.5);
-}
-.pillars-chain__dot.is-active {
-  width: 48px;
-  height: 10px;
-  background: rgba(26,58,45,.16);
-}
-.pillars-chain__dot-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0%;
-  background: var(--c-forest);
-  border-radius: 5px;
-}
-
-/* ───── Responsive Breakpoints ───── */
-@media (max-width: 1024px) {
-  .pillars-chain__stage {
-    height: 420px;
-  }
-  .pchain-card.is-active {
-    width: 86vw;
-  }
-  .pchain-card.is-active .pchain-card__body {
-    padding: 20px 20px 20px 24px;
-    gap: 20px;
-  }
-  .pchain-card.is-prev-1,
-  .pchain-card.is-next-1 {
-    display: none;
-  }
-}
-
+/* ───── Responsive ───── */
 @media (max-width: 768px) {
-  .pillars--chain {
-    padding-bottom: 72px !important;
-  }
-  .pillars-chain__stage {
+  .pchain-card {
+    flex-basis: 84vw;
     height: auto;
   }
-  .pchain-card.is-active {
-    width: 100%;
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    height: auto;
-    border-radius: 24px;
-  }
-  .pchain-card.is-active .pchain-card__body {
+  .pchain-card__body {
     flex-direction: column;
-    padding: 24px 20px;
+    align-items: flex-start;
+    padding: 22px 20px 26px;
     gap: 20px;
   }
   .pchain-card__media {
-    width: 100%;
-    max-width: 260px;
-    height: auto;
-    aspect-ratio: 2 / 3;
     order: -1;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    align-self: center;
   }
-  .pchain-card:not(.is-active) {
-    display: none;
-  }
+  .pchain-card__content { padding: 0; }
 }
 {% endstylesheet %}
 
