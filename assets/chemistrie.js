@@ -883,7 +883,10 @@ document.querySelectorAll('a[href="#ritual-finder-app"]').forEach(function (anch
   var dragStartX = 0;
   var dragDelta = 0;
   var isDragging = false;
+  var dragRaf = null;
   var DRAG_THRESHOLD = 40;
+  var DRAG_DAMPING = 0.55;
+  var settleTimeout = null;
 
   var stage = document.getElementById("pillarsChainStage");
   if (stage) {
@@ -893,6 +896,8 @@ document.querySelectorAll('a[href="#ritual-finder-app"]').forEach(function (anch
       dragMoved = false;
       dragStartX = e.clientX;
       dragDelta = 0;
+      stage.classList.remove("is-settling");
+      clearTimeout(settleTimeout);
       stage.classList.add("is-dragging");
       pauseTimer();
     });
@@ -901,17 +906,35 @@ document.querySelectorAll('a[href="#ritual-finder-app"]').forEach(function (anch
       if (!isDragging) return;
       dragDelta = e.clientX - dragStartX;
       if (Math.abs(dragDelta) > 6) dragMoved = true;
+
+      /* Track the cursor 1:1 (damped) every frame, so the chain visibly
+         follows the drag instead of staying frozen until release. No CSS
+         transition while this runs — one would fight the per-frame
+         updates and make the follow feel laggy instead of direct. */
+      cancelAnimationFrame(dragRaf);
+      dragRaf = requestAnimationFrame(function () {
+        stage.style.transform = "translateX(" + (dragDelta * DRAG_DAMPING) + "px)";
+      });
     });
 
     function endChainDrag() {
       if (!isDragging) return;
       isDragging = false;
       stage.classList.remove("is-dragging");
+      cancelAnimationFrame(dragRaf);
 
       if (Math.abs(dragDelta) > DRAG_THRESHOLD) {
         setSlide(activeIndex + (dragDelta < 0 ? 1 : -1));
       }
       resumeTimer();
+
+      /* Ease the chain back to rest instead of snapping it to 0 instantly —
+         this is the one moment a transition helps rather than fighting the
+         drag, since nothing is updating the transform every frame anymore. */
+      stage.classList.add("is-settling");
+      stage.style.transform = "";
+      clearTimeout(settleTimeout);
+      settleTimeout = setTimeout(function () { stage.classList.remove("is-settling"); }, 420);
 
       /* Clear on the next frame so the click that follows this pointerup
          still sees dragMoved and suppresses itself. */

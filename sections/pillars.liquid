@@ -116,6 +116,10 @@
   -webkit-user-select: none;
 }
 .pillars-chain__stage.is-dragging { cursor: grabbing; }
+/* Only the release "settle" gets a transition — while dragging, JS sets
+   this transform every pointermove frame, and a transition there would
+   lag behind the cursor instead of tracking it directly. */
+.pillars-chain__stage.is-settling { transition: transform .4s cubic-bezier(.2,.8,.2,1); }
 /* Browsers natively drag images, which would hijack the gesture. */
 .pillars-chain__stage img { -webkit-user-drag: none; user-drag: none; }
 
