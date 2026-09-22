@@ -50,8 +50,8 @@
   gsap.from(".hero__eyebrow", { opacity: 0, y: 20, duration: 1, delay: 0.15, ease: "power2.out" });
   gsap.from(".hero__title-row", { opacity: 0, y: 40, duration: 1.1, delay: 0.3, ease: "power3.out", stagger: 0.12 });
   gsap.from(".hero__deck", { opacity: 0, y: 20, duration: 1, delay: 0.9, ease: "power2.out" });
-  gsap.from(".hero__cta-row > *", { opacity: 0, y: 20, duration: 1, delay: 1.1, ease: "power2.out", stagger: 0.1 });
-  gsap.from(".hero__trust > *", { opacity: 0, y: 16, duration: 0.9, delay: 1.3, ease: "power2.out", stagger: 0.08 });
+  gsap.from(".hero__cta-row > *", { opacity: 0, y: 20, duration: 0.7, delay: 0.5, ease: "power2.out", stagger: 0.1 });
+  gsap.from(".hero__trust > *", { opacity: 0, y: 16, duration: 0.7, delay: 0.7, ease: "power2.out", stagger: 0.08 });
   gsap.from(".hero__meta", { opacity: 0, duration: 1, delay: 0.5, ease: "power2.out" });
   gsap.from(".hero__bottle-wrap", { opacity: 0, y: 50, scale: 0.94, duration: 1.4, delay: 0.5, ease: "power3.out" });
   gsap.from(".hero__spec-card", { opacity: 0, y: 30, scale: 0.9, duration: 1, delay: 1.1, ease: "power2.out", stagger: 0.15 });
