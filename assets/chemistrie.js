@@ -185,7 +185,7 @@
   /* ───── Pharmacists Statement — body fades in left to right as it scrolls into view ───── */
   if (window.ScrollTrigger) {
     gsap.from(".pstate__body", {
-      opacity: 0, x: -50, duration: 1, ease: "power2.out",
+      opacity: 0, x: -50, duration: 1, delay: 0.25, ease: "power2.out",
       scrollTrigger: { trigger: ".pstate", start: "top 75%", once: true },
     });
   }
