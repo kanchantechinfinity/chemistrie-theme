@@ -44,12 +44,13 @@
 
 .pstate__heading {
   margin: 14px 0 0;
-  font-size: clamp(30px, 3.3vw, 46px);
+  font-size: clamp(27px, 2.9vw, 40px);
   line-height: 1.14;
 }
 
 .pstate__body {
   margin: 0;
+  align-self: center;
   padding-top: clamp(8px, 0.9vw, 12px);
   padding-left: clamp(20px, 2.6vw, 40px);
   border-left: 1px solid var(--c-line);
@@ -63,6 +64,7 @@
 @media (max-width: 860px) {
   .pstate__inner { grid-template-columns: 1fr; gap: 28px; }
   .pstate__body {
+    align-self: auto;
     padding-left: 0;
     padding-top: 24px;
     border-left: 0;
