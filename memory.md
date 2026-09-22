@@ -3301,3 +3301,6 @@ Follow-up to the top-align fix ([[a12501f]]-ish, prior commit): user wanted the 
 
 ## 2026-09-22 — Reduce hero top padding (5d51f26)
 User screenshot showed a large green gap between the nav and "Some rituals don't need..." heading. Two contributors were stacking: `.hero`'s own top padding (clamp 24-52px) and `.hero__inner`'s top margin (clamp 36-68px, added just before for the copy-nudge-down request) — combined into a much bigger gap than either alone. Reduced both: `.hero` padding-top -> clamp(12px,1.8vw,28px), `.hero__inner` margin-top -> clamp(18px,2.4vw,36px).
+
+## 2026-09-22 — Hero trust strip nudged up (d46543c)
+User wanted the "2,400+ / 28 / ★4.96" trust strip block (bottom of hero copy) moved slightly up. Reduced its spacing: `.hero__trust` margin-top clamp(8,1.5vw,16) -> clamp(2px,0.6vw,8px), padding-top clamp(20,3vw,32) -> clamp(14px,2vw,22px) — keeps the divider line, just tightens the gap above and below it.
