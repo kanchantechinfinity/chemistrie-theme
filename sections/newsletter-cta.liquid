@@ -62,7 +62,7 @@
 }
 
 .circle__copy { min-width: 0; }
-.circle__copy .cta__sub { margin-left: 0; margin-right: 0; }
+.circle__copy .cta__sub { max-width: none; margin: 20px 0 0; }
 
 .circle__panel { min-width: 0; }
 
@@ -140,7 +140,7 @@
 @media (max-width: 860px) {
   .circle__card { text-align: center; }
   .circle__grid { grid-template-columns: 1fr; gap: 36px; }
-  .circle__copy .cta__sub { margin: 28px auto 0; }
+  .circle__copy .cta__sub { max-width: 48ch; margin: 28px auto 0; }
   .circle__panel { display: flex; justify-content: center; }
   .circle__form { max-width: 420px; }
   .cta--circle .cta__consent { text-align: center; }
