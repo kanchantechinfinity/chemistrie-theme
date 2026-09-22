@@ -3258,3 +3258,8 @@ Task: "Frequently asked questions" heading was wrapping to two lines; also revam
 
 ## 2026-09-22 — Fix: FAQ open row showed a solid sage strip instead of text (bf46972)
 User screenshot: clicking a FAQ question replaced the text with a solid green/sage bar. Real bug, not a rendering guess — the open-state selector list `.cfaq-item__q[aria-expanded="true"] .cfaq-item__num, ...__question, ...__icon-line { color: var(--c-sage); background: var(--c-sage); }` (added in the FAQ redesign, 6dc7f4b) applied `background: var(--c-sage)` to ALL three selectors, including `.cfaq-item__question` — meant to only recolor icon-line bars' fill. That painted the full-width flex-grown question span solid sage with sage text on top of it (invisible). Split into two rules: color-only on `__num`/`__question`, background only on `__icon-line`.
+
+## 2026-09-22 — FAQ heading sized to match Reach Us (6c76e02)
+Task: "Frequently asked questions" heading (shrunk to clamp(15,5vw,36) in the earlier one-line fix) should be the same size as "Reach Us" or just slightly smaller.
+- Reach Us uses `.display-h`: clamp(40px,6vw,88px), line-height .98, letter-spacing -.015em. Matched those secondary properties on `.contact-faq__heading` and raised its desktop/tablet size to clamp(30px,5vw,80px) — same shape, capped a bit under Reach Us's max.
+- That size alone would overflow one line on phones again, so kept a `@media (max-width:640px)` step-down to clamp(13px,5vw,26px), re-verified by hand against 320/360/414/480/640px viewport widths (all ≥13% width margin) so the earlier one-line fix ([[contact-faq-one-line-heading]] if referenced later) doesn't regress.
