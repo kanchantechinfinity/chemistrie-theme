@@ -852,6 +852,7 @@ document.querySelectorAll('a[href="#ritual-finder-app"]').forEach(function (anch
 
   cards.forEach(function (card) {
     card.addEventListener("click", function () {
+      if (dragMoved) return;
       if (card.classList.contains("is-active")) return;
       var idx = parseInt(card.getAttribute("data-chain-index"), 10);
       setSlide(idx);
@@ -865,27 +866,53 @@ document.querySelectorAll('a[href="#ritual-finder-app"]').forEach(function (anch
     });
   });
 
-  var touchStartX = 0;
-  var touchEndX = 0;
+  /* Manual sliding — one Pointer Events implementation covers mouse, touch
+     and pen, so there's no separate touch path that could double-fire on
+     touch devices (they emit pointer events too). dragMoved suppresses a
+     flanking card's own click when the pointerup that ends a drag happens
+     to land on one, so a drag never also jumps straight to that card. */
+  var dragMoved = false;
+  var dragStartX = 0;
+  var dragDelta = 0;
+  var isDragging = false;
+  var DRAG_THRESHOLD = 40;
+
   var stage = document.getElementById("pillarsChainStage");
   if (stage) {
-    stage.addEventListener("touchstart", function (e) {
-      touchStartX = e.changedTouches[0].screenX;
+    stage.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      isDragging = true;
+      dragMoved = false;
+      dragStartX = e.clientX;
+      dragDelta = 0;
+      stage.classList.add("is-dragging");
       pauseTimer();
-    }, { passive: true });
+    });
 
-    stage.addEventListener("touchend", function (e) {
-      touchEndX = e.changedTouches[0].screenX;
-      var swipeDist = touchEndX - touchStartX;
-      if (Math.abs(swipeDist) > 40) {
-        if (swipeDist < 0) {
-          setSlide(activeIndex + 1);
-        } else {
-          setSlide(activeIndex - 1);
-        }
+    stage.addEventListener("pointermove", function (e) {
+      if (!isDragging) return;
+      dragDelta = e.clientX - dragStartX;
+      if (Math.abs(dragDelta) > 6) dragMoved = true;
+    });
+
+    function endChainDrag() {
+      if (!isDragging) return;
+      isDragging = false;
+      stage.classList.remove("is-dragging");
+
+      if (Math.abs(dragDelta) > DRAG_THRESHOLD) {
+        setSlide(activeIndex + (dragDelta < 0 ? 1 : -1));
       }
       resumeTimer();
-    }, { passive: true });
+
+      /* Clear on the next frame so the click that follows this pointerup
+         still sees dragMoved and suppresses itself. */
+      requestAnimationFrame(function () { dragMoved = false; });
+    }
+
+    stage.addEventListener("pointerup", endChainDrag);
+    stage.addEventListener("pointercancel", endChainDrag);
+    stage.addEventListener("pointerleave", endChainDrag);
   }
 
   updateCardClasses(0);

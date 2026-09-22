@@ -11,7 +11,7 @@
     {%- endif -%}
   </div>
 
-  <div class="pillars-chain" id="pillarsChain" data-autoplay-speed="5000">
+  <div class="pillars-chain" id="pillarsChain" data-autoplay-speed="3800">
     <div class="pillars-chain__stage" id="pillarsChainStage">
       {%- for block in section.blocks -%}
         {%- liquid
@@ -51,11 +51,6 @@
                   <span>{{ block.settings.crest_mono | default: "Rx" }}</span>
                 </div>
               {%- endif -%}
-              {%- if block.settings.crest_mono != blank -%}
-                <div class="pchain-card__badge-overlay">
-                  <span class="pchain-card__badge-mono">{{ block.settings.crest_mono }}</span>
-                </div>
-              {%- endif -%}
             </div>
           </div>
 
@@ -68,7 +63,6 @@
                 <span>{{ block.settings.crest_mono | default: "Rx" }}</span>
               </div>
             {%- endif -%}
-            <span class="pchain-card__pill-num">0{{ forloop.index }}</span>
           </div>
 
         </article>
@@ -113,7 +107,17 @@
   align-items: center;
   justify-content: center;
   perspective: 1200px;
+  /* Manual drag-to-slide affordance (see the pointer handlers in
+     chemistrie.js). touch-action: pan-y leaves vertical page scroll to
+     the browser and claims horizontal movement for the drag gesture. */
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
+.pillars-chain__stage.is-dragging { cursor: grabbing; }
+/* Browsers natively drag images, which would hijack the gesture. */
+.pillars-chain__stage img { -webkit-user-drag: none; user-drag: none; }
 
 /* ───── Base card ───── */
 .pchain-card {
@@ -307,25 +311,6 @@
   font-family: var(--ff-display);
   font-size: 56px;
 }
-.pchain-card__badge-overlay {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  background: rgba(26,58,45,.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: var(--c-cream);
-  padding: 6px 14px;
-  border-radius: 100px;
-  border: 1px solid rgba(249,244,237,.25);
-}
-.pchain-card__badge-mono {
-  font-family: var(--ff-display);
-  font-size: 13px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
 /* ───── Flanking pill image ───── */
 .pchain-card__pill-img {
   width: 100%;
@@ -344,23 +329,6 @@
   font-family: var(--ff-display);
   font-size: 24px;
 }
-.pchain-card__pill-num {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(26,58,45,.75);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  color: var(--c-cream);
-  font-family: var(--ff-display);
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  letter-spacing: .05em;
-  pointer-events: none;
-}
-
 /* ───── Automated progress indicators ───── */
 .pillars-chain__controls {
   display: flex;
