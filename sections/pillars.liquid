@@ -100,6 +100,24 @@
   align-items: center;
   justify-content: center;
   perspective: 1200px;
+  /* Drag-to-slide. The live offset is applied to the stage rather than
+     to individual cards, so it can't fight the per-state transforms each
+     card already carries (is-active / is-prev-1 / is-next-1 / …). */
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1);
+}
+.pillars-chain__stage.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+/* Browsers natively drag images, which hijacks the gesture. */
+.pillars-chain__stage img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
 }
 
 /* ───── Base Card ───── */
@@ -149,7 +167,10 @@
   border-radius: 24px;
   border: 2px solid rgba(249,244,237,.95);
   box-shadow: 0 16px 36px -12px rgba(26,58,45,.18);
-  background: var(--c-forest);
+  /* Transparent for the same reason as .pchain-card__media — the pill
+     image is contain-fitted, so a dark fill shows as an edge. The
+     no-image fallback carries its own background. */
+  background: transparent;
 }
 .pchain-card:not(.is-active):hover {
   filter: brightness(1.05);
@@ -253,7 +274,11 @@
   aspect-ratio: 2 / 3;
   border-radius: 20px;
   overflow: hidden;
-  background: var(--c-forest);
+  /* No dark fill behind the image. The photos are exactly 2:3, same as
+     this box, but object-fit: contain still letterboxes by a sub-pixel
+     sliver once the computed height lands on a fractional value — with a
+     forest fill behind it that sliver reads as a thin black edge. */
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;

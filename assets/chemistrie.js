@@ -235,9 +235,14 @@
     container.addEventListener("mouseenter", pauseTimer);
     container.addEventListener("mouseleave", resumeTimer);
 
+    /* Set true once a pointer drag actually moves, so the release doesn't
+       also fire the card's click handler and jump somewhere unintended. */
+    var dragMoved = false;
+
     // Clicking flanking cards switches directly
     cards.forEach(function(card) {
       card.addEventListener("click", function() {
+        if (dragMoved) return;
         if (card.classList.contains("is-active")) return;
         var idx = parseInt(card.getAttribute("data-chain-index"), 10);
         setSlide(idx);
@@ -252,28 +257,56 @@
       });
     });
 
-    // Touch swipe support for mobile
-    var touchStartX = 0;
-    var touchEndX = 0;
+    /* Drag to slide — one Pointer Events implementation covers mouse, touch
+       and pen, so there's no separate touch path double-firing on mobile.
+       The stage translates with the cursor (damped) for live feedback and
+       snaps to the next/previous card on release. */
     var stage = document.getElementById("pillarsChainStage");
     if (stage) {
-      stage.addEventListener("touchstart", function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-        pauseTimer();
-      }, { passive: true });
+      var dragStartX = 0;
+      var dragDelta = 0;
+      var isDragging = false;
+      var DRAG_THRESHOLD = 45;
+      var DRAG_DAMPING = 0.28;
+      var DRAG_MAX = 70;
 
-      stage.addEventListener("touchend", function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        var swipeDist = touchEndX - touchStartX;
-        if (Math.abs(swipeDist) > 40) {
-          if (swipeDist < 0) {
-            setSlide(activeIndex + 1);
-          } else {
-            setSlide(activeIndex - 1);
-          }
+      stage.addEventListener("pointerdown", function(e) {
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        isDragging = true;
+        dragMoved = false;
+        dragStartX = e.clientX;
+        dragDelta = 0;
+        stage.classList.add("is-dragging");
+        pauseTimer();
+      });
+
+      stage.addEventListener("pointermove", function(e) {
+        if (!isDragging) return;
+        dragDelta = e.clientX - dragStartX;
+        if (Math.abs(dragDelta) > 6) dragMoved = true;
+        var offset = Math.max(-DRAG_MAX, Math.min(DRAG_MAX, dragDelta * DRAG_DAMPING));
+        stage.style.transform = "translateX(" + offset + "px)";
+      });
+
+      function endChainDrag() {
+        if (!isDragging) return;
+        isDragging = false;
+        stage.classList.remove("is-dragging");
+        stage.style.transform = "";
+
+        if (Math.abs(dragDelta) > DRAG_THRESHOLD) {
+          setSlide(dragDelta < 0 ? activeIndex + 1 : activeIndex - 1);
         }
         resumeTimer();
-      }, { passive: true });
+
+        /* Clear on the next frame so the click that follows this release
+           still sees dragMoved and suppresses itself. */
+        requestAnimationFrame(function() { dragMoved = false; });
+      }
+
+      stage.addEventListener("pointerup", endChainDrag);
+      stage.addEventListener("pointercancel", endChainDrag);
+      stage.addEventListener("pointerleave", endChainDrag);
     }
 
     // Initialize state & start automatic cycling
