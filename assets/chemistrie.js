@@ -117,9 +117,9 @@
   }
 
   /* ───── Pillars — scroll rail ─────
-     The autoplay/dots/drag carousel that used to live here is gone: the
-     section is now a native overflow-x scroll rail (see pillars.liquid),
-     so it needs no JS to move. Only the entrance reveal remains. */
+     The rail is a native overflow-x scroll container (see pillars.liquid),
+     so manual scroll/swipe needs no JS. This adds the automatic sliding on
+     top and gets out of the way the moment anyone touches it. */
   if (window.ScrollTrigger) {
     gsap.fromTo(".pillars-rail-wrap",
       { opacity: 0, y: 40 },
@@ -127,6 +127,74 @@
         scrollTrigger: { trigger: ".pillars-rail-wrap", start: "top 85%", once: true } }
     );
   }
+
+  (function initPillarsRailAutoplay() {
+    var rail = document.getElementById("pillarsRail");
+    if (!rail) return;
+
+    var cards = $$(".pchain-card", rail);
+    if (cards.length < 2) return;
+
+    var INTERVAL = 4000;
+    var RESUME_DELAY = 1200;
+
+    /* Honour an OS-level reduced-motion preference. */
+    var mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq && mq.matches) return;
+
+    var resumeTimer = null;
+    var paused = false;
+    /* Defaults to true so a missed observer callback degrades to "always
+       sliding" rather than "never sliding". */
+    var visible = true;
+
+    function advance() {
+      if (paused || !visible) return;
+
+      var maxScroll = rail.scrollWidth - rail.clientWidth;
+      if (maxScroll <= 1) return;   // everything already fits; nothing to slide
+
+      if (rail.scrollLeft >= maxScroll - 4) {
+        rail.scrollTo({ left: 0, behavior: "smooth" });
+        return;
+      }
+
+      /* Measure one card + gap from the DOM rather than assuming a width,
+         so this stays correct across the responsive card sizes. */
+      var stride = cards[1].offsetLeft - cards[0].offsetLeft;
+      rail.scrollBy({ left: stride > 0 ? stride : rail.clientWidth * 0.8, behavior: "smooth" });
+    }
+
+    function pause() {
+      paused = true;
+      clearTimeout(resumeTimer);
+    }
+
+    /* Brief grace period after an interaction so autoplay doesn't snatch
+       the rail back the instant someone stops scrolling. */
+    function resumeSoon() {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(function () { paused = false; }, RESUME_DELAY);
+    }
+
+    rail.addEventListener("mouseenter", pause);
+    rail.addEventListener("mouseleave", resumeSoon);
+    rail.addEventListener("focusin", pause);
+    rail.addEventListener("focusout", resumeSoon);
+    rail.addEventListener("pointerdown", pause);
+    rail.addEventListener("pointerup", resumeSoon);
+    rail.addEventListener("touchstart", pause, { passive: true });
+    rail.addEventListener("touchend", resumeSoon, { passive: true });
+
+    setInterval(advance, INTERVAL);
+
+    /* Only slide while the section is actually on screen. */
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { visible = entry.isIntersecting; });
+      }, { threshold: 0.25 }).observe(rail);
+    }
+  })();
 
   /* ───── Shop — product reveal ───── */
   if (window.ScrollTrigger) {
