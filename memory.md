@@ -2892,3 +2892,350 @@ orphaned chain selectors remained in the stylesheet.
 uncommitted tweak from the other agent at commit time (they added
 `padding-top` to `.pstate__body`) — checked `git status` and staged only
 my two files by name.
+
+## Build log — 2026-09-22: Trust Signals reverted to the automatic carousel (commit `54892c8`)
+User: "revert and make jt back to automatic". Only one coherent reading —
+reverting my *last* commit would have removed automatic behaviour, which
+contradicts "back to automatic". So: undo the whole scroll-rail detour
+and restore the auto-playing Testimonial Chain.
+
+**Restored from `c877785`, not `cca7cb0`** — deliberately. `cca7cb0` was
+the last chain state, but it contained the pointer-drag the user had
+already rejected ("i didnt want it to drag"). `c877785` is the state just
+before that went in, so reverting there avoids reintroducing something
+they'd explicitly turned down. Then re-applied only the dark-edge fix on
+top (the two `var(--c-forest)` fills behind contain-fitted images →
+`transparent`), since that was a separate request they did want.
+
+**Verified rather than assumed**: `git diff c877785 -- sections/pillars.liquid`
+shows those two background declarations as the entire delta, and the JS
+chain block diffs clean against `c877785`. Also grepped both files for
+orphan rail references (`pillars-rail`, `pillarsRail`,
+`initPillarsRailAutoplay`, `autoplay_speed`) — none left.
+
+**Technique worth reusing for surgical restores**: splicing an old block
+back into a file that's changed a lot elsewhere. Hardcoded line numbers
+failed twice (off-by-one against `sed` output); finding boundaries by
+**marker search** (`findIndex(l => l.includes('Testimonial Chain'))` and
+the next section's comment) worked first time and is resilient to the
+file shifting. Reach for marker-based slicing, not line numbers.
+
+**Net effect on the section's history**: tabs card → carousel →
+testimonial chain → (my rail detour) → back to testimonial chain. The
+rail work (30ed4d5, 366ba0a, and the rail half of the other agent's
+909633e) is fully undone; the dark-edge fix survives.
+
+### Correction: over-reverted the Trust Signals rail (commits `54892c8` → `ef84476`)
+"revert and make jt back to automatic" — I read this as "undo the rail
+detour, restore the auto-playing carousel" and reverted all the way back
+to the Testimonial Chain (`54892c8`). Wrong. User meant **revert the last
+commit only** (`366ba0a`, the auto-scroll), keeping the scroll rail.
+
+Corrected in `ef84476`: back to the rail exactly as at `909633e`
+(horizontal scroll + snap, softened `.10`/`.16` shadow, transparent image
+backgrounds), with the auto-scroll JS removed **and its plumbing cleaned
+up too** — the `data-autoplay-speed` attribute and the autoplay-interval
+schema `range` setting, which would otherwise have sat in the theme
+editor doing nothing.
+
+**Where the misread came from**: the phrasing looked self-contradictory
+("revert" my last change would *remove* automatic, yet they said "back to
+automatic"), and I resolved that contradiction by assuming the larger
+revert. The safer resolution when an instruction seems internally
+contradictory is to ask which of the two readings is meant — I'd asked on
+the previous turn (AskUserQuestion, rail vs chain) and it worked well;
+skipping it here cost a full round-trip and a wasted 400-line revert.
+**When a revert instruction is ambiguous about scope, confirm the scope —
+reverting too far destroys work that was wanted.**
+
+### Resolution: rail + automatic sliding (commit `6f3bb7e`)
+"cant see the automatic sliding" — correct, because the revert they'd
+asked for (`ef84476`) had stripped it. Re-added autoplay **on top of**
+the rail, which is the combination they actually wanted all along:
+manual scroll/swipe still native, autoplay layered over it.
+
+Behaviour: one card every 4s, step measured from the real gap between
+two cards (`cards[1].offsetLeft - cards[0].offsetLeft`) so it survives
+the responsive card widths, looping to the start at the end. Pauses on
+hover/focus/pointer/touch with a 1.2s resume grace.
+
+**Two fixes over the first attempt (`366ba0a`), both guessing at why it
+may not have been visible:**
+1. `visible` now **defaults to `true`** rather than `false`. Previously a
+   missed/never-firing IntersectionObserver callback meant `visible`
+   stayed false forever and nothing ever slid — a silent total failure.
+   Now the failure mode degrades to "slides even when off-screen", which
+   is harmless.
+2. **Dropped the `wheel` handler.** With Lenis smooth scroll active,
+   wheel events fire continuously while scrolling the page; if the cursor
+   happened to sit over the rail, each one called `pause()` +
+   `resumeSoon()`, pushing the resume a full interval out and effectively
+   holding autoplay paused indefinitely.
+
+Also dropped the `autoplay_speed` schema setting in favour of a script
+constant — it had already proven to be dead weight (left stranded in the
+theme editor when autoplay was reverted).
+
+**Note on when autoplay legitimately does nothing**: the `maxScroll <= 1`
+guard means no sliding when all cards already fit without overflow. With
+3 cards at `clamp(300px, 78vw, 620px)` that's ~1.9k px of content, so on
+a very wide (2560px) monitor there's no overflow and correctly no
+movement. Worth remembering before debugging a "not sliding" report —
+check the viewport width first.
+
+### Root-cause fix: autoplay isolated from the main IIFE (commit `ad61594`)
+Third report of "not sliding" after `6f3bb7e`. Stopped tweaking the same
+logic and looked for why it might never execute at all.
+
+**Found a real structural bug, unrelated to the autoplay logic itself**:
+the entire file is one `(function(){...})()` starting with
+`if (!window.gsap) return;`. Autoplay was defined ~600 lines into that
+same IIFE — it has zero functional dependency on GSAP, but was gated
+behind that check anyway, and behind every other animation block between
+the top of the file and its own position. Two silent-failure paths this
+created: (1) if the GSAP CDN script (`unpkg.com`, external, no local
+fallback) fails to load for any reason, the entire IIFE body after that
+line never runs; (2) if *any* earlier synchronous statement in ~600 lines
+of animation code throws, JS execution of the rest of the function stops
+there — no console error visibly connects to "pillars", making it
+genuinely hard to diagnose from a bug report alone.
+
+**Fix**: moved the autoplay IIFE to a fully standalone top-level script
+block at the end of the file, after the main IIFE's closing `})();` —
+mirroring the existing pattern the file already uses for the hero-anchor
+smooth-scroll handler (also standalone, also after the main IIFE). It now
+initializes unconditionally, independent of GSAP load success or any
+unrelated animation code elsewhere in the file. Had to swap the shared
+`$$` helper for a local `querySelectorAll` + `Array.prototype.slice`
+one-liner, since `$$` is scoped inside the other IIFE and unavailable
+here. Logic itself (4s interval, pause/resume, measured stride, reduced-
+motion check) is unchanged from `6f3bb7e`.
+
+**Lesson for this file specifically**: `assets/chemistrie.js` has a single
+choke point at line 21 (`if (!window.gsap) return`) that silently kills
+everything after it. Any new feature added to this file that doesn't
+*itself* need GSAP should go in its own top-level script block, not
+inside the big IIFE, or it inherits that fragility for free. Worth
+proposing splitting the whole file this way if more "code that should
+obviously work isn't running" reports come up.
+
+## Build log — 2026-09-22: Fixed shared hero image cropping + widened, all inner pages (commit `f854690`)
+"make all pages hero sections images display properly and wider" —
+`sections/page-hero.liquid` is shared across Collection, Contact,
+Founders' Circle, Our Story, Pharmacists and Ritual, so one fix here
+covers all of them.
+
+**Measured before touching anything** (PowerShell `System.Drawing`) rather
+than guessing what "not displaying properly" meant: the box was a fixed
+`aspect-ratio: 16/9.5` (1.684) with `object-fit: cover`. Every page's real
+hero asset varies wildly in native ratio (0.75 portrait letter photo up
+to 2.08 wide product shot), and `cover` crops whatever doesn't match the
+box. Computed exact crop loss per page:
+
+- Founders' Circle (`stock-note.jpg`, 0.75 — portrait): **45% of the image
+  kept**, 55% cropped off the sides. This is almost certainly the actual
+  "not displaying properly" bug.
+- Collection (`stock-lineup.jpg`, 1.12 — near-square): 67% kept.
+- Contact / Our Story / Pharmacists / Ritual (1.6–2.1 — landscape/wide):
+  81–96% kept, all reasonably fine already.
+
+**Fix**: `object-fit: cover` → `contain`. This is the only technique that
+guarantees the full photo is always visible regardless of native shape —
+fixes every current mismatch at once, and won't newly break whichever
+image gets uploaded next (this project swaps hero images often). Added
+padding inside `.page-hero__visual` so a contained image reads as a
+deliberately framed photo against the existing forest background rather
+than looking like accidental letterboxing.
+
+**Widened**, the other half of the request: grid split
+`1fr 1.15fr` (~46/54) → `0.82fr 1.3fr` (~39/61), box ratio `16/9.5` → `4/3`
+(a better middle-ground across the actual asset ratios, and taller so the
+wider box isn't just empty framing under `contain`). Text column keeps
+its own measure caps (`.page-hero__title` 15ch, `.page-hero__deck` 56ch),
+so narrowing its grid share doesn't hurt line length/readability.
+
+**Scope note**: this is the shared `page-hero` section only — the
+homepage's own hero (`sections/hero.liquid`, a different, bespoke split
+layout) wasn't touched, since "all pages hero sections" most naturally
+reads as the repeated inner-page component, and the homepage hero has its
+own separate design already tuned earlier this session (grid-lines
+removal, etc.).
+
+## Build log — 2026-09-22: Removed mismatched hero frame fill, fixed homepage hero (commit `e07c4a0`)
+User: "remove the green extra bg from those images and home page hero is
+still the same" — two issues in one message.
+
+**Green bg**: the padding+fill I added in `f854690` was the actual
+problem. `.page-hero__visual` had a flat `background: var(--c-forest-2)`,
+but `.page-hero`'s own background is `var(--grad-deep)` — a diagonal
+gradient sweeping through several shades, not one flat colour. So on any
+page where `object-fit: contain` left a letterbox gap (the exact pages I
+was fixing crop for), the flat fill never matched what was around it and
+read as a visible mismatched green box. Removed the fill and padding
+entirely; letterbox gaps now show the section's real gradient through
+transparency instead of a foreign flat rectangle. Kept the border and
+shadow — those weren't the reported problem (translucent cream line,
+black shadow, neither reads as "green").
+
+**Homepage hero unchanged**: correct observation, and a genuine scope
+gap, not a bug in the previous fix — `f854690` only ever touched
+`sections/page-hero.liquid`, the *inner-page* hero. The homepage has its
+own separate, bespoke hero (`sections/hero.liquid`, styled in
+`chemistrie.css` since that file has no stylesheet block of its own) that
+was never part of that commit. Measured `hero-home.jpg` before editing:
+2.077 ratio in a 16:9.5 (1.684) `cover` box was already losing ~19% off
+top/bottom — same crop-risk pattern as the inner pages, just less severe
+on this particular image. Applied the identical fix: `cover` → `contain`,
+box ratio `16/9.5` → `4/3` (base rule **and** the `≤700px !important`
+mobile override — found by grepping every `.hero__visual-frame` rule
+first, so nothing got missed the way a hidden `!important` easily could
+have fought the base change), image column widened
+(`.hero__inner` `1.1fr/1fr` → `0.9fr/1.15fr` — text previously got *more*
+room than the image, now the reverse). **Did not** remove
+`.hero__visual-frame`'s own background here — `.hero`'s section
+background is already the identical flat `var(--c-forest-2)`, so there
+was never a mismatch on this page the way there was on the gradient-
+backed inner-page hero; removing it would have been a no-op copied
+reflexively from the other fix rather than an actual improvement.
+
+**Found but deliberately not touched**: `sections/hero.liquid` markup
+references `section.settings.hero_image`, but `templates/index.json` sets
+a field called `bottle_image` (empty string) that doesn't correspond to
+any markup reference at all — looks like a leftover from an incomplete
+field rename, currently harmless (the image just falls through to
+`hero_fallback_asset`/`hero-home.jpg` correctly either way) but worth
+cleaning up if anyone touches this section's schema again.
+
+**Coordination note**: `assets/chemistrie.js` had unrelated uncommitted
+changes at commit time — the other agent had reverted the pillars-
+autoplay fix from `ad61594` back out (removed the standalone script,
+restored the old inline comment). Not part of this task; confirmed via
+`git diff` what it was before leaving it alone, and flagged it to the
+user directly since it silently undoes a fix they'd explicitly asked for
+twice this session.
+
+## Build log — 2026-09-22: Two undos per explicit request (commit `efbb4d6`)
+User asked to undo both the Trust Signals autoplay situation and the hero
+image work, with the hero scope confirmed via AskUserQuestion ("revert
+both hero commits") after "the git commit" read as genuinely ambiguous —
+could have meant just the last commit (green-bg fix) or both hero commits
+(widen + contain + green-bg fix). Asking rather than guessing was the
+right call this time, given the earlier over-revert mistake this session.
+
+**Trust Signals**: the other agent had an *uncommitted* local change
+removing the autoplay fix from `ad61594` (reverting `initPillarsRailAutoplay`
+back out, ~78 line removal). Diffed it first to confirm it was a clean,
+isolated reversion with nothing else mixed in, then `git checkout --
+assets/chemistrie.js` to discard it and restore the committed
+(GitHub-matching) state. No new commit needed — HEAD already had what the
+user wanted; the working tree just needed to catch back up to it.
+
+**Hero images**: `git revert --no-commit e07c4a0 f854690` (newest first),
+reverting both hero-image commits in one commit. Verified by diffing the
+result against `909633e` (the last commit before either hero change) —
+empty diff, confirming an exact match rather than just "looks about
+right." `sections/page-hero.liquid` and the homepage hero rules in
+`assets/chemistrie.css` are both back to: `object-fit: cover`, the
+original `16/9.5` box ratio, the original grid column splits, and the
+flat `var(--c-forest-2)` fill.
+
+**Net effect**: the cropping bug on Founders' Circle/Collection hero
+images (45%/67% of the photo visible) is back, since that's what
+reverting these commits necessarily undoes along with the widening/green-
+fix work. Not flagging this as a mistake — it's the direct, known
+consequence of an explicit revert request, worth remembering if a future
+message references "hero images look cropped/wrong" again, since that
+exact diagnosis was already done once (measured via PowerShell
+System.Drawing) and doesn't need re-deriving from scratch.
+
+## Build log — 2026-09-22: Trust Signals rebuilt from a supplied design preview (commit `8f01af5`)
+User pasted a `file:///` path to a standalone HTML mockup (built by a
+different tool, judging by the path — `.gemini/antigravity-ide/.../scratch/
+test_preview.html`) titled "Trust Signals Testimonial Chain Preview" and
+said "i want like this." Read the file directly (Read tool handles local
+file paths) rather than asking for a description — it was a complete,
+self-contained HTML/CSS/JS page, so the exact target was unambiguous
+once opened.
+
+**Design**: one active center card (2-column body — title/italic
+blockquote/byline on the left, full-bleed image with a rounded pill
+badge overlay bottom-right) flanked by narrow numbered preview "pills"
+that shrink and fade with distance (`is-prev-2`/`is-prev-1`/`is-active`/
+`is-next-1`/`is-next-2`/`is-hidden`), auto-advancing with a progress-dot
+row underneath. This replaces the plain scroll rail from the previous
+several commits entirely.
+
+**Content honesty check before porting anything**: the preview's image
+paths (`pillar-pharmacist-formulated.png` etc.) and quote text ("Every
+formula answers to two pharmacists, by name, not a lab Chemistrie
+doesn't own.") are **exact matches** to the live site's existing approved
+`lede`/`image_asset` block data — confirming the preview was built from
+this project's real content, not invented. But the preview's byline row
+("Chemistrie Standard" / "Chemistrie Formulations · Pharmacist Rigor",
+etc.) doesn't correspond to any approved copy or existing schema field —
+that part *is* new/fabricated text from whatever tool generated the
+mockup. Per this project's standing rule, didn't copy it into a live
+default: added `meta_name`/`meta_role` as new optional block settings,
+both blank by default, with an explicit schema `paragraph` note ("not
+filled in with placeholder text since this copy needs approval") and a
+Liquid guard so the byline only renders once a merchant sets both
+fields. The rest of the design ports through untouched since it's just
+layout/styling, not copy.
+
+**Cleaned up while rebuilding schema**: dropped the now-orphaned
+`item1`/`item2`/`item3` (bullet list) and `crest_sub` fields — the new
+design has no slot for them. Checked `templates/index.json` first: all
+of those are already empty strings on every live block, so nothing was
+actually lost.
+
+**JS**: kept the exact architectural lesson from `ad61594` even though
+this was a full rewrite, not a patch — `initPillarsChain` is its own
+top-level script block, outside the big `if (!window.gsap) return`-gated
+IIFE, since none of this carousel logic (card classes, autoplay timer,
+dots, touch swipe) actually needs GSAP. Added one thing neither the
+preview nor any earlier version of this carousel had: a
+`prefers-reduced-motion` check that renders the first card statically
+(clicks/dots still work) instead of auto-advancing.
+
+**Validation**: `node -c` syntax check, CSS brace balance, schema JSON
+parse, HTML tag-count balance (div/article/section/button), and an
+explicit grep sweep for stale `pillarsRail`/`pillars-rail` references
+after the rewrite — all clean before committing.
+
+## Build log — 2026-09-22: Trust Signals badges removed, autoplay faster, manual drag added (commit `8c9f51b`)
+Three changes to the just-rebuilt Testimonial Chain (`8f01af5`):
+
+1. **Removed the badge/number overlays** — `.pchain-card__badge-overlay`
+   (Rx/C./for-her floating on the active card's real photo) and
+   `.pchain-card__pill-num` (01/02/03 on each flanking pill), markup and
+   CSS both. **Deliberately kept `crest_mono`'s no-image fallback**
+   (`.pchain-card__placeholder`/`.pchain-card__pill-fallback`) — that's a
+   different case, only shown when a pillar has no photo at all rather
+   than layered on top of a real one, and moot in practice since all
+   three live pillars have images configured.
+2. **Autoplay** 5000ms → 3800ms ("slightly fast").
+3. **Manual drag added** — the chain previously only advanced via click
+   (flanking card/dot) or touch swipe; no desktop drag. Replaced the
+   touch-only `touchstart`/`touchend` pair with a single **Pointer
+   Events** implementation (mouse + touch + pen) on `#pillarsChainStage`
+   — same reasoning as the rail-drag work earlier this session: a
+   separate touch listener alongside pointer events double-fires on
+   touch devices. A `dragMoved` flag (cleared on the next
+   `requestAnimationFrame` after pointerup) suppresses a flanking card's
+   click when a drag ends on top of one, so dragging never also
+   jump-navigates to that card. `touch-action: pan-y` on the stage keeps
+   vertical page scroll working; images get `user-drag: none` since
+   browsers natively drag them otherwise.
+
+**Context this session had already established, reused here rather than
+re-learned**: (a) touch + pointer event double-firing, (b) the
+click-vs-drag suppression pattern via a moved-flag, (c) keeping non-GSAP
+carousel logic in its own top-level script outside the GSAP-gated IIFE —
+all three came directly from the rail-drag and autoplay-reliability work
+earlier in this session (`cca7cb0`, `ad61594`), applied to a different
+component without needing to re-derive them.
+
+## 2026-09-22 — Pharmacists statement: center body, scroll fade-in, smaller heading (4927491)
+Task: right column ("Chemistrie was built around...") should sit vertically more toward the middle, fade in from left to right as the section scrolls into view, and the left heading ("Skincare doesn't need more complexity...") should be slightly smaller.
+- sections/pharmacists-statement.liquid: `.pstate__body` now `align-self: center` (was inheriting grid `align-items: start`), so it centers against the taller heading column instead of pinning to the top. Reset to `align-self: auto` in the <=860px stacked layout so it doesn't fight the single-column flow. `.pstate__heading` font-size clamp reduced from `clamp(30px,3.3vw,46px)` to `clamp(27px,2.9vw,40px)`.
+- assets/chemistrie.js: added a standalone `gsap.from(".pstate__body", {opacity:0, x:-50, ...})` ScrollTrigger block (trigger `.pstate`, start "top 75%", once: true), placed alongside the file's existing per-section ScrollTrigger blocks (Stat Bar, Contact Steps, Founders) — same pattern used elsewhere, not a new animation system.
