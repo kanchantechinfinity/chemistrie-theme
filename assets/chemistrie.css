@@ -321,7 +321,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* Copy column */
-.hero__copy { display: flex; flex-direction: column; gap: clamp(14px, 1.8vw, 22px); }
+.hero__copy { display: flex; flex-direction: column; gap: clamp(14px, 1.8vw, 22px); margin-top: clamp(10px, 1.4vw, 22px); }
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
