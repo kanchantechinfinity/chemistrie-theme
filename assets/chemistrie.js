@@ -116,95 +116,169 @@
         scrollTrigger: { trigger: ".vision__grid", start: "top 85%" } });
   }
 
-  /* ───── Pillars — scroll rail ─────
-     The rail itself is native overflow-x scrolling (see pillars.liquid), so
-     manual scroll/swipe needs no JS. This only adds the optional auto-scroll
-     on top, and it never blocks the manual path: any interaction pauses it. */
+  /* ───── Pillars — Testimonial Chain ───── */
   if (window.ScrollTrigger) {
-    gsap.fromTo(".pillars-rail-wrap",
+    gsap.fromTo(".pillars-chain",
       { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 1, ease: "power3.out",
-        scrollTrigger: { trigger: ".pillars-rail-wrap", start: "top 85%", once: true } }
+        scrollTrigger: { trigger: ".pillars-chain", start: "top 85%", once: true } }
     );
   }
 
-  (function initPillarsRailAutoplay() {
-    var rail = document.getElementById("pillarsRail");
-    if (!rail) return;
+  (function initPillarsChain() {
+    var container = document.getElementById("pillarsChain");
+    if (!container) return;
 
-    var cards = $$(".pchain-card", rail);
-    if (cards.length < 2) return;
+    var cards = $$(".pchain-card", container);
+    var dots = $$(".pillars-chain__dot", container);
+    var total = cards.length;
+    if (total === 0) return;
 
-    var interval = parseInt(rail.getAttribute("data-autoplay-speed"), 10);
-    if (!interval || interval < 1000) return;  // 0 / unset in the theme editor = manual only
+    var activeIndex = 0;
+    var autoplayInterval = parseInt(container.getAttribute("data-autoplay-speed"), 10) || 5000;
+    var startTime = null;
+    var isPaused = false;
+    var animFrame = null;
 
-    /* Don't auto-move for visitors who've asked the OS for reduced motion. */
-    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduceMotion && reduceMotion.matches) return;
+    function updateCardClasses(idx) {
+      cards.forEach(function(card, i) {
+        card.classList.remove("is-active", "is-prev-1", "is-next-1", "is-prev-2", "is-next-2", "is-hidden");
 
-    var timer = null;
-    var paused = false;
-    var resumeTimer = null;
+        // Distance from active index with wrapping
+        var diff = (i - idx + total) % total;
+        if (diff > total / 2) diff -= total;
 
-    function advance() {
-      if (paused) return;
+        if (diff === 0) {
+          card.classList.add("is-active");
+        } else if (diff === -1 || (total === 2 && diff === 1)) {
+          card.classList.add("is-prev-1");
+        } else if (diff === 1) {
+          card.classList.add("is-next-1");
+        } else if (diff === -2) {
+          card.classList.add("is-prev-2");
+        } else if (diff === 2) {
+          card.classList.add("is-next-2");
+        } else {
+          card.classList.add("is-hidden");
+        }
+      });
 
-      var maxScroll = rail.scrollWidth - rail.clientWidth;
-      if (maxScroll <= 0) return;
+      dots.forEach(function(dot, i) {
+        var isActive = i === idx;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-selected", isActive ? "true" : "false");
+        var fill = dot.querySelector(".pillars-chain__dot-fill");
+        if (fill) fill.style.width = "0%";
+      });
+    }
 
-      /* Loop back once the last card is in view. */
-      if (rail.scrollLeft >= maxScroll - 4) {
-        rail.scrollTo({ left: 0, behavior: "smooth" });
-        return;
+    function setSlide(idx) {
+      activeIndex = (idx + total) % total;
+      updateCardClasses(activeIndex);
+      resetTimer();
+    }
+
+    function tick() {
+      if (isPaused) return;
+      var elapsed = Date.now() - startTime;
+      var progress = Math.min(1, elapsed / autoplayInterval);
+
+      var activeDot = dots[activeIndex];
+      if (activeDot) {
+        var fill = activeDot.querySelector(".pillars-chain__dot-fill");
+        if (fill) fill.style.width = (progress * 100) + "%";
       }
 
-      /* One card + gap, measured rather than assumed, so it stays correct
-         across the responsive card widths. */
-      var stride = cards[1].offsetLeft - cards[0].offsetLeft;
-      rail.scrollBy({ left: stride || rail.clientWidth * 0.8, behavior: "smooth" });
+      if (progress >= 1) {
+        setSlide(activeIndex + 1);
+      } else {
+        animFrame = requestAnimationFrame(tick);
+      }
     }
 
-    function start() {
-      clearInterval(timer);
-      timer = setInterval(advance, interval);
+    function startTimer() {
+      cancelAnimationFrame(animFrame);
+      startTime = Date.now();
+      animFrame = requestAnimationFrame(tick);
     }
 
-    function pause() {
-      paused = true;
-      clearTimeout(resumeTimer);
+    function resetTimer() {
+      cancelAnimationFrame(animFrame);
+      startTime = Date.now();
+      if (!isPaused) {
+        animFrame = requestAnimationFrame(tick);
+      }
     }
 
-    /* After a manual interaction, wait a beat before taking over again so
-       auto-scroll never yanks the rail out from under someone mid-browse. */
-    function resumeSoon() {
-      clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(function () { paused = false; }, interval);
+    function pauseTimer() {
+      isPaused = true;
+      cancelAnimationFrame(animFrame);
     }
 
-    rail.addEventListener("mouseenter", pause);
-    rail.addEventListener("mouseleave", resumeSoon);
-    rail.addEventListener("focusin", pause);
-    rail.addEventListener("focusout", resumeSoon);
-    rail.addEventListener("pointerdown", pause);
-    rail.addEventListener("pointerup", resumeSoon);
-    rail.addEventListener("touchstart", pause, { passive: true });
-    rail.addEventListener("touchend", resumeSoon, { passive: true });
-    rail.addEventListener("wheel", function () { pause(); resumeSoon(); }, { passive: true });
+    function resumeTimer() {
+      if (!isPaused) return;
+      isPaused = false;
+      var activeDot = dots[activeIndex];
+      var currentWidth = 0;
+      if (activeDot) {
+        var fill = activeDot.querySelector(".pillars-chain__dot-fill");
+        if (fill && fill.style.width) {
+          currentWidth = parseFloat(fill.style.width) || 0;
+        }
+      }
+      var elapsed = (currentWidth / 100) * autoplayInterval;
+      startTime = Date.now() - elapsed;
+      animFrame = requestAnimationFrame(tick);
+    }
 
-    /* Stop entirely while the section is off-screen. */
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            start();
+    // Hover pause/resume on the entire chain container
+    container.addEventListener("mouseenter", pauseTimer);
+    container.addEventListener("mouseleave", resumeTimer);
+
+    // Clicking flanking cards switches directly
+    cards.forEach(function(card) {
+      card.addEventListener("click", function() {
+        if (card.classList.contains("is-active")) return;
+        var idx = parseInt(card.getAttribute("data-chain-index"), 10);
+        setSlide(idx);
+      });
+    });
+
+    // Clicking progress dots
+    dots.forEach(function(dot) {
+      dot.addEventListener("click", function() {
+        var idx = parseInt(dot.getAttribute("data-dot-index"), 10);
+        setSlide(idx);
+      });
+    });
+
+    // Touch swipe support for mobile
+    var touchStartX = 0;
+    var touchEndX = 0;
+    var stage = document.getElementById("pillarsChainStage");
+    if (stage) {
+      stage.addEventListener("touchstart", function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        pauseTimer();
+      }, { passive: true });
+
+      stage.addEventListener("touchend", function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        var swipeDist = touchEndX - touchStartX;
+        if (Math.abs(swipeDist) > 40) {
+          if (swipeDist < 0) {
+            setSlide(activeIndex + 1);
           } else {
-            clearInterval(timer);
+            setSlide(activeIndex - 1);
           }
-        });
-      }, { threshold: 0.2 }).observe(rail);
-    } else {
-      start();
+        }
+        resumeTimer();
+      }, { passive: true });
     }
+
+    // Initialize state & start automatic cycling
+    updateCardClasses(0);
+    startTimer();
   })();
 
   /* ───── Shop — product reveal ───── */
