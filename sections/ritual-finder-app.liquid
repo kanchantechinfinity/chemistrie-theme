@@ -35,13 +35,17 @@
 <section class="ritual-finder-app" id="ritual-finder-app" data-screen-label="Ritual Finder Consultation">
   <div class="ritual-finder-app__inner">
 
+    <!-- ───── Section title (sits above the card, not inside it) ───── -->
+    <div class="ritual-finder-app__head">
+      <span class="ritual-finder-app__eyebrow" id="rfEyebrow">— {{ section.settings.eyebrow | default: 'Personalized Consultation' }} —</span>
+    </div>
+
     <!-- ───── Consultation View (Form Card) ───── -->
     <div class="rf-form-card" id="rfCard">
 
-      <!-- Card Header: Eyebrow + Progress -->
+      <!-- Card Header: Progress -->
       <div class="rf-form-card__header">
         <div class="rf-form-card__meta">
-          <span class="ritual-finder-app__eyebrow" id="rfEyebrow">— {{ section.settings.eyebrow | default: 'Personalized Consultation' }} —</span>
           <span class="ritual-finder-app__step-text" id="rfStepText">Question <strong id="rfCurrentStep">1</strong> of <span id="rfTotalSteps">4</span></span>
         </div>
         <div class="ritual-finder-app__progress-track" aria-hidden="true">
@@ -336,7 +340,6 @@
     var totalStepsEl = document.getElementById("rfTotalSteps");
     var progressBar = document.getElementById("rfProgressBar");
     var cardFooter = document.getElementById("rfCardFooter");
-    var eyebrowEl = document.getElementById("rfEyebrow");
     var stepTextEl = document.getElementById("rfStepText");
     var resultsPage = document.getElementById("rfResultsPage");
 
@@ -415,7 +418,6 @@
       routine_pace: null,
       sensitivity: null
     };
-    var advanceTimer = null;
 
     function getProductVariantId(handle) {
       var prod = products[handle];
@@ -459,7 +461,6 @@
         });
 
         if (cardFooter) cardFooter.style.display = "flex";
-        if (eyebrowEl) eyebrowEl.textContent = "— {{ section.settings.eyebrow | default: 'Personalized Consultation' }} —";
         if (stepTextEl) {
           stepTextEl.innerHTML = 'Question <strong id="rfCurrentStep">' + (currentStep + 1) + '</strong> of <span id="rfTotalSteps">' + questionSlides.length + '</span>';
         }
@@ -619,24 +620,14 @@
       if (btnInstant && currentStep < questionSlides.length - 1) {
         btnInstant.style.display = "inline-flex";
       }
-
-      if (advanceTimer) clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(function() {
-        if (currentStep < questionSlides.length - 1) {
-          currentStep++;
-          renderStep();
-        } else {
-          currentStep = questionSlides.length;
-          showResults();
-        }
-      }, 350);
+      /* No auto-advance — selecting an option only marks the choice and
+         unlocks Continue. The visitor decides when to move on. */
     });
 
     // Next button
     if (btnNext) {
       btnNext.addEventListener("click", function() {
         if (btnNext.disabled) return;
-        if (advanceTimer) clearTimeout(advanceTimer);
         if (currentStep < questionSlides.length - 1) {
           currentStep++;
           renderStep();
@@ -650,7 +641,6 @@
     // Instant recommendation button
     if (btnInstant) {
       btnInstant.addEventListener("click", function() {
-        if (advanceTimer) clearTimeout(advanceTimer);
         currentStep = questionSlides.length;
         showResults();
       });
@@ -659,7 +649,6 @@
     // Previous button
     if (btnBack) {
       btnBack.addEventListener("click", function() {
-        if (advanceTimer) clearTimeout(advanceTimer);
         if (currentStep > 0) {
           currentStep--;
           renderStep();
@@ -795,6 +784,29 @@
   }
 })();
 </script>
+
+{% stylesheet %}
+/* The eyebrow used to sit inside the form card's header row beside the
+   "Question 1 of 4" counter. It's now the section's own title above the
+   card, so it reads at title scale rather than as 11px card chrome. */
+.ritual-finder-app__head {
+  text-align: center;
+  margin-bottom: clamp(20px, 2.6vw, 32px);
+}
+.ritual-finder-app__head .ritual-finder-app__eyebrow {
+  display: inline-block;
+  font-family: var(--ff-display);
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: .01em;
+  text-transform: none;
+  color: var(--c-forest);
+}
+
+/* The card's meta row now holds only the step counter. */
+.rf-form-card__meta { justify-content: flex-start; }
+{% endstylesheet %}
 
 {% schema %}
 {
