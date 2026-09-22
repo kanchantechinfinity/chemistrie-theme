@@ -312,9 +312,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   z-index: 2;
   flex: 1;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1fr 1.15fr;
   gap: clamp(40px, 6vw, 80px);
-  align-items: center;
+  align-items: start;
   max-width: 1480px;
   margin: clamp(36px, 4.5vw, 68px) auto 0;
   width: 100%;
@@ -339,7 +339,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero__title {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: clamp(40px, 5.2vw, 76px);
+  font-size: clamp(36px, 4.6vw, 66px);
   line-height: 1;
   letter-spacing: -.022em;
   color: var(--c-cream);
