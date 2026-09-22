@@ -1,5 +1,5 @@
-<!-- ───── Pillars — scroll rail ───── -->
-<section class="pillars pillars--rail" data-screen-label="03 Pillars">
+<!-- ───── Pillars — Testimonial Chain ───── -->
+<section class="pillars pillars--chain" data-screen-label="03 Pillars">
   <div class="pillars__intro">
     <span class="eyebrow">{{ section.settings.eyebrow }}</span>
     <h2 class="display-h">{{ section.settings.intro_heading }}</h2>
@@ -11,166 +11,290 @@
     {%- endif -%}
   </div>
 
-  {%- comment -%}
-    Horizontal scroll rail, mirroring the homepage Collection rail
-    (.shop__rail): native overflow-x scrolling with snap points, no JS.
-    Scroll, trackpad swipe or touch moves the cards continuously.
-  {%- endcomment -%}
-  <div class="pillars-rail-wrap">
-    <div class="pillars-rail" id="pillarsRail">
+  <div class="pillars-chain" id="pillarsChain" data-autoplay-speed="5000">
+    <div class="pillars-chain__stage" id="pillarsChainStage">
       {%- for block in section.blocks -%}
-        <article class="pchain-card" {{ block.shopify_attributes }}>
+        {%- liquid
+          assign img_src = ''
+          if block.settings.image != blank
+            assign img_src = block.settings.image | image_url: width: 1400
+          elsif block.settings.image_asset != blank
+            assign img_src = block.settings.image_asset | asset_url
+          endif
+        -%}
+        <article class="pchain-card{% if forloop.first %} is-active{% elsif forloop.index == 2 %} is-next-1{% elsif forloop.last %} is-prev-1{% else %} is-hidden{% endif %}" data-chain-index="{{ forloop.index0 }}"{{ block.shopify_attributes }}>
+
           <div class="pchain-card__body">
             <div class="pchain-card__content">
-              <span class="pillar__num">0{{ forloop.index }}</span>
-              <h3 class="pillar__title">{{ block.settings.title }}</h3>
-              <p class="pillar__lede">{{ block.settings.lede }}</p>
+              <span class="pchain-card__num">0{{ forloop.index }}</span>
+              <h3 class="pchain-card__title">{{ block.settings.title }}</h3>
+              {%- if block.settings.lede != blank -%}
+                <blockquote class="pchain-card__quote">&ldquo;{{ block.settings.lede }}&rdquo;</blockquote>
+              {%- endif -%}
 
-              {%- if block.settings.item1 != blank or block.settings.item2 != blank or block.settings.item3 != blank -%}
-                <ul class="pillar__list">
-                  {%- if block.settings.item1 != blank -%}<li>{{ block.settings.item1 }}</li>{%- endif -%}
-                  {%- if block.settings.item2 != blank -%}<li>{{ block.settings.item2 }}</li>{%- endif -%}
-                  {%- if block.settings.item3 != blank -%}<li>{{ block.settings.item3 }}</li>{%- endif -%}
-                </ul>
+              {%- if block.settings.meta_name != blank and block.settings.meta_role != blank -%}
+                <div class="pchain-card__meta">
+                  <div class="pchain-card__meta-bar"></div>
+                  <div class="pchain-card__meta-text">
+                    <span class="pchain-card__meta-name">{{ block.settings.meta_name }}</span>
+                    <span class="pchain-card__meta-role">{{ block.settings.meta_role }}</span>
+                  </div>
+                </div>
               {%- endif -%}
             </div>
 
             <div class="pchain-card__media">
-              {%- if block.settings.image != blank -%}
-                <img class="pchain-card__img" src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-              {%- elsif block.settings.image_asset != blank -%}
-                <img class="pchain-card__img" src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+              {%- if img_src != blank -%}
+                <img class="pchain-card__img" src="{{ img_src }}" alt="{{ block.settings.title | escape }}" loading="lazy">
               {%- else -%}
                 <div class="pchain-card__placeholder">
                   <span>{{ block.settings.crest_mono | default: "Rx" }}</span>
                 </div>
               {%- endif -%}
+              {%- if block.settings.crest_mono != blank -%}
+                <div class="pchain-card__badge-overlay">
+                  <span class="pchain-card__badge-mono">{{ block.settings.crest_mono }}</span>
+                </div>
+              {%- endif -%}
             </div>
           </div>
+
+          <!-- Flanking pill: cropped image preview only -->
+          <div class="pchain-card__pill">
+            {%- if img_src != blank -%}
+              <img class="pchain-card__pill-img" src="{{ img_src }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+            {%- else -%}
+              <div class="pchain-card__pill-fallback">
+                <span>{{ block.settings.crest_mono | default: "Rx" }}</span>
+              </div>
+            {%- endif -%}
+            <span class="pchain-card__pill-num">0{{ forloop.index }}</span>
+          </div>
+
         </article>
       {%- endfor -%}
+    </div>
+
+    <!-- Automated progress indicators -->
+    <div class="pillars-chain__controls" aria-label="Trust signal progress">
+      <div class="pillars-chain__dots" id="pillarsChainDots" role="tablist">
+        {%- for block in section.blocks -%}
+          <button type="button" class="pillars-chain__dot{% if forloop.first %} is-active{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Slide {{ forloop.index }}" data-dot-index="{{ forloop.index0 }}">
+            <span class="pillars-chain__dot-fill"></span>
+          </button>
+        {%- endfor -%}
+      </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
-/* ───── Scroll rail shell ─────
-   Same mechanics as the homepage Collection rail (.shop__rail): native
-   horizontal overflow with snap points and a hidden scrollbar. No JS —
-   scroll, trackpad swipe and touch all move it directly. */
-.pillars--rail {
+/* ───── Testimonial Chain Shell ───── */
+.pillars--chain {
   overflow: hidden;
   position: relative;
   padding-top: clamp(36px, 4vw, 56px);
-  padding-bottom: clamp(56px, 7vw, 88px) !important;
+  padding-bottom: clamp(80px, 9vw, 120px) !important;
 }
-.pillars--rail .pillars__intro {
+.pillars--chain .pillars__intro {
   margin: 0 0 clamp(20px, 3vw, 32px) !important;
 }
 
-.pillars-rail-wrap {
-  margin: 0 calc(var(--pad-x) * -1);
+.pillars-chain {
+  max-width: 1360px;
+  margin: 40px auto 0;
   position: relative;
-  /* Softens the cards as they run off each edge, same as the Collection rail. */
-  mask-image: linear-gradient(90deg, transparent 0, black 2%, black 98%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 2%, black 98%, transparent 100%);
 }
-.pillars-rail {
-  display: flex;
-  gap: clamp(18px, 2vw, 28px);
-  padding: 8px var(--pad-x) 28px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-left: var(--pad-x);
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  align-items: stretch;
-}
-.pillars-rail::-webkit-scrollbar { display: none; }
 
-/* ───── Card ───── */
-.pchain-card {
-  flex: 0 0 clamp(300px, 78vw, 620px);
-  scroll-snap-align: start;
-  height: clamp(340px, 42vh, 420px);
-  background: var(--c-cream);
-  border: 1px solid var(--c-line);
-  border-radius: 24px;
-  overflow: hidden;
-  box-sizing: border-box;
-  box-shadow: 0 20px 45px -20px rgba(26,58,45,.10);
-  transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
-}
-.pchain-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 26px 54px -18px rgba(26,58,45,.16);
-}
-.pchain-card__body {
+.pillars-chain__stage {
+  position: relative;
+  height: clamp(480px, 58vh, 540px);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-  padding: 24px 24px 24px 32px;
-  gap: clamp(20px, 2.4vw, 32px);
+  justify-content: center;
+  perspective: 1200px;
+}
+
+/* ───── Base card ───── */
+.pchain-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform .65s cubic-bezier(.2,.8,.2,1), opacity .55s ease, width .65s cubic-bezier(.2,.8,.2,1), height .65s cubic-bezier(.2,.8,.2,1), box-shadow .55s ease;
+  border-radius: 32px;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
-/* ───── Card content ───── */
+/* ───── Active center card ───── */
+.pchain-card.is-active {
+  width: clamp(340px, 66vw, 840px);
+  height: 100%;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  z-index: 10;
+  background: var(--c-cream);
+  border: 1px solid var(--c-line);
+  box-shadow: 0 30px 70px -25px rgba(26,58,45,.22), 0 10px 30px -15px rgba(26,58,45,.1);
+  pointer-events: auto;
+}
+.pchain-card.is-active .pchain-card__body {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  width: 100%;
+  height: 100%;
+  padding: 24px 24px 24px 44px;
+  gap: 36px;
+  opacity: 1;
+  transition: opacity .4s ease .15s;
+}
+.pchain-card.is-active .pchain-card__pill {
+  display: none;
+}
+
+/* ───── Flanking cards ("the chain") ───── */
+.pchain-card:not(.is-active) {
+  cursor: pointer;
+  z-index: 4;
+  border-radius: 28px;
+  border: 2px solid rgba(249,244,237,.9);
+  box-shadow: 0 16px 36px -12px rgba(26,58,45,.18);
+  background: var(--c-forest);
+}
+.pchain-card:not(.is-active):hover {
+  filter: brightness(1.05);
+  box-shadow: 0 20px 42px -10px rgba(26,58,45,.28);
+}
+.pchain-card:not(.is-active) .pchain-card__body {
+  display: none;
+}
+.pchain-card:not(.is-active) .pchain-card__pill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Immediate left/right flank */
+.pchain-card.is-prev-1 {
+  width: clamp(90px, 10vw, 130px);
+  height: clamp(320px, 42vh, 410px);
+  transform: translate(calc(-50% - clamp(230px, 38vw, 490px)), -50%) scale(1);
+  opacity: 0.95;
+  z-index: 6;
+}
+.pchain-card.is-next-1 {
+  width: clamp(90px, 10vw, 130px);
+  height: clamp(320px, 42vh, 410px);
+  transform: translate(calc(-50% + clamp(230px, 38vw, 490px)), -50%) scale(1);
+  opacity: 0.95;
+  z-index: 6;
+}
+
+/* Far left/right flank (4+ items) */
+.pchain-card.is-prev-2 {
+  width: clamp(70px, 7vw, 100px);
+  height: clamp(260px, 34vh, 330px);
+  transform: translate(calc(-50% - clamp(310px, 47vw, 610px)), -50%) scale(0.95);
+  opacity: 0.65;
+  z-index: 3;
+}
+.pchain-card.is-next-2 {
+  width: clamp(70px, 7vw, 100px);
+  height: clamp(260px, 34vh, 330px);
+  transform: translate(calc(-50% + clamp(310px, 47vw, 610px)), -50%) scale(0.95);
+  opacity: 0.65;
+  z-index: 3;
+}
+
+.pchain-card.is-hidden {
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ───── Active card content ───── */
 .pchain-card__content {
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8px 0;
+  padding: 12px 0;
   min-width: 0;
 }
-.pchain-card__content .pillar__num {
+.pchain-card__num {
   font-family: var(--ff-display);
   font-style: italic;
-  font-size: clamp(19px, 1.8vw, 22px);
+  font-size: 18px;
   color: var(--c-tan);
-  letter-spacing: .06em;
   margin-bottom: 8px;
+  letter-spacing: .06em;
   display: block;
 }
-.pchain-card__content .pillar__title {
-  font-size: clamp(24px, 2.3vw, 34px);
+.pchain-card__title {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(24px, 2.4vw, 36px);
   line-height: 1.1;
   letter-spacing: -.01em;
-  margin: 0 0 14px;
+  color: var(--c-forest);
+  margin: 0 0 16px;
 }
-.pchain-card__content .pillar__lede {
-  font-size: clamp(15.5px, 1.3vw, 17.5px);
-  line-height: 1.5;
-  margin: 0;
-  max-width: 42ch;
+.pchain-card__quote {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.45;
+  color: var(--c-ink);
+  margin: 0 0 24px;
+  padding: 0;
+  border: 0;
 }
-.pchain-card__content .pillar__list { margin-top: 14px; }
 
-/* ───── Card media (exact 2:3, uncropped) ─────
-   No dark fill behind the image: the photos are exactly 2:3 like this
-   box, but object-fit: contain still letterboxes by a sub-pixel sliver
-   on fractional heights, and a dark fill makes that read as a black edge. */
+.pchain-card__meta {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  margin-top: auto;
+}
+.pchain-card__meta-bar {
+  width: 2px;
+  background: var(--c-forest);
+  border-radius: 1px;
+}
+.pchain-card__meta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.pchain-card__meta-name {
+  font-family: var(--ff-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--c-forest);
+  letter-spacing: .02em;
+}
+.pchain-card__meta-role {
+  font-size: 12.5px;
+  color: var(--c-ink-mute);
+  letter-spacing: .02em;
+}
+
+/* ───── Active card media ───── */
 .pchain-card__media {
-  flex: 0 0 auto;
   position: relative;
   height: 100%;
-  aspect-ratio: 2 / 3;
-  border-radius: 18px;
+  border-radius: 22px;
   overflow: hidden;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--c-forest);
 }
 .pchain-card__img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
-  border-radius: 18px;
 }
 .pchain-card__placeholder {
   width: 100%;
@@ -182,29 +306,131 @@
   color: var(--c-cream);
   font-family: var(--ff-display);
   font-size: 56px;
-  border-radius: 18px;
+}
+.pchain-card__badge-overlay {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(26,58,45,.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--c-cream);
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(249,244,237,.25);
+}
+.pchain-card__badge-mono {
+  font-family: var(--ff-display);
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* ───── Flanking pill image ───── */
+.pchain-card__pill-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pchain-card__pill-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-forest);
+  color: var(--c-cream);
+  font-family: var(--ff-display);
+  font-size: 24px;
+}
+.pchain-card__pill-num {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(26,58,45,.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--c-cream);
+  font-family: var(--ff-display);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: .05em;
+  pointer-events: none;
+}
+
+/* ───── Automated progress indicators ───── */
+.pillars-chain__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 36px;
+}
+.pillars-chain__dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pillars-chain__dot {
+  padding: 0;
+  border: 0;
+  background: rgba(26,58,45,.2);
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: width .35s cubic-bezier(.2,.8,.2,1), background .3s ease;
+}
+.pillars-chain__dot:hover {
+  background: rgba(26,58,45,.4);
+}
+.pillars-chain__dot.is-active {
+  width: 38px;
+  background: rgba(26,58,45,.15);
+}
+.pillars-chain__dot-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--c-forest);
+  border-radius: 4px;
 }
 
 /* ───── Responsive ───── */
+@media (max-width: 1024px) {
+  .pillars-chain__stage { height: 520px; }
+  .pchain-card.is-active { width: 84vw; }
+  .pchain-card.is-active .pchain-card__body { padding: 20px 20px 20px 28px; gap: 20px; }
+  .pchain-card.is-prev-1,
+  .pchain-card.is-next-1 { display: none; }
+}
+
 @media (max-width: 768px) {
-  .pchain-card {
-    flex-basis: 84vw;
-    height: auto;
-  }
-  .pchain-card__body {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 22px 20px 26px;
-    gap: 20px;
-  }
-  .pchain-card__media {
-    order: -1;
+  .pillars-chain__stage { height: auto; min-height: 480px; }
+  .pchain-card.is-active {
     width: 100%;
-    max-width: 240px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
     height: auto;
-    align-self: center;
+    border-radius: 24px;
   }
-  .pchain-card__content { padding: 0; }
+  .pchain-card.is-active .pchain-card__body {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+    gap: 24px;
+  }
+  .pchain-card__media { height: 280px; order: -1; }
+  .pchain-card__title { font-size: 24px; }
+  .pchain-card__quote { font-size: 15.5px; margin-bottom: 20px; }
+  .pchain-card:not(.is-active) { display: none; }
 }
 {% endstylesheet %}
 
@@ -223,14 +449,14 @@
       "name": "Pillar",
       "settings": [
         { "type": "text", "id": "title", "label": "Title", "default": "Pharmacist-Formulated" },
-        { "type": "text", "id": "lede", "label": "Lede", "default": "Every formula answers to two pharmacists, by name, not a lab Chemistrie doesn't own." },
-        { "type": "text", "id": "item1", "label": "List item 1" },
-        { "type": "text", "id": "item2", "label": "List item 2" },
-        { "type": "text", "id": "item3", "label": "List item 3" },
-        { "type": "text", "id": "crest_mono", "label": "Crest mono", "default": "Rx" },
-        { "type": "text", "id": "crest_sub", "label": "Crest sub" },
-        { "type": "image_picker", "id": "image", "label": "Story image" },
-        { "type": "text", "id": "image_asset", "label": "Story image filename (/assets)", "info": "Fallback used only if Story image above is blank." }
+        { "type": "text", "id": "lede", "label": "Quote", "default": "Every formula answers to two pharmacists, by name, not a lab Chemistrie doesn't own." },
+        { "type": "header", "content": "Byline (optional)" },
+        { "type": "paragraph", "content": "Shown as a small credit line under the quote. Leave both fields blank to hide it — not filled in with placeholder text since this copy needs approval." },
+        { "type": "text", "id": "meta_name", "label": "Name" },
+        { "type": "text", "id": "meta_role", "label": "Role / description" },
+        { "type": "text", "id": "crest_mono", "label": "Badge text", "default": "Rx" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_asset", "label": "Image filename (/assets)", "info": "Fallback used only if Image above is blank." }
       ]
     }
   ],

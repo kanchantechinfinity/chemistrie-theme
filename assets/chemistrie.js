@@ -116,16 +116,15 @@
         scrollTrigger: { trigger: ".vision__grid", start: "top 85%" } });
   }
 
-  /* ───── Pillars — scroll rail entrance ─────
-     The rail is a native overflow-x scroll container (see pillars.liquid),
-     so manual scroll/swipe needs no JS. The automatic sliding itself lives
-     in its own script block at the bottom of this file, outside this IIFE —
-     see the comment there for why. */
+  /* ───── Pillars — Testimonial Chain entrance ─────
+     The card-switching/autoplay logic lives in its own top-level script at
+     the bottom of this file, outside this IIFE — see the comment there for
+     why. Only the section's initial fade-in stays here. */
   if (window.ScrollTrigger) {
-    gsap.fromTo(".pillars-rail-wrap",
+    gsap.fromTo(".pillars-chain",
       { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 1, ease: "power3.out",
-        scrollTrigger: { trigger: ".pillars-rail-wrap", start: "top 85%", once: true } }
+        scrollTrigger: { trigger: ".pillars-chain", start: "top 85%", once: true } }
     );
   }
 
@@ -727,70 +726,168 @@ document.querySelectorAll('a[href="#ritual-finder-app"]').forEach(function (anch
 
 
 /* ──────────────────────────────────────────────
-   CHEMISTRIE — Pillars rail autoplay
+   CHEMISTRIE — Pillars Testimonial Chain
    Deliberately its own top-level script, not nested inside the IIFE
    above. That IIFE returns early if window.gsap isn't loaded, and
-   everything after that point never runs if it does - autoplay doesn't
-   use gsap for anything, so it shouldn't be able to go dark because an
-   unrelated animation library failed to load or an earlier animation
-   block threw. Runs unconditionally once the DOM for it exists.
+   everything after that point never runs if it does - none of this
+   carousel logic (card switching, autoplay, dots, swipe) uses gsap for
+   anything, so it shouldn't be able to go dark because an unrelated
+   animation library failed to load or an earlier animation block threw.
+   Runs unconditionally once the DOM for it exists.
    ────────────────────────────────────────────── */
-(function initPillarsRailAutoplay() {
-  var rail = document.getElementById("pillarsRail");
-  if (!rail) return;
+(function initPillarsChain() {
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
-  var cards = Array.prototype.slice.call(rail.querySelectorAll(".pchain-card"));
-  if (cards.length < 2) return;
+  var container = document.getElementById("pillarsChain");
+  if (!container) return;
 
-  var INTERVAL = 4000;
-  var RESUME_DELAY = 1200;
+  var cards = $$(".pchain-card", container);
+  var dots = $$(".pillars-chain__dot", container);
+  var total = cards.length;
+  if (total === 0) return;
 
-  var mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (mq && mq.matches) return;
+  var activeIndex = 0;
+  var autoplayInterval = parseInt(container.getAttribute("data-autoplay-speed"), 10) || 5000;
+  var startTime = null;
+  var isPaused = false;
+  var animFrame = null;
 
-  var resumeTimer = null;
-  var paused = false;
-  var visible = true;
+  function updateCardClasses(idx) {
+    cards.forEach(function (card, i) {
+      card.classList.remove("is-active", "is-prev-1", "is-next-1", "is-prev-2", "is-next-2", "is-hidden");
 
-  function advance() {
-    if (paused || !visible) return;
+      var diff = (i - idx + total) % total;
+      if (diff > total / 2) diff -= total;
 
-    var maxScroll = rail.scrollWidth - rail.clientWidth;
-    if (maxScroll <= 1) return;
+      if (diff === 0) {
+        card.classList.add("is-active");
+      } else if (diff === -1 || (total === 2 && diff === 1)) {
+        card.classList.add("is-prev-1");
+      } else if (diff === 1) {
+        card.classList.add("is-next-1");
+      } else if (diff === -2) {
+        card.classList.add("is-prev-2");
+      } else if (diff === 2) {
+        card.classList.add("is-next-2");
+      } else {
+        card.classList.add("is-hidden");
+      }
+    });
 
-    if (rail.scrollLeft >= maxScroll - 4) {
-      rail.scrollTo({ left: 0, behavior: "smooth" });
-      return;
+    dots.forEach(function (dot, i) {
+      var isActive = i === idx;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-selected", isActive ? "true" : "false");
+      var fill = dot.querySelector(".pillars-chain__dot-fill");
+      if (fill) fill.style.width = "0%";
+    });
+  }
+
+  function setSlide(idx) {
+    activeIndex = (idx + total) % total;
+    updateCardClasses(activeIndex);
+    resetTimer();
+  }
+
+  function tick() {
+    if (isPaused) return;
+    var elapsed = Date.now() - startTime;
+    var progress = Math.min(1, elapsed / autoplayInterval);
+
+    var activeDot = dots[activeIndex];
+    if (activeDot) {
+      var fill = activeDot.querySelector(".pillars-chain__dot-fill");
+      if (fill) fill.style.width = (progress * 100) + "%";
     }
 
-    var stride = cards[1].offsetLeft - cards[0].offsetLeft;
-    rail.scrollBy({ left: stride > 0 ? stride : rail.clientWidth * 0.8, behavior: "smooth" });
+    if (progress >= 1) {
+      setSlide(activeIndex + 1);
+    } else {
+      animFrame = requestAnimationFrame(tick);
+    }
   }
 
-  function pause() {
-    paused = true;
-    clearTimeout(resumeTimer);
+  function startTimer() {
+    cancelAnimationFrame(animFrame);
+    startTime = Date.now();
+    animFrame = requestAnimationFrame(tick);
   }
 
-  function resumeSoon() {
-    clearTimeout(resumeTimer);
-    resumeTimer = setTimeout(function () { paused = false; }, RESUME_DELAY);
+  function resetTimer() {
+    cancelAnimationFrame(animFrame);
+    startTime = Date.now();
+    if (!isPaused) {
+      animFrame = requestAnimationFrame(tick);
+    }
   }
 
-  rail.addEventListener("mouseenter", pause);
-  rail.addEventListener("mouseleave", resumeSoon);
-  rail.addEventListener("focusin", pause);
-  rail.addEventListener("focusout", resumeSoon);
-  rail.addEventListener("pointerdown", pause);
-  rail.addEventListener("pointerup", resumeSoon);
-  rail.addEventListener("touchstart", pause, { passive: true });
-  rail.addEventListener("touchend", resumeSoon, { passive: true });
-
-  setInterval(advance, INTERVAL);
-
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) { visible = entry.isIntersecting; });
-    }, { threshold: 0.25 }).observe(rail);
+  function pauseTimer() {
+    isPaused = true;
+    cancelAnimationFrame(animFrame);
   }
+
+  function resumeTimer() {
+    if (!isPaused) return;
+    isPaused = false;
+    var activeDot = dots[activeIndex];
+    var currentWidth = 0;
+    if (activeDot) {
+      var fill = activeDot.querySelector(".pillars-chain__dot-fill");
+      if (fill && fill.style.width) {
+        currentWidth = parseFloat(fill.style.width) || 0;
+      }
+    }
+    var elapsed = (currentWidth / 100) * autoplayInterval;
+    startTime = Date.now() - elapsed;
+    animFrame = requestAnimationFrame(tick);
+  }
+
+  /* Honour an OS-level reduced-motion preference: render the first slide
+     and let clicks/dots still work, just no automatic advance. */
+  var mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+  var reduceMotion = !!(mq && mq.matches);
+
+  container.addEventListener("mouseenter", pauseTimer);
+  container.addEventListener("mouseleave", resumeTimer);
+
+  cards.forEach(function (card) {
+    card.addEventListener("click", function () {
+      if (card.classList.contains("is-active")) return;
+      var idx = parseInt(card.getAttribute("data-chain-index"), 10);
+      setSlide(idx);
+    });
+  });
+
+  dots.forEach(function (dot) {
+    dot.addEventListener("click", function () {
+      var idx = parseInt(dot.getAttribute("data-dot-index"), 10);
+      setSlide(idx);
+    });
+  });
+
+  var touchStartX = 0;
+  var touchEndX = 0;
+  var stage = document.getElementById("pillarsChainStage");
+  if (stage) {
+    stage.addEventListener("touchstart", function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+      pauseTimer();
+    }, { passive: true });
+
+    stage.addEventListener("touchend", function (e) {
+      touchEndX = e.changedTouches[0].screenX;
+      var swipeDist = touchEndX - touchStartX;
+      if (Math.abs(swipeDist) > 40) {
+        if (swipeDist < 0) {
+          setSlide(activeIndex + 1);
+        } else {
+          setSlide(activeIndex - 1);
+        }
+      }
+      resumeTimer();
+    }, { passive: true });
+  }
+
+  updateCardClasses(0);
+  if (!reduceMotion && total > 1) startTimer();
 })();
