@@ -3304,3 +3304,12 @@ User screenshot showed a large green gap between the nav and "Some rituals don't
 
 ## 2026-09-22 — Hero trust strip nudged up (d46543c)
 User wanted the "2,400+ / 28 / ★4.96" trust strip block (bottom of hero copy) moved slightly up. Reduced its spacing: `.hero__trust` margin-top clamp(8,1.5vw,16) -> clamp(2px,0.6vw,8px), padding-top clamp(20,3vw,32) -> clamp(14px,2vw,22px) — keeps the divider line, just tightens the gap above and below it.
+
+## 2026-09-22 — Investigated "Explore the Collection CTA missing on full load" (f59b700)
+User: works on reload, missing "when the full website is loaded." Audited all three layers before touching anything:
+- sections/hero.liquid: `.hero__cta-row` markup unchanged, renders unconditionally, no `{% if %}` guard.
+- templates/index.json: `cta_primary_label`/`cta_primary_link` both set (not blank).
+- assets/chemistrie.css: no `display:none`/hidden rule on `.hero__cta-row`/`.hero__cta-primary` anywhere; confirmed no CSS pre-hides it (so a GSAP load failure alone can't explain persistent invisibility — CSS default is visible, JS only adds the fade-in).
+- No duplicate `<script src="chemistrie.js">` (only one, in layout/theme.liquid) and no page-transition/PJAX system that could cause a stale re-render.
+Real fragility found: GSAP/ScrollTrigger load render-blocking from a third-party CDN (`unpkg.com`, layout/theme.liquid lines 36-37) with no self-hosted fallback, and the CTA row's entrance animation (`gsap.from(".hero__cta-row > *", ...)`, assets/chemistrie.js) had `delay:1.1 + duration:1` — not fully visible until ~2.1s after the script runs. On a slower real-world load (more assets competing, slower CDN fetch), that window stretches, which would look exactly like "the CTA isn't there" if checked before it resolves. Shortened cta-row to delay:0.5/duration:0.7 and trust strip to delay:0.7/duration:0.7.
+**Not fully confirmed as THE root cause** — could not reproduce directly — but is the only concrete fragility this audit surfaced, and the fix is safe/beneficial regardless. If still reported missing after this, next step is asking for a HAR/screen recording or checking if it's mobile-specific.
