@@ -7,14 +7,14 @@
   assign _ph = product.handle | downcase
   assign _pt = product.title | downcase
   if _ph contains 'velvet' or _pt contains 'velvet'
-    echo 'product-velvet.png'
+    echo 'product-velvet.jpg'
   elsif _ph contains 'veil' or _pt contains 'veil'
-    echo 'product-veil.png'
+    echo 'product-veil.jpg'
   elsif _ph contains 'cashmere' or _pt contains 'cashmere'
-    echo 'product-cashmere.png'
+    echo 'product-cashmere.jpg'
   elsif _ph contains 'aura' or _pt contains 'aura'
-    echo 'product-aura.png'
+    echo 'product-aura.jpg'
   elsif _ph contains 'silken' or _pt contains 'silken'
-    echo 'product-silken.png'
+    echo 'product-silken.jpg'
   endif
 -%}

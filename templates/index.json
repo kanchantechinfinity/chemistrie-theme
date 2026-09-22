@@ -267,7 +267,7 @@
         "post_velvet": {
           "type": "post",
           "settings": {
-            "image_asset": "product-velvet.png",
+            "image_asset": "product-velvet.jpg",
             "caption": "",
             "link": ""
           }
@@ -275,7 +275,7 @@
         "post_veil": {
           "type": "post",
           "settings": {
-            "image_asset": "product-veil.png",
+            "image_asset": "product-veil.jpg",
             "caption": "",
             "link": ""
           }
@@ -283,7 +283,7 @@
         "post_aura": {
           "type": "post",
           "settings": {
-            "image_asset": "product-aura.png",
+            "image_asset": "product-aura.jpg",
             "caption": "",
             "link": ""
           }
@@ -291,7 +291,7 @@
         "post_silken": {
           "type": "post",
           "settings": {
-            "image_asset": "product-silken.png",
+            "image_asset": "product-silken.jpg",
             "caption": "",
             "link": ""
           }
@@ -299,7 +299,7 @@
         "post_cashmere": {
           "type": "post",
           "settings": {
-            "image_asset": "product-cashmere.png",
+            "image_asset": "product-cashmere.jpg",
             "caption": "",
             "link": ""
           }
