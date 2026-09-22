@@ -1,21 +1,27 @@
 <section class="page-section contact-faq" data-screen-label="FAQ">
   <div class="page-section__inner">
-    <div class="page-section__head">
-      <h2 class="display-h">{{ section.settings.heading }}</h2>
+    <div class="page-section__head contact-faq__head">
+      <h2 class="contact-faq__heading">{{ section.settings.heading }}</h2>
     </div>
 
-    <div class="faq-list">
+    <div class="cfaq-list">
+      {%- assign faq_index = 0 -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'faq' -%}
-        <div class="faq-item" {{ block.shopify_attributes }}>
-          <button class="faq-item__q" type="button" aria-expanded="false">
-            <span>{{ block.settings.question }}</span>
-            <span class="faq-item__plus" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-item__a">
-            <div class="faq-item__a-inner">{{ block.settings.answer }}</div>
+          {%- assign faq_index = faq_index | plus: 1 -%}
+          <div class="cfaq-item" {{ block.shopify_attributes }}>
+            <button class="cfaq-item__q" type="button" aria-expanded="false" aria-controls="cfaq-a-{{ faq_index }}">
+              <span class="cfaq-item__num" aria-hidden="true">{%- if faq_index < 10 -%}0{{ faq_index }}{%- else -%}{{ faq_index }}{%- endif -%}</span>
+              <span class="cfaq-item__question">{{ block.settings.question }}</span>
+              <span class="cfaq-item__icon" aria-hidden="true">
+                <span class="cfaq-item__icon-line cfaq-item__icon-line--h"></span>
+                <span class="cfaq-item__icon-line cfaq-item__icon-line--v"></span>
+              </span>
+            </button>
+            <div class="cfaq-item__a" id="cfaq-a-{{ faq_index }}">
+              <div class="cfaq-item__a-inner">{{ block.settings.answer }}</div>
+            </div>
           </div>
-        </div>
         {%- endif -%}
       {%- endfor -%}
     </div>
@@ -35,6 +41,22 @@
 
 {% stylesheet %}
 .contact-faq { background: var(--c-cream); }
+
+/* Heading is capped well below .display-h's normal size and scales on
+   viewport width (not just container width) so "Frequently asked
+   questions" always fits a single line, down to the narrowest phones. */
+.contact-faq__head { max-width: none; }
+.contact-faq__heading {
+  margin: 14px 0 0;
+  font-family: var(--ff-display);
+  font-weight: 400;
+  white-space: nowrap;
+  font-size: clamp(15px, 5vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  color: var(--c-forest);
+}
+
 .contact-faq__footer { text-align: center; margin-top: clamp(32px, 5vw, 52px); }
 .contact-faq__footer-heading { margin: 0 0 6px; font-family: var(--ff-display); font-size: clamp(19px, 2vw, 23px); color: var(--c-forest); }
 .contact-faq__footer-body { margin: 0; color: var(--c-ink-soft); font-size: 15.5px; }
@@ -42,54 +64,68 @@
 @media (max-width: 700px) {
   .page-section.contact-faq { padding-bottom: clamp(28px, 6vw, 44px); }
 }
-.faq-list { width: 100%; max-width: none; display: flex; flex-direction: column; gap: 12px; }
-.faq-item {
-  border: 1px solid var(--c-line-soft, rgba(26,58,45,.18));
-  border-radius: 14px;
-  background: var(--c-cream);
-  overflow: hidden;
-  transition: background .3s var(--ease-out), border-color .3s var(--ease-out);
+
+/* Editorial numbered rows, divided by hairlines, in place of the old
+   boxed/bordered accordion cards. */
+.cfaq-list { width: 100%; max-width: none; display: flex; flex-direction: column; }
+.cfaq-item { border-bottom: 1px solid var(--c-line); }
+.cfaq-item:first-child { border-top: 1px solid var(--c-line); }
+
+.cfaq-item__q {
+  width: 100%; display: flex; align-items: center; gap: clamp(16px, 3vw, 32px);
+  padding: clamp(20px, 2.8vw, 30px) 2px;
+  background: none; border: 0; cursor: pointer; text-align: left;
 }
-.faq-item:has(.faq-item__q[aria-expanded="true"]) {
-  background: var(--c-paper);
-  border-color: var(--c-tan);
+.cfaq-item__num {
+  flex: 0 0 auto; min-width: 30px;
+  font-family: var(--ff-display); font-style: italic;
+  font-size: clamp(14px, 1.6vw, 18px); color: var(--c-tan-2);
+  transition: color .3s var(--ease-out);
 }
-.faq-item__q {
-  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px;
-  padding: 20px 24px; background: none; border: 0; cursor: pointer; text-align: left;
-  font-family: var(--ff-body); font-size: 15.5px; font-weight: 500;
+.cfaq-item__question {
+  flex: 1 1 auto;
+  font-family: var(--ff-display); font-weight: 400;
+  font-size: clamp(16.5px, 2vw, 21px); line-height: 1.35;
   color: var(--c-forest);
+  transition: color .3s var(--ease-out);
 }
-.faq-item__plus {
-  flex: 0 0 auto; width: 32px; height: 32px; display: grid; place-items: center;
-  border-radius: 999px; background: var(--c-cream);
-  font-family: var(--ff-body); font-size: 18px; line-height: 1;
-  color: var(--c-tan-2); transition: transform .3s var(--ease-out), background .3s var(--ease-out);
+.cfaq-item__icon { position: relative; flex: 0 0 auto; width: 26px; height: 26px; }
+.cfaq-item__icon-line {
+  position: absolute; top: 50%; left: 50%; background: var(--c-forest);
+  transition: transform .35s var(--ease-out), opacity .35s var(--ease-out), background .3s var(--ease-out);
 }
-.faq-item__q[aria-expanded="true"] .faq-item__plus { transform: rotate(45deg); background: var(--c-cream); }
-.faq-item__a {
-  max-height: 0; overflow: hidden;
-  transition: max-height .45s var(--ease-out);
+.cfaq-item__icon-line--h { width: 16px; height: 1px; transform: translate(-50%, -50%); }
+.cfaq-item__icon-line--v { width: 1px; height: 16px; transform: translate(-50%, -50%); }
+.cfaq-item__q[aria-expanded="true"] .cfaq-item__icon-line--v { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+.cfaq-item__q[aria-expanded="true"] .cfaq-item__num,
+.cfaq-item__q[aria-expanded="true"] .cfaq-item__question,
+.cfaq-item__q[aria-expanded="true"] .cfaq-item__icon-line { color: var(--c-sage); background: var(--c-sage); }
+.cfaq-item__q:hover .cfaq-item__question { color: var(--c-sage); }
+
+.cfaq-item__a { max-height: 0; overflow: hidden; transition: max-height .45s var(--ease-out); }
+.cfaq-item__a.is-open { max-height: 420px; }
+.cfaq-item__a-inner {
+  padding: 0 2px clamp(22px, 3vw, 32px) calc(30px + clamp(16px, 3vw, 32px));
+  max-width: 62ch; font-size: 16px; line-height: 1.75; color: var(--c-ink-soft);
 }
-.faq-item__a.is-open { max-height: 400px; }
-.faq-item__a-inner { padding: 0 24px 22px; max-width: 68ch; font-size: 16.5px; line-height: 1.7; color: var(--c-ink-soft); }
-.faq-item__a-inner p { margin: 0 0 12px; }
-.faq-item__a-inner p:last-child { margin-bottom: 0; }
-/* Narrow screens wrap longer answers taller — avoid clipping the open panel */
+.cfaq-item__a-inner p { margin: 0 0 12px; }
+.cfaq-item__a-inner p:last-child { margin-bottom: 0; }
+
 @media (max-width: 640px) {
-  .faq-item__q { padding: 16px 18px; }
-  .faq-item__a-inner { padding: 0 18px 18px; }
-  .faq-item__a.is-open { max-height: 900px; }
+  .cfaq-item__q { gap: 14px; }
+  .cfaq-item__num { min-width: 22px; }
+  .cfaq-item__a-inner { padding-left: calc(22px + 14px); }
+  .cfaq-item__a.is-open { max-height: 900px; }
 }
 {% endstylesheet %}
 
 {% javascript %}
-document.querySelectorAll('.faq-item__q').forEach(function (btn) {
+document.querySelectorAll('.cfaq-item__q').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var expanded = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', String(!expanded));
     var panel = btn.nextElementSibling;
-    if (panel && panel.classList.contains('faq-item__a')) {
+    if (panel && panel.classList.contains('cfaq-item__a')) {
       panel.classList.toggle('is-open', !expanded);
     }
   });
