@@ -1,21 +1,27 @@
 <section class="page-section ritual-faq" data-screen-label="Ritual FAQ">
   <div class="page-section__inner">
     <div class="page-section__head ritual-faq__head">
-      <h2 class="display-h">{{ section.settings.heading }}</h2>
+      <h2 class="ritual-faq__heading">{{ section.settings.heading }}</h2>
     </div>
 
-    <div class="faq-list">
+    <div class="rfaq-list">
+      {%- assign faq_index = 0 -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'faq' -%}
-        <div class="faq-item" {{ block.shopify_attributes }}>
-          <button class="faq-item__q" type="button" aria-expanded="false">
-            <span>{{ block.settings.question }}</span>
-            <span class="faq-item__plus" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-item__a">
-            <div class="faq-item__a-inner">{{ block.settings.answer }}</div>
+          {%- assign faq_index = faq_index | plus: 1 -%}
+          <div class="rfaq-item" {{ block.shopify_attributes }}>
+            <button class="rfaq-item__q" type="button" aria-expanded="false" aria-controls="rfaq-a-{{ faq_index }}">
+              <span class="rfaq-item__num" aria-hidden="true">{%- if faq_index < 10 -%}0{{ faq_index }}{%- else -%}{{ faq_index }}{%- endif -%}</span>
+              <span class="rfaq-item__question">{{ block.settings.question }}</span>
+              <span class="rfaq-item__icon" aria-hidden="true">
+                <span class="rfaq-item__icon-line rfaq-item__icon-line--h"></span>
+                <span class="rfaq-item__icon-line rfaq-item__icon-line--v"></span>
+              </span>
+            </button>
+            <div class="rfaq-item__a" id="rfaq-a-{{ faq_index }}">
+              <div class="rfaq-item__a-inner">{{ block.settings.answer }}</div>
+            </div>
           </div>
-        </div>
         {%- endif -%}
       {%- endfor -%}
     </div>
@@ -24,7 +30,6 @@
 
 {% stylesheet %}
 .ritual-faq { background: var(--c-cream-2); padding: clamp(28px, 3.5vw, 44px) var(--pad-x); }
-.ritual-faq .faq-item { background: var(--c-cream); }
 .ritual-faq .ritual-faq__head.page-section__head {
   text-align: center !important;
   max-width: none !important;
@@ -32,22 +37,87 @@
   margin-left: auto;
   margin-right: auto;
 }
-.ritual-faq .ritual-faq__head.page-section__head .display-h {
+
+/* Heading sizing matches sections/contact-faq.liquid's .contact-faq__heading
+   exactly (same clamp values, line-height, letter-spacing) so the two FAQ
+   sections read as the same design language. Centered here instead of
+   left-aligned, per this section's existing layout. */
+.ritual-faq__heading {
   width: 100%;
-  text-align: center !important;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 14px 0 0;
+  font-family: var(--ff-display);
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(30px, 5vw, 80px);
+  line-height: .98;
+  letter-spacing: -.015em;
+  color: var(--c-forest);
 }
-.ritual-faq .faq-list { max-width: 760px; margin: 0 auto; }
+@media (max-width: 640px) {
+  .ritual-faq__heading { font-size: clamp(13px, 5vw, 26px); }
+}
+
+/* Editorial numbered rows — same pattern as .cfaq-item in contact-faq.liquid. */
+.rfaq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; }
+.rfaq-item { border-bottom: 1px solid var(--c-line); }
+.rfaq-item:first-child { border-top: 1px solid var(--c-line); }
+
+.rfaq-item__q {
+  width: 100%; display: flex; align-items: center; gap: clamp(16px, 3vw, 32px);
+  padding: clamp(20px, 2.8vw, 30px) 2px;
+  background: none; border: 0; cursor: pointer; text-align: left;
+}
+.rfaq-item__num {
+  flex: 0 0 auto; min-width: 30px;
+  font-family: var(--ff-display); font-style: italic;
+  font-size: clamp(14px, 1.6vw, 18px); color: var(--c-tan-2);
+  transition: color .3s var(--ease-out);
+}
+.rfaq-item__question {
+  flex: 1 1 auto;
+  font-family: var(--ff-display); font-weight: 400;
+  font-size: clamp(16.5px, 2vw, 21px); line-height: 1.35;
+  color: var(--c-forest);
+  transition: color .3s var(--ease-out);
+}
+.rfaq-item__icon { position: relative; flex: 0 0 auto; width: 26px; height: 26px; }
+.rfaq-item__icon-line {
+  position: absolute; top: 50%; left: 50%; background: var(--c-forest);
+  transition: transform .35s var(--ease-out), opacity .35s var(--ease-out), background .3s var(--ease-out);
+}
+.rfaq-item__icon-line--h { width: 16px; height: 1px; transform: translate(-50%, -50%); }
+.rfaq-item__icon-line--v { width: 1px; height: 16px; transform: translate(-50%, -50%); }
+.rfaq-item__q[aria-expanded="true"] .rfaq-item__icon-line--v { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+.rfaq-item__q[aria-expanded="true"] .rfaq-item__num,
+.rfaq-item__q[aria-expanded="true"] .rfaq-item__question { color: var(--c-sage); }
+.rfaq-item__q[aria-expanded="true"] .rfaq-item__icon-line { background: var(--c-sage); }
+.rfaq-item__q:hover .rfaq-item__question { color: var(--c-sage); }
+
+.rfaq-item__a { max-height: 0; overflow: hidden; transition: max-height .45s var(--ease-out); }
+.rfaq-item__a.is-open { max-height: 420px; }
+.rfaq-item__a-inner {
+  padding: 0 2px clamp(22px, 3vw, 32px) calc(30px + clamp(16px, 3vw, 32px));
+  max-width: 62ch; font-size: 16px; line-height: 1.75; color: var(--c-ink-soft);
+}
+.rfaq-item__a-inner p { margin: 0 0 12px; }
+.rfaq-item__a-inner p:last-child { margin-bottom: 0; }
+
+@media (max-width: 640px) {
+  .rfaq-item__q { gap: 14px; }
+  .rfaq-item__num { min-width: 22px; }
+  .rfaq-item__a-inner { padding-left: calc(22px + 14px); }
+  .rfaq-item__a.is-open { max-height: 900px; }
+}
 {% endstylesheet %}
 
 {% javascript %}
-document.querySelectorAll('.faq-item__q').forEach(function (btn) {
+document.querySelectorAll('.rfaq-item__q').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var expanded = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', String(!expanded));
     var panel = btn.nextElementSibling;
-    if (panel && panel.classList.contains('faq-item__a')) {
+    if (panel && panel.classList.contains('rfaq-item__a')) {
       panel.classList.toggle('is-open', !expanded);
     }
   });
