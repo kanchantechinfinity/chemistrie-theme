@@ -306,15 +306,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--c-tan); display: inline-block; }
 
-/* Inner split — image column widened (was 1.1fr/1fr, text got more room
-   than the image; now the reverse) to match the wider treatment applied
-   to the inner-page hero. */
+/* Inner split */
 .hero__inner {
   position: relative;
   z-index: 2;
   flex: 1;
   display: grid;
-  grid-template-columns: 0.9fr 1.15fr;
+  grid-template-columns: 1.1fr 1fr;
   gap: clamp(40px, 6vw, 80px);
   align-items: center;
   max-width: 1480px;
@@ -472,11 +470,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero__visual-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9.5;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(240,232,219,.22);
   box-shadow: 0 40px 80px -24px rgba(0,0,0,.65), 0 16px 32px -8px rgba(26,58,45,.4);
+  background: var(--c-forest-2);
 }
 .hero__visual-frame::after {
   content: "";
@@ -486,18 +485,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
   pointer-events: none;
 }
-/* object-fit: contain, same reasoning as the inner-page hero
-   (sections/page-hero.liquid): cover was cropping ~19% off the current
-   image's top/bottom, and would crop far more off any differently-shaped
-   image uploaded later. No fill behind it either — .hero's own background
-   is the same flat var(--c-forest-2), so removing the frame's separate
-   copy of that colour changes nothing visually but stops it acting as an
-   extra layer that has to be kept in sync. */
 .hero__visual-img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   transition: transform .7s var(--ease-out);
 }
@@ -2783,7 +2775,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__visual-frame {
     width: 100% !important;
     max-width: 100% !important;
-    aspect-ratio: 4 / 3 !important;
+    aspect-ratio: 16 / 9.5 !important;
     border-radius: 16px !important;
   }
 }

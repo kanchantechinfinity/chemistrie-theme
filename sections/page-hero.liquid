@@ -35,36 +35,19 @@
 </section>
 
 {% stylesheet %}
-/* Column split shifted toward the image (was 1fr/1.15fr ~46%/54%, now
-   ~40%/60%) to make it wider, per request. Text keeps its own measure
-   caps (.page-hero__title max-width: 15ch, .page-hero__deck: 56ch) so a
-   narrower text column doesn't make lines any harder to read. */
-.page-hero__inner { display: grid; grid-template-columns: 0.82fr 1.3fr; align-items: center; gap: clamp(32px, 5vw, 80px); }
+.page-hero__inner { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: clamp(32px, 5vw, 80px); }
 .page-hero__copy { min-width: 0; }
 .page-hero__visual {
-  aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden;
+  aspect-ratio: 16 / 9.5; border-radius: 18px; overflow: hidden;
   border: 1px solid rgba(240,232,219,.22); box-shadow: 0 40px 80px -28px rgba(0,0,0,.55);
+  background: var(--c-forest-2);
 }
-/* object-fit: contain rather than cover. This section's hero_fallback_asset
-   varies wildly in native ratio across pages — from a 0.75 (portrait) letter
-   photo to a 2.08 (very wide) product shot — and cover crops whatever
-   doesn't match the box. On the portrait one that meant losing ~55% of the
-   image off the sides. contain guarantees the full photo is always visible,
-   on every page, regardless of its shape.
-
-   No fill/padding on the box itself: it previously had a flat
-   var(--c-forest-2) background, but .page-hero's own background is a
-   diagonal gradient (var(--grad-deep)) that sweeps through several
-   shades, not a flat colour — so the flat fill never actually matched
-   its surroundings and read as a visible green box around the image
-   rather than blending in. Leaving it transparent lets any letterbox
-   gap show the section's real gradient behind it instead. */
 .page-hero__visual img,
-.page-hero__visual svg { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; transition: transform .6s var(--ease-out); }
+.page-hero__visual svg { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .6s var(--ease-out); }
 .page-hero__visual:hover img { transform: scale(1.03); }
 @media (max-width: 760px) {
   .page-hero__inner { grid-template-columns: 1fr; gap: 32px; }
-  .page-hero__visual { display: block; width: 100%; aspect-ratio: 4 / 3; margin-top: 8px; }
+  .page-hero__visual { display: block; width: 100%; aspect-ratio: 16 / 9; margin-top: 8px; }
 }
 .page-hero__cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: clamp(16px, 2.5vw, 32px); margin-top: clamp(28px, 3.5vw, 40px); }
 .page-hero__cta-secondary { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-cream); border-bottom: 1px solid rgba(240,232,219,.4); padding-bottom: 3px; transition: border-color .3s var(--ease-out); }
