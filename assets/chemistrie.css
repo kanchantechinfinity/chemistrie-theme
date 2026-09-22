@@ -432,9 +432,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   display: flex;
   align-items: stretch;
   gap: clamp(20px, 3vw, 36px);
-  padding-top: clamp(20px, 3vw, 32px);
+  padding-top: clamp(14px, 2vw, 22px);
   border-top: 1px solid rgba(255,255,255,.14);
-  margin-top: clamp(8px, 1.5vw, 16px);
+  margin-top: clamp(2px, 0.6vw, 8px);
 }
 .hero__trust-item {
   display: flex;
