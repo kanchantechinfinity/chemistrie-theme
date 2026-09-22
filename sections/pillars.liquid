@@ -17,7 +17,7 @@
     Scroll, trackpad swipe or touch moves the cards continuously.
   {%- endcomment -%}
   <div class="pillars-rail-wrap">
-    <div class="pillars-rail" id="pillarsRail">
+    <div class="pillars-rail" id="pillarsRail" data-autoplay-speed="{{ section.settings.autoplay_speed | default: 5 | times: 1000 }}">
       {%- for block in section.blocks -%}
         <article class="pchain-card" {{ block.shopify_attributes }}>
           <div class="pchain-card__body">
@@ -99,12 +99,12 @@
   border-radius: 24px;
   overflow: hidden;
   box-sizing: border-box;
-  box-shadow: 0 20px 45px -20px rgba(26,58,45,.16);
+  box-shadow: 0 20px 45px -20px rgba(26,58,45,.10);
   transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
 }
 .pchain-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 26px 54px -18px rgba(26,58,45,.24);
+  box-shadow: 0 26px 54px -18px rgba(26,58,45,.16);
 }
 .pchain-card__body {
   display: flex;
@@ -215,7 +215,8 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Trust Signals —" },
     { "type": "html", "id": "intro_heading", "label": "Intro heading", "default": "Nothing here was<br/><em>rounded up.</em>" },
     { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Read the Ingredient Philosophy" },
-    { "type": "url", "id": "cta_link", "label": "CTA link" }
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "range", "id": "autoplay_speed", "label": "Auto-scroll interval", "min": 0, "max": 10, "step": 1, "unit": "s", "default": 5, "info": "Seconds between automatic slides. Set to 0 to turn auto-scroll off and leave the rail manual-only." }
   ],
   "blocks": [
     {

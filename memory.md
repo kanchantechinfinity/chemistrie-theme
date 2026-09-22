@@ -2581,3 +2581,314 @@ User requested redesigning the Trust Signals section to match Framer's Testimoni
 - Added automated 5s cycling with animated progress pill indicators in `assets/chemistrie.js` (`initPillarsChain`), pause-on-hover, and mobile touch swiping.
 - Strictly preserved all existing copy (titles, ledes, list items, eyebrow, heading, CTA), typography tokens, and image assets without any extra injected content.
 
+
+## Build log — 2026-09-22: Founders' Circle CTA (commit `381ed0a`)
+Brief: "create founders circle just above the footer on home page" -
+recognized this maps onto the section that was already last-before-footer
+on the homepage (`newsletter_cta_bQgTWH`, just renamed to generic "Join
+the List" the turn before this one) rather than needing a brand-new
+section — rebuilt its content/purpose in place instead of adding a
+redundant second email-capture block right next to it.
+
+**Copy**: exact approved text (Eyebrow "THE FOUNDERS' CIRCLE", "Come
+closer.", early-access/first-looks/pharmacist-notes body, "JOIN THE
+CIRCLE" button) — verified no discount language anywhere, per the
+brief's explicit ban.
+
+**CMS-editability gap closed**: button label and the success message
+were both hardcoded strings before this (`<span>Subscribe</span>`, and a
+fixed "the first letter arrives at the start of next month" message) —
+both are now schema settings (`cta_label`, `success_message`), directly
+satisfying "copy, CTA, success message, and offer should be
+CMS-editable."
+
+**Consent/privacy**: added a `consent_text` setting rendered under the
+form, with the store's real Privacy Policy link (`shop.privacy_policy.url`)
+appended automatically when set — same resolution pattern already used
+in `footer.liquid`, kept consistent rather than inventing new logic.
+
+**CRM/automation — explicitly NOT wired, flagged instead**: same
+reasoning as the Contact page's GoHighLevel ask. The form still only
+reaches Shopify's native customer list via `{% form 'customer' %}` (no
+external CRM push) — changed the tag from generic `newsletter` to
+`founders-circle` so submissions are at least distinguishable once a real
+integration happens, but did not attempt to guess at CRM credentials or
+webhook endpoints. If this comes up again: need the same thing as the
+GHL ask before — an inbound webhook URL or API access, asked for
+directly.
+
+**Naming overlap flagged, not resolved**: `/pages/founders-circle`
+already exists as a much more elaborate "invite-only, request an
+invitation" page (`templates/page.founders-circle.json` — also still has
+the banned 6,000+/ship-time/rating/batch-count stat-bar numbers,
+untouched, out of scope for this brief). This new homepage CTA is a
+lighter, simpler email-capture entry point that happens to share the
+"Founders' Circle" name — did not link one to the other or try to
+reconcile the two framings, since the brief didn't ask for that and they
+serve different purposes (broad email capture vs. an exclusive
+invitation narrative).
+
+### Follow-up: Founders' Circle form redesigned, collapsed input fixed (commit `d1eb14e`)
+User screenshot showed the form badly broken: the email input rendered
+as just "you@", the "YOUR EMAIL" label wrapped to two lines, and the
+consent text was crammed inline to the right of the button inside the
+pill. Asked to redesign the section keeping content/font/colours.
+
+**Root cause**: `.cta__form` in `chemistrie.css` is a single pill
+(`display: flex; border-radius: 999px; padding: 6px`) designed for
+exactly TWO flex children — `.cta__field` and the button. The consent
+paragraph I added the turn before (`381ed0a`) became a third flex child;
+its `flex-basis: 100%` did nothing because the pill has no
+`flex-wrap: wrap`, so it just stole width from the input instead of
+wrapping below. **Lesson: before adding a child to an existing flex
+container, check whether it's sized/structured for a fixed number of
+children — `flex-basis: 100%` only wraps if the parent wraps.**
+
+**Fix/redesign**: `.cta__form` is now a centered flex COLUMN, and only
+the input+button pair keeps the pill (`.cta__form-row`). Consent sits
+below the pill, error line above it, success message still overlays but
+now only over the row. Added focus-within (tan border) state, 16px input
+text, and replaced the cramped floating "YOUR EMAIL" label with a
+`placeholder="Your email address"` plus a `.visually-hidden` label for
+screen readers (that class is global, `chemistrie.css:58` — verified
+before using).
+
+**Scoping**: all new rules live in the section's own `{% stylesheet %}`
+under a new `.cta--circle` modifier, NOT in `chemistrie.css`. Confirmed
+first via grep that `.cta__form`/`.cta__field`/`.cta__sent` are used by
+this section only — but `.cta`/`.cta__card` are shared with the
+`page-cta` snippet, so scoping keeps that untouched. Deliberately left
+the now-redundant base `.cta__form`/`__field`/`__sent` rules in
+`chemistrie.css` rather than deleting them: the scoped rules win on
+every property that matters, and `chemistrie.css` is actively being
+edited by the other agent right now — not worth a conflict for dead-CSS
+tidying.
+
+## Build log — 2026-09-22: Proof stats section scaled down (commit `6889d5b`)
+User: "revamp this section also it looks too big" (homepage Proof stats —
+"Numbers, not noise." with the 0 / 100% / 28 / 14 days row).
+
+**Why it was so tall** — four compounding values, all in `chemistrie.css`:
+`--section-pad-y` (up to 160px, top AND bottom), `.proof__head`'s 80px
+bottom margin, `.proof__cell`'s 36px vertical padding, and `.proof__num`
+at `clamp(72px, 9vw, 140px)`. Tightened all four (92px / 52px / ~26px /
+68px max respectively).
+
+**The other half of the problem was alignment, not size**: `.proof__cell`
+was `flex-direction: column` with default left alignment inside wide
+grid columns, so every numeral sat hard left with a big void to its
+right. Centred the cells — that alone tightened the visual density more
+than the type scaling did. Added a 1200px cap on `.proof__grid` so the
+four columns don't stretch indefinitely on wide screens.
+
+**Scoping**: `proof.liquid` had no `{% stylesheet %}` block at all (all
+its styles lived in `chemistrie.css`). Added one and wrote the overrides
+`.proof`-prefixed (0,2,0 specificity) so they beat the base `.proof__x`
+rules (0,1,0) regardless of stylesheet load order — avoids editing
+`chemistrie.css` while the other agent has it open. Used `.proof.proof`
+for the section padding override since the base is also a single class.
+Count-up animation untouched (keys off `.proof__num`/`.proof__num-n` in
+markup, CSS-only change).
+
+**Content compliance flagged to user, NOT changed** (design-only request,
+and this project has a hard-learned rule about not silently editing copy
+during a design task): this section still publishes "14 days —
+Money-back, no-questions ritual trial." (an explicit refund promise, and
+the Contact page brief's do-not list expressly named refunds) and "28 —
+Pharmacist-respected actives." (a specific unverified figure of the same
+shape as the 6,000+/4.96/200 stats that were stripped everywhere else
+this session). Raised both; left the decision to the user.
+
+## Build log — 2026-09-22: Ritual Finder form changes + Why Pharmacists revamp (commits `367405d`, `27457ac`)
+
+### Ritual Finder (`367405d`)
+Two user-requested changes to `sections/ritual-finder-app.liquid`:
+
+1. **Eyebrow promoted to section title**: "— Personalized Consultation —"
+   moved out of `.rf-form-card__header`'s meta row (where it sat at 11px
+   beside the "Question 1 of 4" counter) into a new
+   `.ritual-finder-app__head` above the card, restyled at display-serif
+   title scale (clamp 22-32px, italic, forest). Card meta row now holds
+   only the step counter, so its `justify-content` switched from
+   `space-between` to `flex-start`. **Also removed the JS line in
+   `renderStep()` that rewrote `eyebrowEl.textContent` every step** — it
+   was per-step state handling for an element that's now static section
+   furniture; left in place it would have been harmless but misleading.
+2. **Auto-advance removed**: the option-click handler had a 350ms
+   `setTimeout` that jumped to the next question automatically. Now
+   selecting only marks the choice and unlocks Continue. Removed
+   `advanceTimer` and all three `clearTimeout(advanceTimer)` guards
+   (in Next / Instant / Back handlers) — they existed solely to cancel
+   that pending jump.
+
+New CSS went into a `{% stylesheet %}` block added to the section (it had
+none — all its styles were in `pages.css`), scoped under
+`.ritual-finder-app__head` so the base `.ritual-finder-app__eyebrow`
+rule in `pages.css` stays untouched.
+
+### Why Pharmacists statement (`27457ac`)
+User: "revamp this section" on `sections/pharmacists-statement.liquid`
+(the section I built earlier for the Pharmacists page). Screenshot showed
+the heading running at full `.display-h` size over a 760px centred
+column — four enormous lines dominating the viewport, with a small
+centred six-line paragraph stranded under it.
+
+Rebuilt as an asymmetric editorial two-column grid (1.05fr / 1fr):
+eyebrow + heading left, body right behind a `border-left` hairline, both
+left-aligned. Heading dropped to `clamp(30px, 3.3vw, 46px)` — **the
+layout carries the section now, so the type doesn't have to**, which is
+the same principle that fixed the Proof section's "too big" complaint.
+Body gets a 60ch measure instead of centred ragged text. Section padding
+cut from the global `--section-pad-y` (up to 160px) to 56-96px. Stacks
+to one column ≤860px with the vertical rule becoming a top border.
+
+**Pattern worth reusing**: three separate "too big / doesn't look nice"
+complaints this session (Pillars, Proof, this one) all came down to the
+same two root causes — a global `--section-pad-y` of up to 160px top AND
+bottom, and centred single columns letting oversized display type wrap
+into many lines. Scaling type down plus changing alignment/layout fixed
+all three; reaching straight for padding tweaks alone would not have.
+
+## Audit — 2026-09-22: Collection page re-verified against the launch brief (commit `34a1d73`)
+User re-sent the full Collection page brief (same one implemented in
+`2695bbd` + follow-ups). Rather than re-implementing, ran a line-by-line
+audit of the live files against every requirement. **Result: everything
+already satisfied except one leftover**, plus one open conflict the user
+themselves created.
+
+Verified in place: announcement bar `show_announcement: false` default in
+both `header.liquid` schema and `config/settings_data.json`, with the
+approved copy and zero `$120`/"complimentary shipping" matches anywhere
+in the repo; hero eyebrow/headline/supporting copy exact, `deck2` blank;
+stat-bar `show_bar: false` with all four values cleared; grid has no
+`col-side`/`col-filters`/`col-callout`/`price_range` references and no
+"N formulas" count; CTA format `View {{ card_name }} →`; `product.available`
+driving the sold-out branch; Ritual Finder card copy matching the brief
+word-for-word with a `ritual_finder_position` number setting (default 6,
+appends if product count is lower) making it repositionable; page-cta
+copy replaced and second button cleared; closing statement untouched;
+footer copyright free of "Compounded with care in Houston"; no em dashes
+in any consumer-facing Collection copy (only in code comments).
+
+**The one leftover found and fixed**: the grid's empty state still read
+"No formulas match your filters." with a "Clear filters" button — dead
+copy pointing at the sidebar filters that same brief removed, and reusing
+the "formulas" vocabulary it also asked to drop. Now "Nothing here yet."
+with a link to all products, which is what that state actually means
+post-filters (it only fires when the collection itself is empty).
+**Lesson: when removing a feature, grep its user-facing strings too, not
+just its markup and CSS — the empty state survived three passes over this
+file because it sits in an `{%- else -%}` branch that never renders in
+normal browsing.**
+
+**Open conflict flagged to user, not silently resolved**: the brief says
+to remove the current placeholder hero image and explicitly bans
+substituting developer-selected stock imagery ("Do not retain the current
+placeholder brands/products shown in the hero image"). I originally set
+`show_visual: false` for exactly that reason (`2695bbd`), but the user
+then instructed "use the older images that were already there", so it was
+set back to `show_visual: true` with `stock-lineup.jpg` (`625a1ad`). That
+verbal instruction and this brief line directly contradict each other —
+left as the user last asked for it and raised the conflict rather than
+flipping it back unannounced.
+
+### Follow-up: Why Pharmacists two-column grid was mis-placing its children (commit `ce68631`)
+User: "put the content on the left to right and place the below content
+to its place" — decoded against the markup rather than guessed at, and it
+described a real bug I'd shipped one commit earlier in `27457ac`.
+
+`.pstate__inner` became a two-column grid but still had **three** direct
+children (eyebrow `<span>`, heading `<h2>`, body `<div>`). Grid
+auto-placement filled them left-to-right, top-to-bottom: eyebrow →
+col 1, heading → col 2, body → col 1 of a *new row*. So the heading was
+separated from its own eyebrow and the body sat below-left instead of
+right — exactly what the user described ("content on the left [should go]
+to right", "the below content [goes] to its place").
+
+Fixed by wrapping eyebrow + heading in a `.pstate__lead` div so the grid
+has exactly two children, one per column.
+
+**Lesson worth carrying: when converting a stacked block to a
+multi-column grid, count the direct children first.** A grid doesn't know
+which elements belong together — any element left loose becomes its own
+grid item. Same class of mistake as the earlier `.rf-item`/consent-line
+flex bug (`d1eb14e`), where an extra child in a container sized for a
+fixed number of children silently broke the layout. Both times the symptom
+looked like a styling problem and the cause was child count.
+
+## Build log — 2026-09-22: Trust Signals drag-to-slide + dark image edge removed (commit `cca7cb0`)
+Two user requests on the Pillars "Testimonial Chain" (the other agent's
+carousel build — checked `git status` first and confirmed they had no
+uncommitted work in `pillars.liquid` before touching it).
+
+**Drag to slide**: the chain already had `touchstart`/`touchend` swipe
+for mobile but no mouse drag. Replaced the touch-only path with a single
+**Pointer Events** implementation (mouse + touch + pen) — keeping both
+would have double-fired on mobile, since touch devices emit pointer
+events too. Live feedback translates the **stage**, not the cards, at
+0.28 damping capped at ±70px; snaps past a 45px threshold. Translating
+the stage matters: each card carries its own per-state transform
+(`is-active` / `is-prev-1` / `is-next-1` / `is-prev-2` / `is-next-2`), so
+a per-card drag offset would have fought those.
+
+Two gotchas handled: (1) a `dragMoved` flag guards the flanking-card
+`click` handler so releasing a drag over a card doesn't *also* jump to
+it — cleared in `requestAnimationFrame` so the click following pointerup
+still sees it; (2) `-webkit-user-drag: none` + `pointer-events: none` on
+the images, because browsers natively drag images and that hijacks the
+gesture entirely.
+
+**Dark edge on images** — diagnosed rather than guessed: measured the
+pillar PNGs with PowerShell `System.Drawing` (all three are 1024×1536 =
+exactly 2:3, matching their containers' `aspect-ratio: 2/3`). So the
+edge wasn't an aspect mismatch. Cause was `object-fit: contain` +
+`background: var(--c-forest)` on both `.pchain-card__media` and
+`.pchain-card:not(.is-active)` — with a fractional computed height the
+contain-fit letterboxes by a sub-pixel sliver, and a dark fill behind it
+reads as a thin black edge. Set both to `transparent`. **Left the two
+other `var(--c-forest)` backgrounds alone after checking what they are:
+`.pchain-card__pill-fallback` (the no-image fallback, needs it) and the
+progress-dot fill (unrelated).**
+
+**Lesson: a "slight black border" on a contain-fitted image is almost
+always the container's own background showing through sub-pixel
+letterboxing — measure the image ratio before assuming a crop/aspect
+mismatch, then remove the fill rather than switching to `cover` (which
+would crop, undoing a deliberate uncropped-image decision).**
+
+## Build log — 2026-09-22: Trust Signals converted to a scroll rail (commit `30ed4d5`)
+User rejected the drag gesture added in `cca7cb0`: "i didnt want it to
+drag i just want as i move it with cursor like how it moves for
+collection on homepage."
+
+**Asked before acting** (AskUserQuestion) rather than guessing, because
+the two readings meant very different work: a ~10-line gesture tweak vs.
+replacing an entire carousel architecture the *other agent* had iterated
+on across four commits (tabs card → carousel → testimonial chain →
+sequence numbers/uncropped images). User picked "make it a scroll rail."
+
+**What the Collection rail actually is** — checked before copying it:
+`.shop__rail` has **no JS at all** (grepped `chemistrie.js`; the only
+"rail" hit is `story__rail-dot`, unrelated). It's pure CSS:
+`display:flex` + `overflow-x:auto` + `scroll-snap-type: x mandatory` +
+`scroll-padding-left` + `scroll-behavior:smooth` + hidden scrollbar, with
+an edge `mask-image` on the wrapper. Mirrored that setup exactly.
+
+**Removed**: the absolute stage and its five state transforms
+(`is-active`/`is-prev-1`/`is-next-1`/`is-prev-2`/`is-next-2`/`is-hidden`),
+the flanking "pill" preview markup + styles, the progress dots, and the
+entire `initPillarsChain` IIFE (~190 lines: autoplay timer, rAF dot
+fills, pause/resume, card-class bookkeeping, and the pointer-drag I'd
+added one commit earlier). Net −475/+79 lines. Kept only the entrance
+reveal, repointed to `.pillars-rail-wrap`.
+
+**Kept**: every card now renders the full presentation the active card
+used to have (number, title, lede, list, 2:3 image), and the transparent
+image backgrounds from `cca7cb0` so the sub-pixel letterbox edge stays
+fixed. Renamed `.pillars--chain` → `.pillars--rail` and verified zero
+orphaned chain selectors remained in the stylesheet.
+
+**Coordination note**: `sections/pharmacists-statement.liquid` had an
+uncommitted tweak from the other agent at commit time (they added
+`padding-top` to `.pstate__body`) — checked `git status` and staged only
+my two files by name.
