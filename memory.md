@@ -3295,3 +3295,6 @@ Task: heading and image should be "equally aligned" (screenshot showed heading t
 - Grew the image: shifted `grid-template-columns` from `1.1fr 1fr` (favoring copy) to `1fr 1.15fr` (favoring image) — box grows proportionally since it's aspect-ratio-locked to column width, no object-fit/crop change (avoided touching aspect-ratio itself, since hero image aspect-ratio changes were explicitly reverted earlier this session per user request — [[chemistrie-theme-repo]] history).
 - `.hero__title` font-size clamp(40px,5.2vw,76px) → clamp(36px,4.6vw,66px).
 - Noted but did not touch: sections/hero.liquid had an uncommitted change from the concurrent `.kilo` agent (removed a schema field's `label`) sitting in the working tree at the same time — staged only assets/chemistrie.css by exact filename, left their file alone.
+
+## 2026-09-22 — Hero copy nudged down slightly (609091f)
+Follow-up to the top-align fix ([[a12501f]]-ish, prior commit): user wanted the hero text a little lower than the image's top edge, not exactly flush. Added `margin-top: clamp(10px, 1.4vw, 22px)` to `.hero__copy` — small, deliberately subtle per "only a little".
