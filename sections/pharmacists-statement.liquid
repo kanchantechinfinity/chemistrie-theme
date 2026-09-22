@@ -1,10 +1,19 @@
 <section class="page-section pstate">
   <div class="page-section__inner">
     <div class="pstate__inner">
-      {%- if section.settings.eyebrow != blank -%}
-        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-      {%- endif -%}
-      <h2 class="display-h pstate__heading">{{ section.settings.heading }}</h2>
+      {%- comment -%}
+        Exactly two children, so the two-column grid places them one per
+        column. The eyebrow and heading must stay wrapped together —
+        loose in the grid they count as separate items and auto-placement
+        pushes the heading into the right column and the body onto a
+        second row.
+      {%- endcomment -%}
+      <div class="pstate__lead">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="display-h pstate__heading">{{ section.settings.heading }}</h2>
+      </div>
       <div class="pstate__body">{{ section.settings.body }}</div>
     </div>
   </div>
@@ -30,6 +39,8 @@
   margin: 0 auto;
   text-align: left;
 }
+
+.pstate__lead { min-width: 0; }
 
 .pstate__heading {
   margin: 14px 0 0;
