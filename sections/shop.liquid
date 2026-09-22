@@ -84,6 +84,14 @@
 </section>
 
 {% stylesheet %}
+/* .shop's base padding-top comes from the shared --section-pad-y
+   (clamp(80px,12vw,160px)), used site-wide — scoped down here instead
+   of touching that variable, so only this section moves up. Compound
+   selector (id+class) for guaranteed specificity over the base rule,
+   regardless of stylesheet load order — see the identical note on
+   .page-section.mprod in sections/main-product.liquid. */
+#shop.shop { padding-top: clamp(40px, 6vw, 80px); }
+
 .shop__rail .pcard {
   flex: 0 0 300px;
   width: 300px;
