@@ -175,6 +175,14 @@
         {%- if gallery_assets != blank -%}
           {%- assign gallery_list = gallery_assets | split: ',' -%}
         {%- endif -%}
+        {%- comment -%} Liquid's {% if %} has no parentheses for grouping, so this is
+          precomputed as a flag rather than written as one compound condition. {%- endcomment -%}
+        {%- assign show_main_nav = false -%}
+        {%- if gallery_list.size > 1 -%}
+          {%- assign show_main_nav = true -%}
+        {%- elsif card_asset == blank and product.images.size > 1 -%}
+          {%- assign show_main_nav = true -%}
+        {%- endif -%}
         <div class="mprod__main">
           {%- if gallery_list.size > 0 -%}
             <img id="mprod-main-image" src="{{ gallery_list.first | asset_url }}" alt="{{ product.title | escape }}">
@@ -190,7 +198,7 @@
             <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" class="mprod__ph">
             {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
           {%- endif -%}
-          {%- if gallery_list.size > 1 or (card_asset == blank and product.images.size > 1) -%}
+          {%- if show_main_nav -%}
             <button type="button" class="mprod__nav mprod__nav--prev" aria-label="Previous image">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
             </button>
