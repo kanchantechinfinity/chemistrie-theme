@@ -3,32 +3,73 @@
   deliberately dark/evergreen so it cannot be mistaken for a sixth product.
   Occupies the same grid cell as a .pcard, so it stretches to match card
   height automatically (CSS Grid's default align-items: stretch).
-  Params: section (for the ritual_finder_* settings)
+
+  Two stacked prompts instead of one heading+body+button card: each is a
+  short question over its answer, the whole line acting as the link.
+  Params: section (for the prompt1_*/prompt2_*/ritual_finder_url settings)
 {%- endcomment -%}
-<a class="rfcard" href="{{ section.settings.ritual_finder_url | default: '/pages/the-ritual' }}">
-  <span class="rfcard__eyebrow">{{ section.settings.ritual_finder_eyebrow }}</span>
-  <h3 class="rfcard__title">{{ section.settings.ritual_finder_heading }}</h3>
-  {%- if section.settings.ritual_finder_body != blank -%}
-    <p class="rfcard__body">{{ section.settings.ritual_finder_body }}</p>
-  {%- endif -%}
-  <span class="rfcard__cta">{{ section.settings.ritual_finder_cta }} <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-</a>
+<div class="rfcard">
+  <a class="rfcard__row" href="{{ section.settings.ritual_finder_url | default: '/pages/the-ritual' }}">
+    <span class="rfcard__q">{{ section.settings.prompt1_question }}</span>
+    <span class="rfcard__a">
+      <span>{{ section.settings.prompt1_answer }}</span>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
+  </a>
+  <span class="rfcard__divider" aria-hidden="true"></span>
+  <a class="rfcard__row" href="{{ section.settings.prompt2_url | default: '/collections/all' }}">
+    <span class="rfcard__q">{{ section.settings.prompt2_question }}</span>
+    <span class="rfcard__a">
+      <span>{{ section.settings.prompt2_answer }}</span>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
+  </a>
+</div>
 
 {% stylesheet %}
 .rfcard {
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background: var(--c-forest);
   border-radius: 14px;
-  padding: clamp(28px, 3vw, 40px);
-  text-decoration: none;
+  padding: clamp(10px, 1.4vw, 16px);
   position: relative;
   overflow: hidden;
   min-height: 320px;
-  transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
 }
-.rfcard:hover { transform: translateY(-4px); box-shadow: 0 24px 60px -30px rgba(26,58,45,.5); }
-.rfcard__eyebrow { color: var(--c-tan); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; display: block; margin-bottom: 16px; }
-.rfcard__title { font-family: var(--ff-display); font-size: clamp(24px, 2.4vw, 30px); font-weight: 500; margin: 0 0 14px; color: var(--c-cream); }
-.rfcard__body { font-size: 14px; line-height: 1.6; color: rgba(249,244,237,.75); margin: 0 0 26px; }
-.rfcard__cta { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-tan); }
+.rfcard__row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  flex: 1 1 0;
+  padding: clamp(18px, 2.2vw, 26px) clamp(6px, 1vw, 10px);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background .35s var(--ease-out);
+}
+.rfcard__row:hover { background: rgba(249,244,237,.06); }
+.rfcard__q {
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(249,244,237,.55);
+}
+.rfcard__a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ff-display);
+  font-size: clamp(19px, 2vw, 23px);
+  color: var(--c-tan);
+  line-height: 1.25;
+}
+.rfcard__a svg { flex: 0 0 auto; transition: transform .35s var(--ease-out); }
+.rfcard__row:hover .rfcard__a svg { transform: translateX(4px); }
+.rfcard__divider {
+  height: 1px;
+  margin: 0 clamp(6px, 1vw, 10px);
+  background: rgba(249,244,237,.14);
+}
 {% endstylesheet %}

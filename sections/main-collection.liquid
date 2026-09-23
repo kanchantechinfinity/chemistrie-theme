@@ -150,11 +150,12 @@
     { "type": "header", "content": "Ritual Finder card" },
     { "type": "paragraph", "content": "Inserts a guided-shopping card into the grid at the position below. As more products are added, update the position rather than redesigning the grid. Set to 0 to hide the card." },
     { "type": "number", "id": "ritual_finder_position", "label": "Position in grid", "default": 6, "info": "6 means it appears as the 6th tile. If the product count is smaller than this, it appends after the last product." },
-    { "type": "text", "id": "ritual_finder_eyebrow", "label": "Eyebrow", "default": "NOT SURE WHERE TO START?" },
-    { "type": "text", "id": "ritual_finder_heading", "label": "Headline", "default": "Find your ritual." },
-    { "type": "textarea", "id": "ritual_finder_body", "label": "Body", "default": "Answer a few thoughtful questions and we'll help you find the products that fit your skin and your goals." },
-    { "type": "text", "id": "ritual_finder_cta", "label": "CTA label", "default": "FIND YOUR RITUAL" },
-    { "type": "url", "id": "ritual_finder_url", "label": "Ritual Finder destination", "default": "/pages/the-ritual" }
+    { "type": "text", "id": "prompt1_question", "label": "Prompt 1 — question", "default": "Not sure where to start?" },
+    { "type": "text", "id": "prompt1_answer", "label": "Prompt 1 — answer", "default": "Begin with The Ritual." },
+    { "type": "url", "id": "ritual_finder_url", "label": "Prompt 1 — destination", "default": "/pages/the-ritual" },
+    { "type": "text", "id": "prompt2_question", "label": "Prompt 2 — question", "default": "Looking for a gift?" },
+    { "type": "text", "id": "prompt2_answer", "label": "Prompt 2 — answer", "default": "See our curated sets." },
+    { "type": "url", "id": "prompt2_url", "label": "Prompt 2 — destination", "info": "Point this at the gift-sets collection once one exists — defaults to the full collection so it's never a dead link.", "default": "/collections/all" }
   ],
   "presets": [{ "name": "Collection Grid" }]
 }
