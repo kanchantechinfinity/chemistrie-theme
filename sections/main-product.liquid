@@ -206,7 +206,13 @@
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
             </button>
           {%- endif -%}
+          {%- comment -%} Hover-zoom lens. Follows the cursor over the image; the
+            region it covers is what the panel beside the gallery magnifies. {%- endcomment -%}
+          <span class="mprod__lens" id="mprod-lens" aria-hidden="true"></span>
         </div>
+        {%- comment -%} Magnified view, shown beside the gallery (over the buy box)
+          while hovering the main image. Desktop pointers only. {%- endcomment -%}
+        <div class="mprod__zoom" id="mprod-zoom" aria-hidden="true"></div>
         {%- if gallery_list.size > 1 -%}
           <div class="mprod__thumbstrip">
             <button type="button" class="mprod__thumb-nav mprod__thumb-nav--prev" aria-label="Scroll thumbnails left">
@@ -431,6 +437,41 @@
 }
 .mprod__main:hover .mprod__nav { opacity: 1; }
 .mprod__nav:hover { background: var(--c-cream); }
+
+/* ── Hover zoom: lens over the image + magnified panel beside it ──
+   Both are driven from JS (see initProductZoom below), which sizes the
+   lens to exactly the region the panel shows, so the two always agree. */
+.mprod__lens {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  z-index: 4;
+  border: 1px solid rgba(26,58,45,.45);
+  background: rgba(249,244,237,.22);
+  box-sizing: border-box;
+}
+.mprod__zoom {
+  position: absolute;
+  top: 0;
+  left: calc(100% + clamp(32px, 5vw, 80px));
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: none;
+  z-index: 30;
+  border-radius: 16px;
+  border: 1px solid var(--c-line-soft);
+  background-color: var(--c-paper);
+  background-repeat: no-repeat;
+  box-shadow: 0 30px 70px -30px rgba(26,58,45,.4);
+}
+.mprod__gallery.is-zooming .mprod__lens,
+.mprod__gallery.is-zooming .mprod__zoom { display: block; }
+.mprod__gallery.is-zooming .mprod__main { cursor: crosshair; }
+/* No hover zoom without a precise pointer, or where the panel has no
+   room to sit beside the gallery. */
+@media (hover: none), (pointer: coarse), (max-width: 1024px) {
+  .mprod__lens, .mprod__zoom { display: none !important; }
+}
 .mprod__nav--prev { left: 14px; }
 .mprod__nav--next { right: 14px; }
 @media (hover: none) { .mprod__nav { opacity: 1; } }
@@ -649,6 +690,70 @@
     thumbTrack.addEventListener('scroll', updateThumbNavState, { passive: true });
     updateThumbNavState();
   }
+
+  // Hover zoom — a lens follows the cursor over the main image and the panel
+  // beside the gallery shows exactly that region, magnified.
+  (function initProductZoom() {
+    var gallery = document.querySelector('.mprod__gallery');
+    var box = document.querySelector('.mprod__main');
+    var lens = document.getElementById('mprod-lens');
+    var panel = document.getElementById('mprod-zoom');
+    if (!gallery || !box || !lens || !panel || !main) return;
+
+    var ZOOM = 2.6;
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+    function enabled() { return fine.matches && window.innerWidth > 1024; }
+
+    // The image is object-fit:contain, so the picture rarely fills its box —
+    // work out where it actually sits, otherwise the lens and the magnified
+    // view drift apart on any image that isn't square.
+    function paintedRect() {
+      var r = main.getBoundingClientRect();
+      var nw = main.naturalWidth, nh = main.naturalHeight;
+      if (!nw || !nh || !r.width || !r.height) return null;
+      var scale = Math.min(r.width / nw, r.height / nh);
+      var w = nw * scale, h = nh * scale;
+      return { left: r.left + (r.width - w) / 2, top: r.top + (r.height - h) / 2, width: w, height: h };
+    }
+
+    function hide() { gallery.classList.remove('is-zooming'); }
+
+    function track(e) {
+      if (!enabled()) { hide(); return; }
+      var img = paintedRect();
+      if (!img) { hide(); return; }
+      var pw = panel.clientWidth, ph = panel.clientHeight;
+      if (!pw || !ph) { hide(); return; }
+
+      // Lens covers exactly what the panel can show at this magnification.
+      var lw = Math.min(pw / ZOOM, img.width);
+      var lh = Math.min(ph / ZOOM, img.height);
+
+      var x = e.clientX - img.left, y = e.clientY - img.top;
+      if (x < 0 || y < 0 || x > img.width || y > img.height) { hide(); return; }
+      gallery.classList.add('is-zooming');
+
+      var lx = Math.max(0, Math.min(x - lw / 2, img.width - lw));
+      var ly = Math.max(0, Math.min(y - lh / 2, img.height - lh));
+
+      var boxRect = box.getBoundingClientRect();
+      lens.style.width = lw + 'px';
+      lens.style.height = lh + 'px';
+      lens.style.left = (img.left - boxRect.left + lx) + 'px';
+      lens.style.top = (img.top - boxRect.top + ly) + 'px';
+
+      // Scale the backdrop so the lens region fills the panel exactly.
+      var fx = pw / lw, fy = ph / lh;
+      panel.style.backgroundImage = 'url("' + (main.currentSrc || main.src) + '")';
+      panel.style.backgroundSize = (img.width * fx) + 'px ' + (img.height * fy) + 'px';
+      panel.style.backgroundPosition = (-lx * fx) + 'px ' + (-ly * fy) + 'px';
+    }
+
+    box.addEventListener('mouseenter', track);
+    box.addEventListener('mousemove', track);
+    box.addEventListener('mouseleave', hide);
+    window.addEventListener('resize', hide, { passive: true });
+  })();
 
   // Prev/next arrows on the main image, shown on hover — cycle through the same thumbnail list
   var prevBtn = document.querySelector('.mprod__nav--prev');
