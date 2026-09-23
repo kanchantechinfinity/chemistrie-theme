@@ -470,7 +470,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero__visual-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9.5;
+  aspect-ratio: 16 / 7.8;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(240,232,219,.22);
@@ -2736,7 +2736,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__visual-frame {
     width: 100% !important;
     max-width: 100% !important;
-    aspect-ratio: 16 / 9.5 !important;
+    aspect-ratio: 16 / 7.8 !important;
     border-radius: 16px !important;
   }
 }
