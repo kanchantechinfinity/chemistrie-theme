@@ -73,8 +73,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .display-h {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: clamp(40px, 6vw, 88px);
-  line-height: .98;
+  font-size: clamp(26px, 3.2vw, 46px);
+  line-height: 1.05;
   letter-spacing: -.015em;
   color: var(--c-forest);
   margin: 16px 0 0;
@@ -811,7 +811,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-family: var(--ff-display);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(32px, 5.2vw, 72px);
+  font-size: clamp(22px, 2.8vw, 40px);
   line-height: 1.12;
   color: var(--c-forest);
   letter-spacing: -.005em;
@@ -1245,7 +1245,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .founders__head { grid-column: 2; grid-row: 1; align-self: end; }
 .founders__body { grid-column: 2; grid-row: 2; }
-.founders__media { grid-column: 1; grid-row: 1 / span 2; position: relative; min-height: 680px; align-self: stretch; }
+.founders__media { grid-column: 1; grid-row: 1 / span 2; position: relative; min-height: 460px; align-self: stretch; }
 .founders__photo {
   position: absolute;
   border-radius: 280px / 360px;
@@ -1288,7 +1288,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .founders__lede {
   font-family: var(--ff-display);
   font-style: italic;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1.45;
   color: var(--c-forest);
   margin: 14px 0 12px;
@@ -1617,7 +1617,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .proof__num {
   font-family: var(--ff-display);
   font-weight: 300;
-  font-size: clamp(72px, 9vw, 140px);
+  font-size: clamp(34px, 4vw, 56px);
   line-height: 1;
   letter-spacing: -.04em;
   color: var(--c-cream);
@@ -1704,8 +1704,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ritual-finder__heading {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: clamp(40px, 6vw, 88px);
-  line-height: .98;
+  font-size: clamp(26px, 3.2vw, 46px);
+  line-height: 1.05;
   letter-spacing: -.015em;
   color: var(--c-cream);
   margin: 16px 0 0;
@@ -2071,7 +2071,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .footer__wordmark-huge {
   font-family: var(--ff-display);
-  font-size: clamp(56px, 11vw, 160px);
+  font-size: clamp(34px, 6vw, 84px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: .04em;
@@ -2221,7 +2221,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .story__year {
   font-family: var(--ff-display);
   font-weight: 500;
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: clamp(24px, 2.6vw, 36px);
   line-height: 1;
   color: var(--c-forest);
   letter-spacing: -.02em;
@@ -2523,7 +2523,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .nav__links a { font-size: 11px; letter-spacing: .14em; }
   .nav__wordmark { font-size: 18px; letter-spacing: .36em; }
 
-  .hero__title { font-size: clamp(64px, 14vw, 200px); }
+  .hero__title { font-size: clamp(30px, 5.5vw, 52px); }
   .hero[data-layout="split"] .hero__inner { max-width: 100%; text-align: center; }
 
   .pillar__visual { border-left: 0; padding-left: 0; padding-top: 20px; border-top: 1px solid var(--c-line); justify-content: flex-start; }
@@ -2532,7 +2532,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .pillar__mono--script { font-size: 28px; }
   .pillar__title { font-size: clamp(28px, 5vw, 44px); }
 
-  .vision__words { font-size: clamp(28px, 4.6vw, 56px); }
+  .vision__words { font-size: clamp(22px, 4vw, 34px); }
 
   .shop__grid { grid-template-columns: repeat(2, 1fr); }
 
@@ -2588,7 +2588,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__meta--left { top: 18px; left: var(--pad-x); }
   .hero__meta--right { top: 18px; right: var(--pad-x); }
   .hero__eyebrow { font-size: 10.5px; letter-spacing: .24em; }
-  .hero__title { font-size: clamp(54px, 22vw, 110px); letter-spacing: .03em; }
+  .hero__title { font-size: clamp(26px, 7vw, 38px); letter-spacing: .01em; }
   .hero__tag { font-size: 16px; }
   .hero__rule { max-width: 32px; }
   .hero__cta-row { flex-direction: column; gap: 16px; align-items: stretch; width: 100%; max-width: 320px; margin-left: auto; margin-right: auto; }
@@ -2636,7 +2636,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .proof__cell:nth-child(odd) { border-left: 0; }
   .proof__cell:nth-child(even) { border-left: 1px solid rgba(249,244,237,.12); }
   .proof__cell:nth-child(n+3) { border-top: 1px solid rgba(249,244,237,.12); }
-  .proof__num { font-size: clamp(48px, 12vw, 72px); }
+  .proof__num { font-size: clamp(26px, 7vw, 38px); }
 
 
   /* Testimonials */
@@ -2668,7 +2668,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ── Very small phones (≤380px) ── */
 @media (max-width: 380px) {
-  .hero__title { font-size: clamp(48px, 20vw, 90px); }
+  .hero__title { font-size: clamp(24px, 7vw, 32px); }
   .pillar__title { font-size: 30px; }
   .testimonial { flex: 0 0 86vw; }
 }
@@ -2723,7 +2723,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   /* Hero — vertical stack, calmer visuals */
   .hero { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
   .hero__inner { grid-template-columns: 1fr; gap: 36px; margin-top: 56px; }
-  .hero__title { font-size: clamp(38px, 8vw, 56px); }
+  .hero__title { font-size: clamp(26px, 6.5vw, 42px); }
   .hero__stage { min-height: 380px; max-width: 460px; margin: 0 auto; width: 100%; }
   .hero__bottle-wrap { max-width: 100%; }
   .hero__spec-card { padding: 10px 14px; }
