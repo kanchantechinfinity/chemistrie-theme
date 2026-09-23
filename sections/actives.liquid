@@ -119,6 +119,13 @@
   </div>
 </section>
 
+{% stylesheet %}
+/* .actives__intro's top padding, stacked on top of .founders's own
+   bottom padding above it, made for a large gap between the two
+   sections. Compound id+class selector for guaranteed specificity. */
+#actives .actives__intro { padding-top: clamp(24px, 3vw, 44px); }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "The Ingredient Index",

@@ -55,6 +55,15 @@
   </div>
 </section>
 
+{% stylesheet %}
+/* .founders's bottom padding comes from the shared --section-pad-y
+   (clamp(80px,12vw,160px)), used site-wide — scoped down here instead.
+   Compound id+class selector for guaranteed specificity over the base
+   rule regardless of stylesheet load order (see the .page-section.mprod
+   note in sections/main-product.liquid for why a bare class isn't safe). */
+#founders.founders { padding-bottom: clamp(40px, 6vw, 80px); }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Founders",
