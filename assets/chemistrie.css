@@ -470,7 +470,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero__visual-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 7.8;
+  /* Match the fallback image's own natural ratio (hero-home.jpg is
+     1024x493) exactly, so object-fit:cover below never has to crop
+     anything — the box and the photo are the same shape. */
+  aspect-ratio: 1024 / 493;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(240,232,219,.22);
@@ -2736,7 +2739,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__visual-frame {
     width: 100% !important;
     max-width: 100% !important;
-    aspect-ratio: 16 / 7.8 !important;
+    aspect-ratio: 1024 / 493 !important;
     border-radius: 16px !important;
   }
 }
