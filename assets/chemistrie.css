@@ -135,17 +135,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .btn--ghost.btn--light:hover { background: var(--c-cream); color: var(--c-forest); border-color: var(--c-cream); }
 
 /* ───────── Utility strip + Nav ───────── */
+/* Forest text on the brand's gold. Gold was picked over the cream tokens
+   because the nav directly below is cream — on --c-cream the bar would
+   have blended into it. Forest on --c-tan measures ~5.6:1, so it clears
+   AA at this small size. */
 .utility-strip {
-  background: var(--c-forest);
-  color: var(--c-cream);
-  font-size: 11px;
-  letter-spacing: .14em;
+  background: var(--c-tan);
+  color: var(--c-forest);
+  font-size: 10.5px;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  padding: 9px 0;
-  font-weight: 400;
+  padding: 10px 0;
+  font-weight: 500;
   position: relative;
   z-index: 50;
   overflow: hidden;
+  border-bottom: 1px solid rgba(26,58,45,.18);
 }
 .utility-strip__track {
   display: flex;
@@ -157,11 +162,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   align-items: center;
   white-space: nowrap;
 }
+/* Hairline rule between repeats rather than a bullet — the same divider
+   language used by the FAQ rows and section dividers. */
 .utility-strip__item::after {
-  content: "\2022";
-  margin: 0 28px;
-  font-size: 8px;
-  color: var(--c-tan);
+  content: "";
+  width: 1px;
+  height: 11px;
+  margin: 0 30px;
+  background: rgba(26,58,45,.32);
 }
 @keyframes utilityStripMarquee {
   from { transform: translateX(0); }
