@@ -722,16 +722,21 @@
       if (!enabled()) { hide(); return; }
       var img = paintedRect();
       if (!img) { hide(); return; }
+
+      var x = e.clientX - img.left, y = e.clientY - img.top;
+      if (x < 0 || y < 0 || x > img.width || y > img.height) { hide(); return; }
+
+      // Reveal before measuring: the panel is display:none until this class
+      // lands, and a display:none element reports clientWidth/Height of 0 —
+      // measuring first would bail out here every time and never show it.
+      gallery.classList.add('is-zooming');
+
       var pw = panel.clientWidth, ph = panel.clientHeight;
       if (!pw || !ph) { hide(); return; }
 
       // Lens covers exactly what the panel can show at this magnification.
       var lw = Math.min(pw / ZOOM, img.width);
       var lh = Math.min(ph / ZOOM, img.height);
-
-      var x = e.clientX - img.left, y = e.clientY - img.top;
-      if (x < 0 || y < 0 || x > img.width || y > img.height) { hide(); return; }
-      gallery.classList.add('is-zooming');
 
       var lx = Math.max(0, Math.min(x - lw / 2, img.width - lw));
       var ly = Math.max(0, Math.min(y - lh / 2, img.height - lh));
