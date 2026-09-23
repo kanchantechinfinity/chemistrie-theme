@@ -135,12 +135,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .btn--ghost.btn--light:hover { background: var(--c-cream); color: var(--c-forest); border-color: var(--c-cream); }
 
 /* ───────── Utility strip + Nav ───────── */
-/* Forest text on the brand's gold. Gold was picked over the cream tokens
-   because the nav directly below is cream — on --c-cream the bar would
-   have blended into it. Forest on --c-tan measures ~5.6:1, so it clears
-   AA at this small size. */
+/* Forest text on the pale sage. Cream tokens were ruled out because the
+   nav directly below is cream and the bar would disappear into it; gold
+   read far too loud. Sage keeps the bar in the green family, stays
+   distinct from the nav, and forest on --c-sage-3 measures ~8.4:1. */
 .utility-strip {
-  background: var(--c-tan);
+  background: var(--c-sage-3);
   color: var(--c-forest);
   font-size: 10.5px;
   letter-spacing: .2em;
