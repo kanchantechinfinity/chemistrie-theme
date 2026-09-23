@@ -169,8 +169,16 @@
       <div class="mprod__gallery">
         {%- capture card_asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}
         {%- assign card_asset = card_asset | strip -%}
+        {%- capture gallery_assets -%}{%- render 'product-gallery-images', product: product -%}{%- endcapture -%}
+        {%- assign gallery_assets = gallery_assets | strip -%}
+        {%- assign gallery_list = blank -%}
+        {%- if gallery_assets != blank -%}
+          {%- assign gallery_list = gallery_assets | split: ',' -%}
+        {%- endif -%}
         <div class="mprod__main">
-          {%- if card_asset != blank -%}
+          {%- if gallery_list.size > 0 -%}
+            <img id="mprod-main-image" src="{{ gallery_list.first | asset_url }}" alt="{{ product.title | escape }}">
+          {%- elsif card_asset != blank -%}
             <img id="mprod-main-image" src="{{ card_asset | asset_url }}" alt="{{ product.title | escape }}">
           {%- elsif product.featured_image -%}
             <img
@@ -182,7 +190,7 @@
             <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" class="mprod__ph">
             {%- comment -%} Temporary Unsplash stock photo — replace with a real product image in Shopify admin {%- endcomment -%}
           {%- endif -%}
-          {%- if card_asset == blank and product.images.size > 1 -%}
+          {%- if gallery_list.size > 1 or (card_asset == blank and product.images.size > 1) -%}
             <button type="button" class="mprod__nav mprod__nav--prev" aria-label="Previous image">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
             </button>
@@ -191,7 +199,27 @@
             </button>
           {%- endif -%}
         </div>
-        {%- if card_asset == blank and product.images.size > 1 -%}
+        {%- if gallery_list.size > 1 -%}
+          <div class="mprod__thumbstrip">
+            <button type="button" class="mprod__thumb-nav mprod__thumb-nav--prev" aria-label="Scroll thumbnails left">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <div class="mprod__thumbs" id="mprod-thumbs">
+              {%- for asset in gallery_list -%}
+                <button
+                  type="button"
+                  class="mprod__thumb {% if forloop.first %}is-active{% endif %}"
+                  data-full="{{ asset | asset_url }}"
+                  aria-label="View image {{ forloop.index }}">
+                  <img src="{{ asset | asset_url }}" alt="" width="160" height="160" loading="lazy">
+                </button>
+              {%- endfor -%}
+            </div>
+            <button type="button" class="mprod__thumb-nav mprod__thumb-nav--next" aria-label="Scroll thumbnails right">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        {%- elsif card_asset == blank and product.images.size > 1 -%}
           <div class="mprod__thumbs">
             {%- for image in product.images -%}
               <button
@@ -408,6 +436,25 @@
 .mprod__thumb.is-active { border-color: var(--c-forest); }
 .mprod__thumb img { width: 100%; height: 100%; object-fit: cover; }
 
+/* Foxtale-style thumbnail strip: side scroll arrows flanking a row of
+   thumbnails, instead of the plain wrapping row above (still used by
+   the product.images fallback for products without a curated gallery). */
+.mprod__thumbstrip { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.mprod__thumbstrip .mprod__thumbs {
+  margin-top: 0; flex-wrap: nowrap; overflow-x: auto; scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.mprod__thumbstrip .mprod__thumbs::-webkit-scrollbar { display: none; }
+.mprod__thumbstrip .mprod__thumb { flex: 0 0 76px; }
+.mprod__thumb-nav {
+  flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--c-line-soft);
+  background: var(--c-cream); color: var(--c-forest);
+  display: grid; place-items: center; cursor: pointer;
+  transition: border-color .3s var(--ease-out), background .3s var(--ease-out);
+}
+.mprod__thumb-nav:hover { background: var(--c-paper); border-color: var(--c-forest); }
+.mprod__thumb-nav[disabled] { opacity: .35; cursor: default; pointer-events: none; }
+
 /* Image stays pinned in the viewport; the buy box is normal flow so it naturally
    scrolls past underneath — the row's height (set by the taller buy-box column,
    now that it holds 6 accordion items) is what gives the sticky image room to stay put. */
@@ -573,6 +620,27 @@
   thumbs.forEach(function (t, i) {
     t.addEventListener('click', function () { activate(i); });
   });
+
+  // Thumbnail strip side arrows — scroll the row, separate from the
+  // main-image prev/next below (those swap the displayed image).
+  var thumbTrack = document.getElementById('mprod-thumbs');
+  var thumbPrev = document.querySelector('.mprod__thumb-nav--prev');
+  var thumbNext = document.querySelector('.mprod__thumb-nav--next');
+  if (thumbTrack && thumbPrev && thumbNext) {
+    var scrollThumbs = function (dir) {
+      var step = (thumbTrack.querySelector('.mprod__thumb') || {}).offsetWidth || 76;
+      thumbTrack.scrollBy({ left: dir * (step + 12) * 2, behavior: 'smooth' });
+    };
+    var updateThumbNavState = function () {
+      var max = thumbTrack.scrollWidth - thumbTrack.clientWidth - 1;
+      thumbPrev.disabled = thumbTrack.scrollLeft <= 0;
+      thumbNext.disabled = thumbTrack.scrollLeft >= max;
+    };
+    thumbPrev.addEventListener('click', function () { scrollThumbs(-1); });
+    thumbNext.addEventListener('click', function () { scrollThumbs(1); });
+    thumbTrack.addEventListener('scroll', updateThumbNavState, { passive: true });
+    updateThumbNavState();
+  }
 
   // Prev/next arrows on the main image, shown on hover — cycle through the same thumbnail list
   var prevBtn = document.querySelector('.mprod__nav--prev');

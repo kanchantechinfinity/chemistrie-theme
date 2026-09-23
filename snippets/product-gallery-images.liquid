@@ -1,0 +1,19 @@
+{%- comment -%}
+  Outputs a comma-separated list of theme-asset filenames for a product's
+  full marketing gallery (main image + thumbnail strip), or nothing for
+  products that don't have one yet. Mirrors product-image-asset.liquid's
+  handle/title matching pattern; the first filename in the list is the
+  clean product shot already used elsewhere on the site (collection grid,
+  homepage), followed by the lifestyle/texture photos, so the gallery
+  opens on the familiar bottle shot before showing it in use.
+
+  Falls back cleanly: main-product.liquid only uses this for products
+  listed here, everything else keeps the existing single-image display.
+{%- endcomment -%}
+{%- liquid
+  assign _ph = product.handle | downcase
+  assign _pt = product.title | downcase
+  if _ph contains 'aura' or _pt contains 'aura'
+    echo 'product-aura.jpg,gallery-aura-1.png,gallery-aura-2.png,gallery-aura-3.png,gallery-aura-4.png'
+  endif
+-%}
