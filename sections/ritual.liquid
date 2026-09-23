@@ -66,6 +66,14 @@
   </div>
 </section>
 
+{% stylesheet %}
+/* .ritual-finder's padding is self-contained (not --section-pad-y) but
+   still sized for a full-bleed statement (clamp(72px,9vw,130px)) —
+   tightened here. Compound id+class selector for guaranteed specificity
+   over the base rule regardless of stylesheet load order. */
+#ritual-finder.ritual-finder { padding-top: clamp(48px, 6vw, 88px); padding-bottom: clamp(48px, 6vw, 88px); }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "The Ritual Finder",

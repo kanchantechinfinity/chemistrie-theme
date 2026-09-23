@@ -47,6 +47,12 @@
 </section>
 
 {% stylesheet %}
+/* .cta's padding comes from the shared --section-pad-y
+   (clamp(80px,12vw,160px)) — scoped down here instead. .cta--circle is
+   unique to this section (page-cta uses .cta--page), so this compound
+   selector is already guaranteed-specific without needing an id. */
+.cta.cta--circle { padding-top: clamp(48px, 7vw, 96px); padding-bottom: clamp(48px, 7vw, 96px); }
+
 /* Split layout: copy on the left, a compact stacked form panel on the
    right, replacing the old everything-centered-and-stacked card. The
    base .cta__card is text-align:center for the single-column CTAs

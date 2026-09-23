@@ -48,6 +48,12 @@
 {%- endif -%}
 
 {% stylesheet %}
+/* .jpreview's padding comes from the shared .page-section class
+   (clamp(80px,12vw,160px) top and bottom) — scoped down here instead.
+   Compound class selector (both classes this section already carries)
+   for guaranteed specificity over the shared rule regardless of
+   stylesheet load order. */
+.page-section.jpreview { padding-top: clamp(40px, 6vw, 80px); padding-bottom: clamp(40px, 6vw, 80px); }
 .jpreview { background: var(--c-cream); }
 .jpreview__head {
   display: flex;
