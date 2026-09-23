@@ -191,7 +191,7 @@
           {%- elsif product.featured_image -%}
             <img
               id="mprod-main-image"
-              src="{{ product.featured_image | image_url: width: 1000 }}"
+              src="{{ product.featured_image | image_url: width: 1800 }}"
               alt="{{ product.featured_image.alt | default: product.title | escape }}"
               width="1000" height="1000">
           {%- else -%}
@@ -239,7 +239,7 @@
               <button
                 type="button"
                 class="mprod__thumb {% if forloop.first %}is-active{% endif %}"
-                data-full="{{ image | image_url: width: 1000 }}"
+                data-full="{{ image | image_url: width: 1800 }}"
                 aria-label="View image {{ forloop.index }}">
                 <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" width="160" height="160" loading="lazy">
               </button>
@@ -454,8 +454,8 @@
   position: absolute;
   top: 0;
   left: calc(100% + clamp(32px, 5vw, 80px));
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 400px;
+  height: 400px;
   display: none;
   z-index: 30;
   border-radius: 16px;
@@ -507,7 +507,12 @@
 /* Image stays pinned in the viewport; the buy box is normal flow so it naturally
    scrolls past underneath — the row's height (set by the taller buy-box column,
    now that it holds 6 accordion items) is what gives the sticky image room to stay put. */
-.mprod__gallery { position: sticky; top: 100px; align-self: start; }
+/* position:sticky always creates a stacking context, so .mprod__zoom's own
+   z-index is scoped inside this element — without raising the gallery
+   itself, the buy box (a later sibling) paints over the zoom panel.
+   Only lifted while zooming, and kept under the nav's z-index of 40. */
+.mprod__gallery { position: sticky; top: 100px; align-self: start; z-index: 1; }
+.mprod__gallery.is-zooming { z-index: 20; }
 .mprod__buy { align-self: start; }
 .mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
 .mprod__title { margin: 0 0 8px; }
@@ -645,7 +650,13 @@
 }
 .mprod__acc-q[aria-expanded="true"] .mprod__acc-icon { transform: rotate(45deg); background: var(--c-cream); }
 .mprod__acc-a { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease-out); }
-.mprod__acc-a.is-open { max-height: 600px; }
+/* Longer entries (The Full Story on most products) run past the panel's
+   height and used to be silently cut off with no way to reach the rest —
+   scroll the overflow instead of clipping it. */
+.mprod__acc-a.is-open { max-height: 460px; overflow-y: auto; overscroll-behavior: contain; }
+.mprod__acc-a.is-open::-webkit-scrollbar { width: 6px; }
+.mprod__acc-a.is-open::-webkit-scrollbar-thumb { background: var(--c-line); border-radius: 999px; }
+.mprod__acc-a.is-open::-webkit-scrollbar-track { background: transparent; }
 .mprod__acc-a-inner { padding: 0 22px 20px; font-size: 16px; line-height: 1.7; color: var(--c-ink-soft); }
 .mprod__acc-a-inner p { margin: 0 0 10px; }
 .mprod__acc-a-inner p:last-child { margin-bottom: 0; }
@@ -734,9 +745,16 @@
       var pw = panel.clientWidth, ph = panel.clientHeight;
       if (!pw || !ph) { hide(); return; }
 
+      // Never magnify past the source's own pixels. Above 1:1 native the
+      // browser is just interpolating and the zoom goes soft — this is what
+      // made it look blurry at a flat 2.6x on a 1536px-wide photo shown ~630px
+      // wide. Cap the factor at the image's real resolution instead.
+      var native = main.naturalWidth / img.width;
+      var factor = Math.max(1.2, Math.min(ZOOM, native));
+
       // Lens covers exactly what the panel can show at this magnification.
-      var lw = Math.min(pw / ZOOM, img.width);
-      var lh = Math.min(ph / ZOOM, img.height);
+      var lw = Math.min(pw / factor, img.width);
+      var lh = Math.min(ph / factor, img.height);
 
       var lx = Math.max(0, Math.min(x - lw / 2, img.width - lw));
       var ly = Math.max(0, Math.min(y - lh / 2, img.height - lh));
