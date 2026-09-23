@@ -360,7 +360,10 @@
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 4h9l3 3v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M9 10h6M9 14h6M9 18h3"/></svg>
                     The Full Story
                   </span>
-                  <span class="mprod__acc-icon" aria-hidden="true">+</span>
+                  <span class="mprod__acc-icon" aria-hidden="true">
+                    <span class="mprod__acc-icon-line mprod__acc-icon-line--h"></span>
+                    <span class="mprod__acc-icon-line mprod__acc-icon-line--v"></span>
+                  </span>
                 </button>
                 <div class="mprod__acc-a" id="mprod-acc-story">
                   <div class="rte mprod__acc-a-inner">{{ product.description }}</div>
@@ -375,7 +378,10 @@
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg>
                     Warnings
                   </span>
-                  <span class="mprod__acc-icon" aria-hidden="true">+</span>
+                  <span class="mprod__acc-icon" aria-hidden="true">
+                    <span class="mprod__acc-icon-line mprod__acc-icon-line--h"></span>
+                    <span class="mprod__acc-icon-line mprod__acc-icon-line--v"></span>
+                  </span>
                 </button>
                 <div class="mprod__acc-a" id="mprod-acc-warnings">
                   <div class="mprod__acc-a-inner">{{ pd_warnings }}</div>
@@ -389,7 +395,10 @@
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-7-4.35-7-10.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 7 4.5C19 16.65 12 21 12 21Z"/></svg>
                   The Feeling
                 </span>
-                <span class="mprod__acc-icon" aria-hidden="true">+</span>
+                <span class="mprod__acc-icon" aria-hidden="true">
+                    <span class="mprod__acc-icon-line mprod__acc-icon-line--h"></span>
+                    <span class="mprod__acc-icon-line mprod__acc-icon-line--v"></span>
+                  </span>
               </button>
               <div class="mprod__acc-a" id="mprod-acc-feeling">
                 <div class="mprod__acc-a-inner">
@@ -623,32 +632,45 @@
   .mprod__gallery { position: static; }
 }
 
-/* Buy-box accordion: Routine Placement / The Full Story / Warnings / The Feeling / Key Benefits / How to Use
-   — boxed like the FAQ accordion (.pfaq): each item is its own bordered, rounded card with a gap between them. */
-.mprod__info-accordion { margin-top: clamp(28px, 3vw, 44px); display: flex; flex-direction: column; gap: 12px; }
-.mprod__acc-item {
-  border: 1px solid var(--c-line-soft); border-radius: 14px; background: var(--c-cream);
-  overflow: hidden; transition: background .3s var(--ease-out), border-color .3s var(--ease-out);
-}
-.mprod__acc-item:has(.mprod__acc-q[aria-expanded="true"]) {
-  background: var(--c-paper); border-color: var(--c-tan);
-}
+/* Buy-box accordion (The Full Story / Warnings / The Feeling).
+   Editorial hairline rows, matching the FAQ pattern already used on the
+   Contact and Ritual pages (.cfaq-item / .rfaq-item), instead of three
+   separate boxed cards: serif labels, a plus that morphs into a minus,
+   and a sage accent on the open row. */
+.mprod__info-accordion { margin-top: clamp(28px, 3vw, 44px); display: flex; flex-direction: column; }
+.mprod__acc-item { border-bottom: 1px solid var(--c-line); }
+.mprod__acc-item:first-child { border-top: 1px solid var(--c-line); }
+
 .mprod__acc-q {
   width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 18px 22px; background: none; border: 0; text-align: left; cursor: pointer;
-  font-family: var(--ff-body); font-size: 15px; font-weight: 500;
+  padding: clamp(16px, 2vw, 22px) 2px;
+  background: none; border: 0; text-align: left; cursor: pointer;
+}
+.mprod__acc-label {
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--ff-display); font-weight: 400;
+  font-size: clamp(16px, 1.8vw, 19px); line-height: 1.3;
   color: var(--c-forest); transition: color .3s var(--ease-out);
 }
-.mprod__acc-q:hover { color: var(--c-tan-2); }
-.mprod__acc-label { display: flex; align-items: center; gap: 12px; }
-.mprod__acc-label svg { flex: 0 0 auto; color: var(--c-tan-2); }
-.mprod__acc-icon {
-  flex: 0 0 auto; width: 32px; height: 32px; display: grid; place-items: center;
-  border-radius: 999px; background: var(--c-cream);
-  font-size: 18px; line-height: 1; color: var(--c-tan-2);
-  transition: transform .3s var(--ease-out), background .3s var(--ease-out);
+.mprod__acc-label svg {
+  flex: 0 0 auto; width: 17px; height: 17px;
+  color: var(--c-tan-2); transition: color .3s var(--ease-out);
 }
-.mprod__acc-q[aria-expanded="true"] .mprod__acc-icon { transform: rotate(45deg); background: var(--c-cream); }
+.mprod__acc-q:hover .mprod__acc-label,
+.mprod__acc-q:hover .mprod__acc-label svg { color: var(--c-sage); }
+
+.mprod__acc-icon { position: relative; flex: 0 0 auto; width: 24px; height: 24px; }
+.mprod__acc-icon-line {
+  position: absolute; top: 50%; left: 50%; background: var(--c-forest);
+  transition: transform .35s var(--ease-out), opacity .35s var(--ease-out), background .3s var(--ease-out);
+}
+.mprod__acc-icon-line--h { width: 15px; height: 1px; transform: translate(-50%, -50%); }
+.mprod__acc-icon-line--v { width: 1px; height: 15px; transform: translate(-50%, -50%); }
+.mprod__acc-q[aria-expanded="true"] .mprod__acc-icon-line--v { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+.mprod__acc-q[aria-expanded="true"] .mprod__acc-label,
+.mprod__acc-q[aria-expanded="true"] .mprod__acc-label svg { color: var(--c-sage); }
+.mprod__acc-q[aria-expanded="true"] .mprod__acc-icon-line { background: var(--c-sage); }
+
 .mprod__acc-a { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease-out); }
 /* Longer entries (The Full Story on most products) run past the panel's
    height and used to be silently cut off with no way to reach the rest —
@@ -657,10 +679,36 @@
 .mprod__acc-a.is-open::-webkit-scrollbar { width: 6px; }
 .mprod__acc-a.is-open::-webkit-scrollbar-thumb { background: var(--c-line); border-radius: 999px; }
 .mprod__acc-a.is-open::-webkit-scrollbar-track { background: transparent; }
-.mprod__acc-a-inner { padding: 0 22px 20px; font-size: 16px; line-height: 1.7; color: var(--c-ink-soft); }
-.mprod__acc-a-inner p { margin: 0 0 10px; }
+
+/* Indent the body to sit under the label text, not the icon. */
+.mprod__acc-a-inner {
+  padding: 0 2px clamp(18px, 2.2vw, 26px) 31px;
+  font-size: 15.5px; line-height: 1.75; color: var(--c-ink-soft);
+}
+.mprod__acc-a-inner p { margin: 0 0 12px; }
 .mprod__acc-a-inner p:last-child { margin-bottom: 0; }
-.mprod__acc-a-inner strong { color: var(--c-forest); font-weight: 600; }
+.mprod__acc-a-inner strong { color: var(--c-forest); font-weight: 500; }
+.mprod__acc-a-inner em { color: var(--c-ink-mute); }
+/* Product descriptions carry their own headings, lists and FAQ blocks — give
+   them a consistent rhythm instead of leaving them at browser defaults. */
+.mprod__acc-a-inner h2,
+.mprod__acc-a-inner h3,
+.mprod__acc-a-inner h4 {
+  font-family: var(--ff-display); font-weight: 400;
+  font-size: clamp(15px, 1.5vw, 17px); line-height: 1.35;
+  color: var(--c-forest); margin: 22px 0 8px;
+}
+.mprod__acc-a-inner > :first-child { margin-top: 0; }
+.mprod__acc-a-inner ul,
+.mprod__acc-a-inner ol { margin: 0 0 12px; padding-left: 18px; }
+.mprod__acc-a-inner li { margin: 0 0 8px; }
+.mprod__acc-a-inner li:last-child { margin-bottom: 0; }
+.mprod__acc-a-inner ul { list-style: none; padding-left: 0; }
+.mprod__acc-a-inner ul li { position: relative; padding-left: 16px; }
+.mprod__acc-a-inner ul li::before {
+  content: ''; position: absolute; left: 0; top: .72em;
+  width: 5px; height: 1px; background: var(--c-tan);
+}
 {% endstylesheet %}
 
 {% javascript %}
