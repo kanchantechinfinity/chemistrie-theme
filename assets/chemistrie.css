@@ -138,14 +138,37 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .utility-strip {
   background: var(--c-forest);
   color: var(--c-cream);
-  text-align: center;
   font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  padding: 9px 16px;
+  padding: 9px 0;
   font-weight: 400;
   position: relative;
   z-index: 50;
+  overflow: hidden;
+}
+.utility-strip__track {
+  display: flex;
+  width: max-content;
+  animation: utilityStripMarquee 26s linear infinite;
+}
+.utility-strip__item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.utility-strip__item::after {
+  content: "\2022";
+  margin: 0 28px;
+  font-size: 8px;
+  color: var(--c-tan);
+}
+@keyframes utilityStripMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .utility-strip__track { animation: none; }
 }
 
 .nav {

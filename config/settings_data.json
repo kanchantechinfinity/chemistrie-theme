@@ -13,7 +13,7 @@
       "header": {
         "type": "header",
         "settings": {
-          "show_announcement": false,
+          "show_announcement": true,
           "announcement": "Pharmacist-formulated skincare, thoughtfully made.",
           "menu": "main-menu-1"
         }

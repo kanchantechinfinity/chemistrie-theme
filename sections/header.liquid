@@ -1,7 +1,11 @@
 <!-- ───── Top utility strip ───── -->
 {%- if section.settings.show_announcement -%}
-<div class="utility-strip">
-  <span>{{ section.settings.announcement }}</span>
+<div class="utility-strip" aria-label="{{ section.settings.announcement | escape }}">
+  <div class="utility-strip__track">
+    {%- for i in (1..8) -%}
+      <span class="utility-strip__item"{% unless forloop.first %} aria-hidden="true"{% endunless %}>{{ section.settings.announcement }}</span>
+    {%- endfor -%}
+  </div>
 </div>
 {%- endif -%}
 
