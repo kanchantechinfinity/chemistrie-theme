@@ -31,7 +31,7 @@
 
   --maxw: 1440px;
   --pad-x: clamp(24px, 5vw, 80px);
-  --section-pad-y: clamp(80px, 12vw, 160px);
+  --section-pad-y: clamp(40px, 6vw, 80px);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -2768,7 +2768,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 @media (max-width: 700px) {
-  :root { --section-pad-y: clamp(56px, 10vw, 80px); }
+  :root { --section-pad-y: clamp(32px, 6vw, 48px); }
 
   /* Pillars — phone text sizing (tab-card shell sizing lives in pillars.liquid) */
   .pillar__title { font-size: clamp(26px, 8vw, 40px); }
