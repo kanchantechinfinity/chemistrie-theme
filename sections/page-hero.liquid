@@ -37,6 +37,13 @@
 {% stylesheet %}
 .page-hero__inner { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: clamp(32px, 5vw, 80px); }
 .page-hero__copy { min-width: 0; }
+/* Match the homepage hero's heading size (.hero__title in
+   assets/chemistrie.css) instead of the larger base .display-h clamp
+   this was inheriting (40-88px). Compound selector (two of the h1's own
+   classes) for guaranteed specificity over the shared .display-h rule
+   regardless of stylesheet load order — see the .page-section.mprod
+   note in sections/main-product.liquid. */
+.display-h.page-hero__title { font-size: clamp(36px, 4.6vw, 66px); }
 .page-hero__visual {
   aspect-ratio: 16 / 9.5; border-radius: 18px; overflow: hidden;
   border: 1px solid rgba(240,232,219,.22); box-shadow: 0 40px 80px -28px rgba(0,0,0,.55);
