@@ -1,24 +1,10 @@
 <!-- ───── Brand Story — chapters ───── -->
 <section class="story" id="our-story" data-screen-label="10 Brand Story">
-  {%- comment -%}
-    Render the intro only when there's something in it. On the homepage all
-    three fields are blank, and an empty .display-h still reserves a full
-    line box (plus margins), which left a large dead gap above the first
-    chapter.
-  {%- endcomment -%}
-  {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.lede != blank -%}
-    <div class="story__intro">
-      {%- if section.settings.eyebrow != blank -%}
-        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-      {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="display-h">{{ section.settings.heading }}</h2>
-      {%- endif -%}
-      {%- if section.settings.lede != blank -%}
-        <p class="story__lede">{{ section.settings.lede }}</p>
-      {%- endif -%}
-    </div>
-  {%- endif -%}
+  <div class="story__intro">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-h">{{ section.settings.heading }}</h2>
+    <p class="story__lede">{{ section.settings.lede }}</p>
+  </div>
 
   <ol class="story__chapters">
 
@@ -128,7 +114,7 @@
 .story__chapter-photo-mark {
   font-family: var(--ff-display);
   font-style: italic;
-  font-size: clamp(30px, 3.6vw, 44px);
+  font-size: clamp(48px, 6vw, 72px);
   color: rgba(26, 58, 45, .18);
   line-height: 1;
 }
