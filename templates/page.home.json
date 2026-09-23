@@ -9,7 +9,7 @@
     "proof": { "type": "proof" },
     "ritual": { "type": "ritual" },
     "testimonials": { "type": "testimonials" },
-    "story": { "type": "story" },
+    "story": { "type": "story", "settings": { "chapter_1_image_asset": "story-chapter1-2011.jpg" } },
     "instagram": { "type": "instagram" },
     "newsletter-cta": { "type": "newsletter-cta" }
   },
