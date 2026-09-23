@@ -619,13 +619,25 @@
   .mprod__row--actions .mprod__wish { justify-content: center; }
 }
 
+/* Three static badges rather than a run of faint middot-separated text —
+   picks up the pill shape already used by the theme's buttons. Not
+   interactive: no hover, cursor or focus treatment, so they never read
+   as something you can click. */
 .mprod__trust {
   list-style: none; margin: 26px 0 0; padding: 22px 0 0; border-top: 1px solid var(--c-line-soft);
-  display: flex; flex-wrap: wrap; gap: 8px 20px;
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute);
+  display: flex; flex-wrap: wrap; gap: 10px;
 }
-.mprod__trust li { position: relative; padding-left: 18px; }
-.mprod__trust li::before { content: '·'; position: absolute; left: 4px; color: var(--c-tan); font-size: 18px; line-height: .9; }
+.mprod__trust li {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--c-tan-3); background: var(--c-cream);
+  font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--c-forest); white-space: nowrap;
+}
+.mprod__trust li::before {
+  content: ''; flex: 0 0 auto;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--c-tan);
+}
 
 @media (max-width: 860px) {
   .mprod__layout { grid-template-columns: 1fr; }
@@ -650,14 +662,18 @@
   display: flex; align-items: center; gap: 14px;
   font-family: var(--ff-display); font-weight: 400;
   font-size: clamp(16px, 1.8vw, 19px); line-height: 1.3;
-  color: var(--c-forest); transition: color .3s var(--ease-out);
+  color: var(--c-forest-2); transition: color .3s var(--ease-out);
 }
 .mprod__acc-label svg {
   flex: 0 0 auto; width: 17px; height: 17px;
   color: var(--c-tan-2); transition: color .3s var(--ease-out);
 }
+/* Bronze on hover instead of the washed-out sage. The open row keeps the
+   deep heading colour and accents the icon instead — bronze sits at ~2.6:1
+   on this cream, fine for a transient hover but too low to leave a label
+   sitting in while the panel is read. */
 .mprod__acc-q:hover .mprod__acc-label,
-.mprod__acc-q:hover .mprod__acc-label svg { color: var(--c-sage); }
+.mprod__acc-q:hover .mprod__acc-label svg { color: var(--c-tan-2); }
 
 .mprod__acc-icon { position: relative; flex: 0 0 auto; width: 24px; height: 24px; }
 .mprod__acc-icon-line {
@@ -667,9 +683,9 @@
 .mprod__acc-icon-line--h { width: 15px; height: 1px; transform: translate(-50%, -50%); }
 .mprod__acc-icon-line--v { width: 1px; height: 15px; transform: translate(-50%, -50%); }
 .mprod__acc-q[aria-expanded="true"] .mprod__acc-icon-line--v { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
-.mprod__acc-q[aria-expanded="true"] .mprod__acc-label,
-.mprod__acc-q[aria-expanded="true"] .mprod__acc-label svg { color: var(--c-sage); }
-.mprod__acc-q[aria-expanded="true"] .mprod__acc-icon-line { background: var(--c-sage); }
+.mprod__acc-q[aria-expanded="true"] .mprod__acc-label { color: var(--c-forest-2); }
+.mprod__acc-q[aria-expanded="true"] .mprod__acc-label svg { color: var(--c-tan-2); }
+.mprod__acc-q[aria-expanded="true"] .mprod__acc-icon-line { background: var(--c-tan-2); }
 
 .mprod__acc-a { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease-out); }
 /* Longer entries (The Full Story on most products) run past the panel's
