@@ -3373,3 +3373,12 @@ Shopify's theme sync reported 4 failures (2 distinct issues) after the Collectio
 2. **Liquid's `{% if %}` has no parentheses for grouping.** Error at main-product.liquid:193: "Expected dotdot but found comparison." `gallery_list.size > 1 or (card_asset == blank and product.images.size > 1)` — grepped the whole theme, no other file uses parens inside an if condition, confirming this genuinely isn't supported syntax. Fixed by precomputing a `show_main_nav` boolean via if/elsif branches instead of one compound parenthesized expression.
 
 **Pattern to remember going forward**: before writing schema JSON or Liquid conditionals with a pattern not already used elsewhere in this theme, grep for an existing precedent first — this theme's own file set is effectively the ground truth for "what Shopify's Liquid/schema version here actually accepts," more reliable than assuming general Liquid/JSON-schema knowledge applies unmodified.
+
+## 2026-09-23 — Product gallery extended to all 5 launch products (1b87d15)
+User uploaded 15 more images for Velvet, Veil, Cashmere, Silken (Aura was done previously, [[21280e2]]). Read every single image individually via the Read tool before assigning it — did not trust upload/message order — since a misattribution would put the wrong product's photo on another product's live page:
+- 46-48 = Cashmere (application shot, 2 bottle shots)
+- 49-52 = Silken (jar+swatch, forearm scar-line application — confirms Silken's real "scar refining gel" use case, jar+spoon, jar lid-off)
+- 53-56 = Veil (clear droplet texture, woman holding the VEIL-labeled bottle — this is what confirmed 53 belongs to Veil not Silken, despite sitting right after the Silken group, 2 bottle shots)
+- 57-60 = Velvet (foam texture, face-washing shot, 2 bottle shots)
+Saved as `assets/gallery-{product}-{n}.png`, added matching `elsif` branches to `snippets/product-gallery-images.liquid` (each starting with the product's existing approved bottle shot, same pattern as Aura). No changes needed to `sections/main-product.liquid` — the gallery logic built for Aura already generically handles any product this snippet returns a list for.
+**Confirms the reusable-pattern design worked as intended**: extending to 4 more products took zero section-file changes, only new asset files + snippet branches.
