@@ -6,8 +6,7 @@
         {%- if feat.image -%}
           {{ feat.image | image_url: width: 1600 | image_tag: loading: 'eager', widths: '600,900,1200,1600', alt: feat.image.alt | default: feat.title, class: 'jhero__img' }}
         {%- else -%}
-          <img src="{{ 'stock-lifestyle.jpg' | asset_url }}" alt="{{ feat.title | escape }}" loading="eager" class="jhero__img jhero__ph">
-{%- comment -%} Temporary Unsplash stock photo — replace with a real article image in Shopify admin {%- endcomment -%}
+          <img src="{{ 'hero-journal.jpg' | asset_url }}" alt="{{ feat.title | escape }}" loading="eager" class="jhero__img jhero__ph">
         {%- endif -%}
       </a>
       <div class="jhero__copy">
@@ -24,7 +23,10 @@
         <a class="jhero__read" href="{{ feat.url }}">Read the article &rarr;</a>
       </div>
     {%- else -%}
-      <div class="jhero__empty">
+      <div class="jhero__media jhero__media--static" aria-hidden="true">
+        <img src="{{ 'hero-journal.jpg' | asset_url }}" alt="" loading="eager" class="jhero__img">
+      </div>
+      <div class="jhero__copy jhero__empty">
         <span class="eyebrow eyebrow--light">— The Journal —</span>
         <h1 class="display-h display-h--light jhero__title">Letters from<br/><em>the bench.</em></h1>
         <p class="jhero__excerpt">Our first entries are being compounded. Ingredient education, ritual notes, and perspectives from the founders are on their way.</p>
@@ -46,6 +48,7 @@
 .jhero__excerpt { margin: 24px 0 0; max-width: 52ch; color: rgba(240,232,219,.72); font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7; }
 .jhero__read { display: inline-block; margin-top: 28px; font-size: 12.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--c-tan); border-bottom: 1px solid var(--c-tan); padding-bottom: 6px; transition: color .3s, border-color .3s; }
 .jhero__read:hover { color: var(--c-cream); border-color: var(--c-cream); }
+.jhero__media--static { cursor: default; }
 .jhero__empty { max-width: 720px; }
 .jhero__empty .jhero__title { margin-top: 18px; }
 @media (max-width: 900px) {

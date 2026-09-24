@@ -3543,3 +3543,9 @@ Scoped the fix to product pages only, per the ask ("remove this from all product
 2. `assets/chemistrie.css` — `body.template-product { scrollbar-width: none; -ms-overflow-style: none; } body.template-product::-webkit-scrollbar { display: none; }`.
 Scroll itself is untouched — only the drawn track disappears; wheel/trackpad/keyboard/Lenis all still move the page. Verified in Chrome with `--hide-scrollbars=false` (forces the non-overlay track headless normally suppresses, reproducing what the user saw): scrollbar reserved width drops from its normal value to 0, and `scrollTo` still moves `scrollY`.
 Added the new `template-*` body class primarily for this, but it's reusable for any future per-template-only CSS.
+
+## 2026-09-24 — Journal hero now shows a dedicated photo instead of stock/blank
+Journal hero pulls its image from the first published article (`feat.image`) when one exists. Two cases had no real photo: an article with no featured image (fell back to the shared `stock-lifestyle.jpg`, also used by article-related/journal-grid/journal-preview-card), and zero articles published yet (showed no image at all — text-only "Letters from the bench.").
+Added a dedicated `assets/hero-journal.jpg` (1349x650 desk/notebook shot) and pointed both cases at it instead, scoped to `sections/journal-hero.liquid` only — the shared `stock-lifestyle.jpg` fallback used elsewhere is untouched. The "no articles" branch previously rendered no `.jhero__media` at all; added one (`.jhero__media--static`, non-link, `cursor: default`) so the hero always shows a photo rather than going text-only pre-launch.
+A real article's own featured image still takes priority in both branches — this only fills the gap until one exists.
+Verified in Chrome for both branches: image fills the 4:3 frame edge to edge, `object-fit: cover`, no broken image, no JS errors.
