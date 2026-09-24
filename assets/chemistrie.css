@@ -149,7 +149,7 @@ body.template-product::-webkit-scrollbar { display: none; }
    read far too loud. Sage keeps the bar in the green family, stays
    distinct from the nav, and forest on --c-sage-3 measures ~8.4:1. */
 .utility-strip {
-  background: var(--c-sage-3);
+  background: #F0E8DB;
   color: var(--c-forest);
   font-size: 10.5px;
   letter-spacing: .2em;
