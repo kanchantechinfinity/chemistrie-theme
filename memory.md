@@ -3509,3 +3509,15 @@ Removed with it: `ritual_finder_position` setting, `rf_position`/`rf_inserted` b
 **Two harness traps hit, both worth remembering:**
 1. `grep -c $'\r' <file>` reported "162/162" for a file that is pure **LF** — it is not a reliable CRLF test. `sections/main-collection.liquid` is LF while `sections/product-details.liquid` is CRLF, so per-file detection matters. Use `python -c "s=io.open(p,newline='').read(); s.count('\r\n')"` instead.
 2. Slicing CSS out of `chemistrie.css` by line range (`sed -n '94,140p'`) cut through an unterminated `/* ... */` comment, so everything appended after it was swallowed and the `a { text-decoration: none }` reset never applied — the preview showed underlined buttons that do not exist in production. Same class of bug as the earlier orphan-declaration slice; slice on a matched delimiter, not a line number.
+
+## 2026-09-24 — Routine Placement: horizontal rail + fixed a class collision that hid the step names
+User reported the section rendering as a dark green box inside each cream card with only tan italic numbers visible.
+
+**Cause — the important one to remember.** An earlier note in this log said section CSS "is only loaded on pages rendering that section". **That is wrong for `{% stylesheet %}` blocks.** Shopify concatenates every section's `{% stylesheet %}` into one theme-wide sheet served on every page. `sections/ritual-steps.liquid` already owned `.rstep` (`background: #1A3A2D`, rounded card) and `.rstep__num` (tan italic Cormorant), and it sorts after `product-details` in the bundle, so it won. My forest-coloured `.rstep__name` was painting on that dark card — invisible.
+Fix: everything namespaced `rplace__*`. **Before inventing a BEM block, grep the whole theme for the root class**, not just the file being edited.
+
+**Redesign** (user: "i want those routine horizontal line"): each routine is now one full-width row rather than a half-width column, steps running left to right along a rail.
+Rail geometry: steps are `flex: 1 1 0` so they are exactly equal width, which makes `.rplace__step:not(:last-child)::after { left: 50%; width: calc(100% + var(--rgap)) }` land precisely on the next badge centre — no guessed percentage inset. `--rgap` is declared on `.rplace__track` so the pseudo can read the same gap the flex row uses. Badge gets `z-index: 1` over the rail's `0`.
+Long parentheticals no longer sit under their step (a sentence in a ~200px centred column wraps badly). The snippet makes a second pass and emits them as `.rplace__notes` footnotes under the rail, keyed to the step number.
+Dropped `.rplace--single` / `routine_single` — with full-width rows there is nothing to narrow.
+Verified in Chrome with **ritual-steps.css loaded after product-details.css** to reproduce the real bundle order: track background transparent, names forest and visible, rail straight, every segment within 1.5px of the badge-centre span, no overflow at 1200px or 420px.

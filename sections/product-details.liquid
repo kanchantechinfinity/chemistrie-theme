@@ -522,15 +522,12 @@
       {%- endif -%}
     </div>
 
-    {%- comment -%} ───── Routine Placement — numbered AM/PM step columns on the dark band ───── {%- endcomment -%}
+    {%- comment -%} ───── Routine Placement — AM/PM step rails on the dark band ───── {%- endcomment -%}
     {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
-      {%- comment -%} One routine only (e.g. Aura, evening-only) gets a narrower grid so the single card does not stretch the full band width. {%- endcomment -%}
-      {%- assign routine_single = true -%}
-      {%- if pd_routine_am != blank and pd_routine_pm != blank -%}{%- assign routine_single = false -%}{%- endif -%}
       <div class="pdet__block pdet__visual-band">
         <h2 class="pdet__h pdet__h--center">Routine Placement</h2>
         <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-        <div class="rplace{% if routine_single %} rplace--single{% endif %}">
+        <div class="rplace">
           {%- if pd_routine_am != blank -%}
             {%- assign am_steps = pd_routine_am | split: '→' -%}
             <div class="rplace__col rplace__col--am">
@@ -858,24 +855,22 @@
 .pdet__ing-cred { font-size: 12px; font-style: italic; color: var(--c-ink-mute); }
 .pdet__ing-grid--spotlight .pdet__ing-card { background: var(--c-paper); }
 
-/* Routine Placement — two numbered step columns. Replaces the old chip-flow
-   rows: long step copy ("Your Own SPF", the Silken layering note) wrapped
-   badly as nowrap pills, and the mustard AM tag sat outside the palette. */
-.rplace {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: clamp(18px, 2.5vw, 28px); max-width: 860px; margin: 0 auto;
-}
-.rplace--single { max-width: 440px; }
+/* Routine Placement — each routine is one full-width row whose steps run
+   left to right along a rail. Namespaced rplace__ throughout: .rstep and
+   .rstep__num belong to sections/ritual-steps.liquid, and Shopify bundles
+   every section stylesheet into one theme-wide sheet, so those rules applied
+   here too and painted a dark card behind forest-coloured step names. */
+.rplace { display: flex; flex-direction: column; gap: 16px; max-width: 900px; margin: 0 auto; }
 .rplace__col {
   background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 18px;
-  padding: clamp(22px, 3vw, 30px);
+  padding: clamp(22px, 3vw, 30px) clamp(20px, 3vw, 34px);
 }
 .rplace__head {
   display: flex; align-items: center; gap: 11px;
-  padding-bottom: 15px; margin-bottom: 19px; border-bottom: 1px solid var(--c-line);
+  padding-bottom: 15px; margin-bottom: 22px; border-bottom: 1px solid var(--c-line);
 }
 /* Both icons take the forest ink; only the disc behind them differs, so the
-   AM/PM distinction stays inside the palette instead of the old mustard. */
+   AM/PM distinction stays inside the palette. */
 .rplace__icon {
   flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
   display: grid; place-items: center; color: var(--c-forest);
@@ -887,23 +882,41 @@
   font-weight: 600; color: var(--c-forest);
 }
 
-.rstep { list-style: none; margin: 0; padding: 0; }
-.rstep__item { position: relative; display: flex; align-items: flex-start; gap: 13px; padding-bottom: 18px; }
-.rstep__item:last-child { padding-bottom: 0; }
-/* Rail joining the number badges, fading out toward the last step. */
-.rstep__item:not(:last-child)::before {
-  content: ""; position: absolute; left: 13px; top: 30px; bottom: 4px; width: 1px;
-  background: linear-gradient(var(--c-tan-3), rgba(232,217,191,.2));
+.rplace__track { --rgap: clamp(6px, 1.4vw, 18px); display: flex; gap: var(--rgap); }
+.rplace__step {
+  position: relative; flex: 1 1 0; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
 }
-.rstep__num {
+/* Rail segment from this badge's centre to the next one. Every step is
+   flex: 1 1 0, so they are equal width and 100% + the gap lands exactly on
+   the next centre — no guessing at an inset. */
+.rplace__step:not(:last-child)::after {
+  content: ""; position: absolute; z-index: 0; top: 13px; left: 50%;
+  width: calc(100% + var(--rgap)); height: 1px; background: var(--c-tan-3);
+}
+.rplace__num {
   position: relative; z-index: 1; flex: 0 0 auto; width: 27px; height: 27px; border-radius: 50%;
   display: grid; place-items: center; background: var(--c-forest); color: var(--c-cream);
   font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums;
 }
-.rstep__body { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding-top: 2px; }
-.rstep__name { font-family: var(--ff-display); font-size: 18px; font-weight: 500; line-height: 1.25; color: var(--c-forest); }
-.rstep__role { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; color: var(--c-tan-2); }
-.rstep__note { font-size: 12.5px; line-height: 1.5; color: var(--c-ink-mute); }
+.rplace__name { font-family: var(--ff-display); font-size: 17px; font-weight: 500; line-height: 1.25; color: var(--c-forest); }
+.rplace__role { font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--c-tan-2); }
+
+.rplace__notes {
+  list-style: none; margin: 20px 0 0; padding: 14px 0 0; border-top: 1px solid var(--c-line-soft);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.rplace__notes li { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.5; color: var(--c-ink-mute); }
+.rplace__notes-key {
+  flex: 0 0 auto; width: 16px; height: 16px; margin-top: 2px; border-radius: 50%;
+  display: grid; place-items: center; border: 1px solid var(--c-tan-3);
+  font-size: 9.5px; font-weight: 600; color: var(--c-tan-2);
+}
+
+@media (max-width: 520px) {
+  .rplace__name { font-size: 15px; }
+  .rplace__role { font-size: 9px; letter-spacing: .1em; }
+}
 
 /* Texture tags under the "How it feels" tab — previously shared the routine
    chip styles, kept here now that Routine Placement uses numbered steps. */

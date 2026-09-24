@@ -1,32 +1,53 @@
 {%- comment -%}
-  One Routine Placement column's numbered steps.
+  One Routine Placement row: the steps laid out left to right along a rail.
   Accepts: steps — array of "Name (role or note)" strings, already split on the
   arrow separator by the calling section.
-  A short parenthetical (<= 3 words, e.g. "Cleanse") renders as an uppercase role
-  label; a longer one (e.g. the Silken layering note) renders as a sentence caption,
-  so both shapes of routine copy read correctly without per-product markup.
+
+  Every class here is namespaced under rplace__ rather than the shorter rstep__.
+  sections/ritual-steps.liquid already owns .rstep / .rstep__num, and Shopify
+  bundles every section's {% stylesheet %} into one theme-wide sheet, so that
+  section's dark-card styling applied here too and hid the step names.
+
+  A short parenthetical (<= 3 words, e.g. "Cleanse") renders as the step's role
+  label. A longer one — the Cashmere and Silken layering notes — would squeeze a
+  full sentence into a narrow centred column, so it drops to a footnote under
+  the rail, keyed to the step number.
 {%- endcomment -%}
-<ol class="rstep">
+<div class="rplace__track">
   {%- for step in steps -%}
-    {%- assign bits = step | strip | split: "(" -%}
+    {%- assign bits = step | strip | split: '(' -%}
     {%- assign step_name = bits[0] | strip -%}
-    {%- assign step_note = "" -%}
+    {%- assign step_role = '' -%}
     {%- if bits.size > 1 -%}
-      {%- assign step_note = bits[1] | replace: ")", "" | strip -%}
+      {%- assign step_note = bits[1] | replace: ')', '' | strip -%}
+      {%- assign note_words = step_note | split: ' ' -%}
+      {%- if note_words.size <= 3 -%}
+        {%- assign step_role = step_note -%}
+      {%- endif -%}
     {%- endif -%}
-    <li class="rstep__item">
-      <span class="rstep__num" aria-hidden="true">{{ forloop.index }}</span>
-      <span class="rstep__body">
-        <span class="rstep__name">{{ step_name }}</span>
-        {%- if step_note != blank -%}
-          {%- assign note_words = step_note | split: " " -%}
-          {%- if note_words.size > 3 -%}
-            <span class="rstep__note">{{ step_note }}</span>
-          {%- else -%}
-            <span class="rstep__role">{{ step_note }}</span>
-          {%- endif -%}
-        {%- endif -%}
-      </span>
-    </li>
+    <div class="rplace__step">
+      <span class="rplace__num" aria-hidden="true">{{ forloop.index }}</span>
+      <span class="rplace__name">{{ step_name }}</span>
+      {%- if step_role != blank -%}
+        <span class="rplace__role">{{ step_role }}</span>
+      {%- endif -%}
+    </div>
   {%- endfor -%}
-</ol>
+</div>
+
+{%- assign has_notes = false -%}
+{%- for step in steps -%}
+  {%- assign bits = step | strip | split: '(' -%}
+  {%- if bits.size > 1 -%}
+    {%- assign step_note = bits[1] | replace: ')', '' | strip -%}
+    {%- assign note_words = step_note | split: ' ' -%}
+    {%- if note_words.size > 3 -%}
+      {%- if has_notes == false -%}
+        <ul class="rplace__notes">
+        {%- assign has_notes = true -%}
+      {%- endif -%}
+      <li><span class="rplace__notes-key">{{ forloop.index }}</span>{{ step_note }}</li>
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if has_notes -%}</ul>{%- endif -%}
