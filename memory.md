@@ -3529,3 +3529,9 @@ Left `product-<product>.jpg` untouched — it is the shot the collection grid an
 Verified with a rendered contact sheet (all 25 files, `product-*` + `gallery-*`): no broken paths and no cross-product mix-ups.
 
 **Known consequence, flagged to the user, not yet acted on**: the hover zoom in `sections/main-product.liquid` caps its magnification at native resolution (`factor = max(1.2, min(2.6, naturalWidth / paintedWidth))`). The main image paints at roughly 600px, and every new asset is 600x600, so the factor floors at 1.2x — a nearly flat zoom. The previous gallery PNGs were 1402-1536px wide and gave about 2.5x. `product-*.jpg` was already 600x600, so the default view was always flat; this extends that to the whole strip. Fix is source images at 1200-1600px, not a code change.
+
+## 2026-09-24 — Removed the paper frame behind the main product image
+`.mprod__main` had `background: var(--c-paper)` (#f5edd9) plus `padding: clamp(14px, 2vw, 26px)` and a `border-radius: 6px` on the image inside it, so every product photo sat inset on a cream mat inside the rounded border — two mismatched frames around a shot that already has its own background. Dropped the padding, the background and the inner radius; the image now fills the box edge to edge inside the 16px border.
+`object-fit` deliberately stays `contain`: the zoom's `paintedRect()` assumes it when locating the image inside its box, and it letterboxes rather than crops a non-square upload. With no background behind it, a non-square image now shows the page cream instead of a paper band.
+Padding removal is safe for the zoom because `paintedRect()` measures `main.getBoundingClientRect()` — the `<img>` element's own rect, which already excluded the parent's padding.
+Verified in Chrome: computed padding 0, background transparent, image within 2px of the frame on all three sample assets.
