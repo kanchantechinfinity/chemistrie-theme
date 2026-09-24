@@ -881,21 +881,26 @@
 .rtabs__btn svg { flex: 0 0 auto; }
 
 .rbento-wrap[hidden] { display: none; }
-.rbento { display: flex; align-items: flex-end; gap: clamp(12px, 1.8vw, 20px); max-width: 1100px; margin: 0 auto; }
+.rbento { display: flex; align-items: stretch; gap: clamp(12px, 1.8vw, 20px); max-width: 1100px; margin: 0 auto; }
 .rbento__box {
   position: relative; overflow: hidden; flex: 1 1 0; min-width: 0;
   background: var(--c-cream); border-radius: 18px;
   padding: 20px 18px 22px; display: flex; flex-direction: column; gap: 14px;
   box-shadow: 0 16px 30px -20px rgba(0,0,0,.35);
+  transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
 }
-/* Ascending stairs left to right, each box a little taller than the last —
-   the eye climbs toward the routine's final step. Alternating tints (all
-   still palette tokens) give the row a bento-mosaic feel instead of four
-   identical tiles. Caps at 4 children; no current routine runs longer. */
-.rbento__box:nth-child(1) { padding-top: 20px; background: var(--c-cream); }
-.rbento__box:nth-child(2) { padding-top: 40px; background: var(--c-tan-3); }
-.rbento__box:nth-child(3) { padding-top: 60px; background: var(--c-cream); }
-.rbento__box:nth-child(4) { padding-top: 80px; background: var(--c-sage-3); }
+/* Same resting height for every box now — the stairs used to come from
+   ascending padding-top; that's gone, so the "stairs feel" instead happens
+   on hover: odd boxes lift up, even boxes dip down, alternating across the
+   row. Tints (all still palette tokens) stay, for the bento-mosaic feel over
+   four identical tiles. Caps at 4 children; no current routine runs longer. */
+.rbento__box:nth-child(1) { background: var(--c-cream); }
+.rbento__box:nth-child(2) { background: var(--c-tan-3); }
+.rbento__box:nth-child(3) { background: var(--c-cream); }
+.rbento__box:nth-child(4) { background: var(--c-sage-3); }
+.rbento__box:nth-child(odd):hover { transform: translateY(-10px); box-shadow: 0 24px 40px -20px rgba(0,0,0,.4); }
+.rbento__box:nth-child(even):hover { transform: translateY(10px); box-shadow: 0 10px 22px -14px rgba(0,0,0,.4); }
+@media (prefers-reduced-motion: reduce) { .rbento__box { transition: none; } }
 .rbento__ghost {
   position: absolute; top: -10px; right: 2px; z-index: 0;
   font-family: var(--ff-display); font-weight: 600; font-size: 72px; line-height: 1;
@@ -930,10 +935,10 @@
   /* flex: 1 1 0 divides the CONTAINER's main axis — once that axis turns
      vertical every box fights over the column's height instead of sizing to
      its own content, squeezing the name/role text out of view. Drop back to
-     natural, content-driven height and flatten the stairs (no room for a
-     diagonal read in one narrow column). */
+     natural, content-driven height. */
   .rbento { flex-direction: column; align-items: stretch; }
-  .rbento__box { flex: 0 0 auto; padding-top: 20px !important; }
+  .rbento__box { flex: 0 0 auto; }
+  .rbento__box:hover { transform: none; }
   .rbento__name { font-size: 18px; }
 }
 
