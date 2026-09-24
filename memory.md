@@ -3521,3 +3521,11 @@ Rail geometry: steps are `flex: 1 1 0` so they are exactly equal width, which ma
 Long parentheticals no longer sit under their step (a sentence in a ~200px centred column wraps badly). The snippet makes a second pass and emits them as `.rplace__notes` footnotes under the rail, keyed to the step number.
 Dropped `.rplace--single` / `routine_single` — with full-width rows there is nothing to narrow.
 Verified in Chrome with **ritual-steps.css loaded after product-details.css** to reproduce the real bundle order: track background transparent, names forest and visible, rail straight, every segment within 1.5px of the badge-centre span, no overflow at 1200px or 420px.
+
+## 2026-09-24 — Product page galleries replaced with the new 600x600 shoot
+20 new images (4 per product) replacing every `gallery-<product>-N.png`. Order within each product: detail/alt product shot, in-use lifestyle, texture swatch, second product angle — so the strip does not open on a near-duplicate of the `product-<product>.jpg` hero that already sits first in the list.
+Cashmere had only 3 gallery slots; added `gallery-cashmere-4.png` to `snippets/product-gallery-images.liquid`.
+Left `product-<product>.jpg` untouched — it is the shot the collection grid and homepage also use, and the user scoped this to the product page.
+Verified with a rendered contact sheet (all 25 files, `product-*` + `gallery-*`): no broken paths and no cross-product mix-ups.
+
+**Known consequence, flagged to the user, not yet acted on**: the hover zoom in `sections/main-product.liquid` caps its magnification at native resolution (`factor = max(1.2, min(2.6, naturalWidth / paintedWidth))`). The main image paints at roughly 600px, and every new asset is 600x600, so the factor floors at 1.2x — a nearly flat zoom. The previous gallery PNGs were 1402-1536px wide and gave about 2.5x. `product-*.jpg` was already 600x600, so the default view was always flat; this extends that to the whole strip. Fix is source images at 1200-1600px, not a code change.
