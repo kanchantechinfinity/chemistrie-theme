@@ -1,0 +1,32 @@
+{%- comment -%}
+  One Routine Placement column's numbered steps.
+  Accepts: steps — array of "Name (role or note)" strings, already split on the
+  arrow separator by the calling section.
+  A short parenthetical (<= 3 words, e.g. "Cleanse") renders as an uppercase role
+  label; a longer one (e.g. the Silken layering note) renders as a sentence caption,
+  so both shapes of routine copy read correctly without per-product markup.
+{%- endcomment -%}
+<ol class="rstep">
+  {%- for step in steps -%}
+    {%- assign bits = step | strip | split: "(" -%}
+    {%- assign step_name = bits[0] | strip -%}
+    {%- assign step_note = "" -%}
+    {%- if bits.size > 1 -%}
+      {%- assign step_note = bits[1] | replace: ")", "" | strip -%}
+    {%- endif -%}
+    <li class="rstep__item">
+      <span class="rstep__num" aria-hidden="true">{{ forloop.index }}</span>
+      <span class="rstep__body">
+        <span class="rstep__name">{{ step_name }}</span>
+        {%- if step_note != blank -%}
+          {%- assign note_words = step_note | split: " " -%}
+          {%- if note_words.size > 3 -%}
+            <span class="rstep__note">{{ step_note }}</span>
+          {%- else -%}
+            <span class="rstep__role">{{ step_note }}</span>
+          {%- endif -%}
+        {%- endif -%}
+      </span>
+    </li>
+  {%- endfor -%}
+</ol>

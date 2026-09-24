@@ -522,40 +522,37 @@
       {%- endif -%}
     </div>
 
-    {%- comment -%} ───── Routine Placement — AM/PM chip flow on a sage band ───── {%- endcomment -%}
+    {%- comment -%} ───── Routine Placement — numbered AM/PM step columns on the dark band ───── {%- endcomment -%}
     {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
+      {%- comment -%} One routine only (e.g. Aura, evening-only) gets a narrower grid so the single card does not stretch the full band width. {%- endcomment -%}
+      {%- assign routine_single = true -%}
+      {%- if pd_routine_am != blank and pd_routine_pm != blank -%}{%- assign routine_single = false -%}{%- endif -%}
       <div class="pdet__block pdet__visual-band">
         <h2 class="pdet__h pdet__h--center">Routine Placement</h2>
         <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-        <div class="pdet__routine-visual">
+        <div class="rplace{% if routine_single %} rplace--single{% endif %}">
           {%- if pd_routine_am != blank -%}
             {%- assign am_steps = pd_routine_am | split: '→' -%}
-            <div class="pdet__routine-row">
-              <span class="pdet__routine-tag pdet__routine-tag--am">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
-                Morning
-              </span>
-              <div class="pdet__routine-chips">
-                {%- for step in am_steps -%}
-                  <span class="pdet__routine-chip">{{ step | strip }}</span>
-                  {%- unless forloop.last -%}<span class="pdet__routine-arrow" aria-hidden="true">→</span>{%- endunless -%}
-                {%- endfor -%}
+            <div class="rplace__col rplace__col--am">
+              <div class="rplace__head">
+                <span class="rplace__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+                </span>
+                <span class="rplace__label">Morning</span>
               </div>
+              {%- render 'routine-steps', steps: am_steps -%}
             </div>
           {%- endif -%}
           {%- if pd_routine_pm != blank -%}
             {%- assign pm_steps = pd_routine_pm | split: '→' -%}
-            <div class="pdet__routine-row">
-              <span class="pdet__routine-tag pdet__routine-tag--pm">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
-                Evening
-              </span>
-              <div class="pdet__routine-chips">
-                {%- for step in pm_steps -%}
-                  <span class="pdet__routine-chip">{{ step | strip }}</span>
-                  {%- unless forloop.last -%}<span class="pdet__routine-arrow" aria-hidden="true">→</span>{%- endunless -%}
-                {%- endfor -%}
+            <div class="rplace__col rplace__col--pm">
+              <div class="rplace__head">
+                <span class="rplace__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+                </span>
+                <span class="rplace__label">Evening</span>
               </div>
+              {%- render 'routine-steps', steps: pm_steps -%}
             </div>
           {%- endif -%}
         </div>
@@ -610,9 +607,9 @@
             {%- if mf.feeling != blank -%}{{ mf.feeling | replace: '—', ',' }}{%- else -%}{{ pd_feeling }}{%- endif -%}
           </p>
           {%- if pd_texture_tags != blank -%}
-            <div class="pdet__routine-chips">
+            <div class="pdet__tagrow">
               {%- for tag in pd_texture_tags -%}
-                <span class="pdet__routine-chip">{{ tag | strip }}</span>
+                <span class="pdet__tag">{{ tag | strip }}</span>
               {%- endfor -%}
             </div>
           {%- endif -%}
@@ -861,28 +858,59 @@
 .pdet__ing-cred { font-size: 12px; font-style: italic; color: var(--c-ink-mute); }
 .pdet__ing-grid--spotlight .pdet__ing-card { background: var(--c-paper); }
 
-/* Routine Placement — Morning/Evening rows with product-name chips */
-.pdet__routine-visual { display: flex; flex-direction: column; gap: 18px; }
-.pdet__routine-row {
-  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
-  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px;
-  padding: 20px 24px;
+/* Routine Placement — two numbered step columns. Replaces the old chip-flow
+   rows: long step copy ("Your Own SPF", the Silken layering note) wrapped
+   badly as nowrap pills, and the mustard AM tag sat outside the palette. */
+.rplace {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(18px, 2.5vw, 28px); max-width: 860px; margin: 0 auto;
 }
-.pdet__routine-tag {
-  display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto;
-  padding: 9px 18px; border-radius: 999px;
-  font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+.rplace--single { max-width: 440px; }
+.rplace__col {
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 18px;
+  padding: clamp(22px, 3vw, 30px);
 }
-.pdet__routine-tag--am { background: #fbe6b8; color: #8a5b12; }
-.pdet__routine-tag--pm { background: var(--c-forest); color: var(--c-cream); }
-.pdet__routine-chips { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.pdet__routine-chip {
+.rplace__head {
+  display: flex; align-items: center; gap: 11px;
+  padding-bottom: 15px; margin-bottom: 19px; border-bottom: 1px solid var(--c-line);
+}
+/* Both icons take the forest ink; only the disc behind them differs, so the
+   AM/PM distinction stays inside the palette instead of the old mustard. */
+.rplace__icon {
+  flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--c-forest);
+}
+.rplace__col--am .rplace__icon { background: var(--c-tan-3); }
+.rplace__col--pm .rplace__icon { background: var(--c-sage-3); }
+.rplace__label {
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  font-weight: 600; color: var(--c-forest);
+}
+
+.rstep { list-style: none; margin: 0; padding: 0; }
+.rstep__item { position: relative; display: flex; align-items: flex-start; gap: 13px; padding-bottom: 18px; }
+.rstep__item:last-child { padding-bottom: 0; }
+/* Rail joining the number badges, fading out toward the last step. */
+.rstep__item:not(:last-child)::before {
+  content: ""; position: absolute; left: 13px; top: 30px; bottom: 4px; width: 1px;
+  background: linear-gradient(var(--c-tan-3), rgba(232,217,191,.2));
+}
+.rstep__num {
+  position: relative; z-index: 1; flex: 0 0 auto; width: 27px; height: 27px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--c-forest); color: var(--c-cream);
+  font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.rstep__body { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding-top: 2px; }
+.rstep__name { font-family: var(--ff-display); font-size: 18px; font-weight: 500; line-height: 1.25; color: var(--c-forest); }
+.rstep__role { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; color: var(--c-tan-2); }
+.rstep__note { font-size: 12.5px; line-height: 1.5; color: var(--c-ink-mute); }
+
+/* Texture tags under the "How it feels" tab — previously shared the routine
+   chip styles, kept here now that Routine Placement uses numbered steps. */
+.pdet__tagrow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.pdet__tag {
   display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 999px;
-  background: var(--c-forest); color: #fff; font-size: 13px; font-weight: 500; white-space: nowrap;
-}
-.pdet__routine-arrow { color: var(--c-tan-2); font-size: 15px; }
-@media (max-width: 700px) {
-  .pdet__routine-row { flex-direction: column; align-items: flex-start; }
+  background: var(--c-forest); color: var(--c-cream); font-size: 13px; font-weight: 500; white-space: nowrap;
 }
 
 /* Lifestyle photo block — "the ritual in use" */
