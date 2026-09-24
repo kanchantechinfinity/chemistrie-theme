@@ -603,7 +603,11 @@
 .mprod__row--options { align-items: flex-end; }
 .mprod__row--options .mprod__variants { flex: 1 1 auto; min-width: 0; }
 .mprod__row--options .mprod__qty { flex: 0 0 108px; }
-.mprod__row--options input[type="hidden"] ~ .mprod__qty { flex: 1 1 auto; }
+/* Single-variant products render a hidden id input in place of the variant
+   picker, so this sibling combinator used to match and stretch the qty box
+   to fill the whole row (flex: 1 1 auto) — the one case that wasn't actually
+   shrunk by the rule above. Keep it compact here too. */
+.mprod__row--options input[type="hidden"] ~ .mprod__qty { flex: 0 0 140px; }
 
 .mprod__row--actions { align-items: stretch; }
 .mprod__row--actions .mprod__add { flex: 1 1 auto; width: auto; margin: 0; }
