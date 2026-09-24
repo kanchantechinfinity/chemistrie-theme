@@ -900,7 +900,24 @@
 .rbento__box:nth-child(4) { background: var(--c-sage-3); }
 .rbento__box:nth-child(odd):hover { transform: translateY(-10px); box-shadow: 0 24px 40px -20px rgba(0,0,0,.4); }
 .rbento__box:nth-child(even):hover { transform: translateY(10px); box-shadow: 0 10px 22px -14px rgba(0,0,0,.4); }
-@media (prefers-reduced-motion: reduce) { .rbento__box { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .rbento__box { transition: none; } .rbento__box::before { transition: none !important; } }
+/* Corner fill — a circle anchored on the top-right corner, oversized (200%
+   of the box) so scaling it from 0 to 1 sweeps tan across the whole tile
+   without ever exposing a straight/clipped edge. Sits behind the content
+   (z-index: 0, content is 1) and inside the box's own overflow: hidden +
+   border-radius, so the circle never spills past the rounded corners while
+   mid-sweep. Tan, not forest: this band's own background is #1A3A2D, almost
+   the same hex as --c-forest, so a forest fill made the hovered card nearly
+   vanish into the surrounding band instead of visibly filling with color —
+   caught by comparing computed colors in the browser, not by eye. */
+.rbento__box::before {
+  content: ""; position: absolute; z-index: 0;
+  top: -50%; right: -50%; width: 200%; height: 200%;
+  background: var(--c-tan); border-radius: 50%;
+  transform: scale(0); transform-origin: top right;
+  transition: transform .5s var(--ease-out);
+}
+.rbento__box:hover::before { transform: scale(1); }
 .rbento__ghost {
   position: absolute; top: -10px; right: 2px; z-index: 0;
   font-family: var(--ff-display); font-weight: 600; font-size: 72px; line-height: 1;
@@ -910,7 +927,9 @@
   position: relative; z-index: 1; flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%;
   background: var(--c-forest); color: var(--c-cream);
   display: grid; place-items: center; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;
+  transition: background .4s var(--ease-out), color .4s var(--ease-out);
 }
+.rbento__box:hover .rbento__num { background: var(--c-cream); color: var(--c-forest); }
 .rbento__name {
   position: relative; z-index: 1; margin: 0;
   font-family: var(--ff-display); font-size: 21px; font-weight: 500; line-height: 1.15; color: var(--c-forest);
@@ -918,7 +937,13 @@
 .rbento__role {
   position: relative; z-index: 1; font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
   font-weight: 600; color: var(--c-tan-2);
+  transition: color .4s var(--ease-out);
 }
+/* tan-2 (a darker tan) on the hover fill's plain --c-tan is too close in
+   hue/lightness to stay legible, so this one still needs a flip — to forest,
+   which was already proven to read on tan elsewhere (e.g. .racc__label on
+   .racc__item--am's tan-3 badge). */
+.rbento__box:hover .rbento__role { color: var(--c-forest); }
 
 .rbento__notes {
   list-style: none; margin: 20px auto 0; padding: 14px 0 0; border-top: 1px solid var(--c-line-soft);
