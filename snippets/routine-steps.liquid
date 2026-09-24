@@ -1,22 +1,19 @@
 {%- comment -%}
-  One Routine Placement row: the steps as individual elevated cards, one per
-  step, with a faint numeral watermark behind the content — the editorial
-  card-grid treatment (see build log entry for the reference this replaced
-  the connected-rail version with).
+  One Routine Placement period's steps, as plain numbered rows inside an
+  accordion panel (see sections/product-details.liquid for the .racc__item
+  wrapper this renders into).
   Accepts: steps — array of "Name (role or note)" strings, already split on the
   arrow separator by the calling section.
 
-  Every class here is namespaced under rplace__ rather than the shorter rstep__.
-  sections/ritual-steps.liquid already owns .rstep / .rstep__num, and Shopify
-  bundles every section's {% stylesheet %} into one theme-wide sheet, so that
-  section's dark-card styling applied here too and hid the step names.
+  Namespaced racc__ (not rstep__ or rplace__ — both already used and retired
+  by earlier versions of this section; see the git history on this file).
 
   A short parenthetical (<= 3 words, e.g. "Cleanse") renders as the step's role
-  label. A longer one — the Cashmere and Silken layering notes — would squeeze a
-  full sentence into a card built for a two-word label, so it drops to a
-  footnote under the grid, keyed to the step number, same as before.
+  label. A longer one — the Cashmere and Silken layering notes — would run on
+  past a single row, so it drops to a footnote below the rows, keyed to the
+  step number.
 {%- endcomment -%}
-<div class="rplace__cards">
+<div class="racc__rows">
   {%- for step in steps -%}
     {%- assign bits = step | strip | split: '(' -%}
     {%- assign step_name = bits[0] | strip -%}
@@ -28,16 +25,13 @@
         {%- assign step_role = step_note -%}
       {%- endif -%}
     {%- endif -%}
-    <article class="rplace__card">
-      <span class="rplace__ghost" aria-hidden="true">{{ forloop.index }}</span>
-      <div class="rplace__card-top">
-        <span class="rplace__num" aria-hidden="true">{{ forloop.index }}</span>
-        {%- if step_role != blank -%}
-          <span class="rplace__role">{{ step_role }}</span>
-        {%- endif -%}
-      </div>
-      <h3 class="rplace__name">{{ step_name }}</h3>
-    </article>
+    <div class="racc__row">
+      <span class="racc__num" aria-hidden="true">{{ forloop.index }}</span>
+      <span class="racc__name">{{ step_name }}</span>
+      {%- if step_role != blank -%}
+        <span class="racc__role">{{ step_role }}</span>
+      {%- endif -%}
+    </div>
   {%- endfor -%}
 </div>
 
@@ -49,10 +43,10 @@
     {%- assign note_words = step_note | split: ' ' -%}
     {%- if note_words.size > 3 -%}
       {%- if has_notes == false -%}
-        <ul class="rplace__notes">
+        <ul class="racc__notes">
         {%- assign has_notes = true -%}
       {%- endif -%}
-      <li><span class="rplace__notes-key">{{ forloop.index }}</span>{{ step_note }}</li>
+      <li><span class="racc__notes-key">{{ forloop.index }}</span>{{ step_note }}</li>
     {%- endif -%}
   {%- endif -%}
 {%- endfor -%}

@@ -522,40 +522,45 @@
       {%- endif -%}
     </div>
 
-    {%- comment -%} ───── Routine Placement — editorial step-card grid on the dark band ───── {%- endcomment -%}
+    {%- comment -%} ───── Routine Placement — accordion, collapsed by default ───── {%- endcomment -%}
     {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
+      {%- comment -%} Morning always opens by default. Evening opens by default only when it's the only period (Aura) — with both present, only Morning starts open so the section rests shorter. {%- endcomment -%}
+      {%- assign pm_open = false -%}
+      {%- if pd_routine_am == blank -%}{%- assign pm_open = true -%}{%- endif -%}
       <div class="pdet__block pdet__visual-band">
         <h2 class="pdet__h pdet__h--center">Routine Placement</h2>
         <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-        <div class="rplace">
+        <div class="racc">
           {%- if pd_routine_am != blank -%}
             {%- assign am_steps = pd_routine_am | split: '→' -%}
-            <div class="rplace__col rplace__col--am">
-              <div class="rplace__head">
-                <div class="rplace__head-id">
-                  <span class="rplace__badge" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
-                  </span>
-                  <span class="rplace__label">Morning</span>
-                </div>
-                <span class="rplace__meta">{{ am_steps.size }}-Step Routine</span>
+            <div class="racc__item racc__item--am is-open">
+              <button type="button" class="racc__head" aria-expanded="true" aria-controls="racc-panel-am">
+                <span class="racc__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+                </span>
+                <span class="racc__label">Morning</span>
+                <span class="racc__meta">{{ am_steps.size }}-Step Routine</span>
+                <svg class="racc__chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="racc__panel is-open" id="racc-panel-am">
+                {%- render 'routine-steps', steps: am_steps -%}
               </div>
-              {%- render 'routine-steps', steps: am_steps -%}
             </div>
           {%- endif -%}
           {%- if pd_routine_pm != blank -%}
             {%- assign pm_steps = pd_routine_pm | split: '→' -%}
-            <div class="rplace__col rplace__col--pm">
-              <div class="rplace__head">
-                <div class="rplace__head-id">
-                  <span class="rplace__badge" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
-                  </span>
-                  <span class="rplace__label">Evening</span>
-                </div>
-                <span class="rplace__meta">{{ pm_steps.size }}-Step Routine</span>
+            <div class="racc__item racc__item--pm{% if pm_open %} is-open{% endif %}">
+              <button type="button" class="racc__head" aria-expanded="{{ pm_open }}" aria-controls="racc-panel-pm">
+                <span class="racc__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+                </span>
+                <span class="racc__label">Evening</span>
+                <span class="racc__meta">{{ pm_steps.size }}-Step Routine</span>
+                <svg class="racc__chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="racc__panel{% if pm_open %} is-open{% endif %}" id="racc-panel-pm">
+                {%- render 'routine-steps', steps: pm_steps -%}
               </div>
-              {%- render 'routine-steps', steps: pm_steps -%}
             </div>
           {%- endif -%}
         </div>
@@ -861,94 +866,77 @@
 .pdet__ing-cred { font-size: 12px; font-style: italic; color: var(--c-ink-mute); }
 .pdet__ing-grid--spotlight .pdet__ing-card { background: var(--c-paper); }
 
-/* Routine Placement — each routine is one full-width row whose steps run
-   left to right along a rail. Namespaced rplace__ throughout: .rstep and
-   .rstep__num belong to sections/ritual-steps.liquid, and Shopify bundles
-   every section stylesheet into one theme-wide sheet, so those rules applied
-   here too and painted a dark card behind forest-coloured step names. */
-/* Routine Placement — one editorial card per step (numeral badge + role +
-   product name), grouped under a period header strip (AM/PM badge, label,
-   and a real step count pulled from the routine data). Replaces an earlier
-   connected-rail layout with separated, elevated cards per the reference
-   direction. */
-.rplace { display: flex; flex-direction: column; gap: 20px; max-width: 1100px; margin: 0 auto; }
-.rplace__col {
-  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 18px;
-  padding: clamp(22px, 3vw, 30px) clamp(20px, 3vw, 34px);
+/* Routine Placement — accordion, collapsed by default. Namespaced racc__
+   throughout: sections/ritual-steps.liquid already owns .rstep/.rstep__num,
+   and Shopify bundles every section's stylesheet into one theme-wide sheet,
+   so a shorter name collided with that section's dark-card styling before
+   (see the git history on this block for that one). Reuses the same
+   aria-expanded + max-height toggle pattern as the FAQ accordion (.pfaq__)
+   further down this file, rather than a second pattern for the same job. */
+.racc { display: flex; flex-direction: column; gap: 14px; max-width: 780px; margin: 0 auto; }
+.racc__item {
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px;
+  overflow: hidden; transition: border-color .3s var(--ease-out);
 }
-.rplace__head {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  padding-bottom: 15px; margin-bottom: 22px; border-bottom: 1px solid var(--c-line);
+.racc__item.is-open { border-color: var(--c-tan); }
+.racc__head {
+  width: 100%; display: flex; align-items: center; gap: 12px;
+  padding: 18px 22px; background: none; border: 0; text-align: left; cursor: pointer;
+  font-family: var(--ff-body); color: inherit;
 }
-.rplace__head-id { display: flex; align-items: center; gap: 11px; }
-/* Both badges take the forest ink; only the disc behind them differs, so the
-   AM/PM distinction stays inside the palette. */
-.rplace__badge {
-  flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+.racc__icon {
+  flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
   display: grid; place-items: center; color: var(--c-forest);
 }
-.rplace__col--am .rplace__badge { background: var(--c-tan-3); }
-.rplace__col--pm .rplace__badge { background: var(--c-sage-3); }
-.rplace__label {
+.racc__item--am .racc__icon { background: var(--c-tan-3); }
+.racc__item--pm .racc__icon { background: var(--c-sage-3); }
+.racc__label {
   font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
   font-weight: 600; color: var(--c-forest);
 }
-.rplace__meta {
-  font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--c-ink-mute); border: 1px solid var(--c-line-soft); border-radius: 999px;
-  padding: 5px 12px;
+.racc__meta {
+  margin-left: auto; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--c-ink-mute);
+}
+.racc__chevron { flex: 0 0 auto; color: var(--c-tan-2); transition: transform .3s var(--ease-out); }
+.racc__item.is-open .racc__chevron { transform: rotate(180deg); }
+.racc__panel { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease-out); }
+.racc__panel.is-open { max-height: 640px; }
+
+.racc__rows { padding: 4px 22px 20px; display: flex; flex-direction: column; }
+.racc__row {
+  display: flex; align-items: baseline; gap: 14px; padding: 12px 0;
+  border-top: 1px solid var(--c-line-soft);
+}
+.racc__row:first-child { border-top: 0; }
+.racc__num {
+  flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--c-forest); color: var(--c-cream);
+  display: grid; place-items: center; font-size: 10.5px; font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.racc__name { font-family: var(--ff-display); font-size: 18px; font-weight: 500; color: var(--c-forest); }
+.racc__role {
+  margin-left: auto; flex: 0 0 auto; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
+  font-weight: 600; color: var(--c-tan-2);
 }
 
-.rplace__cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: clamp(12px, 1.6vw, 18px); }
-.rplace__card {
-  position: relative; overflow: hidden; min-width: 0;
-  background: var(--c-paper); border: 1px solid var(--c-line-soft); border-radius: 14px;
-  padding: 18px 16px 20px; transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
-}
-.rplace__card:hover { transform: translateY(-3px); box-shadow: 0 20px 36px -22px rgba(26,58,45,.35); }
-/* Small staggered lift on later cards — a restrained version of the
-   reference's cascading offsets, kept subtle so a 4-card row doesn't grow a
-   tall gap beneath the shortest card. */
-@media (min-width: 640px) {
-  .rplace__card:nth-child(2) { margin-top: 10px; }
-  .rplace__card:nth-child(3) { margin-top: 20px; }
-  .rplace__card:nth-child(4) { margin-top: 30px; }
-}
-.rplace__ghost {
-  position: absolute; top: -6px; right: 6px; z-index: 0;
-  font-family: var(--ff-display); font-size: 64px; font-weight: 600; line-height: 1;
-  color: rgba(26,58,45,.06); pointer-events: none; user-select: none;
-}
-.rplace__card-top {
-  position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--c-line-soft);
-}
-.rplace__num {
-  flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
-  display: grid; place-items: center; background: var(--c-forest); color: var(--c-cream);
-  font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;
-}
-.rplace__role { font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--c-tan-2); }
-.rplace__name {
-  position: relative; z-index: 1; margin: 0;
-  font-family: var(--ff-display); font-size: 20px; font-weight: 500; line-height: 1.2; color: var(--c-forest);
-}
-
-.rplace__notes {
-  list-style: none; margin: 20px 0 0; padding: 14px 0 0; border-top: 1px solid var(--c-line-soft);
+.racc__notes {
+  list-style: none; margin: 4px 22px 18px; padding: 14px 0 0; border-top: 1px solid var(--c-line-soft);
   display: flex; flex-direction: column; gap: 6px;
 }
-.rplace__notes li { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.5; color: var(--c-ink-mute); }
-.rplace__notes-key {
+.racc__notes li { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.5; color: var(--c-ink-mute); }
+.racc__notes-key {
   flex: 0 0 auto; width: 16px; height: 16px; margin-top: 2px; border-radius: 50%;
   display: grid; place-items: center; border: 1px solid var(--c-tan-3);
   font-size: 9.5px; font-weight: 600; color: var(--c-tan-2);
 }
 
 @media (max-width: 520px) {
-  .rplace__name { font-size: 17px; }
-  .rplace__role { font-size: 9px; letter-spacing: .1em; }
-  .rplace__ghost { font-size: 48px; }
+  .racc__head { padding: 16px 18px; gap: 10px; }
+  .racc__meta { display: none; }
+  .racc__rows { padding: 4px 18px 18px; }
+  .racc__notes { margin: 4px 18px 16px; }
+  .racc__name { font-size: 16px; }
 }
 
 /* Texture tags under the "How it feels" tab — previously shared the routine
@@ -1029,6 +1017,19 @@ document.querySelectorAll('.pfaq__q').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var open = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', String(!open));
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if (panel) panel.classList.toggle('is-open', !open);
+  });
+});
+
+// Routine Placement accordion — same aria-expanded + is-open toggle pattern
+// as the FAQ accordion above, on its own selector since the two live in
+// separate markup blocks. Morning/Evening toggle independently.
+document.querySelectorAll('.racc__head').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    btn.closest('.racc__item').classList.toggle('is-open', !open);
     var panel = document.getElementById(btn.getAttribute('aria-controls'));
     if (panel) panel.classList.toggle('is-open', !open);
   });
