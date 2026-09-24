@@ -522,7 +522,7 @@
       {%- endif -%}
     </div>
 
-    {%- comment -%} ───── Routine Placement — AM/PM step rails on the dark band ───── {%- endcomment -%}
+    {%- comment -%} ───── Routine Placement — editorial step-card grid on the dark band ───── {%- endcomment -%}
     {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
       <div class="pdet__block pdet__visual-band">
         <h2 class="pdet__h pdet__h--center">Routine Placement</h2>
@@ -532,10 +532,13 @@
             {%- assign am_steps = pd_routine_am | split: '→' -%}
             <div class="rplace__col rplace__col--am">
               <div class="rplace__head">
-                <span class="rplace__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
-                </span>
-                <span class="rplace__label">Morning</span>
+                <div class="rplace__head-id">
+                  <span class="rplace__badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+                  </span>
+                  <span class="rplace__label">Morning</span>
+                </div>
+                <span class="rplace__meta">{{ am_steps.size }}-Step Routine</span>
               </div>
               {%- render 'routine-steps', steps: am_steps -%}
             </div>
@@ -544,10 +547,13 @@
             {%- assign pm_steps = pd_routine_pm | split: '→' -%}
             <div class="rplace__col rplace__col--pm">
               <div class="rplace__head">
-                <span class="rplace__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
-                </span>
-                <span class="rplace__label">Evening</span>
+                <div class="rplace__head-id">
+                  <span class="rplace__badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+                  </span>
+                  <span class="rplace__label">Evening</span>
+                </div>
+                <span class="rplace__meta">{{ pm_steps.size }}-Step Routine</span>
               </div>
               {%- render 'routine-steps', steps: pm_steps -%}
             </div>
@@ -860,47 +866,73 @@
    .rstep__num belong to sections/ritual-steps.liquid, and Shopify bundles
    every section stylesheet into one theme-wide sheet, so those rules applied
    here too and painted a dark card behind forest-coloured step names. */
-.rplace { display: flex; flex-direction: column; gap: 16px; max-width: 900px; margin: 0 auto; }
+/* Routine Placement — one editorial card per step (numeral badge + role +
+   product name), grouped under a period header strip (AM/PM badge, label,
+   and a real step count pulled from the routine data). Replaces an earlier
+   connected-rail layout with separated, elevated cards per the reference
+   direction. */
+.rplace { display: flex; flex-direction: column; gap: 20px; max-width: 1100px; margin: 0 auto; }
 .rplace__col {
   background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 18px;
   padding: clamp(22px, 3vw, 30px) clamp(20px, 3vw, 34px);
 }
 .rplace__head {
-  display: flex; align-items: center; gap: 11px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
   padding-bottom: 15px; margin-bottom: 22px; border-bottom: 1px solid var(--c-line);
 }
-/* Both icons take the forest ink; only the disc behind them differs, so the
+.rplace__head-id { display: flex; align-items: center; gap: 11px; }
+/* Both badges take the forest ink; only the disc behind them differs, so the
    AM/PM distinction stays inside the palette. */
-.rplace__icon {
+.rplace__badge {
   flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
   display: grid; place-items: center; color: var(--c-forest);
 }
-.rplace__col--am .rplace__icon { background: var(--c-tan-3); }
-.rplace__col--pm .rplace__icon { background: var(--c-sage-3); }
+.rplace__col--am .rplace__badge { background: var(--c-tan-3); }
+.rplace__col--pm .rplace__badge { background: var(--c-sage-3); }
 .rplace__label {
   font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
   font-weight: 600; color: var(--c-forest);
 }
-
-.rplace__track { --rgap: clamp(6px, 1.4vw, 18px); display: flex; gap: var(--rgap); }
-.rplace__step {
-  position: relative; flex: 1 1 0; min-width: 0;
-  display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+.rplace__meta {
+  font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--c-ink-mute); border: 1px solid var(--c-line-soft); border-radius: 999px;
+  padding: 5px 12px;
 }
-/* Rail segment from this badge's centre to the next one. Every step is
-   flex: 1 1 0, so they are equal width and 100% + the gap lands exactly on
-   the next centre — no guessing at an inset. */
-.rplace__step:not(:last-child)::after {
-  content: ""; position: absolute; z-index: 0; top: 13px; left: 50%;
-  width: calc(100% + var(--rgap)); height: 1px; background: var(--c-tan-3);
+
+.rplace__cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: clamp(12px, 1.6vw, 18px); }
+.rplace__card {
+  position: relative; overflow: hidden; min-width: 0;
+  background: var(--c-paper); border: 1px solid var(--c-line-soft); border-radius: 14px;
+  padding: 18px 16px 20px; transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
+}
+.rplace__card:hover { transform: translateY(-3px); box-shadow: 0 20px 36px -22px rgba(26,58,45,.35); }
+/* Small staggered lift on later cards — a restrained version of the
+   reference's cascading offsets, kept subtle so a 4-card row doesn't grow a
+   tall gap beneath the shortest card. */
+@media (min-width: 640px) {
+  .rplace__card:nth-child(2) { margin-top: 10px; }
+  .rplace__card:nth-child(3) { margin-top: 20px; }
+  .rplace__card:nth-child(4) { margin-top: 30px; }
+}
+.rplace__ghost {
+  position: absolute; top: -6px; right: 6px; z-index: 0;
+  font-family: var(--ff-display); font-size: 64px; font-weight: 600; line-height: 1;
+  color: rgba(26,58,45,.06); pointer-events: none; user-select: none;
+}
+.rplace__card-top {
+  position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--c-line-soft);
 }
 .rplace__num {
-  position: relative; z-index: 1; flex: 0 0 auto; width: 27px; height: 27px; border-radius: 50%;
+  flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
   display: grid; place-items: center; background: var(--c-forest); color: var(--c-cream);
-  font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums;
+  font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;
 }
-.rplace__name { font-family: var(--ff-display); font-size: 17px; font-weight: 500; line-height: 1.25; color: var(--c-forest); }
 .rplace__role { font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--c-tan-2); }
+.rplace__name {
+  position: relative; z-index: 1; margin: 0;
+  font-family: var(--ff-display); font-size: 20px; font-weight: 500; line-height: 1.2; color: var(--c-forest);
+}
 
 .rplace__notes {
   list-style: none; margin: 20px 0 0; padding: 14px 0 0; border-top: 1px solid var(--c-line-soft);
@@ -914,8 +946,9 @@
 }
 
 @media (max-width: 520px) {
-  .rplace__name { font-size: 15px; }
+  .rplace__name { font-size: 17px; }
   .rplace__role { font-size: 9px; letter-spacing: .1em; }
+  .rplace__ghost { font-size: 48px; }
 }
 
 /* Texture tags under the "How it feels" tab — previously shared the routine

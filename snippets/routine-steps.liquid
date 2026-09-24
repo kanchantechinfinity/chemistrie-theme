@@ -1,5 +1,8 @@
 {%- comment -%}
-  One Routine Placement row: the steps laid out left to right along a rail.
+  One Routine Placement row: the steps as individual elevated cards, one per
+  step, with a faint numeral watermark behind the content — the editorial
+  card-grid treatment (see build log entry for the reference this replaced
+  the connected-rail version with).
   Accepts: steps — array of "Name (role or note)" strings, already split on the
   arrow separator by the calling section.
 
@@ -10,10 +13,10 @@
 
   A short parenthetical (<= 3 words, e.g. "Cleanse") renders as the step's role
   label. A longer one — the Cashmere and Silken layering notes — would squeeze a
-  full sentence into a narrow centred column, so it drops to a footnote under
-  the rail, keyed to the step number.
+  full sentence into a card built for a two-word label, so it drops to a
+  footnote under the grid, keyed to the step number, same as before.
 {%- endcomment -%}
-<div class="rplace__track">
+<div class="rplace__cards">
   {%- for step in steps -%}
     {%- assign bits = step | strip | split: '(' -%}
     {%- assign step_name = bits[0] | strip -%}
@@ -25,13 +28,16 @@
         {%- assign step_role = step_note -%}
       {%- endif -%}
     {%- endif -%}
-    <div class="rplace__step">
-      <span class="rplace__num" aria-hidden="true">{{ forloop.index }}</span>
-      <span class="rplace__name">{{ step_name }}</span>
-      {%- if step_role != blank -%}
-        <span class="rplace__role">{{ step_role }}</span>
-      {%- endif -%}
-    </div>
+    <article class="rplace__card">
+      <span class="rplace__ghost" aria-hidden="true">{{ forloop.index }}</span>
+      <div class="rplace__card-top">
+        <span class="rplace__num" aria-hidden="true">{{ forloop.index }}</span>
+        {%- if step_role != blank -%}
+          <span class="rplace__role">{{ step_role }}</span>
+        {%- endif -%}
+      </div>
+      <h3 class="rplace__name">{{ step_name }}</h3>
+    </article>
   {%- endfor -%}
 </div>
 
