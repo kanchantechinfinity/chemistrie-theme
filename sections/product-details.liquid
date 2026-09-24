@@ -522,48 +522,40 @@
       {%- endif -%}
     </div>
 
-    {%- comment -%} ───── Routine Placement — accordion, collapsed by default ───── {%- endcomment -%}
+    {%- comment -%} ───── Routine Placement — Morning/Evening tabs, bento-stairs step boxes ───── {%- endcomment -%}
     {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
-      {%- comment -%} Morning always opens by default. Evening opens by default only when it's the only period (Aura) — with both present, only Morning starts open so the section rests shorter. {%- endcomment -%}
-      {%- assign pm_open = false -%}
-      {%- if pd_routine_am == blank -%}{%- assign pm_open = true -%}{%- endif -%}
+      {%- comment -%} Tabs only make sense with two periods to switch between; a single-period routine (Aura, evening-only) just shows its one panel with no toggle. {%- endcomment -%}
+      {%- assign routine_both = false -%}
+      {%- if pd_routine_am != blank and pd_routine_pm != blank -%}{%- assign routine_both = true -%}{%- endif -%}
       <div class="pdet__block pdet__visual-band">
         <h2 class="pdet__h pdet__h--center">Routine Placement</h2>
         <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-        <div class="racc">
-          {%- if pd_routine_am != blank -%}
-            {%- assign am_steps = pd_routine_am | split: '→' -%}
-            <div class="racc__item racc__item--am is-open">
-              <button type="button" class="racc__head" aria-expanded="true" aria-controls="racc-panel-am">
-                <span class="racc__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
-                </span>
-                <span class="racc__label">Morning</span>
-                <span class="racc__meta">{{ am_steps.size }}-Step Routine</span>
-                <svg class="racc__chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        {%- if routine_both -%}
+          <div class="rtabs">
+            <div class="rtabs__group" role="tablist" aria-label="Time of day">
+              <button type="button" class="rtabs__btn is-active" data-routine-period="am" aria-pressed="true">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+                Morning
               </button>
-              <div class="racc__panel is-open" id="racc-panel-am">
-                {%- render 'routine-steps', steps: am_steps -%}
-              </div>
-            </div>
-          {%- endif -%}
-          {%- if pd_routine_pm != blank -%}
-            {%- assign pm_steps = pd_routine_pm | split: '→' -%}
-            <div class="racc__item racc__item--pm{% if pm_open %} is-open{% endif %}">
-              <button type="button" class="racc__head" aria-expanded="{{ pm_open }}" aria-controls="racc-panel-pm">
-                <span class="racc__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
-                </span>
-                <span class="racc__label">Evening</span>
-                <span class="racc__meta">{{ pm_steps.size }}-Step Routine</span>
-                <svg class="racc__chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              <button type="button" class="rtabs__btn" data-routine-period="pm" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+                Evening
               </button>
-              <div class="racc__panel{% if pm_open %} is-open{% endif %}" id="racc-panel-pm">
-                {%- render 'routine-steps', steps: pm_steps -%}
-              </div>
             </div>
-          {%- endif -%}
-        </div>
+          </div>
+        {%- endif -%}
+        {%- if pd_routine_am != blank -%}
+          {%- assign am_steps = pd_routine_am | split: '→' -%}
+          <div class="rbento-wrap" data-routine-panel="am">
+            {%- render 'routine-steps', steps: am_steps -%}
+          </div>
+        {%- endif -%}
+        {%- if pd_routine_pm != blank -%}
+          {%- assign pm_steps = pd_routine_pm | split: '→' -%}
+          <div class="rbento-wrap" data-routine-panel="pm"{% if routine_both %} hidden{% endif %}>
+            {%- render 'routine-steps', steps: pm_steps -%}
+          </div>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
@@ -866,77 +858,83 @@
 .pdet__ing-cred { font-size: 12px; font-style: italic; color: var(--c-ink-mute); }
 .pdet__ing-grid--spotlight .pdet__ing-card { background: var(--c-paper); }
 
-/* Routine Placement — accordion, collapsed by default. Namespaced racc__
-   throughout: sections/ritual-steps.liquid already owns .rstep/.rstep__num,
-   and Shopify bundles every section's stylesheet into one theme-wide sheet,
-   so a shorter name collided with that section's dark-card styling before
-   (see the git history on this block for that one). Reuses the same
-   aria-expanded + max-height toggle pattern as the FAQ accordion (.pfaq__)
-   further down this file, rather than a second pattern for the same job. */
-.racc { display: flex; flex-direction: column; gap: 14px; max-width: 780px; margin: 0 auto; }
-.racc__item {
-  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px;
-  overflow: hidden; transition: border-color .3s var(--ease-out);
+/* Routine Placement — Morning/Evening tabs + bento-stairs step boxes.
+   Namespaced rtabs__/rbento__: sections/ritual-steps.liquid already owns
+   .rstep/.rstep__num and .rsteps__toggle/.rsteps__pill for its own (sitewide,
+   not per-product) Morning/Evening switcher, and Shopify bundles every
+   section's stylesheet into one theme-wide sheet, so reusing those names
+   here would collide with that section wherever both land on the same page.
+   The tab visual language (pill group, active = solid fill) intentionally
+   matches .rsteps__pill anyway, just under its own class names. */
+.rtabs { display: flex; justify-content: center; margin-bottom: clamp(28px, 3.5vw, 40px); }
+.rtabs__group {
+  display: inline-flex; gap: 4px; padding: 4px;
+  background: rgba(240,232,219,.08); border: 1px solid rgba(240,232,219,.16); border-radius: 999px;
 }
-.racc__item.is-open { border-color: var(--c-tan); }
-.racc__head {
-  width: 100%; display: flex; align-items: center; gap: 12px;
-  padding: 18px 22px; background: none; border: 0; text-align: left; cursor: pointer;
-  font-family: var(--ff-body); color: inherit;
+.rtabs__btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px;
+  border: 0; border-radius: 999px; cursor: pointer; background: none;
+  font-family: var(--ff-body); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(240,232,219,.65); transition: background .3s var(--ease-out), color .3s var(--ease-out);
 }
-.racc__icon {
-  flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
-  display: grid; place-items: center; color: var(--c-forest);
-}
-.racc__item--am .racc__icon { background: var(--c-tan-3); }
-.racc__item--pm .racc__icon { background: var(--c-sage-3); }
-.racc__label {
-  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-  font-weight: 600; color: var(--c-forest);
-}
-.racc__meta {
-  margin-left: auto; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--c-ink-mute);
-}
-.racc__chevron { flex: 0 0 auto; color: var(--c-tan-2); transition: transform .3s var(--ease-out); }
-.racc__item.is-open .racc__chevron { transform: rotate(180deg); }
-.racc__panel { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease-out); }
-.racc__panel.is-open { max-height: 640px; }
+.rtabs__btn.is-active { background: var(--c-cream); color: var(--c-forest); }
+.rtabs__btn svg { flex: 0 0 auto; }
 
-.racc__rows { padding: 4px 22px 20px; display: flex; flex-direction: column; }
-.racc__row {
-  display: flex; align-items: baseline; gap: 14px; padding: 12px 0;
-  border-top: 1px solid var(--c-line-soft);
+.rbento-wrap[hidden] { display: none; }
+.rbento { display: flex; align-items: flex-end; gap: clamp(12px, 1.8vw, 20px); max-width: 1100px; margin: 0 auto; }
+.rbento__box {
+  position: relative; overflow: hidden; flex: 1 1 0; min-width: 0;
+  background: var(--c-cream); border-radius: 18px;
+  padding: 20px 18px 22px; display: flex; flex-direction: column; gap: 14px;
+  box-shadow: 0 16px 30px -20px rgba(0,0,0,.35);
 }
-.racc__row:first-child { border-top: 0; }
-.racc__num {
-  flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%;
+/* Ascending stairs left to right, each box a little taller than the last —
+   the eye climbs toward the routine's final step. Alternating tints (all
+   still palette tokens) give the row a bento-mosaic feel instead of four
+   identical tiles. Caps at 4 children; no current routine runs longer. */
+.rbento__box:nth-child(1) { padding-top: 20px; background: var(--c-cream); }
+.rbento__box:nth-child(2) { padding-top: 40px; background: var(--c-tan-3); }
+.rbento__box:nth-child(3) { padding-top: 60px; background: var(--c-cream); }
+.rbento__box:nth-child(4) { padding-top: 80px; background: var(--c-sage-3); }
+.rbento__ghost {
+  position: absolute; top: -10px; right: 2px; z-index: 0;
+  font-family: var(--ff-display); font-weight: 600; font-size: 72px; line-height: 1;
+  color: rgba(26,58,45,.07); pointer-events: none; user-select: none;
+}
+.rbento__num {
+  position: relative; z-index: 1; flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%;
   background: var(--c-forest); color: var(--c-cream);
-  display: grid; place-items: center; font-size: 10.5px; font-weight: 600; font-variant-numeric: tabular-nums;
+  display: grid; place-items: center; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;
 }
-.racc__name { font-family: var(--ff-display); font-size: 18px; font-weight: 500; color: var(--c-forest); }
-.racc__role {
-  margin-left: auto; flex: 0 0 auto; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
+.rbento__name {
+  position: relative; z-index: 1; margin: 0;
+  font-family: var(--ff-display); font-size: 21px; font-weight: 500; line-height: 1.15; color: var(--c-forest);
+}
+.rbento__role {
+  position: relative; z-index: 1; font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
   font-weight: 600; color: var(--c-tan-2);
 }
 
-.racc__notes {
-  list-style: none; margin: 4px 22px 18px; padding: 14px 0 0; border-top: 1px solid var(--c-line-soft);
-  display: flex; flex-direction: column; gap: 6px;
+.rbento__notes {
+  list-style: none; margin: 20px auto 0; padding: 14px 0 0; border-top: 1px solid var(--c-line-soft);
+  display: flex; flex-direction: column; gap: 6px; max-width: 1100px;
 }
-.racc__notes li { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.5; color: var(--c-ink-mute); }
-.racc__notes-key {
+.rbento__notes li { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.5; color: rgba(240,232,219,.65); }
+.rbento__notes-key {
   flex: 0 0 auto; width: 16px; height: 16px; margin-top: 2px; border-radius: 50%;
   display: grid; place-items: center; border: 1px solid var(--c-tan-3);
-  font-size: 9.5px; font-weight: 600; color: var(--c-tan-2);
+  font-size: 9.5px; font-weight: 600; color: var(--c-tan);
 }
 
-@media (max-width: 520px) {
-  .racc__head { padding: 16px 18px; gap: 10px; }
-  .racc__meta { display: none; }
-  .racc__rows { padding: 4px 18px 18px; }
-  .racc__notes { margin: 4px 18px 16px; }
-  .racc__name { font-size: 16px; }
+@media (max-width: 700px) {
+  /* flex: 1 1 0 divides the CONTAINER's main axis — once that axis turns
+     vertical every box fights over the column's height instead of sizing to
+     its own content, squeezing the name/role text out of view. Drop back to
+     natural, content-driven height and flatten the stairs (no room for a
+     diagonal read in one narrow column). */
+  .rbento { flex-direction: column; align-items: stretch; }
+  .rbento__box { flex: 0 0 auto; padding-top: 20px !important; }
+  .rbento__name { font-size: 18px; }
 }
 
 /* Texture tags under the "How it feels" tab — previously shared the routine
@@ -1022,16 +1020,25 @@ document.querySelectorAll('.pfaq__q').forEach(function (btn) {
   });
 });
 
-// Routine Placement accordion — same aria-expanded + is-open toggle pattern
-// as the FAQ accordion above, on its own selector since the two live in
-// separate markup blocks. Morning/Evening toggle independently.
-document.querySelectorAll('.racc__head').forEach(function (btn) {
-  btn.addEventListener('click', function () {
-    var open = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!open));
-    btn.closest('.racc__item').classList.toggle('is-open', !open);
-    var panel = document.getElementById(btn.getAttribute('aria-controls'));
-    if (panel) panel.classList.toggle('is-open', !open);
+// Routine Placement Morning/Evening tabs — same show/hide-by-[hidden]
+// pattern as sections/ritual-steps.liquid's own period switcher, scoped to
+// this band so it never touches that section's tabs if both land on a page.
+document.querySelectorAll('.rtabs__group').forEach(function (group) {
+  var btns = group.querySelectorAll('.rtabs__btn');
+  var band = group.closest('.pdet__visual-band');
+  var panels = band ? band.querySelectorAll('[data-routine-panel]') : [];
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var period = btn.getAttribute('data-routine-period');
+      btns.forEach(function (b) {
+        var active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+      panels.forEach(function (panel) {
+        panel.hidden = panel.getAttribute('data-routine-panel') !== period;
+      });
+    });
   });
 });
 

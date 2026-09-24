@@ -1,19 +1,20 @@
 {%- comment -%}
-  One Routine Placement period's steps, as plain numbered rows inside an
-  accordion panel (see sections/product-details.liquid for the .racc__item
-  wrapper this renders into).
+  One Routine Placement period's steps, as a row of bento-stairs boxes (see
+  sections/product-details.liquid for the .rbento-wrap this renders into).
   Accepts: steps — array of "Name (role or note)" strings, already split on the
   arrow separator by the calling section.
 
-  Namespaced racc__ (not rstep__ or rplace__ — both already used and retired
-  by earlier versions of this section; see the git history on this file).
+  Namespaced rbento__ — the fourth class-naming generation for this section
+  (rstep__ collided with sections/ritual-steps.liquid; rplace__ named a
+  card-grid concept; racc__ named an accordion concept). Each replaced the
+  last as the design changed; see git history for the earlier two.
 
-  A short parenthetical (<= 3 words, e.g. "Cleanse") renders as the step's role
-  label. A longer one — the Cashmere and Silken layering notes — would run on
-  past a single row, so it drops to a footnote below the rows, keyed to the
-  step number.
+  A short parenthetical (<= 3 words, e.g. "Cleanse") renders as the step's
+  role label. A longer one — the Cashmere and Silken layering notes — has
+  nowhere to go inside a bento box sized for a name and a two-word role, so
+  it drops to a footnote below the row, keyed to the step number.
 {%- endcomment -%}
-<div class="racc__rows">
+<div class="rbento">
   {%- for step in steps -%}
     {%- assign bits = step | strip | split: '(' -%}
     {%- assign step_name = bits[0] | strip -%}
@@ -25,11 +26,12 @@
         {%- assign step_role = step_note -%}
       {%- endif -%}
     {%- endif -%}
-    <div class="racc__row">
-      <span class="racc__num" aria-hidden="true">{{ forloop.index }}</span>
-      <span class="racc__name">{{ step_name }}</span>
+    <div class="rbento__box">
+      <span class="rbento__ghost" aria-hidden="true">{{ forloop.index }}</span>
+      <span class="rbento__num" aria-hidden="true">{{ forloop.index }}</span>
+      <span class="rbento__name">{{ step_name }}</span>
       {%- if step_role != blank -%}
-        <span class="racc__role">{{ step_role }}</span>
+        <span class="rbento__role">{{ step_role }}</span>
       {%- endif -%}
     </div>
   {%- endfor -%}
@@ -43,10 +45,10 @@
     {%- assign note_words = step_note | split: ' ' -%}
     {%- if note_words.size > 3 -%}
       {%- if has_notes == false -%}
-        <ul class="racc__notes">
+        <ul class="rbento__notes">
         {%- assign has_notes = true -%}
       {%- endif -%}
-      <li><span class="racc__notes-key">{{ forloop.index }}</span>{{ step_note }}</li>
+      <li><span class="rbento__notes-key">{{ forloop.index }}</span>{{ step_note }}</li>
     {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
