@@ -498,18 +498,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   align-items: center;
   justify-content: center;
 }
+/* Capped at 600x600 and never cropped. The frame shrink-wraps the image
+   (width: fit-content, no aspect-ratio) instead of being a fixed box —
+   the hero photos range from 2.08 landscape to 0.75 portrait, so a fixed
+   square would letterbox nearly all of them. Hugging the image means the
+   whole picture shows with no empty bands inside the border. */
 .hero__visual-frame {
   position: relative;
-  width: 100%;
-  /* Match the fallback image's own natural ratio (hero-home.jpg is
-     1024x493) exactly, so object-fit:cover below never has to crop
-     anything — the box and the photo are the same shape. */
-  aspect-ratio: 1024 / 493;
+  width: fit-content;
+  max-width: 100%;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(240,232,219,.22);
   box-shadow: 0 40px 80px -24px rgba(0,0,0,.65), 0 16px 32px -8px rgba(26,58,45,.4);
-  background: var(--c-forest-2);
+  background: transparent;
 }
 .hero__visual-frame::after {
   content: "";
@@ -521,10 +523,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .hero__visual-img {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  width: auto;
+  height: auto;
+  max-width: 600px;
+  max-height: 600px;
+  object-fit: contain;
   transition: transform .7s var(--ease-out);
 }
 .hero__visual-frame:hover .hero__visual-img {
@@ -2770,9 +2773,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__visual-frame {
     width: 100% !important;
     max-width: 100% !important;
-    aspect-ratio: 1024 / 493 !important;
+    aspect-ratio: auto !important;
     border-radius: 16px !important;
   }
+  /* phone: let the photo shrink with the column instead of holding 600px */
+  .hero__visual-img { max-width: 100% !important; }
 }
 
 @media (max-width: 700px) {

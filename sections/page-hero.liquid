@@ -44,17 +44,25 @@
    regardless of stylesheet load order — see the .page-section.mprod
    note in sections/main-product.liquid. */
 .display-h.page-hero__title { font-size: clamp(36px, 4.6vw, 66px); }
+/* Capped at 600x600, never cropped. Same approach as the homepage hero:
+   the frame shrink-wraps the image rather than being a fixed box, because
+   these hero photos run from 2.08 landscape (pharmacists) to 0.75 portrait
+   (founders' circle) — a fixed box of any one shape would crop or letterbox
+   most of them. */
 .page-hero__visual {
-  aspect-ratio: 16 / 9.5; border-radius: 18px; overflow: hidden;
+  width: fit-content; max-width: 100%;
+  margin-inline: auto;
+  border-radius: 18px; overflow: hidden;
   border: 1px solid rgba(240,232,219,.22); box-shadow: 0 40px 80px -28px rgba(0,0,0,.55);
-  background: var(--c-forest-2);
+  background: transparent;
 }
 .page-hero__visual img,
-.page-hero__visual svg { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .6s var(--ease-out); }
+.page-hero__visual svg { display: block; width: auto; height: auto; max-width: 600px; max-height: 600px; object-fit: contain; transition: transform .6s var(--ease-out); }
 .page-hero__visual:hover img { transform: scale(1.03); }
 @media (max-width: 760px) {
   .page-hero__inner { grid-template-columns: 1fr; gap: 32px; }
-  .page-hero__visual { display: block; width: 100%; aspect-ratio: 16 / 9; margin-top: 8px; }
+  .page-hero__visual { display: block; width: 100%; aspect-ratio: auto; margin-top: 8px; }
+  .page-hero__visual img { max-width: 100%; }
 }
 .page-hero__cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: clamp(16px, 2.5vw, 32px); margin-top: clamp(28px, 3.5vw, 40px); }
 .page-hero__cta-secondary { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-cream); border-bottom: 1px solid rgba(240,232,219,.4); padding-bottom: 3px; transition: border-color .3s var(--ease-out); }
