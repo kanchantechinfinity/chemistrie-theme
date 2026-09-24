@@ -17,7 +17,8 @@
         "deck": "Thoughtfully formulated skincare designed to work beautifully on its own or as part of your ritual.",
         "deck2": "",
         "show_visual": true,
-        "hero_fallback_asset": "stock-lineup.jpg"
+        "visual_ratio": "1349 / 650",
+        "hero_fallback_asset": "hero-collection.jpg"
       }
     },
     "stat-bar": {
