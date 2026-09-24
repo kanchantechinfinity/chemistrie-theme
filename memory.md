@@ -3535,3 +3535,11 @@ Verified with a rendered contact sheet (all 25 files, `product-*` + `gallery-*`)
 `object-fit` deliberately stays `contain`: the zoom's `paintedRect()` assumes it when locating the image inside its box, and it letterboxes rather than crops a non-square upload. With no background behind it, a non-square image now shows the page cream instead of a paper band.
 Padding removal is safe for the zoom because `paintedRect()` measures `main.getBoundingClientRect()` — the `<img>` element's own rect, which already excluded the parent's padding.
 Verified in Chrome: computed padding 0, background transparent, image within 2px of the frame on all three sample assets.
+
+## 2026-09-24 — Hid the native scrollbar track on product pages
+User screenshot showed a plain grey Windows-style scrollbar (up/down arrow buttons, boxy track) sitting at the right edge near the tabs row. This isn't part of the page markup — it's the browser's own non-overlay scrollbar, which Windows Chrome draws when the OS's "always show scrollbars" setting is on (vs. the thin overlay style macOS/touch devices default to). Lenis (the smooth-scroll lib already loaded) doesn't touch it — it scrolls the real document, so the native track stays.
+Scoped the fix to product pages only, per the ask ("remove this from all products page section"), rather than hiding it sitewide:
+1. `layout/theme.liquid` — `<body>` now carries `class="template-{{ template.name }}"` (there was no template class before). `template.name` is `"product"` on all 5 product pages regardless of handle.
+2. `assets/chemistrie.css` — `body.template-product { scrollbar-width: none; -ms-overflow-style: none; } body.template-product::-webkit-scrollbar { display: none; }`.
+Scroll itself is untouched — only the drawn track disappears; wheel/trackpad/keyboard/Lenis all still move the page. Verified in Chrome with `--hide-scrollbars=false` (forces the non-overlay track headless normally suppresses, reproducing what the user saw): scrollbar reserved width drops from its normal value to 0, and `scrollTo` still moves `scrollY`.
+Added the new `template-*` body class primarily for this, but it's reusable for any future per-template-only CSS.
