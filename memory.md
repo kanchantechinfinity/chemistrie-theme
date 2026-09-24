@@ -3499,3 +3499,13 @@ New `snippets/routine-steps.liquid` splits each step on `(`, then branches on wo
 Aura is evening-only, so `routine_single` adds `.rplace--single` (440px) — otherwise `grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))` would stretch the lone card across the whole band.
 **Gotcha**: `.pdet__routine-chips` / `.pdet__routine-chip` were shared with the texture-tags panel under the "How it feels" tab. Deleting the routine CSS would have stripped that panel, so those two rules were renamed `.pdet__tagrow` / `.pdet__tag` and kept.
 Verified in Chrome at 1200px and 420px across all four routine shapes: no step body overflows its column, parse output correct for every product, no JS errors.
+
+## 2026-09-24 — Collection guided-shopping prompts moved out of the grid into a CTA band
+The two prompts ("Not sure where to start? / Begin with The Ritual.", "Looking for a gift? / See our curated sets.") lived in `snippets/ritual-finder-card.liquid`, a dark tile injected into the product grid at `ritual_finder_position` (default 6). Because it shared a grid cell with the product cards it inherited their height — two short lines of copy stranded in a 320px+ column of empty forest green.
+Replaced by `snippets/collection-cta.liquid`, a band rendered once below the grid and pager, inside `.col-body`. Each half is the question as an 11px caps label over a real outlined button (`btn btn--ghost btn--light`); `remove_last: '.'` strips the trailing period from the answer text so it reads as a button label. Band capped at 940px and centred, `1fr auto 1fr` with a hairline rule between, collapsing to one column under 700px.
+Buttons are deliberately **outlined, not solid** — a filled pair in this band would outrank the product cards' own "View <product>" CTAs directly above it.
+Removed with it: `ritual_finder_position` setting, `rf_position`/`rf_inserted` bookkeeping, and the old snippet.
+
+**Two harness traps hit, both worth remembering:**
+1. `grep -c $'\r' <file>` reported "162/162" for a file that is pure **LF** — it is not a reliable CRLF test. `sections/main-collection.liquid` is LF while `sections/product-details.liquid` is CRLF, so per-file detection matters. Use `python -c "s=io.open(p,newline='').read(); s.count('\r\n')"` instead.
+2. Slicing CSS out of `chemistrie.css` by line range (`sed -n '94,140p'`) cut through an unterminated `/* ... */` comment, so everything appended after it was swallowed and the `a { text-decoration: none }` reset never applied — the preview showed underlined buttons that do not exist in production. Same class of bug as the earlier orphan-declaration slice; slice on a matched delimiter, not a line number.

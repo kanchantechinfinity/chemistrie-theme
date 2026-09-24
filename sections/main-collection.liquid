@@ -1,5 +1,4 @@
 {%- assign col = section.settings.collection | default: collection -%}
-{%- assign rf_position = section.settings.ritual_finder_position | default: 0 -%}
 {%- paginate col.products by 24 -%}
 <section class="page-section col-main">
   <div class="page-section__inner">
@@ -20,7 +19,6 @@
 
       {%- if col.products.size > 0 -%}
         <div class="col-grid">
-          {%- assign rf_inserted = false -%}
           {%- for product in col.products -%}
             {%- assign card_name = product.title | split: '—' | first | strip -%}
             {%- capture card_copy -%}{%- render 'product-descriptor', product: product -%}{%- endcapture -%}
@@ -57,16 +55,7 @@
                 {%- endif -%}
               </div>
             </article>
-
-            {%- if rf_position > 0 and forloop.index == rf_position -%}
-              {%- render 'ritual-finder-card', section: section -%}
-              {%- assign rf_inserted = true -%}
-            {%- endif -%}
           {%- endfor -%}
-
-          {%- if rf_position > 0 and rf_inserted == false -%}
-            {%- render 'ritual-finder-card', section: section -%}
-          {%- endif -%}
         </div>
 
         {%- if paginate.pages > 1 -%}
@@ -98,6 +87,8 @@
           <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Browse all products</a>
         </div>
       {%- endif -%}
+
+      {%- render 'collection-cta', section: section -%}
     </div>
   </div>
 </section>
@@ -147,9 +138,8 @@
   "name": "Collection Grid",
   "settings": [
     { "type": "collection", "id": "collection", "label": "Collection to display", "info": "Leave blank to use the current collection; pick \"All\" to show every product." },
-    { "type": "header", "content": "Ritual Finder card" },
-    { "type": "paragraph", "content": "Inserts a guided-shopping card into the grid at the position below. As more products are added, update the position rather than redesigning the grid. Set to 0 to hide the card." },
-    { "type": "number", "id": "ritual_finder_position", "label": "Position in grid", "default": 6, "info": "6 means it appears as the 6th tile. If the product count is smaller than this, it appends after the last product." },
+    { "type": "header", "content": "Guided-shopping CTAs" },
+    { "type": "paragraph", "content": "Two prompts shown as buttons in a band below the product grid." },
     { "type": "text", "id": "prompt1_question", "label": "Prompt 1 — question", "default": "Not sure where to start?" },
     { "type": "text", "id": "prompt1_answer", "label": "Prompt 1 — answer", "default": "Begin with The Ritual." },
     { "type": "url", "id": "ritual_finder_url", "label": "Prompt 1 — destination", "info": "Leave blank to use /pages/the-ritual." },

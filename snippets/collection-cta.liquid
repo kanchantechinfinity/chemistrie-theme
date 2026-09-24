@@ -1,0 +1,45 @@
+{%- comment -%}
+  Guided-shopping CTA band below the collection grid. This used to be a dark
+  tile sitting inside the grid itself, where it read as a sixth product and
+  left a tall column of dead space beside two short lines of copy.
+  Each half is a question label over a real button, so the prompt looks like
+  the action it is.
+  Params: section (for the prompt1_*/prompt2_*/ritual_finder_url settings)
+{%- endcomment -%}
+{%- assign cta1 = section.settings.prompt1_answer | strip | remove_last: '.' -%}
+{%- assign cta2 = section.settings.prompt2_answer | strip | remove_last: '.' -%}
+<div class="ccta">
+  <div class="ccta__col">
+    <span class="ccta__q">{{ section.settings.prompt1_question }}</span>
+    <a class="btn btn--ghost btn--light ccta__btn" href="{{ section.settings.ritual_finder_url | default: '/pages/the-ritual' }}">{{ cta1 }}</a>
+  </div>
+  <span class="ccta__rule" aria-hidden="true"></span>
+  <div class="ccta__col">
+    <span class="ccta__q">{{ section.settings.prompt2_question }}</span>
+    <a class="btn btn--ghost btn--light ccta__btn" href="{{ section.settings.prompt2_url | default: '/collections/all' }}">{{ cta2 }}</a>
+  </div>
+</div>
+
+{% stylesheet %}
+.ccta {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: clamp(20px, 4vw, 56px);
+  background: var(--c-forest); border-radius: 18px;
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 56px);
+  margin: clamp(40px, 5vw, 64px) auto 0; max-width: 940px;
+}
+.ccta__col { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.ccta__q {
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(240,232,219,.55);
+}
+/* The band is the page's quietest CTA, so the buttons stay outlined rather
+   than solid — a filled pair here would outrank the product cards' own CTAs. */
+.ccta__btn { white-space: nowrap; }
+.ccta__rule { width: 1px; align-self: stretch; background: rgba(240,232,219,.16); }
+@media (max-width: 700px) {
+  .ccta { grid-template-columns: minmax(0, 1fr); }
+  .ccta__rule { width: auto; height: 1px; align-self: auto; }
+  .ccta__btn { white-space: normal; }
+}
+{% endstylesheet %}
