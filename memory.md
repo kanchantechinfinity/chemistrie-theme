@@ -3549,3 +3549,9 @@ Journal hero pulls its image from the first published article (`feat.image`) whe
 Added a dedicated `assets/hero-journal.jpg` (1349x650 desk/notebook shot) and pointed both cases at it instead, scoped to `sections/journal-hero.liquid` only — the shared `stock-lifestyle.jpg` fallback used elsewhere is untouched. The "no articles" branch previously rendered no `.jhero__media` at all; added one (`.jhero__media--static`, non-link, `cursor: default`) so the hero always shows a photo rather than going text-only pre-launch.
 A real article's own featured image still takes priority in both branches — this only fills the gap until one exists.
 Verified in Chrome for both branches: image fills the 4:3 frame edge to edge, `object-fit: cover`, no broken image, no JS errors.
+
+## 2026-09-24 — Shrunk the quantity input and Add to Ritual button on product pages
+Both inherited full button/input sizing meant for standalone CTAs (`.btn` base: 16px/28px padding, 12.5px font; `.mprod__qty-input`: 12px/14px padding, 15px font) and read oversized sitting together in the buy box.
+`.mprod__qty-input`: 9px/12px padding, 13.5px font (was 12px/14px, 15px). Box itself narrowed 130px → 108px (`.mprod__row--options .mprod__qty`).
+`.btn.mprod__add`: added padding 13px/22px, font-size 11px, overriding the shared `.btn`/`.btn--primary` base from chemistrie.css. Used the compound selector `.btn.mprod__add` (two of the element's own classes) rather than `.mprod__add` alone, for guaranteed specificity over the shared rule regardless of stylesheet bundle order — same pattern as `.page-section.mprod` and `.display-h.page-hero__title` elsewhere in this repo.
+Verified computed styles in Chrome: button height dropped from ~50px to 42px, qty box to 108px wide, both a moderate reduction rather than a drastic one (per earlier "reduce by a few numbers, not itna" feedback).
