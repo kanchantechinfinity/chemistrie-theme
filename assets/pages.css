@@ -21,7 +21,7 @@
   font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.7;
 }
-.page-hero__deck + .page-hero__deck { margin-top: 16px; }
+.page-hero__deck + .page-hero__deck { margin-top: 9px; }
 
 /* ---- Stat bar — light, so it never sits dark-on-dark directly under the dark page-hero above it ---- */
 .statbar {
