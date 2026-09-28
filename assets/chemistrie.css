@@ -283,10 +283,12 @@ body.template-product::-webkit-scrollbar { display: none; }
 }
 
 /* ───────── Hero — Modern split layout ───────── */
+/* Sized as a band like .page-hero (assets/pages.css) rather than a full-screen
+   opener — the 100vh min-height made the homepage hero far taller than every
+   other page's, which is what put it out of step with them. */
 .hero {
   position: relative;
-  min-height: calc(100vh - 108px);
-  padding: clamp(12px, 1.8vw, 28px) var(--pad-x) 40px;
+  padding: clamp(24px, 3.5vw, 52px) var(--pad-x) clamp(60px, 8vw, 110px);
   overflow: hidden;
   background: var(--c-forest-2);
   display: flex;
@@ -362,13 +364,15 @@ body.template-product::-webkit-scrollbar { display: none; }
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1.15fr;
-  gap: clamp(40px, 6vw, 80px);
+  /* gap, max-width and margin all match .page-hero__inner so the two columns
+     land on the same measure as every other page hero. */
+  gap: clamp(32px, 5vw, 80px);
   /* stretch so the stage column matches the copy's height and the frame's
      height: 100% has something definite to resolve against — same as
      .page-hero__inner. */
   align-items: stretch;
-  max-width: 1480px;
-  margin: clamp(18px, 2.4vw, 36px) auto 0;
+  max-width: var(--maxw);
+  margin: 0 auto;
   width: 100%;
 }
 
@@ -417,7 +421,9 @@ body.template-product::-webkit-scrollbar { display: none; }
 .hero__deck {
   font-family: var(--ff-display);
   font-style: italic;
-  font-size: clamp(17px, 1.6vw, 21px);
+  /* same size as .page-hero__deck; the serif italic is the homepage's own
+     treatment and stays. */
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.5;
   color: rgba(240,232,219,.72);
   margin: 0;
