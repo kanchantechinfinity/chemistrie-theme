@@ -486,10 +486,12 @@ body.template-product::-webkit-scrollbar { display: none; }
 .hero__trust {
   display: flex;
   /* wraps at any width, so the strip stays intact now that the two-column
-     layout holds down to 760px like the other heroes. */
+     layout holds down to 760px like the other heroes. The gap is tight enough
+     that all three stats still hold one row on desktop — at 36px the rating
+     dropped to a second line and took the whole band down with it. */
   flex-wrap: wrap;
   align-items: stretch;
-  gap: clamp(20px, 3vw, 36px);
+  gap: clamp(14px, 1.6vw, 20px);
   padding-top: clamp(14px, 2vw, 22px);
   border-top: 1px solid rgba(255,255,255,.14);
   margin-top: clamp(2px, 0.6vw, 8px);
@@ -507,8 +509,10 @@ body.template-product::-webkit-scrollbar { display: none; }
   color: var(--c-cream);
 }
 .hero__trust-label {
-  font-size: 11px;
-  letter-spacing: .14em;
+  /* sized so all three labels clear the ~633px copy column on one row; at
+     11px/.14em they ran past it and pushed the rating onto its own line. */
+  font-size: 10px;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: rgba(240,232,219,.52);
 }
