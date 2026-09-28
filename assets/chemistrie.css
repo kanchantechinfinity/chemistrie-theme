@@ -363,7 +363,10 @@ body.template-product::-webkit-scrollbar { display: none; }
   display: grid;
   grid-template-columns: 1fr 1.15fr;
   gap: clamp(40px, 6vw, 80px);
-  align-items: start;
+  /* stretch so the stage column matches the copy's height and the frame's
+     height: 100% has something definite to resolve against — same as
+     .page-hero__inner. */
+  align-items: stretch;
   max-width: 1480px;
   margin: clamp(18px, 2.4vw, 36px) auto 0;
   width: 100%;
@@ -519,10 +522,13 @@ body.template-product::-webkit-scrollbar { display: none; }
 .hero__visual-frame {
   position: relative;
   width: 100%;
-  /* Match the fallback image's own natural ratio (hero-home.jpg is
-     1024x493) exactly, so object-fit:cover below never has to crop
-     anything — the box and the photo are the same shape. */
-  aspect-ratio: 1024 / 493;
+  /* Sized like .page-hero__visual on every other page rather than pinned to
+     hero-home.jpg's own 1024x493: height follows the copy column between the
+     shared floor and ceiling, so the homepage photo reads at the same scale
+     as the rest. object-fit: cover below absorbs the ratio difference. */
+  height: 100%;
+  min-height: var(--hero-visual-min);
+  max-height: var(--hero-visual-max);
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(240,232,219,.22);
