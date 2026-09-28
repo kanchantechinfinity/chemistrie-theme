@@ -797,7 +797,16 @@
 }
 
 /* What's Inside / Full Ingredient List / Ingredient Spotlight — tabs */
-.pdet__tabs-nav { display: flex; gap: clamp(24px, 3vw, 40px); border-bottom: 1px solid var(--c-line-soft); margin-bottom: 28px; overflow-x: auto; }
+/* overflow-x: auto forces the computed overflow-y from visible to auto, so the
+   active tab's 2px underline (1px past the box) was enough to raise a real
+   vertical scrollbar on the nav. Pin overflow-y and keep the underline inside
+   the box; scrollbar-width/::-webkit-scrollbar hide the horizontal bar the
+   narrow-screen swipe still needs. */
+.pdet__tabs-nav {
+  display: flex; gap: clamp(24px, 3vw, 40px); border-bottom: 1px solid var(--c-line-soft);
+  margin-bottom: 28px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
+}
+.pdet__tabs-nav::-webkit-scrollbar { display: none; }
 .pdet__tab {
   position: relative; flex: 0 0 auto; padding: 4px 0 16px; background: none; border: 0; cursor: pointer;
   font-family: var(--ff-display); font-size: clamp(24px, 3vw, 32px); font-weight: 500; color: var(--c-ink-mute);
@@ -805,7 +814,7 @@
 }
 .pdet__tab:hover { color: var(--c-forest); }
 .pdet__tab.is-active { color: var(--c-forest); }
-.pdet__tab.is-active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-forest); }
+.pdet__tab.is-active::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--c-forest); }
 .pdet__tab-panel { display: none; }
 .pdet__tab-panel.is-active { display: block; }
 .pdet__tab-panel .pdet__ing-grid { margin-top: 4px; }
