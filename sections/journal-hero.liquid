@@ -2,18 +2,21 @@
 <section class="jhero">
   <div class="jhero__inner">
     {%- if blog.articles.size > 0 -%}
+      {%- comment -%}
+        Eyebrow, title, excerpt — the same three blocks a .page-hero carries,
+        so this band computes to the same height. The category chip and the
+        "Read the article" link were the two extras that pushed it taller; the
+        category still shows on every card below, and both the title and the
+        photo already link through to the article.
+      {%- endcomment -%}
       <div class="jhero__copy">
         <span class="eyebrow eyebrow--light">— The Journal —</span>
-        {%- if feat.tags.size > 0 -%}
-          <span class="jhero__cat">{{ feat.tags.first }}</span>
-        {%- endif -%}
         <h1 class="display-h display-h--light jhero__title">
           <a href="{{ feat.url }}">{{ feat.title }}</a>
         </h1>
         {%- if feat.excerpt_or_content != blank -%}
-          <p class="jhero__excerpt">{{ feat.excerpt_or_content | strip_html | truncatewords: 42 }}</p>
+          <p class="jhero__excerpt">{{ feat.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
         {%- endif -%}
-        <a class="jhero__read" href="{{ feat.url }}">Read the article &rarr;</a>
       </div>
       <a class="jhero__media" href="{{ feat.url }}" aria-label="{{ feat.title | escape }}">
         {%- if feat.image -%}
@@ -41,12 +44,11 @@
 /* Same column split and copy-then-visual order as .page-hero__inner, so the
    journal hero reads like every other page hero: text left, image right. */
 .jhero__inner { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(32px, 5vw, 80px); align-items: stretch; }
-/* Same stretch-between-bounds sizing as .page-hero__visual — the old 4/3 box
-   side-cropped the ~2.07 ratio journal art and left dead space beside the copy. */
+/* Same 1349/650 frame as .page-hero__visual — the old 4/3 box side-cropped the
+   ~2.07 ratio journal art and left dead space beside the copy. */
 .jhero__media { display: block; border-radius: 16px; overflow: hidden; background: var(--c-forest-2); aspect-ratio: 1349 / 650; height: auto; align-self: center; }
 .jhero__img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease-out); }
 .jhero__media:hover .jhero__img { transform: scale(1.04); }
-.jhero__cat { display: inline-block; margin: 20px 0 0; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-tan); }
 /* Same size as .display-h.page-hero__title rather than the base .display-h
    (38-78px) this was inheriting, which ran larger than every other hero.
    Compound selector for specificity over the shared rule, matching the
@@ -56,12 +58,11 @@
 .jhero__title a { transition: color .3s; }
 .jhero__title a:hover { color: var(--c-tan); }
 .jhero__excerpt { margin: 28px 0 0; max-width: 56ch; color: rgba(240,232,219,.72); font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7; }
-.jhero__read { display: inline-block; margin-top: 28px; font-size: 12.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--c-tan); border-bottom: 1px solid var(--c-tan); padding-bottom: 6px; transition: color .3s, border-color .3s; }
-.jhero__read:hover { color: var(--c-cream); border-color: var(--c-cream); }
 .jhero__media--static { cursor: default; }
 .jhero__empty { max-width: 720px; }
 .jhero__empty .jhero__title { margin-top: 18px; }
-@media (max-width: 900px) {
+/* collapses at 760px, the width .page-hero__inner does. */
+@media (max-width: 760px) {
   .jhero__inner { grid-template-columns: 1fr; }
   .jhero__media { height: auto; }
 }
