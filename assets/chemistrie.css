@@ -374,7 +374,10 @@ body.template-product::-webkit-scrollbar { display: none; }
 /* Copy column */
 /* centred against the photo, like .page-hero__copy — the column stretches to
    the row, so without this the copy sits at the top with its slack below. */
-.hero__copy { display: flex; flex-direction: column; justify-content: center; gap: clamp(14px, 1.8vw, 22px); margin-top: clamp(10px, 1.4vw, 22px); }
+/* Tight spacing because this column carries a CTA row and trust strip the
+   other heroes don't, and it alone sets the band's height. margin-top is 0:
+   the column is centred now, so a top margin only pushed it off centre. */
+.hero__copy { display: flex; flex-direction: column; justify-content: center; gap: clamp(10px, 1.3vw, 16px); margin-top: 0; }
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -437,7 +440,7 @@ body.template-product::-webkit-scrollbar { display: none; }
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 28px;
+  padding: 13px 26px;
   background: var(--c-tan);
   color: var(--c-forest);
   border-radius: 999px;
@@ -492,9 +495,9 @@ body.template-product::-webkit-scrollbar { display: none; }
   flex-wrap: wrap;
   align-items: stretch;
   gap: clamp(14px, 1.6vw, 20px);
-  padding-top: clamp(14px, 2vw, 22px);
+  padding-top: clamp(10px, 1.4vw, 16px);
   border-top: 1px solid rgba(255,255,255,.14);
-  margin-top: clamp(2px, 0.6vw, 8px);
+  margin-top: 0;
 }
 .hero__trust-item {
   display: flex;
