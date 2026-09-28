@@ -22,9 +22,14 @@
     </div>
 
     {%- if section.settings.show_visual -%}
+      {%- if section.settings.hero_image != blank -%}
+        {%- assign ph_photo_url = section.settings.hero_image | image_url: width: 1200 -%}
+      {%- else -%}
+        {%- assign ph_photo_url = section.settings.hero_fallback_asset | default: 'hero-visual.jpg' | asset_url -%}
+      {%- endif -%}
       <div class="page-hero__visual"
         {%- comment -%} Optional per-page ratio so a wide lineup shot is not side-cropped by the default 16/9.5 frame {%- endcomment -%}
-        {%- if section.settings.visual_ratio != blank %} style="aspect-ratio: {{ section.settings.visual_ratio }};"{% endif -%}
+        style="--hero-photo:url('{{ ph_photo_url }}');{% if section.settings.visual_ratio != blank %}aspect-ratio: {{ section.settings.visual_ratio }};{% endif %}"
         aria-hidden="true">
         {%- if section.settings.hero_image != blank -%}
           {%- comment -%} The visual column is ~750 CSS px at the 1440 max-width, so 700 was serving a half-resolution image to every retina screen. {%- endcomment -%}
@@ -60,12 +65,28 @@
      grid item start-aligns by default, which would put the gap back, under
      the photo, on the long-copy pages. */
   height: 100%; min-height: var(--hero-visual-min); max-height: var(--hero-visual-max); align-self: center;
+  position: relative;
   border-radius: 18px; overflow: hidden;
   border: 1px solid rgba(240,232,219,.22); box-shadow: 0 40px 80px -28px rgba(0,0,0,.55);
   background: var(--c-forest-2);
 }
+/* The hero shots are around 2.07 wide while this frame is nearer 1.6, so
+   cover-fitting them cut roughly a fifth off each side. They're contained
+   instead, and the band that leaves is filled with a heavily blurred copy of
+   the same shot — the whole photo reads, without flat bars around it. */
+.page-hero__visual::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: var(--hero-photo);
+  background-size: cover; background-position: center;
+  filter: blur(30px) brightness(.5) saturate(.8);
+  transform: scale(1.2);
+}
 .page-hero__visual img,
-.page-hero__visual svg { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .6s var(--ease-out); }
+.page-hero__visual svg {
+  display: block; position: relative; z-index: 1;
+  width: 100%; height: 100%; object-fit: contain; object-position: center;
+  transition: transform .6s var(--ease-out);
+}
 .page-hero__visual:hover img { transform: scale(1.03); }
 @media (max-width: 760px) {
   .page-hero__inner { grid-template-columns: 1fr; gap: 32px; }
