@@ -12,7 +12,7 @@
 
     {%- paginate blog.articles by 9 -%}
       {%- if blog.articles.size > 0 -%}
-        <div class="jgrid__grid">
+        <div class="jgrid__grid" data-count="{{ blog.articles.size }}">
           {%- for article in blog.articles -%}
             {%- assign words = article.content | strip_html | split: ' ' | size -%}
             {%- assign rt = words | divided_by: 200 | at_least: 1 -%}
@@ -93,6 +93,15 @@
 .jgrid__filter.is-active { background: var(--c-forest); color: var(--c-cream); border-color: var(--c-forest); }
 
 .jgrid__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 44px); }
+/* A 3-track row is mostly empty while the blog is still short — one article
+   left a card beside two dead columns. Narrow the track count to the number
+   of entries until there are enough to fill a row. Desktop-only: these
+   attribute selectors outrank the plain .jgrid__grid rules in the media
+   queries below, so unscoped they would force 2 columns onto a phone. */
+@media (min-width: 901px) {
+  .jgrid__grid[data-count="1"] { grid-template-columns: minmax(0, 560px); justify-content: center; }
+  .jgrid__grid[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 940px; margin-inline: auto; }
+}
 .jcard { display: flex; flex-direction: column; }
 .jcard__media { display: block; position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: var(--grad-cream); }
 .jcard__img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease-out); }

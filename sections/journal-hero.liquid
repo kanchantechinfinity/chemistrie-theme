@@ -2,13 +2,6 @@
 <section class="jhero">
   <div class="jhero__inner">
     {%- if blog.articles.size > 0 -%}
-      <a class="jhero__media" href="{{ feat.url }}" aria-label="{{ feat.title | escape }}">
-        {%- if feat.image -%}
-          {{ feat.image | image_url: width: 1600 | image_tag: loading: 'eager', widths: '600,900,1200,1600', alt: feat.image.alt | default: feat.title, class: 'jhero__img' }}
-        {%- else -%}
-          <img src="{{ 'hero-journal.jpg' | asset_url }}" alt="{{ feat.title | escape }}" loading="eager" class="jhero__img jhero__ph">
-        {%- endif -%}
-      </a>
       <div class="jhero__copy">
         <span class="eyebrow eyebrow--light">— The Journal —</span>
         {%- if feat.tags.size > 0 -%}
@@ -22,14 +15,21 @@
         {%- endif -%}
         <a class="jhero__read" href="{{ feat.url }}">Read the article &rarr;</a>
       </div>
+      <a class="jhero__media" href="{{ feat.url }}" aria-label="{{ feat.title | escape }}">
+        {%- if feat.image -%}
+          {{ feat.image | image_url: width: 1600 | image_tag: loading: 'eager', widths: '600,900,1200,1600', alt: feat.image.alt | default: feat.title, class: 'jhero__img' }}
+        {%- else -%}
+          <img src="{{ 'hero-journal.jpg' | asset_url }}" alt="{{ feat.title | escape }}" loading="eager" class="jhero__img jhero__ph">
+        {%- endif -%}
+      </a>
     {%- else -%}
-      <div class="jhero__media jhero__media--static" aria-hidden="true">
-        <img src="{{ 'hero-journal.jpg' | asset_url }}" alt="" loading="eager" class="jhero__img">
-      </div>
       <div class="jhero__copy jhero__empty">
         <span class="eyebrow eyebrow--light">— The Journal —</span>
-        <h1 class="display-h display-h--light jhero__title">Letters from<br/><em>the bench.</em></h1>
+        <h1 class="display-h display-h--light jhero__title">Letters from <em>the bench.</em></h1>
         <p class="jhero__excerpt">Our first entries are being compounded. Ingredient education, ritual notes, and perspectives from the founders are on their way.</p>
+      </div>
+      <div class="jhero__media jhero__media--static" aria-hidden="true">
+        <img src="{{ 'hero-journal.jpg' | asset_url }}" alt="" loading="eager" class="jhero__img">
       </div>
     {%- endif -%}
   </div>
@@ -37,7 +37,9 @@
 
 {% stylesheet %}
 .jhero { background: var(--grad-deep); color: var(--c-cream); padding: clamp(40px, 5vw, 72px) var(--pad-x) clamp(36px, 5vw, 64px); overflow: clip; }
-.jhero__inner { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: stretch; }
+/* Same column split and copy-then-visual order as .page-hero__inner, so the
+   journal hero reads like every other page hero: text left, image right. */
+.jhero__inner { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(32px, 5vw, 80px); align-items: stretch; }
 /* Same stretch-between-bounds sizing as .page-hero__visual — the old 4/3 box
    side-cropped the ~2.07 ratio journal art and left dead space beside the copy. */
 .jhero__media { display: block; border-radius: 16px; overflow: hidden; background: var(--c-forest-2); height: 100%; min-height: var(--hero-visual-min); max-height: var(--hero-visual-max); align-self: center; }
@@ -55,7 +57,7 @@
 .jhero__empty .jhero__title { margin-top: 18px; }
 @media (max-width: 900px) {
   .jhero__inner { grid-template-columns: 1fr; }
-  .jhero__media { order: -1; height: auto; aspect-ratio: 16 / 9; min-height: 0; max-height: none; }
+  .jhero__media { height: auto; aspect-ratio: 16 / 9; min-height: 0; max-height: none; }
 }
 {% endstylesheet %}
 
