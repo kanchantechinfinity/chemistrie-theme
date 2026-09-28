@@ -3,20 +3,26 @@
   <div class="jhero__inner">
     {%- if blog.articles.size > 0 -%}
       {%- comment -%}
-        Eyebrow, title, excerpt — the same three blocks a .page-hero carries,
-        so this band computes to the same height. The category chip and the
-        "Read the article" link were the two extras that pushed it taller; the
-        category still shows on every card below, and both the title and the
-        photo already link through to the article.
+        A .page-hero's copy is about 211px tall and the band only affords ~215,
+        so everything here has to earn its height: the category rides on the
+        eyebrow's line rather than taking a block of its own, the excerpt is
+        cut to roughly two lines, and the margins are tighter than a page
+        hero's — which is what buys room for the read link at the end.
       {%- endcomment -%}
       <div class="jhero__copy">
-        <span class="eyebrow eyebrow--light">— The Journal —</span>
+        <div class="jhero__meta">
+          <span class="eyebrow eyebrow--light">— The Journal —</span>
+          {%- if feat.tags.size > 0 -%}
+            <span class="jhero__cat">{{ feat.tags.first }}</span>
+          {%- endif -%}
+        </div>
         <h1 class="display-h display-h--light jhero__title">
           <a href="{{ feat.url }}">{{ feat.title }}</a>
         </h1>
         {%- if feat.excerpt_or_content != blank -%}
-          <p class="jhero__excerpt">{{ feat.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+          <p class="jhero__excerpt">{{ feat.excerpt_or_content | strip_html | truncatewords: 18 }}</p>
         {%- endif -%}
+        <a class="jhero__read" href="{{ feat.url }}">Read the article &rarr;</a>
       </div>
       <a class="jhero__media" href="{{ feat.url }}" aria-label="{{ feat.title | escape }}">
         {%- if feat.image -%}
@@ -54,10 +60,17 @@
    Compound selector for specificity over the shared rule, matching the
    pattern used in sections/page-hero.liquid. */
 .display-h.jhero__title { font-size: clamp(36px, 4.6vw, 66px); }
-.jhero__title { margin: 18px 0 0; max-width: 15ch; }
+/* category shares the eyebrow's row, so it costs no block of its own */
+.jhero__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; }
+.jhero__cat { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-tan); }
+/* margins are tighter than .page-hero's 18/28 to leave room for the read link
+   within the same band height */
+.jhero__title { margin: 10px 0 0; max-width: 15ch; }
 .jhero__title a { transition: color .3s; }
 .jhero__title a:hover { color: var(--c-tan); }
-.jhero__excerpt { margin: 28px 0 0; max-width: 56ch; color: rgba(240,232,219,.72); font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7; }
+.jhero__excerpt { margin: 12px 0 0; max-width: 56ch; color: rgba(240,232,219,.72); font-size: clamp(15px, 1.3vw, 18px); line-height: 1.6; }
+.jhero__read { display: inline-block; margin-top: 12px; font-size: 12.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--c-tan); border-bottom: 1px solid var(--c-tan); padding-bottom: 5px; transition: color .3s, border-color .3s; }
+.jhero__read:hover { color: var(--c-cream); border-color: var(--c-cream); }
 .jhero__media--static { cursor: default; }
 .jhero__empty { max-width: 720px; }
 .jhero__empty .jhero__title { margin-top: 18px; }
