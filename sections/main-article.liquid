@@ -92,7 +92,9 @@
 .art__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 28px; font-size: 13px; letter-spacing: .04em; color: rgba(240,232,219,.65); }
 
 .art__hero { max-width: 1100px; margin: clamp(-40px, -4vw, -60px) auto 0; padding: 0 var(--pad-x); }
-.art__hero-img { width: 100%; border-radius: 16px; box-shadow: 0 40px 80px -40px rgba(14,33,24,.5); }
+/* max-height keeps a portrait article image from rendering as a towering
+   banner — the only hero in the theme that was sizing off intrinsic height. */
+.art__hero-img { width: 100%; max-height: var(--hero-visual-max); object-fit: cover; border-radius: 16px; box-shadow: 0 40px 80px -40px rgba(14,33,24,.5); }
 
 .art__body-wrap { background: var(--c-cream); padding: clamp(56px, 8vw, 100px) var(--pad-x); }
 .article-body { max-width: 68ch; margin: 0 auto; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.8; color: var(--c-ink); }

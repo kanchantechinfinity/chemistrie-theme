@@ -33,6 +33,15 @@
   --pad-x: clamp(24px, 5vw, 80px);
   --section-pad-y: clamp(40px, 6vw, 80px);
 
+  /* Hero visual sizing, shared by every hero (homepage, page-hero, journal,
+     article) so the image reads at the same scale on every page. The frames
+     stretch to their copy column rather than sitting in a fixed-ratio box —
+     a fixed ratio left short/wide art floating in dead space next to taller
+     copy, and the source photos range from 0.75 to 2.08 so no single ratio
+     fit them all. Cover-fit + this band is what keeps them consistent. */
+  --hero-visual-min: clamp(320px, 30vw, 440px);
+  --hero-visual-max: 560px;
+
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -2094,8 +2103,8 @@ body.template-product::-webkit-scrollbar { display: none; }
   letter-spacing: .04em;
   color: rgba(200,170,122,.1);
   text-align: center;
-  padding: 40px 0 0;
-  margin-bottom: -16px;
+  padding: clamp(32px, 4vw, 52px) 0 clamp(10px, 1.8vw, 22px);
+  margin-bottom: 0;
   white-space: nowrap;
   pointer-events: none;
   overflow: hidden;
@@ -2680,7 +2689,7 @@ body.template-product::-webkit-scrollbar { display: none; }
   .footer__wordmark { font-size: 20px; letter-spacing: .36em; }
   .footer__tag { font-size: 15px; }
   .footer__bot { flex-direction: column; align-items: flex-start; gap: 14px; font-size: 11px; }
-  .footer__wordmark-huge { font-size: 22vw; padding-top: 24px; }
+  .footer__wordmark-huge { font-size: 22vw; padding: 24px 0 10px; margin-bottom: 0; }
 }
 
 /* ── Very small phones (≤380px) ── */
@@ -2741,7 +2750,9 @@ body.template-product::-webkit-scrollbar { display: none; }
   .hero { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
   .hero__inner { grid-template-columns: 1fr; gap: 36px; margin-top: 56px; }
   .hero__title { font-size: clamp(38px, 8vw, 56px); }
-  .hero__stage { min-height: 380px; max-width: 460px; margin: 0 auto; width: 100%; }
+  /* .hero__stage sizing for this breakpoint lives in the block below — every
+     declaration here was already overridden by it, 380px of min-height
+     included, which is what left the stage taller than the photo inside it. */
   .hero__bottle-wrap { max-width: 100%; }
   .hero__spec-card { padding: 10px 14px; }
   .hero__spec-card--top { top: 0; left: 0; max-width: 160px; }
@@ -2771,7 +2782,9 @@ body.template-product::-webkit-scrollbar { display: none; }
     height: auto !important;
     aspect-ratio: auto !important;
     width: 100% !important;
-    max-width: 520px !important;
+    /* Match .hero__copy's 640px so the photo and the text block are the same
+       width — at 520px the image read as undersized next to the copy. */
+    max-width: 640px !important;
     margin: 28px auto 0 !important;
     z-index: 2 !important;
     pointer-events: auto !important;

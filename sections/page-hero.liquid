@@ -27,7 +27,8 @@
         {%- if section.settings.visual_ratio != blank %} style="aspect-ratio: {{ section.settings.visual_ratio }};"{% endif -%}
         aria-hidden="true">
         {%- if section.settings.hero_image != blank -%}
-          {{ section.settings.hero_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', alt: '' }}
+          {%- comment -%} The visual column is ~750 CSS px at the 1440 max-width, so 700 was serving a half-resolution image to every retina screen. {%- endcomment -%}
+          {{ section.settings.hero_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '700,1000,1400,1600', alt: '' }}
         {%- else -%}
           {%- comment -%} Temporary Unsplash stock photo, page-specific — replace via this section's "Hero image" setting whenever a real shot is ready {%- endcomment -%}
           <img src="{{ section.settings.hero_fallback_asset | default: 'hero-visual.jpg' | asset_url }}" alt="" loading="lazy">
@@ -38,7 +39,7 @@
 </section>
 
 {% stylesheet %}
-.page-hero__inner { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: clamp(32px, 5vw, 80px); }
+.page-hero__inner { display: grid; grid-template-columns: 1fr 1.15fr; align-items: stretch; gap: clamp(32px, 5vw, 80px); }
 .page-hero__copy { min-width: 0; }
 /* Match the homepage hero's heading size (.hero__title in
    assets/chemistrie.css) instead of the larger base .display-h clamp
@@ -47,8 +48,16 @@
    regardless of stylesheet load order — see the .page-section.mprod
    note in sections/main-product.liquid. */
 .display-h.page-hero__title { font-size: clamp(36px, 4.6vw, 66px); }
+/* Height follows the copy column (align-items: stretch) between a floor and a
+   ceiling, instead of a fixed aspect-ratio box. The fixed 16/9.5 frame was
+   shorter than the copy on every page, leaving a band of dead space above and
+   below the photo, and it side-cropped the 2.07-ratio hero assets. */
 .page-hero__visual {
-  aspect-ratio: 16 / 9.5; border-radius: 18px; overflow: hidden;
+  /* align-self: center matters once max-height caps the stretch — a capped
+     grid item start-aligns by default, which would put the gap back, under
+     the photo, on the long-copy pages. */
+  height: 100%; min-height: var(--hero-visual-min); max-height: var(--hero-visual-max); align-self: center;
+  border-radius: 18px; overflow: hidden;
   border: 1px solid rgba(240,232,219,.22); box-shadow: 0 40px 80px -28px rgba(0,0,0,.55);
   background: var(--c-forest-2);
 }
@@ -57,7 +66,10 @@
 .page-hero__visual:hover img { transform: scale(1.03); }
 @media (max-width: 760px) {
   .page-hero__inner { grid-template-columns: 1fr; gap: 32px; }
-  .page-hero__visual { display: block; width: 100%; aspect-ratio: 16 / 9; margin-top: 8px; }
+  .page-hero__visual {
+    display: block; width: 100%; margin-top: 8px;
+    height: auto; aspect-ratio: 16 / 9; min-height: 0; max-height: none;
+  }
 }
 .page-hero__cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: clamp(16px, 2.5vw, 32px); margin-top: clamp(28px, 3.5vw, 40px); }
 .page-hero__cta-secondary { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-cream); border-bottom: 1px solid rgba(240,232,219,.4); padding-bottom: 3px; transition: border-color .3s var(--ease-out); }
@@ -74,7 +86,7 @@
     { "type": "textarea", "id": "deck2", "label": "Deck paragraph 2 (optional)" },
     { "type": "checkbox", "id": "show_visual", "label": "Show hero image", "default": true },
     { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Optional. Shows a temporary stock photo until a real product image is uploaded. Hidden automatically on narrow screens so it never crowds the heading." },
-    { "type": "text", "id": "visual_ratio", "label": "Hero image ratio (advanced)", "info": "Optional. e.g. 1349 / 650. Leave blank for the standard 16 / 9.5 frame. Use the image's own width / height so nothing gets cropped." },
+    { "type": "text", "id": "visual_ratio", "label": "Hero image ratio (advanced)", "info": "Optional, narrow screens only. Leave blank — the hero image now matches the height of the text beside it on desktop, so every page's hero is the same size." },
     { "type": "text", "id": "hero_fallback_asset", "label": "Fallback image filename (advanced)", "info": "Internal use — the theme asset filename shown until a real Hero image is uploaded above. Leave as-is unless changing the temporary photo." },
     { "type": "header", "content": "Buttons (optional)" },
     { "type": "text", "id": "cta_label", "label": "Primary button label" },
