@@ -488,6 +488,9 @@ body.template-product::-webkit-scrollbar { display: none; }
 /* Trust strip */
 .hero__trust {
   display: flex;
+  /* wraps at any width, so the strip stays intact now that the two-column
+     layout holds down to 760px like the other heroes. */
+  flex-wrap: wrap;
   align-items: stretch;
   gap: clamp(20px, 3vw, 36px);
   padding-top: clamp(14px, 2vw, 22px);
@@ -770,8 +773,9 @@ body.template-product::-webkit-scrollbar { display: none; }
   100% { transform: scaleY(1); opacity: 0; transform-origin: bottom; }
 }
 
-/* Responsive */
-@media (max-width: 1100px) {
+/* Responsive — collapses at 760px, the same width .page-hero__inner does, so
+   the homepage isn't stacked while every other hero is still side by side. */
+@media (max-width: 760px) {
   .hero__inner { grid-template-columns: 1fr; gap: 48px; }
   .hero__stage { min-height: auto; max-width: 640px; margin: 0 auto; width: 100%; }
   .hero__title { text-align: left; }
@@ -2621,7 +2625,7 @@ body.template-product::-webkit-scrollbar { display: none; }
   .utility-strip { font-size: 9.5px; letter-spacing: .1em; padding: 7px 12px; }
 
   /* Hero */
-  .hero { min-height: 92vh; padding-top: 60px; padding-bottom: 70px; }
+  .hero { padding-top: 60px; padding-bottom: 70px; }
   .hero__meta { font-size: 9.5px; letter-spacing: .18em; }
   .hero__meta--left { top: 18px; left: var(--pad-x); }
   .hero__meta--right { top: 18px; right: var(--pad-x); }
@@ -2757,9 +2761,10 @@ body.template-product::-webkit-scrollbar { display: none; }
   .reel__play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
-@media (max-width: 900px) {
-  /* Hero — vertical stack, calmer visuals */
-  .hero { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
+@media (max-width: 760px) {
+  /* Hero — vertical stack, calmer visuals. Matched to the collapse breakpoint
+     above; these all describe the stacked layout, so they start where it does. */
+  .hero { padding-top: 48px; padding-bottom: 48px; }
   .hero__inner { grid-template-columns: 1fr; gap: 36px; margin-top: 56px; }
   .hero__title { font-size: clamp(38px, 8vw, 56px); }
   /* .hero__stage sizing for this breakpoint lives in the block below — every
