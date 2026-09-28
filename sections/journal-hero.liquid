@@ -3,11 +3,10 @@
   <div class="jhero__inner">
     {%- if blog.articles.size > 0 -%}
       {%- comment -%}
-        A .page-hero's copy is about 211px tall and the band only affords ~215,
-        so everything here has to earn its height: the category rides on the
-        eyebrow's line rather than taking a block of its own, the excerpt is
-        cut to roughly two lines, and the margins are tighter than a page
-        hero's — which is what buys room for the read link at the end.
+        Carries more than a .page-hero does — a category, a full excerpt and a
+        read link — so this band runs taller than theirs by design. The
+        category rides on the eyebrow's line and the margins stay tight to
+        keep that difference as small as the content allows.
       {%- endcomment -%}
       <div class="jhero__copy">
         <div class="jhero__meta">
@@ -20,7 +19,7 @@
           <a href="{{ feat.url }}">{{ feat.title }}</a>
         </h1>
         {%- if feat.excerpt_or_content != blank -%}
-          <p class="jhero__excerpt">{{ feat.excerpt_or_content | strip_html | truncatewords: 18 }}</p>
+          <p class="jhero__excerpt">{{ feat.excerpt_or_content | strip_html | truncatewords: 42 }}</p>
         {%- endif -%}
         <a class="jhero__read" href="{{ feat.url }}">Read the article &rarr;</a>
       </div>
