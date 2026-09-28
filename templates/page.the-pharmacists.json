@@ -12,10 +12,9 @@
     "page-hero": {
       "type": "page-hero",
       "settings": {
-        "eyebrow": "— Harin &amp; Zach —",
-        "heading": "Trained to ask<br/><em>what's actually in it.</em>",
-        "deck": "They met at the University of Houston College of Pharmacy in 2011, then spent more than a decade in different rooms — long-term care, specialty, infusion, community pharmacy, compounding — before their careers found each other again.",
-        "deck2": "Twenty-three years of combined practice now sits behind every Chemistrie formula: the same judgment they'd bring to a prescription, brought to the shelf instead.",
+        "eyebrow": "— The Pharmacists —",
+        "heading": "The Pharmacists.",
+        "deck": "Harin and Zach have been comparing notes since 2011.",
         "show_visual": true,
         "hero_fallback_asset": "hero-pharmacists.jpg"
       }
