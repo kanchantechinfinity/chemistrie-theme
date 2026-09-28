@@ -40,7 +40,10 @@
 
 {% stylesheet %}
 .page-hero__inner { display: grid; grid-template-columns: 1fr 1.15fr; align-items: stretch; gap: clamp(32px, 5vw, 80px); }
-.page-hero__copy { min-width: 0; }
+/* align-self: center, because align-items: stretch above makes this column as
+   tall as the photo and block content then starts at its top edge — the copy
+   sat high with the leftover space pooled underneath it. */
+.page-hero__copy { min-width: 0; align-self: center; }
 /* Match the homepage hero's heading size (.hero__title in
    assets/chemistrie.css) instead of the larger base .display-h clamp
    this was inheriting (40-88px). Compound selector (two of the h1's own
