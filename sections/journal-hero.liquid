@@ -42,7 +42,7 @@
 .jhero__inner { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(32px, 5vw, 80px); align-items: stretch; }
 /* Same stretch-between-bounds sizing as .page-hero__visual — the old 4/3 box
    side-cropped the ~2.07 ratio journal art and left dead space beside the copy. */
-.jhero__media { display: block; border-radius: 16px; overflow: hidden; background: var(--c-forest-2); height: 100%; min-height: var(--hero-visual-min); max-height: var(--hero-visual-max); align-self: center; }
+.jhero__media { display: block; border-radius: 16px; overflow: hidden; background: var(--c-forest-2); aspect-ratio: 1349 / 650; height: auto; align-self: center; }
 .jhero__img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease-out); }
 .jhero__media:hover .jhero__img { transform: scale(1.04); }
 .jhero__cat { display: inline-block; margin: 20px 0 0; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-tan); }
@@ -57,7 +57,7 @@
 .jhero__empty .jhero__title { margin-top: 18px; }
 @media (max-width: 900px) {
   .jhero__inner { grid-template-columns: 1fr; }
-  .jhero__media { height: auto; aspect-ratio: 16 / 9; min-height: 0; max-height: none; }
+  .jhero__media { height: auto; }
 }
 {% endstylesheet %}
 

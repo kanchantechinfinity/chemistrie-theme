@@ -51,15 +51,12 @@
    regardless of stylesheet load order — see the .page-section.mprod
    note in sections/main-product.liquid. */
 .display-h.page-hero__title { font-size: clamp(36px, 4.6vw, 66px); }
-/* Height follows the copy column (align-items: stretch) between a floor and a
-   ceiling, instead of a fixed aspect-ratio box. The fixed 16/9.5 frame was
-   shorter than the copy on every page, leaving a band of dead space above and
-   below the photo, and it side-cropped the 2.07-ratio hero assets. */
+/* Fixed 1349x650 — the hero assets' own ratio, so object-fit: cover has
+   nothing to crop. The copy beside it centres against the photo rather than
+   stretching, so whichever of the two is shorter sits centred instead of
+   leaving its slack pooled at one end. */
 .page-hero__visual {
-  /* align-self: center matters once max-height caps the stretch — a capped
-     grid item start-aligns by default, which would put the gap back, under
-     the photo, on the long-copy pages. */
-  height: 100%; min-height: var(--hero-visual-min); max-height: var(--hero-visual-max); align-self: center;
+  aspect-ratio: 1349 / 650; height: auto; align-self: center;
   border-radius: 18px; overflow: hidden;
   border: 1px solid rgba(240,232,219,.22); box-shadow: 0 40px 80px -28px rgba(0,0,0,.55);
   background: var(--c-forest-2);
@@ -69,10 +66,9 @@
 .page-hero__visual:hover img { transform: scale(1.03); }
 @media (max-width: 760px) {
   .page-hero__inner { grid-template-columns: 1fr; gap: 32px; }
-  .page-hero__visual {
-    display: block; width: 100%; margin-top: 8px;
-    height: auto; aspect-ratio: 16 / 9; min-height: 0; max-height: none;
-  }
+  /* same 1349x650 frame as desktop — 16/9 here would have cropped the sides
+     off the very shots the ratio exists to preserve. */
+  .page-hero__visual { display: block; width: 100%; margin-top: 8px; }
 }
 .page-hero__cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: clamp(16px, 2.5vw, 32px); margin-top: clamp(28px, 3.5vw, 40px); }
 .page-hero__cta-secondary { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-cream); border-bottom: 1px solid rgba(240,232,219,.4); padding-bottom: 3px; transition: border-color .3s var(--ease-out); }
