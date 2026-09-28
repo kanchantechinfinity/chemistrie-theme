@@ -62,9 +62,12 @@
 /* category shares the eyebrow's row, so it costs no block of its own */
 .jhero__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; }
 .jhero__cat { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-tan); }
-/* margins are tighter than .page-hero's 18/28 to leave room for the read link
-   within the same band height */
-.jhero__title { margin: 10px 0 0; max-width: 15ch; }
+/* Font size is .page-hero__title's exactly; the measure is wider because real
+   article titles run far longer than a marketing headline — at 15ch this one
+   broke into five lines and read as a much bigger block than the other heroes
+   despite the identical type size. Margins stay tighter than .page-hero's
+   18/28 to leave room for the read link within the band. */
+.jhero__title { margin: 10px 0 0; max-width: 22ch; }
 .jhero__title a { transition: color .3s; }
 .jhero__title a:hover { color: var(--c-tan); }
 .jhero__excerpt { margin: 12px 0 0; max-width: 56ch; color: rgba(240,232,219,.72); font-size: clamp(15px, 1.3vw, 18px); line-height: 1.6; }
