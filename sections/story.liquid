@@ -105,7 +105,11 @@
 /* Neutral placeholder for a chapter with no approved photo yet — keeps
    the same footprint/shadow as a real .story__chapter-photo so the
    alternating rhythm doesn't break, without faking an image. */
-.story__chapter-photo--placeholder {
+/* Compound selector so this beats .story__chapter-photo's own forest
+   background in assets/chemistrie.css regardless of which stylesheet loads
+   last — at equal specificity that rule won and the placeholder rendered as
+   a dark box. Same pattern as .page-section.mprod in main-product.liquid. */
+.story__chapter-photo.story__chapter-photo--placeholder {
   background: linear-gradient(155deg, var(--c-tan-3) 0%, var(--c-cream-2) 100%);
   display: flex;
   align-items: center;
