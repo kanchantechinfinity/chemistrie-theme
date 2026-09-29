@@ -17,7 +17,10 @@
   font-size: 15px;
 }
 .closing-band__text {
-  max-width: 620px;
+  /* wide enough to hold the statement on one line at full size — 620px broke
+     it after "two". Still bounded by the viewport, so it wraps rather than
+     overflowing on narrow screens. */
+  max-width: min(92vw, 900px);
   margin: 0;
   text-align: center;
   color: var(--c-cream);
