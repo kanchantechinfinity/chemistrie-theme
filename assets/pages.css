@@ -18,8 +18,13 @@
   margin: 28px 0 0;
   max-width: 56ch;
   color: rgba(240,232,219,.72);
+  /* italic display serif, matching .hero__deck on the homepage — this was
+     inheriting the body sans, so the same line read in a different typeface
+     depending on which hero you were looking at. */
+  font-family: var(--ff-display);
+  font-style: italic;
   font-size: clamp(15px, 1.3vw, 18px);
-  line-height: 1.7;
+  line-height: 1.5;
 }
 .page-hero__deck + .page-hero__deck { margin-top: 9px; }
 

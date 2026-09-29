@@ -421,8 +421,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 .hero__deck {
   font-family: var(--ff-display);
   font-style: italic;
-  /* same size as .page-hero__deck; the serif italic is the homepage's own
-     treatment and stays. */
+  /* matches .page-hero__deck in assets/pages.css */
   font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.5;
   color: rgba(240,232,219,.72);
