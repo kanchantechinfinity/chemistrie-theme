@@ -228,7 +228,6 @@
     if (!pin || !track) return;
 
     const cards = $$(".active-card", track);
-    const isPhone = window.matchMedia("(max-width: 700px)").matches;
 
     /* Intro head reveal — fire as soon as it enters view, no lag */
     gsap.from(".actives__intro > *", {
@@ -236,15 +235,11 @@
       scrollTrigger: { trigger: ".actives__intro", start: "top 100%" },
     });
 
-    if (isPhone) {
-      pin.style.height = "auto";
-      pin.style.overflowX = "auto";
-      pin.style.overflowY = "hidden";
-      pin.style.scrollSnapType = "x mandatory";
-      pin.style.paddingBottom = "32px";
-      cards.forEach(c => c.style.scrollSnapAlign = "start");
-      return;
-    }
+    /* Phones pin and scrub like desktop rather than swiping card by card. The
+       stylesheet under 700px still describes a plain scroll rail, scoped to
+       :not(.is-pinned), so the cards stay reachable if this never runs — this
+       class is what hands control over. */
+    pin.classList.add("is-pinned");
 
     const totalScroll = () => track.scrollWidth - window.innerWidth + 80;
 
