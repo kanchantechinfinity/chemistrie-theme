@@ -1,0 +1,527 @@
+{%- comment -%}
+  Chemistrie Ritual Finder — implements the quiz logic documented in
+  "Chemistrie Ritual Finder — Quiz logic & product mapping" (source: the
+  GoHighLevel workflow "Chemistrie | Ritual Finder Processing", Sep 29 2026).
+
+  Six questions plus a contact capture. Only two of them decide the outcome:
+  Q1 sets the Ritual, Q4 sets the Tier, and Ritual x Tier resolves to a named
+  set in MATRIX below. Q5 saves a secondary product without changing that set.
+  Q2, Q3 and Q6 are collected for the profile only.
+
+  This is deliberately separate from sections/ritual-finder-app.liquid, which
+  is an older four-question quiz with different ritual names and still runs on
+  the Ritual page.
+{%- endcomment -%}
+
+{%- liquid
+  assign velvet_prod = all_products['velvet']
+  assign veil_prod = all_products['veil']
+  assign cashmere_prod = all_products['cashmere']
+  assign aura_prod = all_products['aura']
+  assign silken_prod = all_products['silken']
+
+  if velvet_prod == blank or veil_prod == blank or cashmere_prod == blank or aura_prod == blank or silken_prod == blank
+    for col in collections
+      for p in col.products
+        assign ph = p.handle | downcase
+        if velvet_prod == blank and ph contains 'velvet'
+          assign velvet_prod = p
+        elsif veil_prod == blank and ph contains 'veil'
+          assign veil_prod = p
+        elsif cashmere_prod == blank and ph contains 'cashmere'
+          assign cashmere_prod = p
+        elsif aura_prod == blank and ph contains 'aura'
+          assign aura_prod = p
+        elsif silken_prod == blank and ph contains 'silken'
+          assign silken_prod = p
+        endif
+      endfor
+    endfor
+  endif
+-%}
+
+<section class="gfinder" id="gift-ritual-finder" data-screen-label="Ritual Finder">
+  <div class="gfinder__inner">
+    <div class="gfinder__head">
+      <span class="eyebrow">— {{ section.settings.eyebrow | default: 'Ritual Finder' }} —</span>
+      <h2 class="display-h gfinder__title">{{ section.settings.heading }}</h2>
+    </div>
+
+    <div class="gfinder__card" data-gfinder
+      {%- if section.settings.webhook_url != blank %} data-endpoint="{{ section.settings.webhook_url }}"{% endif -%}
+    >
+      <div class="gfinder__progress" data-gf-progress>
+        <span class="gfinder__progress-label">Question <b data-gf-current>1</b> of <span data-gf-total>6</span></span>
+        <span class="gfinder__progress-track"><i data-gf-bar></i></span>
+      </div>
+
+      <div data-gf-steps>
+        {%- comment -%} Q1 — sets the Ritual {%- endcomment -%}
+        <fieldset class="gfinder__step is-active" data-gf-step data-gf-key="improve">
+          <legend class="gfinder__q">What would you most like to improve about your skin?</legend>
+          <div class="gfinder__opts">
+            <button type="button" data-gf-opt="Hydration">Hydration</button>
+            <button type="button" data-gf-opt="Texture">Texture</button>
+            <button type="button" data-gf-opt="Appearance of Fine Lines">Appearance of Fine Lines</button>
+            <button type="button" data-gf-opt="Uneven Tones">Uneven Tones</button>
+            <button type="button" data-gf-opt="Appearance of Scars">Appearance of Scars</button>
+            <button type="button" data-gf-opt="Overall Skin Maintenance">Overall Skin Maintenance</button>
+          </div>
+        </fieldset>
+
+        {%- comment -%} Q2 — profile only {%- endcomment -%}
+        <fieldset class="gfinder__step" data-gf-step data-gf-key="skin_type" hidden>
+          <legend class="gfinder__q">How would you describe your skin?</legend>
+          <div class="gfinder__opts">
+            <button type="button" data-gf-opt="Dry">Dry</button>
+            <button type="button" data-gf-opt="Normal">Normal</button>
+            <button type="button" data-gf-opt="Combination">Combination</button>
+            <button type="button" data-gf-opt="Oily">Oily</button>
+            <button type="button" data-gf-opt="Not Sure">Not Sure</button>
+          </div>
+        </fieldset>
+
+        {%- comment -%} Q3 — profile only {%- endcomment -%}
+        <fieldset class="gfinder__step" data-gf-step data-gf-key="sensitivity" hidden>
+          <legend class="gfinder__q">How sensitive is your skin?</legend>
+          <div class="gfinder__opts">
+            <button type="button" data-gf-opt="Rarely reacts">Rarely reacts</button>
+            <button type="button" data-gf-opt="Occasionally becomes irritated or sensitive">Occasionally becomes irritated or sensitive</button>
+            <button type="button" data-gf-opt="Frequently becomes irritated or sensitive">Frequently becomes irritated or sensitive</button>
+            <button type="button" data-gf-opt="I'm not sure">I&rsquo;m not sure</button>
+          </div>
+        </fieldset>
+
+        {%- comment -%} Q4 — sets the Tier {%- endcomment -%}
+        <fieldset class="gfinder__step" data-gf-step data-gf-key="routine_fit" hidden>
+          <legend class="gfinder__q">What kind of skincare routine fits your lifestyle?</legend>
+          <div class="gfinder__opts">
+            <button type="button" data-gf-opt="Keep It Simple">Keep It Simple</button>
+            <button type="button" data-gf-opt="Balanced Routine">Balanced Routine</button>
+            <button type="button" data-gf-opt="Give Me The Full Ritual">Give Me The Full Ritual</button>
+          </div>
+        </fieldset>
+
+        {%- comment -%} Q5 — saves a secondary product, does not change the set {%- endcomment -%}
+        <fieldset class="gfinder__step" data-gf-step data-gf-key="secondary" hidden>
+          <legend class="gfinder__q">What else would you like your skincare routine to focus on?</legend>
+          <div class="gfinder__opts">
+            <button type="button" data-gf-opt="Hydration">Hydration</button>
+            <button type="button" data-gf-opt="Texture">Texture</button>
+            <button type="button" data-gf-opt="Appearance of fine lines">Appearance of fine lines</button>
+            <button type="button" data-gf-opt="Uneven tone">Uneven tone</button>
+            <button type="button" data-gf-opt="Appearance of scars">Appearance of scars</button>
+            <button type="button" data-gf-opt="Overall skin maintenance">Overall skin maintenance</button>
+            <button type="button" data-gf-opt="Nothing else, just my primary goal">Nothing else, just my primary goal</button>
+          </div>
+        </fieldset>
+
+        {%- comment -%} Q6 — profile only {%- endcomment -%}
+        <fieldset class="gfinder__step" data-gf-step data-gf-key="current_routine" hidden>
+          <legend class="gfinder__q">What does your skincare routine look like today?</legend>
+          <div class="gfinder__opts">
+            <button type="button" data-gf-opt="Cleanser only or very minimal">Cleanser only or very minimal</button>
+            <button type="button" data-gf-opt="Cleanser + moisturizer">Cleanser + moisturizer</button>
+            <button type="button" data-gf-opt="A few targeted products">A few targeted products</button>
+            <button type="button" data-gf-opt="Full multi-step routine">Full multi-step routine</button>
+            <button type="button" data-gf-opt="I don't currently have a consistent routine">I don&rsquo;t currently have a consistent routine</button>
+          </div>
+        </fieldset>
+
+        {%- comment -%} Contact capture {%- endcomment -%}
+        <div class="gfinder__step gfinder__step--contact" data-gf-contact hidden>
+          <p class="gfinder__q">Your Chemistrie ritual is ready.</p>
+          <p class="gfinder__sub">Tell us where to send your personalized Chemistrie recommendation.</p>
+          <div class="gfinder__fields">
+            <label class="gfinder__field">
+              <span>First Name</span>
+              <input type="text" data-gf-name required autocomplete="given-name">
+            </label>
+            <label class="gfinder__field">
+              <span>Email</span>
+              <input type="email" data-gf-email required autocomplete="email">
+            </label>
+          </div>
+          <p class="gfinder__error" data-gf-error hidden></p>
+          <button type="button" class="btn btn--primary gfinder__submit" data-gf-submit>Show my ritual</button>
+        </div>
+      </div>
+
+      <div class="gfinder__nav" data-gf-nav>
+        <button type="button" class="gfinder__back" data-gf-back hidden>&larr; Back</button>
+      </div>
+
+      {%- comment -%} Result {%- endcomment -%}
+      <div class="gfinder__result" data-gf-result hidden>
+        <span class="gfinder__result-eyebrow">Your ritual</span>
+        <h3 class="display-h gfinder__result-title" data-gf-result-title></h3>
+        <div class="gfinder__products" data-gf-products></div>
+        <div class="gfinder__result-actions">
+          <button type="button" class="btn btn--primary" data-gf-add>Add the ritual to cart</button>
+          <a class="gfinder__restart" href="#" data-gf-restart>Start again</a>
+        </div>
+        <p class="gfinder__secondary" data-gf-secondary hidden></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-gfinder]');
+  if (!root) return;
+
+  var PRODUCTS = {
+    velvet: {
+      title: 'Velvet', subtitle: 'Foaming Cleanser',
+      url: {{ velvet_prod.url | default: '/products/velvet' | json }},
+      price: {{ velvet_prod.price | money | default: '' | json }},
+      image: {{ velvet_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      variantId: {{ velvet_prod.selected_or_first_available_variant.id | default: null | json }}
+    },
+    silken: {
+      title: 'Silken', subtitle: 'Skin Refining Gel',
+      url: {{ silken_prod.url | default: '/products/silken' | json }},
+      price: {{ silken_prod.price | money | default: '' | json }},
+      image: {{ silken_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      variantId: {{ silken_prod.selected_or_first_available_variant.id | default: null | json }}
+    },
+    aura: {
+      title: 'Aura', subtitle: 'Advanced Renewal Cream',
+      url: {{ aura_prod.url | default: '/products/aura' | json }},
+      price: {{ aura_prod.price | money | default: '' | json }},
+      image: {{ aura_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      variantId: {{ aura_prod.selected_or_first_available_variant.id | default: null | json }}
+    },
+    veil: {
+      title: 'Veil', subtitle: 'Renewing Serum',
+      url: {{ veil_prod.url | default: '/products/veil' | json }},
+      price: {{ veil_prod.price | money | default: '' | json }},
+      image: {{ veil_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      variantId: {{ veil_prod.selected_or_first_available_variant.id | default: null | json }}
+    },
+    cashmere: {
+      title: 'Cashmere', subtitle: 'Lightweight Hydrating Lotion',
+      url: {{ cashmere_prod.url | default: '/products/cashmere' | json }},
+      price: {{ cashmere_prod.price | money | default: '' | json }},
+      image: {{ cashmere_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      variantId: {{ cashmere_prod.selected_or_first_available_variant.id | default: null | json }}
+    }
+  };
+
+  // Q1 answer -> Ritual
+  var RITUAL = {
+    'Hydration': 'Hydration',
+    'Texture': 'Refining',
+    'Appearance of Fine Lines': 'Renewal',
+    'Uneven Tones': 'Refining',
+    'Appearance of Scars': 'Refining',
+    'Overall Skin Maintenance': 'Essential'
+  };
+
+  // Q4 answer -> Tier
+  var TIER = {
+    'Keep It Simple': 'Essential',
+    'Balanced Routine': 'Balanced',
+    'Give Me The Full Ritual': 'Complete'
+  };
+
+  // Ritual x Tier -> displayed name + product set
+  var MATRIX = {
+    Essential: {
+      Essential: { name: 'Essential Core',      items: ['velvet', 'cashmere'] },
+      Balanced:  { name: 'Essential Plus',      items: ['velvet', 'veil', 'aura', 'cashmere'] },
+      Complete:  { name: 'Complete Core',       items: ['velvet', 'veil', 'aura', 'cashmere'] }
+    },
+    Hydration: {
+      Essential: { name: 'Hydration Essential', items: ['velvet', 'cashmere'] },
+      Balanced:  { name: 'Hydration Balanced',  items: ['velvet', 'veil', 'aura', 'cashmere'] },
+      Complete:  { name: 'Hydration Complete',  items: ['velvet', 'veil', 'aura', 'cashmere'] }
+    },
+    Refining: {
+      Essential: { name: 'Refining Essential',  items: ['velvet', 'silken'] },
+      Balanced:  { name: 'Refining Balanced',   items: ['velvet', 'silken', 'aura', 'cashmere'] },
+      Complete:  { name: 'Refining Complete',   items: ['velvet', 'veil', 'silken', 'aura', 'cashmere'] }
+    },
+    Renewal: {
+      Essential: { name: 'Renewal Essential',   items: ['velvet', 'aura'] },
+      Balanced:  { name: 'Renewal Balanced',    items: ['velvet', 'veil', 'aura', 'cashmere'] },
+      Complete:  { name: 'Renewal Complete',    items: ['velvet', 'veil', 'aura', 'silken', 'cashmere'] }
+    }
+  };
+
+  // Q5 answer -> secondary product. Saved to the payload; it does not change
+  // the set above. "Nothing else" maps to no secondary rather than dead-ending
+  // the way the GHL workflow currently does.
+  var SECONDARY = {
+    'Hydration': 'cashmere',
+    'Texture': 'silken',
+    'Appearance of fine lines': 'aura',
+    'Uneven tone': 'veil',
+    'Appearance of scars': 'silken',
+    'Overall skin maintenance': null,
+    'Nothing else, just my primary goal': null
+  };
+
+  var steps    = Array.prototype.slice.call(root.querySelectorAll('[data-gf-step]'));
+  var contact  = root.querySelector('[data-gf-contact]');
+  var screens  = steps.concat([contact]);
+  var progress = root.querySelector('[data-gf-progress]');
+  var curEl    = root.querySelector('[data-gf-current]');
+  var totalEl  = root.querySelector('[data-gf-total]');
+  var barEl    = root.querySelector('[data-gf-bar]');
+  var backBtn  = root.querySelector('[data-gf-back]');
+  var nav      = root.querySelector('[data-gf-nav]');
+  var result   = root.querySelector('[data-gf-result]');
+  var answers  = {};
+  var index    = 0;
+  var chosen   = null;
+
+  if (totalEl) totalEl.textContent = String(steps.length);
+
+  function show(i) {
+    index = i;
+    screens.forEach(function (s, n) { if (s) s.hidden = n !== i; });
+    var onQuestions = i < steps.length;
+    if (progress) progress.hidden = !onQuestions;
+    if (onQuestions) {
+      if (curEl) curEl.textContent = String(i + 1);
+      if (barEl) barEl.style.width = (((i + 1) / steps.length) * 100) + '%';
+    }
+    if (backBtn) backBtn.hidden = i === 0;
+    if (nav) nav.hidden = false;
+  }
+
+  steps.forEach(function (step, i) {
+    var key = step.getAttribute('data-gf-key');
+    step.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-gf-opt]');
+      if (!btn) return;
+      answers[key] = btn.getAttribute('data-gf-opt');
+      step.querySelectorAll('[data-gf-opt]').forEach(function (b) {
+        b.classList.toggle('is-chosen', b === btn);
+      });
+      show(i + 1);
+    });
+  });
+
+  if (backBtn) {
+    backBtn.addEventListener('click', function () { if (index > 0) show(index - 1); });
+  }
+
+  function resolve() {
+    var ritual = RITUAL[answers.improve] || 'Essential';
+    var tier   = TIER[answers.routine_fit] || 'Essential';
+    var cell   = MATRIX[ritual][tier];
+    return {
+      ritual: ritual,
+      tier: tier,
+      name: cell.name,
+      items: cell.items,
+      secondary: SECONDARY[answers.secondary] || null
+    };
+  }
+
+  function render(res) {
+    root.querySelector('[data-gf-result-title]').textContent = res.name;
+
+    var wrap = root.querySelector('[data-gf-products]');
+    wrap.innerHTML = '';
+    res.items.forEach(function (key) {
+      var p = PRODUCTS[key];
+      if (!p) return;
+      var a = document.createElement('a');
+      a.className = 'gfinder__product';
+      a.href = p.url;
+      a.innerHTML =
+        (p.image ? '<span class="gfinder__product-img"><img src="' + p.image + '" alt="" loading="lazy"></span>' : '') +
+        '<span class="gfinder__product-name">' + p.title + '</span>' +
+        '<span class="gfinder__product-sub">' + p.subtitle + '</span>' +
+        (p.price ? '<span class="gfinder__product-price">' + p.price + '</span>' : '');
+      wrap.appendChild(a);
+    });
+
+    var secEl = root.querySelector('[data-gf-secondary]');
+    if (res.secondary && PRODUCTS[res.secondary]) {
+      secEl.textContent = 'Noted for later: ' + PRODUCTS[res.secondary].title + ', for your secondary focus.';
+      secEl.hidden = false;
+    } else {
+      secEl.hidden = true;
+    }
+
+    steps.forEach(function (s) { s.hidden = true; });
+    if (contact) contact.hidden = true;
+    if (progress) progress.hidden = true;
+    if (nav) nav.hidden = true;
+    result.hidden = false;
+  }
+
+  var submitBtn = root.querySelector('[data-gf-submit]');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function () {
+      var nameEl  = root.querySelector('[data-gf-name]');
+      var emailEl = root.querySelector('[data-gf-email]');
+      var errEl   = root.querySelector('[data-gf-error]');
+      var name    = (nameEl.value || '').trim();
+      var email   = (emailEl.value || '').trim();
+
+      if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        errEl.textContent = 'Please add your first name and a valid email address.';
+        errEl.hidden = false;
+        return;
+      }
+      errEl.hidden = true;
+
+      chosen = resolve();
+      var payload = {
+        first_name: name,
+        email: email,
+        answers: answers,
+        ritual: chosen.ritual,
+        tier: chosen.tier,
+        final_ritual_recommendation: chosen.name,
+        ritual_configuration: chosen.items.map(function (k) { return PRODUCTS[k].title; }).join(' + '),
+        secondary_product: chosen.secondary ? PRODUCTS[chosen.secondary].title : null
+      };
+
+      // The recommendation shows either way — the handoff is best-effort so a
+      // failing endpoint never costs the visitor their result.
+      var endpoint = root.getAttribute('data-endpoint');
+      if (endpoint) {
+        try {
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).catch(function () {});
+        } catch (e) {}
+      }
+
+      render(chosen);
+    });
+  }
+
+  var addBtn = root.querySelector('[data-gf-add]');
+  if (addBtn) {
+    addBtn.addEventListener('click', function () {
+      if (!chosen) return;
+      var items = chosen.items
+        .map(function (k) { return PRODUCTS[k].variantId; })
+        .filter(Boolean)
+        .map(function (id) { return { id: id, quantity: 1 }; });
+      if (!items.length) { window.location.href = '/collections/all'; return; }
+      addBtn.disabled = true;
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items })
+      }).then(function () { window.location.href = '/cart'; })
+        .catch(function () { addBtn.disabled = false; });
+    });
+  }
+
+  var restart = root.querySelector('[data-gf-restart]');
+  if (restart) {
+    restart.addEventListener('click', function (e) {
+      e.preventDefault();
+      answers = {}; chosen = null;
+      root.querySelectorAll('.is-chosen').forEach(function (b) { b.classList.remove('is-chosen'); });
+      result.hidden = true;
+      show(0);
+    });
+  }
+
+  show(0);
+})();
+</script>
+
+{% stylesheet %}
+.gfinder { background: var(--c-cream); padding: clamp(48px, 6vw, 88px) var(--pad-x); }
+.gfinder__inner { max-width: 980px; margin: 0 auto; }
+.gfinder__head { text-align: center; margin-bottom: clamp(24px, 3vw, 40px); }
+.gfinder__title { margin: 12px 0 0; }
+
+.gfinder__card {
+  background: #fff; border: 1px solid var(--c-line-soft); border-radius: 24px;
+  padding: clamp(24px, 3.4vw, 44px);
+  box-shadow: 0 30px 60px -40px rgba(26, 58, 45, .35);
+}
+
+.gfinder__progress { display: block; margin-bottom: clamp(20px, 2.4vw, 30px); }
+.gfinder__progress-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); }
+.gfinder__progress-track { display: block; height: 2px; margin-top: 10px; background: var(--c-line-soft); border-radius: 2px; overflow: hidden; }
+.gfinder__progress-track i { display: block; height: 100%; width: 16.6%; background: var(--c-forest); transition: width .4s var(--ease-out); }
+
+.gfinder__step { border: 0; margin: 0; padding: 0; }
+.gfinder__q {
+  display: block; margin: 0 0 clamp(16px, 2vw, 24px); padding: 0;
+  font-family: var(--ff-display); font-size: clamp(21px, 2.4vw, 30px);
+  line-height: 1.2; color: var(--c-forest);
+}
+.gfinder__sub { margin: -8px 0 20px; font-size: 14.5px; color: var(--c-ink-soft); }
+
+.gfinder__opts { display: grid; gap: 10px; }
+.gfinder__opts button {
+  appearance: none; cursor: pointer; text-align: left;
+  font-family: inherit; font-size: 15px; color: var(--c-forest);
+  background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 999px;
+  padding: 15px 22px;
+  transition: background .25s var(--ease-out), border-color .25s var(--ease-out), transform .2s var(--ease-out);
+}
+.gfinder__opts button:hover { border-color: var(--c-forest); transform: translateX(3px); }
+.gfinder__opts button.is-chosen { background: var(--c-forest); border-color: var(--c-forest); color: var(--c-cream); }
+
+.gfinder__fields { display: grid; gap: 14px; }
+.gfinder__field span { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); margin-bottom: 6px; }
+.gfinder__field input {
+  width: 100%; font-family: inherit; font-size: 15px; color: var(--c-forest);
+  background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 12px; padding: 13px 16px;
+}
+.gfinder__field input:focus { outline: none; border-color: var(--c-forest); }
+.gfinder__error { margin: 12px 0 0; font-size: 13.5px; color: #7a2b2b; }
+.gfinder__submit { margin-top: 20px; }
+
+.gfinder__nav { margin-top: 22px; }
+.gfinder__back {
+  appearance: none; background: none; border: 0; cursor: pointer; padding: 0;
+  font-family: inherit; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute);
+}
+.gfinder__back:hover { color: var(--c-forest); }
+
+.gfinder__result-eyebrow { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); }
+.gfinder__result-title { margin: 10px 0 clamp(20px, 2.4vw, 30px); }
+.gfinder__products { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.gfinder__product {
+  display: flex; flex-direction: column; gap: 4px; text-align: center;
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px; padding: 16px 12px;
+  transition: transform .25s var(--ease-out), border-color .25s var(--ease-out);
+}
+.gfinder__product:hover { transform: translateY(-3px); border-color: var(--c-line); }
+.gfinder__product-img { display: block; aspect-ratio: 1; overflow: hidden; border-radius: 10px; margin-bottom: 8px; }
+.gfinder__product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gfinder__product-name { font-family: var(--ff-display); font-size: 18px; color: var(--c-forest); }
+.gfinder__product-sub { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--c-ink-mute); }
+.gfinder__product-price { font-size: 13.5px; color: var(--c-ink-soft); margin-top: 4px; }
+
+.gfinder__result-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: clamp(22px, 2.6vw, 32px); }
+.gfinder__restart { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); border-bottom: 1px solid var(--c-line); padding-bottom: 3px; }
+.gfinder__restart:hover { color: var(--c-forest); border-color: var(--c-forest); }
+.gfinder__secondary { margin: 16px 0 0; font-size: 13.5px; color: var(--c-ink-soft); font-style: italic; }
+
+@media (max-width: 560px) {
+  .gfinder__opts button { padding: 13px 18px; font-size: 14.5px; }
+  .gfinder__products { grid-template-columns: repeat(2, 1fr); }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ritual Finder Quiz",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ritual Finder" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Six questions.<br/><em>One ritual.</em>" },
+    { "type": "url", "id": "webhook_url", "label": "Submission endpoint (optional)", "info": "Inbound webhook that receives the name, email, answers and recommendation — the GoHighLevel workflow's trigger URL. Leave blank and the quiz still shows the result on screen, but nothing is sent anywhere." }
+  ],
+  "presets": [{ "name": "Ritual Finder Quiz" }]
+}
+{% endschema %}
