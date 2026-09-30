@@ -327,8 +327,34 @@
           </div>
 
           {%- assign pd_name = product.title | split: '—' | first | strip -%}
+
+          {%- comment -%}
+            Pre-order window. The setting is the last day inclusive, so a day is
+            added to cover all of it. Once it passes, everything below reverts to
+            the normal Add to Ritual wording with no further edit needed.
+
+            This governs wording and the order flag only — whether an out-of-stock
+            variant can actually be bought is Shopify's inventory policy, set per
+            variant in admin ("Continue selling when out of stock"). Without that,
+            product.available stays false and the Sold Out branch still wins.
+          {%- endcomment -%}
+          {%- liquid
+            assign preorder_on = false
+            if section.settings.preorder_until != blank
+              assign now_s = 'now' | date: '%s' | times: 1
+              assign until_s = section.settings.preorder_until | date: '%s' | times: 1 | plus: 86400
+              if until_s > now_s
+                assign preorder_on = true
+              endif
+            endif
+          -%}
+
           <div class="mprod__row mprod__row--actions">
-            {%- if product.available -%}
+            {%- if product.available and preorder_on -%}
+              <button type="submit" name="add" class="btn btn--primary mprod__add" data-add-to-ritual data-product-name="{{ pd_name | escape }}" aria-label="Pre-order {{ pd_name }}">{{ section.settings.preorder_label | default: 'Pre-order' }}</button>
+              {%- comment -%} Carries through to the cart, checkout and the order in admin, so pre-orders are identifiable at fulfilment. {%- endcomment -%}
+              <input type="hidden" name="properties[Pre-order]" value="{{ section.settings.preorder_property | default: 'Pre-order' | escape }}">
+            {%- elsif product.available -%}
               <button type="submit" name="add" class="btn btn--primary mprod__add" data-add-to-ritual data-product-name="{{ pd_name | escape }}" aria-label="Add {{ pd_name }} to cart">Add to Ritual</button>
             {%- else -%}
               <button type="submit" name="add" class="btn btn--primary mprod__add" disabled>Sold Out</button>
@@ -340,6 +366,10 @@
             </button>
           </div>
         {%- endform -%}
+
+        {%- if product.available and preorder_on and section.settings.preorder_note != blank -%}
+          <p class="mprod__preorder-note">{{ section.settings.preorder_note }}</p>
+        {%- endif -%}
 
         {%- unless product.available -%}
           <p class="mprod__soldout-note">{{ pd_name }} is temporarily out of stock. Join the waitlist to hear when it's back.</p>
@@ -614,6 +644,10 @@
 .btn.mprod__add { padding: 10px 18px; font-size: 10px; letter-spacing: .13em; }
 .mprod__add[disabled] { opacity: .5; cursor: default; }
 .mprod__soldout-note { margin: 14px 0 0; font-size: 13px; color: var(--c-ink-soft); line-height: 1.6; }
+.mprod__preorder-note {
+  margin: 14px 0 0; padding-left: 12px; border-left: 2px solid var(--c-tan);
+  font-size: 13px; color: var(--c-ink-soft); line-height: 1.6;
+}
 
 .mprod__toast {
   position: fixed; left: 50%; bottom: 32px; transform: translate(-50%, 12px);
@@ -962,13 +996,22 @@
       e.preventDefault();
       var name = addBtn.getAttribute('data-product-name') || 'Item';
       addBtn.disabled = true;
+      // Line-item properties have to be forwarded explicitly — this posts JSON
+      // rather than the form, so anything not named here (the pre-order flag
+      // among them) would never reach the cart.
+      var fd = new FormData(form);
+      var payload = { id: fd.get('id'), quantity: fd.get('quantity') || 1 };
+      var props = {};
+      fd.forEach(function (value, key) {
+        var match = key.match(/^properties\[(.+)\]$/);
+        if (match && String(value).trim() !== '') props[match[1]] = value;
+      });
+      if (Object.keys(props).length) payload.properties = props;
+
       fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          id: new FormData(form).get('id'),
-          quantity: new FormData(form).get('quantity') || 1
-        })
+        body: JSON.stringify(payload)
       })
         .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
         .then(function (result) {
@@ -996,7 +1039,13 @@
 {% schema %}
 {
   "name": "Product Main",
-  "settings": [],
+  "settings": [
+    { "type": "header", "content": "Pre-order" },
+    { "type": "text", "id": "preorder_until", "label": "Pre-order until", "default": "2026-10-07", "info": "YYYY-MM-DD, inclusive. While this date has not passed, the buy button reads Pre-order and every order is tagged. Clear the field to switch pre-orders off early. Note: this changes wording and tagging only — for a variant with no stock to be orderable, set it to 'Continue selling when out of stock' in the product's inventory settings." },
+    { "type": "text", "id": "preorder_label", "label": "Button label", "default": "Pre-order" },
+    { "type": "text", "id": "preorder_property", "label": "Order tag", "default": "Pre-order — ships from 8 October 2026", "info": "Shown on the cart line and saved with the order, so pre-orders are identifiable at fulfilment." },
+    { "type": "textarea", "id": "preorder_note", "label": "Note under the button", "default": "Pre-order now — your ritual ships from 8 October 2026." }
+  ],
   "presets": [{ "name": "Product Main" }]
 }
 {% endschema %}
