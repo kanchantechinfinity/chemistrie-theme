@@ -496,7 +496,8 @@
   background: var(--c-paper);
   border: 1px solid rgba(240, 232, 219, .14);
   border-radius: 26px;
-  padding: clamp(26px, 3.6vw, 56px) clamp(22px, 3.4vw, 60px);
+  /* narrower side padding than vertical, to give the result shot more room */
+  padding: clamp(26px, 3.6vw, 56px) clamp(20px, 2.8vw, 44px);
   box-shadow: 0 40px 80px -36px rgba(0, 0, 0, .55);
 }
 
@@ -545,11 +546,11 @@
 
 .gfinder__result-eyebrow { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); }
 .gfinder__result-title { margin: 10px 0 clamp(18px, 2.2vw, 26px); }
-/* 820px wide, so it carries the result without the cream margins either side
-   swallowing the card. Sources are 1680px, i.e. 2x this, so it stays sharp;
-   width/height auto means it scales whole rather than cropping. */
+/* 1040px — near the full width of the card's content box, so very little
+   cream is left either side. Sources are 2080px, i.e. 2x this, so it stays
+   sharp; width/height auto means it scales whole rather than cropping. */
 .gfinder__shot {
-  max-width: 820px; margin: 0 auto clamp(18px, 2.2vw, 26px);
+  max-width: 1040px; margin: 0 auto clamp(18px, 2.2vw, 26px);
   border-radius: 18px; overflow: hidden; background: var(--c-cream);
 }
 .gfinder__shot img { display: block; width: 100%; height: auto; }
