@@ -1,0 +1,78 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page-hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "— Gifting —",
+        "heading": "A gift that<br/><em>keeps its promise.</em>",
+        "deck": "Pharmacist-formulated skincare, compounded by hand in Houston and hand-numbered in batches of 200. Considered enough to give to the people you know best.",
+        "cta_label": "SHOP THE COLLECTION",
+        "cta_url": "/collections/all",
+        "cta2_label": "Find their ritual",
+        "cta2_url": "/pages/the-ritual",
+        "show_visual": true,
+        "hero_fallback_asset": "hero-collection.jpg"
+      }
+    },
+    "gift-faq": {
+      "type": "ritual-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Which formula makes the best gift?",
+            "answer": "<p>If you are unsure where to begin, Velvet and Veil suit almost every skin — a cleanser and a serum are the two steps any routine can absorb. For someone already settled in their routine, Aura is the formula people tend not to buy for themselves.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I include a note with the order?",
+            "answer": "<p>Yes. Add your message in the notes field at checkout and we will include it with the order, handwritten, on a Chemistrie card.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "What if it is not right for their skin?",
+            "answer": "<p>Reach out and a pharmacist will help you exchange it for something that suits them better. Every formula is traceable to the batch it came from, so we can advise on what to try instead.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
+      "settings": {
+        "heading": "Gifting Questions"
+      }
+    },
+    "page-cta": {
+      "type": "page-cta",
+      "settings": {
+        "eyebrow": "— Not sure yet —",
+        "heading": "Ask a pharmacist",
+        "sub": "<em>“Tell us about their skin and we will tell you honestly what we would give them.”</em>",
+        "button_label": "Contact Us",
+        "button_url": "/pages/contact",
+        "button2_label": "Explore the Collection",
+        "button2_url": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "page-hero",
+    "gift-faq",
+    "page-cta"
+  ]
+}
