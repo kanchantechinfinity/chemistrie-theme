@@ -17,7 +17,12 @@
         "deck": "Thoughtfully formulated skincare designed to work beautifully on its own or as part of your ritual.",
         "deck2": "",
         "show_visual": true,
-        "hero_fallback_asset": "hero-collection.jpg"
+        "visual_ratio": "",
+        "hero_fallback_asset": "hero-collection.jpg",
+        "cta_label": "",
+        "cta_url": "",
+        "cta2_label": "",
+        "cta2_url": ""
       }
     },
     "stat-bar": {
@@ -64,7 +69,15 @@
     },
     "main-collection": {
       "type": "main-collection",
-      "settings": {}
+      "settings": {
+        "collection": "",
+        "prompt1_question": "Not sure where to start?",
+        "prompt1_answer": "Begin with The Ritual.",
+        "ritual_finder_url": "shopify://pages/the-ritual",
+        "prompt2_question": "Looking for a gift?",
+        "prompt2_answer": "See our curated sets.",
+        "prompt2_url": "shopify://pages/gift-page"
+      }
     },
     "page-cta": {
       "type": "page-cta",
@@ -81,7 +94,9 @@
     },
     "closing-statement": {
       "type": "closing-statement",
-      "settings": {}
+      "settings": {
+        "text": "Every formula in this Collection answers to the same two people."
+      }
     }
   },
   "order": [
