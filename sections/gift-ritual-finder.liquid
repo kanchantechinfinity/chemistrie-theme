@@ -545,7 +545,10 @@
 .gfinder__back:hover { color: var(--c-forest); }
 
 .gfinder__result-eyebrow { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); }
-.gfinder__result-title { margin: 10px 0 clamp(18px, 2.2vw, 26px); }
+/* compound selector so this wins over .display-h's own margin: 16px 0 0
+   regardless of stylesheet order — otherwise the top gap was whichever of
+   the two loaded last. */
+.display-h.gfinder__result-title { margin: 2px 0 clamp(18px, 2.2vw, 26px); }
 /* 1040px — near the full width of the card's content box, so very little
    cream is left either side. Sources are 2080px, i.e. 2x this, so it stays
    sharp; width/height auto means it scales whole rather than cropping. */
