@@ -40,6 +40,24 @@
   endif
 -%}
 
+{%- comment -%}
+  Images come from snippets/product-image-asset.liquid, the same approved
+  theme assets the product page and collection grid use — the Shopify product
+  images are not the approved shots, so featured_image renders placeholders.
+{%- endcomment -%}
+{%- capture img_velvet -%}{%- render 'product-image-asset', product: velvet_prod -%}{%- endcapture -%}
+{%- capture img_silken -%}{%- render 'product-image-asset', product: silken_prod -%}{%- endcapture -%}
+{%- capture img_aura -%}{%- render 'product-image-asset', product: aura_prod -%}{%- endcapture -%}
+{%- capture img_veil -%}{%- render 'product-image-asset', product: veil_prod -%}{%- endcapture -%}
+{%- capture img_cashmere -%}{%- render 'product-image-asset', product: cashmere_prod -%}{%- endcapture -%}
+{%- liquid
+  assign img_velvet = img_velvet | strip | default: 'product-velvet.jpg'
+  assign img_silken = img_silken | strip | default: 'product-silken.jpg'
+  assign img_aura = img_aura | strip | default: 'product-aura.jpg'
+  assign img_veil = img_veil | strip | default: 'product-veil.jpg'
+  assign img_cashmere = img_cashmere | strip | default: 'product-cashmere.jpg'
+-%}
+
 <section class="gfinder" id="gift-ritual-finder" data-screen-label="Ritual Finder">
   <div class="gfinder__inner">
     <div class="gfinder__head">
@@ -177,35 +195,35 @@
       title: 'Velvet', subtitle: 'Foaming Cleanser',
       url: {{ velvet_prod.url | default: '/products/velvet' | json }},
       price: {{ velvet_prod.price | money | default: '' | json }},
-      image: {{ velvet_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      image: {{ img_velvet | asset_url | json }},
       variantId: {{ velvet_prod.selected_or_first_available_variant.id | default: null | json }}
     },
     silken: {
       title: 'Silken', subtitle: 'Skin Refining Gel',
       url: {{ silken_prod.url | default: '/products/silken' | json }},
       price: {{ silken_prod.price | money | default: '' | json }},
-      image: {{ silken_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      image: {{ img_silken | asset_url | json }},
       variantId: {{ silken_prod.selected_or_first_available_variant.id | default: null | json }}
     },
     aura: {
       title: 'Aura', subtitle: 'Advanced Renewal Cream',
       url: {{ aura_prod.url | default: '/products/aura' | json }},
       price: {{ aura_prod.price | money | default: '' | json }},
-      image: {{ aura_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      image: {{ img_aura | asset_url | json }},
       variantId: {{ aura_prod.selected_or_first_available_variant.id | default: null | json }}
     },
     veil: {
       title: 'Veil', subtitle: 'Renewing Serum',
       url: {{ veil_prod.url | default: '/products/veil' | json }},
       price: {{ veil_prod.price | money | default: '' | json }},
-      image: {{ veil_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      image: {{ img_veil | asset_url | json }},
       variantId: {{ veil_prod.selected_or_first_available_variant.id | default: null | json }}
     },
     cashmere: {
       title: 'Cashmere', subtitle: 'Lightweight Hydrating Lotion',
       url: {{ cashmere_prod.url | default: '/products/cashmere' | json }},
       price: {{ cashmere_prod.price | money | default: '' | json }},
-      image: {{ cashmere_prod.featured_image | image_url: width: 400 | default: '' | json }},
+      image: {{ img_cashmere | asset_url | json }},
       variantId: {{ cashmere_prod.selected_or_first_available_variant.id | default: null | json }}
     }
   };
