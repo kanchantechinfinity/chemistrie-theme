@@ -71,18 +71,23 @@
   <div class="footer__wordmark-huge" aria-hidden="true">CHEMISTRIE</div>
 
   <div class="footer__bot">
-    <span>© {{ 'now' | date: '%Y' }} {{ section.settings.copyright_line }}</span>
+    {%- comment -%}
+      One centred line, pipe-separated. The year is part of the copyright
+      setting rather than rendered from 'now', so the line reads exactly as
+      written — it will not roll over on its own.
+    {%- endcomment -%}
+    <div class="footer__legal-line">
+      <span>{{ section.settings.copyright_line }}</span>
 
-    {%- if privacy_url != blank or terms_url != blank -%}
-      <nav class="footer__legal">
-        {%- if privacy_url != blank -%}
-          <a href="{{ privacy_url }}">{{ section.settings.privacy_label }}</a>
-        {%- endif -%}
-        {%- if terms_url != blank -%}
-          <a href="{{ terms_url }}">{{ section.settings.terms_label }}</a>
-        {%- endif -%}
-      </nav>
-    {%- endif -%}
+      {%- if privacy_url != blank -%}
+        <span class="footer__legal-sep" aria-hidden="true">|</span>
+        <a href="{{ privacy_url }}">{{ section.settings.privacy_label }}</a>
+      {%- endif -%}
+      {%- if terms_url != blank -%}
+        <span class="footer__legal-sep" aria-hidden="true">|</span>
+        <a href="{{ terms_url }}">{{ section.settings.terms_label }}</a>
+      {%- endif -%}
+    </div>
 
     <div class="footer__social">
       {%- if ig != blank -%}
@@ -118,7 +123,7 @@
     { "type": "text", "id": "heading_help", "label": "Column 3 heading", "default": "Help" },
     { "type": "link_list", "id": "menu_help", "label": "Column 3 menu" },
     { "type": "header", "content": "Legal" },
-    { "type": "text", "id": "copyright_line", "label": "Copyright line (after the year)", "default": "The Chemist Pharmacy – Designed and Developed by Techinfinity. All rights reserved." },
+    { "type": "text", "id": "copyright_line", "label": "Copyright line", "info": "Includes the year — it is not added automatically, so update it when the year changes.", "default": "© 2025 The Chemist Pharmacy – Designed and Developed by Techinfinity . All rights reserved." },
     { "type": "text", "id": "privacy_label", "label": "Privacy link label", "default": "Privacy Policy" },
     { "type": "url", "id": "privacy_url", "label": "Privacy link URL", "info": "Leave blank to use the store's Privacy Policy from Settings → Policies. The link is hidden if neither is set." },
     { "type": "text", "id": "terms_label", "label": "Terms link label", "default": "Terms of Use" },

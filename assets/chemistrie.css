@@ -2089,18 +2089,24 @@ body.template-product::-webkit-scrollbar { display: none; }
 }
 .footer__col a:hover { color: var(--c-cream); }
 
+/* Social row first, then the legal line centred beneath it — column-reverse
+   keeps the line last in the visual order while it stays first in the markup. */
 .footer__bot {
   max-width: 1320px;
   margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; flex-direction: column-reverse; align-items: center;
   padding: 28px 0 32px;
-  flex-wrap: wrap;
-  gap: 16px;
+  gap: 18px;
   font-size: 12px;
   color: rgba(249,244,237,.5);
+  text-align: center;
 }
-.footer__legal { display: flex; gap: 24px; }
-.footer__legal a:hover { color: var(--c-cream); }
+.footer__legal-line {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 8px;
+}
+.footer__legal-sep { opacity: .45; }
+.footer__legal-line a:hover { color: var(--c-cream); }
 .footer__social { display: flex; gap: 14px; align-items: center; }
 .footer__social a {
   width: 36px; height: 36px; border-radius: 50%;
@@ -2132,7 +2138,9 @@ body.template-product::-webkit-scrollbar { display: none; }
 @media (max-width: 560px) {
   .nav__links { display: none; }
   .footer__top { grid-template-columns: 1fr; }
-  .footer__bot { flex-direction: column; }
+  /* column-reverse, not column — plain column would put the legal line above
+     the social icons instead of beneath them. */
+  .footer__bot { flex-direction: column-reverse; }
 }
 
 /* ───────── Animation utility classes ───────── */
@@ -2700,11 +2708,10 @@ body.template-product::-webkit-scrollbar { display: none; }
   .footer__brand { grid-column: 1 / -1; }
   .footer__col { gap: 4px; }
   .footer__col a { padding: 7px 0; }
-  .footer__legal { gap: 20px; }
-  .footer__legal a { padding: 6px 0; }
+  .footer__legal-line a { padding: 6px 0; }
   .footer__wordmark { font-size: 20px; letter-spacing: .36em; }
   .footer__tag { font-size: 15px; }
-  .footer__bot { flex-direction: column; align-items: flex-start; gap: 14px; font-size: 11px; }
+  .footer__bot { gap: 14px; font-size: 11px; }
   .footer__wordmark-huge { font-size: 22vw; padding: 24px 0 10px; margin-bottom: 0; }
 }
 
