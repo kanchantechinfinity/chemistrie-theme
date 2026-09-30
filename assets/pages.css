@@ -78,11 +78,13 @@
 .pcard__price { font-size: 14px; color: var(--c-ink-soft); white-space: nowrap; }
 .pcard__type { font-size: 12px; letter-spacing: .08em; color: var(--c-ink-mute); text-transform: uppercase; }
 /* display serif italic, matching .page-hero__deck — the descriptor was the
-   only line on the card still set in the body sans. Nudged up a point because
-   the serif reads smaller than Inter at the same size. */
+   only line on the card still set in the body sans. 17px because Cormorant
+   sits noticeably smaller than Inter at a matched size, and its lighter
+   italic stroke needs the extra size to hold up at card scale. Colour is
+   unchanged from the original rule. */
 .pcard__copy {
   font-family: var(--ff-display); font-style: italic;
-  font-size: 15px; line-height: 1.55; color: var(--c-ink-soft); margin: 2px 0 4px;
+  font-size: 17px; line-height: 1.5; color: var(--c-ink-soft); margin: 3px 0 5px;
 }
 .pcard__btn { display: block; margin-top: auto; width: 100%; padding: 13px; background: var(--c-forest); color: var(--c-cream); border-radius: 8px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-align: center; text-decoration: none; transition: background .3s; }
 .pcard__btn:hover { background: var(--c-forest-2); }
