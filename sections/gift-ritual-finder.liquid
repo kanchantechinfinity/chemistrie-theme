@@ -174,7 +174,6 @@
         <span class="gfinder__result-eyebrow">Your ritual</span>
         <h3 class="display-h gfinder__result-title" data-gf-result-title></h3>
         <div class="gfinder__shot" data-gf-shot hidden></div>
-        <div class="gfinder__products" data-gf-products></div>
         <div class="gfinder__result-actions">
           <button type="button" class="btn btn--primary" data-gf-add>Add the ritual to cart</button>
           <a class="gfinder__restart" href="#" data-gf-restart>Start again</a>
@@ -365,22 +364,6 @@
       shot.hidden = true;
     }
 
-    var wrap = root.querySelector('[data-gf-products]');
-    wrap.innerHTML = '';
-    res.items.forEach(function (key) {
-      var p = PRODUCTS[key];
-      if (!p) return;
-      var a = document.createElement('a');
-      a.className = 'gfinder__product';
-      a.href = p.url;
-      a.innerHTML =
-        (p.image ? '<span class="gfinder__product-img"><img src="' + p.image + '" alt="" loading="lazy"></span>' : '') +
-        '<span class="gfinder__product-name">' + p.title + '</span>' +
-        '<span class="gfinder__product-sub">' + p.subtitle + '</span>' +
-        (p.price ? '<span class="gfinder__product-price">' + p.price + '</span>' : '');
-      wrap.appendChild(a);
-    });
-
     var secEl = root.querySelector('[data-gf-secondary]');
     if (res.secondary && PRODUCTS[res.secondary]) {
       secEl.textContent = 'Noted for later: ' + PRODUCTS[res.secondary].title + ', for your secondary focus.';
@@ -548,18 +531,6 @@
 .gfinder__result-title { margin: 10px 0 clamp(18px, 2.2vw, 26px); }
 .gfinder__shot { border-radius: 18px; overflow: hidden; margin-bottom: clamp(18px, 2.2vw, 26px); background: var(--c-cream); }
 .gfinder__shot img { display: block; width: 100%; height: auto; }
-.gfinder__products { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
-.gfinder__product {
-  display: flex; flex-direction: column; gap: 4px; text-align: center;
-  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px; padding: 18px 14px;
-  transition: transform .25s var(--ease-out), border-color .25s var(--ease-out), background .25s var(--ease-out);
-}
-.gfinder__product:hover { transform: translateY(-3px); border-color: var(--c-tan-2); background: var(--c-tan-3); }
-.gfinder__product-img { display: block; aspect-ratio: 1; overflow: hidden; border-radius: 10px; margin-bottom: 8px; }
-.gfinder__product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.gfinder__product-name { font-family: var(--ff-display); font-size: 18px; color: var(--c-forest); }
-.gfinder__product-sub { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--c-ink-mute); }
-.gfinder__product-price { font-size: 13.5px; color: var(--c-ink-soft); margin-top: 4px; }
 
 .gfinder__result-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: clamp(22px, 2.6vw, 32px); }
 .gfinder__restart { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); border-bottom: 1px solid var(--c-line); padding-bottom: 3px; }
@@ -573,7 +544,6 @@
 }
 @media (max-width: 560px) {
   .gfinder__opts button { padding: 14px 18px; font-size: 14.5px; }
-  .gfinder__products { grid-template-columns: repeat(2, 1fr); }
 }
 {% endstylesheet %}
 
