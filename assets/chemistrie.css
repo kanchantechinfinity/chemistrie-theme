@@ -86,7 +86,9 @@ body.template-product::-webkit-scrollbar { display: none; }
 .display-h {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: clamp(38px, 5.4vw, 78px);
+  /* caps at 60px on desktop; still scales down so it doesn't overrun a phone,
+     which a flat 60px would. The two hero titles set their own size. */
+  font-size: clamp(32px, 4.2vw, 60px);
   line-height: .98;
   letter-spacing: -.015em;
   color: var(--c-forest);
