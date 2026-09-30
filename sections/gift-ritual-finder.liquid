@@ -155,6 +155,7 @@
       <div class="gfinder__result" data-gf-result hidden>
         <span class="gfinder__result-eyebrow">Your ritual</span>
         <h3 class="display-h gfinder__result-title" data-gf-result-title></h3>
+        <div class="gfinder__shot" data-gf-shot hidden></div>
         <div class="gfinder__products" data-gf-products></div>
         <div class="gfinder__result-actions">
           <button type="button" class="btn btn--primary" data-gf-add>Add the ritual to cart</button>
@@ -250,6 +251,18 @@
     }
   };
 
+  // Product set -> its photographed lineup, keyed on the set sorted alphabetically
+  // so the two Complete tiers (same five products, listed in a different order)
+  // resolve to the same shot.
+  var SET_IMAGE = {
+    'cashmere,velvet': {{ 'ritual-set-velvet-cashmere.jpg' | asset_url | json }},
+    'aura,velvet': {{ 'ritual-set-velvet-aura.jpg' | asset_url | json }},
+    'silken,velvet': {{ 'ritual-set-velvet-silken.jpg' | asset_url | json }},
+    'aura,cashmere,veil,velvet': {{ 'ritual-set-velvet-veil-aura-cashmere.jpg' | asset_url | json }},
+    'aura,cashmere,silken,velvet': {{ 'ritual-set-velvet-silken-aura-cashmere.jpg' | asset_url | json }},
+    'aura,cashmere,silken,veil,velvet': {{ 'ritual-set-full-five.jpg' | asset_url | json }}
+  };
+
   // Q5 answer -> secondary product. Saved to the payload; it does not change
   // the set above. "Nothing else" maps to no secondary rather than dead-ending
   // the way the GHL workflow currently does.
@@ -318,12 +331,21 @@
       tier: tier,
       name: cell.name,
       items: cell.items,
+      image: SET_IMAGE[cell.items.slice().sort().join(',')] || null,
       secondary: SECONDARY[answers.secondary] || null
     };
   }
 
   function render(res) {
     root.querySelector('[data-gf-result-title]').textContent = res.name;
+
+    var shot = root.querySelector('[data-gf-shot]');
+    if (res.image) {
+      shot.innerHTML = '<img src="' + res.image + '" alt="' + res.name + '" loading="lazy">';
+      shot.hidden = false;
+    } else {
+      shot.hidden = true;
+    }
 
     var wrap = root.querySelector('[data-gf-products]');
     wrap.innerHTML = '';
@@ -489,7 +511,9 @@
 .gfinder__back:hover { color: var(--c-forest); }
 
 .gfinder__result-eyebrow { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); }
-.gfinder__result-title { margin: 10px 0 clamp(20px, 2.4vw, 30px); }
+.gfinder__result-title { margin: 10px 0 clamp(18px, 2.2vw, 26px); }
+.gfinder__shot { border-radius: 18px; overflow: hidden; margin-bottom: clamp(18px, 2.2vw, 26px); background: var(--c-cream); }
+.gfinder__shot img { display: block; width: 100%; height: auto; }
 .gfinder__products { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
 .gfinder__product {
   display: flex; flex-direction: column; gap: 4px; text-align: center;
