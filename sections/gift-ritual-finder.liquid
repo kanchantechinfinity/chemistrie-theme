@@ -476,21 +476,35 @@
 </script>
 
 {% stylesheet %}
-.gfinder { background: var(--c-cream); padding: clamp(48px, 6vw, 88px) var(--pad-x); }
-.gfinder__inner { max-width: 980px; margin: 0 auto; }
-.gfinder__head { text-align: center; margin-bottom: clamp(24px, 3vw, 40px); }
+/* Now the first thing on the page, with the hero gone — so the band carries
+   the dark opening every other page gets from its hero, and the card sits on
+   it in paper. Palette only: forest ground, tan accents, cream type. */
+.gfinder {
+  background: var(--grad-deep);
+  color: var(--c-cream);
+  padding: clamp(40px, 5vw, 72px) clamp(16px, 3vw, 40px) clamp(48px, 6vw, 88px);
+}
+.gfinder__inner { max-width: 1240px; margin: 0 auto; }
+.gfinder__head { text-align: center; margin-bottom: clamp(22px, 2.8vw, 36px); }
+.gfinder__head .eyebrow { color: var(--c-tan); }
+/* compound selector: .display-h sets forest at equal specificity, so plain
+   .gfinder__title would lose on stylesheet order and print dark on dark. */
 .gfinder__title { margin: 12px 0 0; }
+.display-h.gfinder__title { color: var(--c-cream); }
+.display-h.gfinder__title em { color: var(--c-tan); }
 
 .gfinder__card {
-  background: #fff; border: 1px solid var(--c-line-soft); border-radius: 24px;
-  padding: clamp(24px, 3.4vw, 44px);
-  box-shadow: 0 30px 60px -40px rgba(26, 58, 45, .35);
+  background: var(--c-paper);
+  border: 1px solid rgba(240, 232, 219, .14);
+  border-radius: 26px;
+  padding: clamp(26px, 3.6vw, 56px) clamp(22px, 3.4vw, 60px);
+  box-shadow: 0 40px 80px -36px rgba(0, 0, 0, .55);
 }
 
-.gfinder__progress { display: block; margin-bottom: clamp(20px, 2.4vw, 30px); }
-.gfinder__progress-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); }
-.gfinder__progress-track { display: block; height: 2px; margin-top: 10px; background: var(--c-line-soft); border-radius: 2px; overflow: hidden; }
-.gfinder__progress-track i { display: block; height: 100%; width: 16.6%; background: var(--c-forest); transition: width .4s var(--ease-out); }
+.gfinder__progress { display: block; margin-bottom: clamp(22px, 2.6vw, 34px); }
+.gfinder__progress-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-tan-2); }
+.gfinder__progress-track { display: block; height: 2px; margin-top: 10px; background: rgba(26, 58, 45, .12); border-radius: 2px; overflow: hidden; }
+.gfinder__progress-track i { display: block; height: 100%; width: 16.6%; background: var(--c-tan); transition: width .4s var(--ease-out); }
 
 .gfinder__step { border: 0; margin: 0; padding: 0; }
 .gfinder__q {
@@ -500,22 +514,24 @@
 }
 .gfinder__sub { margin: -8px 0 20px; font-size: 14.5px; color: var(--c-ink-soft); }
 
-.gfinder__opts { display: grid; gap: 10px; }
+/* Two-up on the wider card so six options don't run as a tall single stack. */
+.gfinder__opts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .gfinder__opts button {
   appearance: none; cursor: pointer; text-align: left;
-  font-family: inherit; font-size: 15px; color: var(--c-forest);
-  background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 999px;
-  padding: 15px 22px;
-  transition: background .25s var(--ease-out), border-color .25s var(--ease-out), transform .2s var(--ease-out);
+  font-family: inherit; font-size: 15px; line-height: 1.35; color: var(--c-forest);
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 14px;
+  padding: 17px 22px;
+  transition: background .25s var(--ease-out), border-color .25s var(--ease-out), color .25s var(--ease-out);
 }
-.gfinder__opts button:hover { border-color: var(--c-forest); transform: translateX(3px); }
+.gfinder__opts button:hover { background: var(--c-tan-3); border-color: var(--c-tan-2); }
 .gfinder__opts button.is-chosen { background: var(--c-forest); border-color: var(--c-forest); color: var(--c-cream); }
 
 .gfinder__fields { display: grid; gap: 14px; }
 .gfinder__field span { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); margin-bottom: 6px; }
+.gfinder__fields { grid-template-columns: repeat(2, 1fr); }
 .gfinder__field input {
   width: 100%; font-family: inherit; font-size: 15px; color: var(--c-forest);
-  background: var(--c-cream); border: 1px solid var(--c-line); border-radius: 12px; padding: 13px 16px;
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 12px; padding: 14px 16px;
 }
 .gfinder__field input:focus { outline: none; border-color: var(--c-forest); }
 .gfinder__error { margin: 12px 0 0; font-size: 13.5px; color: #7a2b2b; }
@@ -535,10 +551,10 @@
 .gfinder__products { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
 .gfinder__product {
   display: flex; flex-direction: column; gap: 4px; text-align: center;
-  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px; padding: 16px 12px;
-  transition: transform .25s var(--ease-out), border-color .25s var(--ease-out);
+  background: var(--c-cream); border: 1px solid var(--c-line-soft); border-radius: 16px; padding: 18px 14px;
+  transition: transform .25s var(--ease-out), border-color .25s var(--ease-out), background .25s var(--ease-out);
 }
-.gfinder__product:hover { transform: translateY(-3px); border-color: var(--c-line); }
+.gfinder__product:hover { transform: translateY(-3px); border-color: var(--c-tan-2); background: var(--c-tan-3); }
 .gfinder__product-img { display: block; aspect-ratio: 1; overflow: hidden; border-radius: 10px; margin-bottom: 8px; }
 .gfinder__product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .gfinder__product-name { font-family: var(--ff-display); font-size: 18px; color: var(--c-forest); }
@@ -550,8 +566,13 @@
 .gfinder__restart:hover { color: var(--c-forest); border-color: var(--c-forest); }
 .gfinder__secondary { margin: 16px 0 0; font-size: 13.5px; color: var(--c-ink-soft); font-style: italic; }
 
+@media (max-width: 760px) {
+  /* single column below the two-up breakpoint, for options and the name/email
+     pair alike */
+  .gfinder__opts, .gfinder__fields { grid-template-columns: 1fr; }
+}
 @media (max-width: 560px) {
-  .gfinder__opts button { padding: 13px 18px; font-size: 14.5px; }
+  .gfinder__opts button { padding: 14px 18px; font-size: 14.5px; }
   .gfinder__products { grid-template-columns: repeat(2, 1fr); }
 }
 {% endstylesheet %}

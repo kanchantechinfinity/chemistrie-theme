@@ -9,20 +9,6 @@
  */
 {
   "sections": {
-    "page-hero": {
-      "type": "page-hero",
-      "settings": {
-        "eyebrow": "— The Ritual Finder —",
-        "heading": "Your skin.<br/><em>Your ritual.</em>",
-        "deck": "A considered routine starts with knowing what belongs in it. Answer six questions and we will build a Chemistrie ritual around your skin and your priorities.",
-        "cta_label": "START THE QUIZ",
-        "cta_url": "#gift-ritual-finder",
-        "cta2_label": "Explore the Collection",
-        "cta2_url": "/collections/all",
-        "show_visual": true,
-        "hero_fallback_asset": "hero-collection.jpg"
-      }
-    },
     "gift-ritual-finder": {
       "type": "gift-ritual-finder",
       "settings": {
@@ -78,7 +64,6 @@
     }
   },
   "order": [
-    "page-hero",
     "gift-ritual-finder",
     "gift-faq",
     "page-cta"
