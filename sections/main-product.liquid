@@ -351,7 +351,8 @@
 
           <div class="mprod__row mprod__row--actions">
             {%- if product.available and preorder_on -%}
-              <button type="submit" name="add" class="btn btn--primary mprod__add" data-add-to-ritual data-product-name="{{ pd_name | escape }}" aria-label="Pre-order {{ pd_name }}">{{ section.settings.preorder_label | default: 'Pre-order' }}</button>
+              {%- comment -%} data-preorder sends it to checkout after the add, the way a Buy Now would — otherwise the click only drops it in the cart with no route to payment. {%- endcomment -%}
+              <button type="submit" name="add" class="btn btn--primary mprod__add" data-add-to-ritual data-preorder data-product-name="{{ pd_name | escape }}" aria-label="Pre-order {{ pd_name }}">{{ section.settings.preorder_label | default: 'Pre-order' }}</button>
               {%- comment -%} Carries through to the cart, checkout and the order in admin, so pre-orders are identifiable at fulfilment. {%- endcomment -%}
               <input type="hidden" name="properties[Pre-order]" value="{{ section.settings.preorder_property | default: 'Pre-order' | escape }}">
             {%- elsif product.available -%}
@@ -1019,6 +1020,13 @@
             showToast(name + ' is temporarily out of stock. Join the waitlist to hear when it\'s back.', true);
             return;
           }
+          // Pre-order behaves like a Buy Now: straight to payment rather than
+          // leaving the customer on the page wondering what happened.
+          if (addBtn.hasAttribute('data-preorder')) {
+            window.location.href = '/checkout';
+            return;
+          }
+
           showToast(name + ' is in your ritual.');
           return fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
             var countEl = document.querySelector('.nav__bag-count');
