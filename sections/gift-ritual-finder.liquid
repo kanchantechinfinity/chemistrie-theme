@@ -268,6 +268,24 @@
     }
   };
 
+  // Product set -> the bundle product's variant, where one has been chosen in
+  // the theme editor. Empty entries fall back to adding the components.
+  var BUNDLES = {};
+  {%- assign bundle_keys = 'cashmere,velvet|aura,velvet|silken,velvet|aura,cashmere,veil,velvet|aura,cashmere,silken,velvet|aura,cashmere,silken,veil,velvet' | split: '|' -%}
+  {%- for key in bundle_keys -%}
+    {%- case forloop.index -%}
+      {%- when 1 -%}{%- assign bp = section.settings.bundle_velvet_cashmere -%}
+      {%- when 2 -%}{%- assign bp = section.settings.bundle_velvet_aura -%}
+      {%- when 3 -%}{%- assign bp = section.settings.bundle_velvet_silken -%}
+      {%- when 4 -%}{%- assign bp = section.settings.bundle_velvet_veil_aura_cashmere -%}
+      {%- when 5 -%}{%- assign bp = section.settings.bundle_velvet_silken_aura_cashmere -%}
+      {%- when 6 -%}{%- assign bp = section.settings.bundle_full_five -%}
+    {%- endcase -%}
+    {%- if bp != blank and bp.selected_or_first_available_variant != blank -%}
+  BUNDLES[{{ key | json }}] = {{ bp.selected_or_first_available_variant.id | json }};
+    {%- endif -%}
+  {%- endfor -%}
+
   // Product set -> its photographed lineup, keyed on the set sorted alphabetically
   // so the two Complete tiers (same five products, listed in a different order)
   // resolve to the same shot.
@@ -444,10 +462,17 @@
   if (addBtn) {
     addBtn.addEventListener('click', function () {
       if (!chosen) return;
-      var items = chosen.items
-        .map(function (k) { return PRODUCTS[k].variantId; })
-        .filter(Boolean)
-        .map(function (id) { return { id: id, quantity: 1 }; });
+
+      // One line item if a bundle product has been set for this exact set,
+      // otherwise the components individually. Means the quiz keeps working
+      // before the bundles exist and switches over on its own once they do.
+      var bundle = BUNDLES[chosen.items.slice().sort().join(',')];
+      var items = bundle
+        ? [{ id: bundle, quantity: 1 }]
+        : chosen.items
+            .map(function (k) { return PRODUCTS[k].variantId; })
+            .filter(Boolean)
+            .map(function (id) { return { id: id, quantity: 1 }; });
       if (!items.length) { window.location.href = '/collections/all'; return; }
       addBtn.disabled = true;
       fetch('/cart/add.js', {
@@ -576,7 +601,16 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ritual Finder" },
     { "type": "html", "id": "heading", "label": "Heading", "default": "Six questions.<br/><em>One ritual.</em>" },
-    { "type": "url", "id": "webhook_url", "label": "Submission endpoint (optional)", "info": "Inbound webhook that receives the name, email, answers and recommendation — the GoHighLevel workflow's trigger URL. Leave blank and the quiz still shows the result on screen, but nothing is sent anywhere." }
+    { "type": "url", "id": "webhook_url", "label": "Submission endpoint (optional)", "info": "Inbound webhook that receives the name, email, answers and recommendation — the GoHighLevel workflow's trigger URL. Leave blank and the quiz still shows the result on screen, but nothing is sent anywhere." },
+
+    { "type": "header", "content": "Bundles" },
+    { "type": "paragraph", "content": "Pick the matching bundle product for each set and the quiz adds it as one line item. Any set left empty adds its formulas individually instead, so this can be filled in one at a time. The twelve rituals share these six sets." },
+    { "type": "product", "id": "bundle_velvet_cashmere", "label": "Velvet + Cashmere", "info": "Essential Core, Hydration Essential" },
+    { "type": "product", "id": "bundle_velvet_aura", "label": "Velvet + Aura", "info": "Renewal Essential" },
+    { "type": "product", "id": "bundle_velvet_silken", "label": "Velvet + Silken", "info": "Refining Essential" },
+    { "type": "product", "id": "bundle_velvet_veil_aura_cashmere", "label": "Velvet + Veil + Aura + Cashmere", "info": "Essential Plus, Complete Core, Hydration Balanced, Hydration Complete, Renewal Balanced" },
+    { "type": "product", "id": "bundle_velvet_silken_aura_cashmere", "label": "Velvet + Silken + Aura + Cashmere", "info": "Refining Balanced" },
+    { "type": "product", "id": "bundle_full_five", "label": "All five formulas", "info": "Refining Complete, Renewal Complete" }
   ],
   "presets": [{ "name": "Ritual Finder Quiz" }]
 }
