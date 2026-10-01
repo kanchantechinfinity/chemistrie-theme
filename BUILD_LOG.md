@@ -6,6 +6,28 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Ship-date promise removed from pre-orders
+
+**Task:** remove "Your ritual ships from 8 October 2026." from ritual bundles.
+
+**Shipped.**
+
+| Setting | Was | Now |
+| --- | --- | --- |
+| `preorder_note` (under the buy button) | "Pre-order now. Your ritual ships from 8 October 2026." | "Pre-order now." |
+| `preorder_property` (cart line + order record) | "Pre-order. Ships from 8 October 2026" | "Pre-order" |
+
+Both in `sections/main-product.liquid`. The date was in two places, not one —
+the cart-line property repeated the same promise after checkout started.
+`preorder_until` (2026-10-07) left alone: that switches pre-order mode on and
+off, it is not shown to customers.
+
+**Verified:** schema parses; no stored override in any template or
+`settings_data.json`, so the defaults are what render; grep confirms no
+"ships from" or "8 October" left anywhere in the theme.
+
+---
+
 ## 2026-10-01 — Portrait image in the Founder's Circle Purpose block
 
 **Task:** use the supplied portrait image in the Purpose section.
