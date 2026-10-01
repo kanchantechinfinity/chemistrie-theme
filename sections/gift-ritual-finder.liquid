@@ -270,19 +270,28 @@
 
   // Product set -> the bundle product's variant, where one has been chosen in
   // the theme editor. Empty entries fall back to adding the components.
+  // Keyed per outcome (Ritual|Tier), not per product set, because two outcomes
+  // can share identical contents and still be sold as separately named bundles
+  // — Essential Core and Hydration Essential are both Velvet + Cashmere.
   var BUNDLES = {};
-  {%- assign bundle_keys = 'cashmere,velvet|aura,velvet|silken,velvet|aura,cashmere,veil,velvet|aura,cashmere,silken,velvet|aura,cashmere,silken,veil,velvet' | split: '|' -%}
-  {%- for key in bundle_keys -%}
+  {%- assign bundle_cells = 'Essential|Essential,Essential|Balanced,Essential|Complete,Hydration|Essential,Hydration|Balanced,Hydration|Complete,Refining|Essential,Refining|Balanced,Refining|Complete,Renewal|Essential,Renewal|Balanced,Renewal|Complete' | split: ',' -%}
+  {%- for cell_key in bundle_cells -%}
     {%- case forloop.index -%}
-      {%- when 1 -%}{%- assign bp = section.settings.bundle_velvet_cashmere -%}
-      {%- when 2 -%}{%- assign bp = section.settings.bundle_velvet_aura -%}
-      {%- when 3 -%}{%- assign bp = section.settings.bundle_velvet_silken -%}
-      {%- when 4 -%}{%- assign bp = section.settings.bundle_velvet_veil_aura_cashmere -%}
-      {%- when 5 -%}{%- assign bp = section.settings.bundle_velvet_silken_aura_cashmere -%}
-      {%- when 6 -%}{%- assign bp = section.settings.bundle_full_five -%}
+      {%- when 1 -%}{%- assign bp = section.settings.bundle_essential_core -%}
+      {%- when 2 -%}{%- assign bp = section.settings.bundle_essential_plus -%}
+      {%- when 3 -%}{%- assign bp = section.settings.bundle_complete_core -%}
+      {%- when 4 -%}{%- assign bp = section.settings.bundle_hydration_essential -%}
+      {%- when 5 -%}{%- assign bp = section.settings.bundle_hydration_balanced -%}
+      {%- when 6 -%}{%- assign bp = section.settings.bundle_hydration_complete -%}
+      {%- when 7 -%}{%- assign bp = section.settings.bundle_refining_essential -%}
+      {%- when 8 -%}{%- assign bp = section.settings.bundle_refining_balanced -%}
+      {%- when 9 -%}{%- assign bp = section.settings.bundle_refining_complete -%}
+      {%- when 10 -%}{%- assign bp = section.settings.bundle_renewal_essential -%}
+      {%- when 11 -%}{%- assign bp = section.settings.bundle_renewal_balanced -%}
+      {%- when 12 -%}{%- assign bp = section.settings.bundle_renewal_complete -%}
     {%- endcase -%}
     {%- if bp != blank and bp.selected_or_first_available_variant != blank -%}
-  BUNDLES[{{ key | json }}] = { id: {{ bp.selected_or_first_available_variant.id | json }}, title: {{ bp.title | json }}, price: {{ bp.price | money | json }} };
+  BUNDLES[{{ cell_key | json }}] = { id: {{ bp.selected_or_first_available_variant.id | json }}, title: {{ bp.title | json }}, price: {{ bp.price | money | json }} };
     {%- endif -%}
   {%- endfor -%}
 
@@ -376,7 +385,7 @@
     var tier   = TIER[answers.routine_fit] || 'Essential';
     var cell   = MATRIX[ritual][tier];
     var setKey = cell.items.slice().sort().join(',');
-    var bundle = BUNDLES[setKey] || null;
+    var bundle = BUNDLES[ritual + '|' + tier] || null;
     return {
       ritual: ritual,
       tier: tier,
@@ -613,13 +622,19 @@
     { "type": "url", "id": "webhook_url", "label": "Submission endpoint (optional)", "info": "Inbound webhook that receives the name, email, answers and recommendation — the GoHighLevel workflow's trigger URL. Leave blank and the quiz still shows the result on screen, but nothing is sent anywhere." },
 
     { "type": "header", "content": "Bundles" },
-    { "type": "paragraph", "content": "Pick the matching bundle product for each set and the quiz adds it as one line item. Any set left empty adds its formulas individually instead, so this can be filled in one at a time. The twelve rituals share these six sets." },
-    { "type": "product", "id": "bundle_velvet_cashmere", "label": "Velvet + Cashmere", "info": "Essential Core, Hydration Essential" },
-    { "type": "product", "id": "bundle_velvet_aura", "label": "Velvet + Aura", "info": "Renewal Essential" },
-    { "type": "product", "id": "bundle_velvet_silken", "label": "Velvet + Silken", "info": "Refining Essential" },
-    { "type": "product", "id": "bundle_velvet_veil_aura_cashmere", "label": "Velvet + Veil + Aura + Cashmere", "info": "Essential Plus, Complete Core, Hydration Balanced, Hydration Complete, Renewal Balanced" },
-    { "type": "product", "id": "bundle_velvet_silken_aura_cashmere", "label": "Velvet + Silken + Aura + Cashmere", "info": "Refining Balanced" },
-    { "type": "product", "id": "bundle_full_five", "label": "All five formulas", "info": "Refining Complete, Renewal Complete" }
+    { "type": "paragraph", "content": "One bundle per quiz outcome. Outcomes with the same formulas can still point at differently named bundles. Any left empty add their formulas individually instead, so these can be filled in one at a time." },
+    { "type": "product", "id": "bundle_essential_core", "label": "Essential Core", "info": "Velvet + Cashmere" },
+    { "type": "product", "id": "bundle_essential_plus", "label": "Essential Plus", "info": "Velvet + Veil + Aura + Cashmere" },
+    { "type": "product", "id": "bundle_complete_core", "label": "Complete Core", "info": "Velvet + Veil + Aura + Cashmere" },
+    { "type": "product", "id": "bundle_hydration_essential", "label": "Hydration Essential", "info": "Velvet + Cashmere" },
+    { "type": "product", "id": "bundle_hydration_balanced", "label": "Hydration Balanced", "info": "Velvet + Veil + Aura + Cashmere" },
+    { "type": "product", "id": "bundle_hydration_complete", "label": "Hydration Complete", "info": "Velvet + Veil + Aura + Cashmere" },
+    { "type": "product", "id": "bundle_refining_essential", "label": "Refining Essential", "info": "Velvet + Silken" },
+    { "type": "product", "id": "bundle_refining_balanced", "label": "Refining Balanced", "info": "Velvet + Silken + Aura + Cashmere" },
+    { "type": "product", "id": "bundle_refining_complete", "label": "Refining Complete", "info": "Velvet + Veil + Silken + Aura + Cashmere" },
+    { "type": "product", "id": "bundle_renewal_essential", "label": "Renewal Essential", "info": "Velvet + Aura" },
+    { "type": "product", "id": "bundle_renewal_balanced", "label": "Renewal Balanced", "info": "Velvet + Veil + Aura + Cashmere" },
+    { "type": "product", "id": "bundle_renewal_complete", "label": "Renewal Complete", "info": "Velvet + Veil + Aura + Silken + Cashmere" }
   ],
   "presets": [{ "name": "Ritual Finder Quiz" }]
 }
