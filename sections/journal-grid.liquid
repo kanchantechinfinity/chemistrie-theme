@@ -2,13 +2,34 @@
 <section class="jgrid page-section page-section--paper">
   <div class="page-section__inner">
 
-    <nav class="jgrid__filters" aria-label="Article categories">
-      <a class="jgrid__filter {% if current_tags == empty %}is-active{% endif %}" href="{{ blog.url }}">All</a>
-      {%- for cat in cats -%}
-        <a class="jgrid__filter {% if current_tags contains cat %}is-active{% endif %}"
-           href="{{ blog.url }}/tagged/{{ cat | handle }}">{{ cat }}</a>
-      {%- endfor -%}
-    </nav>
+    {%- comment -%}
+      The categories are a fixed list, not read from the blog's tags, so each
+      link points at /tagged/<handle> whether or not any article carries that
+      tag. Rendered as spans by default: the pills still label what the Journal
+      covers, without offering a click that can land on an empty page. Turn
+      "Category filters are clickable" on once articles are tagged.
+    {%- endcomment -%}
+    {%- if section.settings.filters_clickable -%}
+      <nav class="jgrid__filters" aria-label="Article categories">
+        <a class="jgrid__filter {% if current_tags == empty %}is-active{% endif %}" href="{{ blog.url }}">All</a>
+        {%- for cat in cats -%}
+          <a class="jgrid__filter {% if current_tags contains cat %}is-active{% endif %}"
+             href="{{ blog.url }}/tagged/{{ cat | handle }}">{{ cat }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- else -%}
+      {%- comment -%}
+        A <ul>, not a <nav>: a navigation landmark holding nothing navigable is
+        announced as one by screen readers and then leads nowhere. As a plain
+        list these read as what they are — the subjects the Journal covers.
+      {%- endcomment -%}
+      <ul class="jgrid__filters jgrid__filters--static">
+        <li class="jgrid__filter {% if current_tags == empty %}is-active{% endif %}">All</li>
+        {%- for cat in cats -%}
+          <li class="jgrid__filter {% if current_tags contains cat %}is-active{% endif %}">{{ cat }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
 
     {%- paginate blog.articles by 9 -%}
       {%- if blog.articles.size > 0 -%}
@@ -88,8 +109,14 @@
 
 {% stylesheet %}
 .jgrid__filters { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-bottom: clamp(40px, 6vw, 64px); }
+.jgrid__filters--static { list-style: none; padding: 0; margin-top: 0; }
 .jgrid__filter { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--c-ink-soft); padding: 9px 18px; border: 1px solid var(--c-line); border-radius: 999px; transition: all .3s var(--ease-out); }
 .jgrid__filter:hover { border-color: var(--c-forest); color: var(--c-forest); }
+/* Static pills are labels, not controls: drop the hover response and the
+   text cursor, so nothing about them invites a click that does nothing. */
+.jgrid__filters--static .jgrid__filter { cursor: default; }
+.jgrid__filters--static .jgrid__filter:hover { border-color: var(--c-line); color: var(--c-ink-soft); }
+.jgrid__filters--static .jgrid__filter.is-active:hover { border-color: var(--c-forest); color: var(--c-cream); }
 .jgrid__filter.is-active { background: var(--c-forest); color: var(--c-cream); border-color: var(--c-forest); }
 
 .jgrid__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 44px); }
@@ -148,7 +175,9 @@
 {% schema %}
 {
   "name": "Journal Grid",
-  "settings": [],
+  "settings": [
+    { "type": "checkbox", "id": "filters_clickable", "label": "Category filters are clickable", "default": false, "info": "Off: the pills are plain labels. Turn on once articles carry these tags, so the links lead somewhere." }
+  ],
   "presets": [{ "name": "Journal Grid" }]
 }
 {% endschema %}

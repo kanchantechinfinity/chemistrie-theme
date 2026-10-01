@@ -6,6 +6,28 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Journal category pills made non-clickable
+
+**Task:** make the Journal filter buttons not clickable.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| Pills render as `<ul>/<li>` instead of `<a>`; new `filters_clickable` checkbox (default off) | `sections/journal-grid.liquid` |
+| `.jgrid__filters--static` — no marker, `cursor: default`, hover response neutralised | same file |
+
+The pills were built from a hardcoded category list rather than the blog's
+real tags, so most linked to an empty `/tagged/…` listing. Static state uses
+a list, not a `<nav>`, so screen readers aren't given a navigation landmark
+with nothing navigable in it.
+
+**Verified:** schema parses, `filters_clickable` defaults false; `blog.json`
+stores no override, so the off state is what renders. No anchors remain in
+the static branch. **Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Founder's Circle hero copy restored
 
 **Task:** the Founder's Circle hero content was missing.
