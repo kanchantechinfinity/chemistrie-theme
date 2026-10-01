@@ -6,6 +6,26 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Footer studio credit linked
+
+**Task:** make "Techinfinity" in the footer link to https://www.techinfinity.io/.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| New `credit_name` / `credit_url` settings; credit linked by substring replace | `sections/footer.liquid` |
+| `.footer__credit` underline + hover; mobile tap padding narrowed to `:not(.footer__credit)` | `assets/chemistrie.css` |
+
+Opens in a new tab (`target="_blank" rel="noopener"`). The copyright line
+stays a single editable text setting — blanking either credit setting
+renders it as plain text instead of breaking.
+
+**Verified:** schema JSON parses; substring replacement simulated against the
+exact default copyright string. **Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Image delivery: weight and priority
 
 **Task:** make site images load fast on page load; use the supplied

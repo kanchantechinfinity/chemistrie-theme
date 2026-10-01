@@ -2110,6 +2110,17 @@ body.template-product::-webkit-scrollbar { display: none; }
 }
 .footer__legal-sep { opacity: .45; }
 .footer__legal-line a:hover { color: var(--c-cream); }
+/* The studio credit sits inside the sentence rather than beside it like
+   Privacy and Terms, so it needs an underline to read as a link at all —
+   the siblings get away without one because their position marks them. */
+.footer__credit {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(240,232,219,.4);
+  transition: text-decoration-color .3s var(--ease-out), color .3s var(--ease-out);
+}
+.footer__credit:hover { text-decoration-color: currentColor; }
 .footer__social { display: flex; gap: 14px; align-items: center; }
 .footer__social a {
   width: 36px; height: 36px; border-radius: 50%;
@@ -2715,7 +2726,10 @@ body.template-product::-webkit-scrollbar { display: none; }
   .footer__brand { grid-column: 1 / -1; }
   .footer__col { gap: 4px; }
   .footer__col a { padding: 7px 0; }
-  .footer__legal-line a { padding: 6px 0; }
+  /* :not(.footer__credit) — the tap-target padding is for the standalone
+     Privacy/Terms links. The credit is a word inside a sentence; padding
+     it only enlarges a hit area that overlaps the text around it. */
+  .footer__legal-line a:not(.footer__credit) { padding: 6px 0; }
   .footer__wordmark { font-size: 20px; letter-spacing: .36em; }
   .footer__tag { font-size: 15px; }
   .footer__bot { gap: 14px; font-size: 11px; }

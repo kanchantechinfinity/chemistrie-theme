@@ -75,9 +75,23 @@
       One centred line, pipe-separated. The year is part of the copyright
       setting rather than rendered from 'now', so the line reads exactly as
       written — it will not roll over on its own.
+
+      The studio credit is linked by substring rather than by splitting the line
+      into parts, so the merchant keeps one plain-text copyright setting to edit
+      and the link survives any rewording around the name. Blanking either
+      credit setting leaves the line as plain text.
     {%- endcomment -%}
+    {%- liquid
+      assign credit_name = section.settings.credit_name
+      assign credit_url = section.settings.credit_url
+      assign legal_line = section.settings.copyright_line
+    -%}
+    {%- if credit_name != blank and credit_url != blank -%}
+      {%- capture credit_link -%}<a class="footer__credit" href="{{ credit_url | escape }}" target="_blank" rel="noopener">{{ credit_name }}</a>{%- endcapture -%}
+      {%- assign legal_line = legal_line | replace: credit_name, credit_link -%}
+    {%- endif -%}
     <div class="footer__legal-line">
-      <span>{{ section.settings.copyright_line }}</span>
+      <span>{{ legal_line }}</span>
 
       {%- if privacy_url != blank -%}
         <span class="footer__legal-sep" aria-hidden="true">|</span>
@@ -123,6 +137,8 @@
     { "type": "text", "id": "heading_help", "label": "Column 3 heading", "default": "Help" },
     { "type": "link_list", "id": "menu_help", "label": "Column 3 menu" },
     { "type": "header", "content": "Legal" },
+    { "type": "text", "id": "credit_name", "label": "Studio credit name", "info": "Where this exact text appears in the copyright line, it becomes a link. Leave blank for no link.", "default": "Techinfinity" },
+    { "type": "text", "id": "credit_url", "label": "Studio credit link", "info": "Full address, including https://", "default": "https://www.techinfinity.io/" },
     { "type": "text", "id": "copyright_line", "label": "Copyright line", "info": "Includes the year — it is not added automatically, so update it when the year changes.", "default": "© 2025 The Chemist Pharmacy – Designed and Developed by Techinfinity . All rights reserved." },
     { "type": "text", "id": "privacy_label", "label": "Privacy link label", "default": "Privacy Policy" },
     { "type": "url", "id": "privacy_url", "label": "Privacy link URL", "info": "Leave blank to use the store's Privacy Policy from Settings → Policies. The link is hidden if neither is set." },
