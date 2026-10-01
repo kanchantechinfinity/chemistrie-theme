@@ -475,30 +475,28 @@
 </script>
 
 {% stylesheet %}
-/* Now the first thing on the page, with the hero gone — so the band carries
-   the dark opening every other page gets from its hero, and the card sits on
-   it in paper. Palette only: forest ground, tan accents, cream type. */
+/* First thing on the gift page, with the hero gone. Tan band, paper card,
+   forest type — palette tokens only. */
 .gfinder {
-  background: var(--grad-deep);
-  color: var(--c-cream);
+  background: var(--c-tan-3);
+  color: var(--c-forest);
   padding: clamp(40px, 5vw, 72px) clamp(16px, 3vw, 40px) clamp(48px, 6vw, 88px);
 }
 .gfinder__inner { max-width: 1240px; margin: 0 auto; }
 .gfinder__head { text-align: center; margin-bottom: clamp(22px, 2.8vw, 36px); }
-.gfinder__head .eyebrow { color: var(--c-tan); }
-/* compound selector: .display-h sets forest at equal specificity, so plain
-   .gfinder__title would lose on stylesheet order and print dark on dark. */
 .gfinder__title { margin: 12px 0 0; }
-.display-h.gfinder__title { color: var(--c-cream); }
-.display-h.gfinder__title em { color: var(--c-tan); }
+.display-h.gfinder__title { color: var(--c-forest); }
+.display-h.gfinder__title em { color: var(--c-tan-2); }
 
 .gfinder__card {
   background: var(--c-paper);
-  border: 1px solid rgba(240, 232, 219, .14);
+  border: 1px solid var(--c-line-soft);
   border-radius: 26px;
   /* narrower side padding than vertical, to give the result shot more room */
   padding: clamp(26px, 3.6vw, 56px) clamp(20px, 2.8vw, 44px);
-  box-shadow: 0 40px 80px -36px rgba(0, 0, 0, .55);
+  /* softer and green-tinted now the band is light — a black shadow at .55
+     muddied the tan around the card. */
+  box-shadow: 0 30px 60px -34px rgba(26, 58, 45, .35);
 }
 
 .gfinder__progress { display: block; margin-bottom: clamp(22px, 2.6vw, 34px); }
