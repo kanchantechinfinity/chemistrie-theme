@@ -18,7 +18,17 @@
   elsif product.metafields.custom.benefit != blank
     assign benefit = product.metafields.custom.benefit
   else
-    assign benefit = product.description | strip_html | split: '. ' | first | append: '.'
+    assign _desc = product.description | strip_html | strip
+    if _desc != blank
+      assign benefit = _desc | split: '. ' | first | append: '.'
+    else
+      comment
+        Without this guard an empty description became '' | append: '.' — a
+        line containing nothing but a full stop, which is what the bundle
+        products render.
+      endcomment
+      assign benefit = ''
+    endif
   endif
 -%}
 {%- comment -%} Site-wide rule: no em-dashes in visible copy, even if Admin data has one {%- endcomment -%}
@@ -253,10 +263,17 @@
         {%- if pd_eyebrow != blank or product.type != blank -%}
           <span class="eyebrow mprod__eyebrow">{{ pd_eyebrow | default: product.type }}</span>
         {%- endif -%}
-        <h1 class="display-h mprod__title">{{ product.title | split: '—' | first | strip }}</h1>
+        {%- assign pd_title = product.title | split: '—' | first | strip -%}
+        <h1 class="display-h mprod__title">{{ pd_title }}</h1>
 
+        {%- comment -%}
+          The subheadline is the half of the title after the em dash, so
+          "Velvet — Foaming Facial Cleanser" splits into a name and a
+          descriptor. A title without one — the bundles — splits to itself at
+          both ends, which printed the name twice. Hence the second test.
+        {%- endcomment -%}
         {%- assign pd_subheadline = mf.subheadline | default: product.title | split: '—' | last | strip -%}
-        {%- if pd_subheadline != blank -%}
+        {%- if pd_subheadline != blank and pd_subheadline != pd_title -%}
           <p class="mprod__subhead">{{ pd_subheadline }}</p>
         {%- endif -%}
 
