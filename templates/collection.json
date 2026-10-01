@@ -70,7 +70,7 @@
     "main-collection": {
       "type": "main-collection",
       "settings": {
-        "collection": "",
+        "collection": "frontpage",
         "prompt1_question": "Not sure where to start?",
         "prompt1_answer": "Begin with The Ritual.",
         "ritual_finder_url": "shopify://pages/the-ritual",
