@@ -3,10 +3,29 @@
   or nothing for products without one. Client-approved shots live in the theme
   because the matching Shopify product images are not the approved ones.
 {%- endcomment -%}
+{%- comment -%}
+  Bundles are matched first and by exact handle. They have no approved shot of
+  their own, so each takes the lineup photo of the formulas it contains — the
+  same images the Ritual Finder shows with its result. Exact handles, because a
+  loose match would catch a bundle on a component's name and hand back a single
+  bottle instead of the set.
+{%- endcomment -%}
 {%- liquid
   assign _ph = product.handle | downcase
   assign _pt = product.title | downcase
-  if _ph contains 'velvet' or _pt contains 'velvet'
+  if _ph == 'essential-core' or _ph == 'hydration-essential'
+    echo 'ritual-set-velvet-cashmere.jpg'
+  elsif _ph == 'renewal-essential'
+    echo 'ritual-set-velvet-aura.jpg'
+  elsif _ph == 'refining-essential'
+    echo 'ritual-set-velvet-silken.jpg'
+  elsif _ph == 'essential-complete'
+    echo 'ritual-set-velvet-veil-aura-cashmere.jpg'
+  elsif _ph == 'refining-balanced'
+    echo 'ritual-set-velvet-silken-aura-cashmere.jpg'
+  elsif _ph == 'master-ritual'
+    echo 'ritual-set-full-five.jpg'
+  elsif _ph contains 'velvet' or _pt contains 'velvet'
     echo 'product-velvet.jpg'
   elsif _ph contains 'veil' or _pt contains 'veil'
     echo 'product-veil.jpg'
