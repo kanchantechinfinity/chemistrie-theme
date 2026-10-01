@@ -1,17 +1,78 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": { "type": "hero" },
-    "vision": { "type": "vision" },
-    "pillars": { "type": "pillars" },
-    "shop": { "type": "shop", "settings": {} },
-    "founders": { "type": "founders" },
-    "actives": { "type": "actives" },
-    "proof": { "type": "proof" },
-    "ritual": { "type": "ritual" },
-    "testimonials": { "type": "testimonials" },
-    "story": { "type": "story", "settings": { "chapter_1_image_asset": "story-chapter1-2011.jpg", "chapter_2_image_asset": "story-chapter2-idea.jpg" } },
-    "instagram": { "type": "instagram" },
-    "newsletter-cta": { "type": "newsletter-cta" }
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "vision": {
+      "type": "vision",
+      "settings": {}
+    },
+    "pillars": {
+      "type": "pillars",
+      "settings": {}
+    },
+    "shop": {
+      "type": "shop",
+      "settings": {}
+    },
+    "founders": {
+      "type": "founders",
+      "settings": {}
+    },
+    "actives": {
+      "type": "actives",
+      "settings": {}
+    },
+    "proof": {
+      "type": "proof",
+      "settings": {}
+    },
+    "ritual": {
+      "type": "ritual",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "story": {
+      "type": "story",
+      "settings": {
+        "chapter_1_image_asset": "story-chapter1-2011.jpg",
+        "chapter_2_image_asset": "story-chapter2-idea.jpg"
+      }
+    },
+    "instagram": {
+      "type": "instagram",
+      "settings": {}
+    },
+    "newsletter-cta": {
+      "type": "newsletter-cta",
+      "settings": {}
+    }
   },
-  "order": ["hero","vision","pillars","ritual","shop","founders","actives","proof","testimonials","story","instagram","newsletter-cta"]
+  "order": [
+    "hero",
+    "vision",
+    "pillars",
+    "ritual",
+    "shop",
+    "founders",
+    "actives",
+    "proof",
+    "testimonials",
+    "story",
+    "instagram",
+    "newsletter-cta"
+  ]
 }
