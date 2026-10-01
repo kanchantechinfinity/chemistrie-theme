@@ -12,11 +12,21 @@
       {%- endif -%}
     </div>
     <div class="insta__intro-right">
-      <a class="insta__handle" href="{{ section.settings.instagram_url | default: '#' }}" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg>
-        <span>{{ section.settings.handle }}</span>
-        <em>· {{ section.settings.follower_count }}</em>
-      </a>
+      <div class="insta__social">
+        <a class="insta__handle" href="{{ section.settings.instagram_url | default: '#' }}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg>
+          <span>{{ section.settings.handle }}</span>
+          {%- if section.settings.follower_count != blank -%}
+            <em>· {{ section.settings.follower_count }}</em>
+          {%- endif -%}
+        </a>
+        {%- if section.settings.facebook_url != blank -%}
+          <a class="insta__handle" href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V9H7v3h2v9h3v-9h2.5l.5-3H12V6.8c0-.5.3-.8.9-.8H15V3Z"/></svg>
+            <span>{{ section.settings.facebook_handle | default: 'Chemistrie' }}</span>
+          </a>
+        {%- endif -%}
+      </div>
       <div class="insta__nav" aria-label="Slider navigation">
         <button class="insta__arrow" data-dir="-1" aria-label="Previous">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
@@ -81,7 +91,9 @@
     { "type": "textarea", "id": "body", "label": "Body copy" },
     { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Follow on Instagram" },
     { "type": "url", "id": "instagram_url", "label": "Instagram profile URL" },
-    { "type": "text", "id": "handle", "label": "Handle", "default": "@chemistrie.co" },
+    { "type": "text", "id": "handle", "label": "Instagram handle", "default": "@chemistriecollective" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook page URL", "info": "Leave blank to hide the Facebook button." },
+    { "type": "text", "id": "facebook_handle", "label": "Facebook label", "default": "Chemistrie" },
     { "type": "text", "id": "follower_count", "label": "Follower count", "default": "21.4k" }
   ],
   "blocks": [

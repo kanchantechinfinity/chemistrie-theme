@@ -2405,6 +2405,8 @@ body.template-product::-webkit-scrollbar { display: none; }
   align-items: flex-end;
   gap: 16px;
 }
+/* holds the Instagram and Facebook pills side by side */
+.insta__social { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
 .insta__handle {
   display: inline-flex;
   align-items: center;

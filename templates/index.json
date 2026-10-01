@@ -56,8 +56,8 @@
             "item2": "",
             "item3": "",
             "crest_mono": "C.",
-           "crest_sub": "",
-           "image_asset": "pillar-purposefully-formulated.png"
+            "crest_sub": "",
+            "image_asset": "pillar-purposefully-formulated.png"
           }
         },
         "pillar_cCqT3t": {
@@ -320,9 +320,11 @@
         "sub": "",
         "body": "",
         "cta_label": "Follow on Instagram",
-        "instagram_url": "https://www.instagram.com/chemistrie.co/",
-        "handle": "@chemistrie.co",
-        "follower_count": "21.4k"
+        "instagram_url": "https://www.instagram.com/chemistriecollective/",
+        "handle": "@chemistriecollective",
+        "follower_count": "21.4k",
+        "facebook_url": "https://www.facebook.com/chemistrie",
+        "facebook_handle": "Chemistrie"
       }
     },
     "journal_preview_hN3vQx": {
