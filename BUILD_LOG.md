@@ -6,6 +6,37 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — 404s redirect to the homepage
+
+**Task:** make CTAs and pages that 404 go to the homepage instead.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| `redirect_home` checkbox (default on) + `location.replace()` hop to `/` | `sections/main-404.liquid` |
+
+**Link audit result: the theme has no dead internal links.** Three suspects
+checked and cleared — a JS-concatenated `/products/` path, an empty CTA URL
+that already falls back to the collection route, and three anchor CTAs whose
+target ids all exist.
+
+**Could not verify store-side resources:** the Shopify connector is attached to
+a different store (`0ww0zm-c1.myshopify.com`), not Chemistrie. Best signal
+available: `/pages/faq` and `/pages/shipping-returns` are linked from the
+footer and are the only `/pages/*` links with no matching theme template.
+Confirm those exist in admin.
+
+**Verified:** schema parses; redirect guarded against a self-loop; 404 page
+left intact as the no-JS fallback. **Not verified:** not opened in a browser.
+
+**Caveat:** a theme cannot set a status code, so this is a client-side hop.
+Search engines still get a 404 for the dead URL, and blanket 404-to-home is a
+soft-404 pattern Google penalises. Real moves belong in Admin > Navigation >
+URL Redirects as 301s.
+
+---
+
 ## 2026-10-01 — Ship-date promise removed from pre-orders
 
 **Task:** remove "Your ritual ships from 8 October 2026." from ritual bundles.

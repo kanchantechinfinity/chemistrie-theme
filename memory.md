@@ -3664,3 +3664,20 @@ User: remove "Your ritual ships from 8 October 2026." from all ritual product bu
 - `preorder_property` ("Pre-order. Ships from 8 October 2026") — the line-item property, which shows **on the cart line and on the order**, so the customer met the same promise two steps later. Reduced to "Pre-order": fulfilment can still identify these orders, the date claim is gone. `info` now warns to keep "Pre-order" as the leading word in case orders are filtered on it.
 Neither string is stored in a template or `settings_data.json`, so the schema defaults are what render — no template edit needed. Grep confirms no "ships from" or "8 October" anywhere left in the theme.
 `preorder_until` (2026-10-07) deliberately untouched — that is the switch that decides whether pre-order mode is on at all, not a customer-facing promise.
+
+## 2026-10-01 — 404s now bounce to the homepage; link audit found the theme clean
+User: "make all the cta and pages that redirect to 404 to redirect to home page".
+
+**Audited every internal link in the theme first, and found no dead ones.** Three things looked broken and were not:
+- `/products/` in `sections/ritual-finder-app.liquid` is JS string concatenation (`"/products/" + handle`), not a literal href.
+- `page.our-story.json` has `button_url: ""` on its "Explore the Collection" CTA, but `snippets/page-cta.liquid` already renders `{{ button_url | default: routes.all_products_collection_url }}`, and Liquid's `default` filter treats an empty string as falsy — so it lands on the collection.
+- The three anchor CTAs (`#request-invitation`, `#letter-sample`, `#gift-ritual-finder`) all resolve; checked each id exists in its section.
+
+**Could not verify Shopify-side resources.** The Shopify MCP connector is attached to a different store entirely — "My Store", `0ww0zm-c1.myshopify.com`, a bedding shop in INR/India — not Chemistrie, so live page/product handles were unverifiable. **Worth remembering before trusting that connector for anything on this project.**
+Best available signal instead: `/pages/faq` and `/pages/shipping-returns` are linked from the footer and are the only two `/pages/*` links with no matching template in the theme (contact, founders-circle, the-pharmacists, the-ritual all have one). Those are the likeliest live 404s, but it has to be confirmed in admin.
+
+**The redirect.** `sections/main-404.liquid` gained a `redirect_home` checkbox (default true) and an inline script. Three decisions in it:
+- `window.location.replace()`, never `href`/`assign` — a redirect that leaves a history entry means the back button returns the visitor to the dead URL, which bounces them forward again; they get trapped and cannot leave by going back.
+- Guarded with `if (window.location.pathname !== home)` so it can never become a reload loop.
+- Script sits before the markup, so the hop happens without the 404 flashing.
+**Stated plainly to the user, not buried:** a Shopify theme cannot set a status code, so this is a client-side hop — the dead URL still returns 404 to search engines, and this is a soft-404 pattern Google penalises if used broadly. The 404 page is still the full fallback for non-JS visitors and when the checkbox is off. For URLs that genuinely moved, Admin > Navigation > URL Redirects issues a real 301 and is the correct tool.

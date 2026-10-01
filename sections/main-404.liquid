@@ -1,3 +1,27 @@
+{%- comment -%}
+  Sends any 404 straight to the homepage. The page below still renders for
+  anyone who arrives with JavaScript off, and stays the full fallback if the
+  redirect is ever switched off in the editor.
+
+  replace(), not assign/href: a redirect that leaves a history entry means the
+  visitor's back button returns them to the dead URL, which bounces them
+  forward again — they get stuck and cannot leave by going back.
+
+  Server-side is not available here. A Shopify theme cannot set a status code,
+  so this is a client-side hop and search engines still receive a 404 for the
+  dead URL. That is the honest outcome; for URLs that should permanently move
+  somewhere, use Admin > Navigation > URL Redirects instead, which issues a
+  real 301.
+{%- endcomment -%}
+{%- if section.settings.redirect_home -%}
+  <script>
+    (function () {
+      var home = {{ routes.root_url | json }};
+      // Never redirect if we are somehow already there — that is a reload loop.
+      if (window.location.pathname !== home) window.location.replace(home);
+    }());
+  </script>
+{%- endif -%}
 <section class="page-hero e404" data-screen-label="404">
   <div class="page-hero__inner e404__inner">
     <span class="eyebrow eyebrow--light">— Error 404 —</span>
@@ -36,7 +60,9 @@
 {% schema %}
 {
   "name": "404",
-  "settings": [],
+  "settings": [
+    { "type": "checkbox", "id": "redirect_home", "label": "Send 404s to the homepage", "default": true, "info": "Off: visitors see the 404 page below, with links home, to the collection, and a search box. On: they are moved to the homepage immediately. The 404 page is still what non-JavaScript visitors and search engines see either way." }
+  ],
   "presets": [{ "name": "404" }]
 }
 {% endschema %}
