@@ -76,7 +76,7 @@
         "ritual_finder_url": "shopify://pages/the-ritual",
         "prompt2_question": "Looking for a gift?",
         "prompt2_answer": "See our curated sets.",
-        "prompt2_url": "shopify://pages/gift-page"
+        "prompt2_url": "shopify://pages/the-ritual"
       }
     },
     "page-cta": {
