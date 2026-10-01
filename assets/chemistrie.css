@@ -1338,7 +1338,8 @@ body.template-product::-webkit-scrollbar { display: none; }
   margin: 14px 0 12px;
 }
 .founders__body p {
-  margin: 0 0 18px;
+  /* no paragraph gap — the 1.7 line-height carries the separation on its own */
+  margin: 0;
   color: var(--c-ink-soft);
   font-size: 16px;
   font-style: normal;
