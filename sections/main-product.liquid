@@ -270,10 +270,11 @@
           The subheadline is the half of the title after the em dash, so
           "Velvet — Foaming Facial Cleanser" splits into a name and a
           descriptor. A title without one — the bundles — splits to itself at
-          both ends, which printed the name twice. Hence the second test.
+          both ends, so the name repeats in small caps beneath itself, which is
+          the intended treatment there.
         {%- endcomment -%}
         {%- assign pd_subheadline = mf.subheadline | default: product.title | split: '—' | last | strip -%}
-        {%- if pd_subheadline != blank and pd_subheadline != pd_title -%}
+        {%- if pd_subheadline != blank -%}
           <p class="mprod__subhead">{{ pd_subheadline }}</p>
         {%- endif -%}
 
@@ -580,7 +581,10 @@
 .mprod__gallery.is-zooming { z-index: 20; }
 .mprod__buy { align-self: start; }
 .mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
-.mprod__title { margin: 0 0 8px; }
+/* Pulled left by its own optical side bearing. The display serif carries more
+   space to the left of a capital than the uppercase sans beneath it, so at
+   matched margins the heading reads as indented against its own subheading. */
+.mprod__title { margin: 0 0 8px -0.045em; }
 .mprod__subhead { font-family: var(--ff-body); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 16px; }
 .mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: none; }
 

@@ -85,7 +85,10 @@
   gap: clamp(40px, 6vw, 96px);
   align-items: start;
 }
-.contact-main__heading { margin: 14px 0 34px; }
+/* Same optical pull as .mprod__title — the display serif's left side bearing
+   otherwise sets this heading in from the eyebrow above it and the icon
+   column below. */
+.contact-main__heading { margin: 14px 0 34px -0.045em; }
 .cinfo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 26px; }
 /* center, not flex-start: the 42px icon is shorter than the label+value block
    beside it, so top-aligning left it riding high against its own text. */
