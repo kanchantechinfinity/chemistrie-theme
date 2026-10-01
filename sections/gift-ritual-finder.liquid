@@ -282,7 +282,7 @@
       {%- when 6 -%}{%- assign bp = section.settings.bundle_full_five -%}
     {%- endcase -%}
     {%- if bp != blank and bp.selected_or_first_available_variant != blank -%}
-  BUNDLES[{{ key | json }}] = {{ bp.selected_or_first_available_variant.id | json }};
+  BUNDLES[{{ key | json }}] = { id: {{ bp.selected_or_first_available_variant.id | json }}, title: {{ bp.title | json }}, price: {{ bp.price | money | json }} };
     {%- endif -%}
   {%- endfor -%}
 
@@ -375,12 +375,19 @@
     var ritual = RITUAL[answers.improve] || 'Essential';
     var tier   = TIER[answers.routine_fit] || 'Essential';
     var cell   = MATRIX[ritual][tier];
+    var setKey = cell.items.slice().sort().join(',');
+    var bundle = BUNDLES[setKey] || null;
     return {
       ritual: ritual,
       tier: tier,
-      name: cell.name,
+      // cell.name is the name from the logic document; bundle.title is what the
+      // customer will see in the cart. Show the bundle's, so the result and the
+      // cart do not print two different names for the same thing.
+      name: bundle ? bundle.title : cell.name,
+      matrixName: cell.name,
+      bundle: bundle,
       items: cell.items,
-      image: SET_IMAGE[cell.items.slice().sort().join(',')] || null,
+      image: SET_IMAGE[setKey] || null,
       secondary: SECONDARY[answers.secondary] || null
     };
   }
@@ -436,7 +443,10 @@
         answers: answers,
         ritual: chosen.ritual,
         tier: chosen.tier,
-        final_ritual_recommendation: chosen.name,
+        // the logic document's name, which the GHL workflow matches on — the
+        // bundle's own name goes alongside it rather than replacing it.
+        final_ritual_recommendation: chosen.matrixName,
+        bundle_name: chosen.bundle ? chosen.bundle.title : null,
         ritual_configuration: chosen.items.map(function (k) { return PRODUCTS[k].title; }).join(' + '),
         secondary_product: chosen.secondary ? PRODUCTS[chosen.secondary].title : null
       };
@@ -466,9 +476,8 @@
       // One line item if a bundle product has been set for this exact set,
       // otherwise the components individually. Means the quiz keeps working
       // before the bundles exist and switches over on its own once they do.
-      var bundle = BUNDLES[chosen.items.slice().sort().join(',')];
-      var items = bundle
-        ? [{ id: bundle, quantity: 1 }]
+      var items = chosen.bundle
+        ? [{ id: chosen.bundle.id, quantity: 1 }]
         : chosen.items
             .map(function (k) { return PRODUCTS[k].variantId; })
             .filter(Boolean)
