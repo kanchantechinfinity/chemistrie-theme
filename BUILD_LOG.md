@@ -6,6 +6,23 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Footer copyright updated
+
+**Task:** change "2025 The Chemist Pharmacy" to "2026 Chemistrie", in all footers.
+
+**Shipped.** `sections/footer.liquid` — `copyright_line` default is now
+"© 2026 Chemistrie – Designed and Developed by Techinfinity . All rights
+reserved."
+
+One footer section renders on every page and nothing stores an override, so
+one edit covers the whole site. The Techinfinity link still works — it is
+matched as a substring, not by splitting the line.
+
+**Left alone:** "The Chemist Pharmacy" in Zach's bio on the Pharmacists page
+(2 places) — that is the pharmacy he worked at, not branding.
+
+---
+
 ## 2026-10-01 — Hero redesign REVERTED
 
 **Task:** put the homepage hero back.
