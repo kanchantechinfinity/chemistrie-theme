@@ -13,19 +13,36 @@
       "type": "page-hero",
       "settings": {
         "eyebrow": "THE RITUAL FINDER",
-        "heading": "Your skin.<br/><em>Your ritual.</em>",
+        "heading": "Your skin.<br><em>Your ritual.</em>",
         "deck": "A considered routine starts with knowing what belongs in it. Answer a few questions and we'll help you build a Chemistrie ritual around your skin and your priorities.",
+        "deck2": "",
+        "show_visual": true,
+        "visual_ratio": "",
+        "hero_fallback_asset": "hero-ritual.jpg",
         "cta_label": "START MY RITUAL",
         "cta_url": "#gift-ritual-finder",
-        "show_visual": true,
-        "hero_fallback_asset": "hero-ritual.jpg"
+        "cta2_label": "",
+        "cta2_url": ""
       }
     },
     "ritual-finder-app": {
       "type": "gift-ritual-finder",
       "settings": {
         "eyebrow": "Personalized Consultation",
-        "heading": "Six questions.<br/><em>One ritual.</em>"
+        "heading": "Six questions.<br><em>One ritual.</em>",
+        "webhook_url": "",
+        "bundle_essential_core": "essential-core",
+        "bundle_essential_plus": "essential-complete",
+        "bundle_complete_core": "essential-complete",
+        "bundle_hydration_essential": "hydration-essential",
+        "bundle_hydration_balanced": "essential-complete",
+        "bundle_hydration_complete": "essential-complete",
+        "bundle_refining_essential": "refining-essential",
+        "bundle_refining_balanced": "refining-balanced",
+        "bundle_refining_complete": "master-ritual",
+        "bundle_renewal_essential": "renewal-essential",
+        "bundle_renewal_balanced": "essential-complete",
+        "bundle_renewal_complete": "master-ritual"
       }
     },
     "ritual-faq": {

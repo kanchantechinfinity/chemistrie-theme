@@ -39,11 +39,7 @@
           "settings": {
             "title": "Pharmacist-Formulated",
             "lede": "Every formula is developed with the precision, intention, and accountability we bring to pharmacy.",
-            "item1": "",
-            "item2": "",
-            "item3": "",
             "crest_mono": "Rx",
-            "crest_sub": "",
             "image_asset": "pillar-pharmacist-formulated.png"
           }
         },
@@ -52,11 +48,7 @@
           "settings": {
             "title": "Purposefully Formulated",
             "lede": "Every ingredient earns its place, selected not for the label, but for what it contributes to the formula as a whole.",
-            "item1": "",
-            "item2": "",
-            "item3": "",
             "crest_mono": "C.",
-            "crest_sub": "",
             "image_asset": "pillar-purposefully-formulated.png"
           }
         },
@@ -65,11 +57,7 @@
           "settings": {
             "title": "Designed to Work Together",
             "lede": "A focused collection made to layer with intention, so your ritual includes what your skin needs and leaves out what it doesn't.",
-            "item1": "",
-            "item2": "",
-            "item3": "",
             "crest_mono": "for her",
-            "crest_sub": "",
             "image_asset": "pillar-designed-together.png"
           }
         }
@@ -84,8 +72,7 @@
         "eyebrow": "— Trust Signals —",
         "intro_heading": "Nothing here was <em>rounded up.</em>",
         "cta_label": "Read the Ingredient Philosophy",
-        "cta_link": "/blogs/journal",
-        "crest_style": "full"
+        "cta_link": "/blogs/journal"
       }
     },
     "shop_jAJymM": {
@@ -322,9 +309,9 @@
         "cta_label": "Follow on Instagram",
         "instagram_url": "https://www.instagram.com/chemistriecollective/",
         "handle": "@chemistriecollective",
-        "follower_count": "",
         "facebook_url": "https://www.facebook.com/chemistrie",
-        "facebook_handle": "Chemistrie"
+        "facebook_handle": "Chemistrie",
+        "follower_count": ""
       }
     },
     "journal_preview_hN3vQx": {
