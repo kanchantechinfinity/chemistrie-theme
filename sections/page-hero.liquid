@@ -1,8 +1,19 @@
 <section class="page-hero" data-screen-label="{{ section.settings.eyebrow | strip }}">
   <div class="page-hero__inner">
     <div class="page-hero__copy">
-      <span class="eyebrow eyebrow--light">{{ section.settings.eyebrow }}</span>
-      <h1 class="display-h display-h--light page-hero__title">{{ section.settings.heading }}</h1>
+      {%- comment -%}
+        Guarded like the deck and CTAs below. Unguarded, a page that clears its
+        eyebrow or heading still emitted the elements, so the copy column opened
+        with the line-height of an empty span and the margins of an empty h1 —
+        dead space that reads as missing content — and the page was left with an
+        empty <h1>, which is worse for search and screen readers than none.
+      {%- endcomment -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow eyebrow--light">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="display-h display-h--light page-hero__title">{{ section.settings.heading }}</h1>
+      {%- endif -%}
       {%- if section.settings.deck != blank -%}
         <p class="page-hero__deck">{{ section.settings.deck }}</p>
       {%- endif -%}

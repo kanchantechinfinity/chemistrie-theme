@@ -6,6 +6,32 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Founder's Circle hero copy restored
+
+**Task:** the Founder's Circle hero content was missing.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| `eyebrow` and `heading` restored from commit `51e5088` | `templates/page.founders-circle.json` |
+| Eyebrow and `<h1>` now `blank`-guarded like the deck and CTAs beside them | `sections/page-hero.liquid` |
+
+Root cause: commit `10d92a7` blanked both settings when the designed banner
+went in, but the section rendered those elements unconditionally — so the
+page kept an empty span's line-height, an empty `<h1>`'s margins, and an
+empty `<h1>` in the markup.
+
+**Verified:** all six `page-hero` templates audited — each has both fields,
+so the guard is protection for future edits, not a visible change.
+
+**Open for the user:** the restored heading now duplicates the text set into
+the banner artwork on the right. A text-free crop of the banner for the hero
+visual would resolve it; not done, because the banner on the hero was an
+explicit request.
+
+---
+
 ## 2026-10-01 — Footer studio credit linked
 
 **Task:** make "Techinfinity" in the footer link to https://www.techinfinity.io/.
