@@ -16,15 +16,16 @@
         "heading": "Your skin.<br/><em>Your ritual.</em>",
         "deck": "A considered routine starts with knowing what belongs in it. Answer a few questions and we'll help you build a Chemistrie ritual around your skin and your priorities.",
         "cta_label": "START MY RITUAL",
-        "cta_url": "#ritual-finder-app",
+        "cta_url": "#gift-ritual-finder",
         "show_visual": true,
         "hero_fallback_asset": "hero-ritual.jpg"
       }
     },
     "ritual-finder-app": {
-      "type": "ritual-finder-app",
+      "type": "gift-ritual-finder",
       "settings": {
-        "eyebrow": "Personalized Consultation"
+        "eyebrow": "Personalized Consultation",
+        "heading": "Six questions.<br/><em>One ritual.</em>"
       }
     },
     "ritual-faq": {
