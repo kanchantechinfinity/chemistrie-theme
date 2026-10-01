@@ -89,7 +89,7 @@
    otherwise sets this heading in from the eyebrow above it and the icon
    column below. */
 .contact-main__heading { margin: 14px 0 34px -0.045em; }
-.cinfo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 26px; }
+.cinfo { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 26px; }
 /* center, not flex-start: the 42px icon is shorter than the label+value block
    beside it, so top-aligning left it riding high against its own text. */
 .cinfo__item { display: flex; gap: 18px; align-items: center; }
@@ -101,7 +101,9 @@
 .cinfo__icon svg { width: 20px; height: 20px; }
 .cinfo__text { display: flex; flex-direction: column; gap: 3px; }
 .cinfo__label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink-mute, var(--c-sage)); }
-.cinfo__value { font-family: var(--ff-display); font-size: clamp(18px, 2vw, 22px); line-height: 1.3; color: var(--c-forest); }
+/* same optical pull as the headings — the serif value otherwise sits in from
+   the sans label directly above it */
+.cinfo__value { font-family: var(--ff-display); font-size: clamp(18px, 2vw, 22px); line-height: 1.3; color: var(--c-forest); margin-left: -0.045em; }
 
 .cform { display: flex; flex-direction: column; gap: 20px; }
 .cform__field { display: flex; flex-direction: column; gap: 8px; }
