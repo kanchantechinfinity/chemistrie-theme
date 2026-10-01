@@ -1,6 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
+{%- comment -%}
+  Google tag (gtag.js) — GA4 property G-H1EZ7GHQX3. Google asks for this
+  immediately after <head> and for exactly one Google tag per page, so it goes
+  here, above everything else, and must not be duplicated anywhere else in the
+  theme.
+
+  request.design_mode guard: the theme editor loads the storefront in an
+  iframe, so without this every section you drag or setting you tweak sends a
+  real pageview and pollutes the analytics with your own editing sessions.
+{%- endcomment -%}
+{%- unless request.design_mode -%}
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H1EZ7GHQX3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-H1EZ7GHQX3');
+  </script>
+{%- endunless -%}
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>{{ page_title }}</title>

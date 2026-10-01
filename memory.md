@@ -3709,3 +3709,13 @@ User saw the shipped result ("why is homepage looking like this restore the hero
 Changed the `copyright_line` default in `sections/footer.liquid` from "© 2025 The Chemist Pharmacy – Designed and Developed by Techinfinity . All rights reserved." to "© 2026 Chemistrie – …". One footer section renders site-wide, and no template or `settings_data.json` stores an override, so the schema default is what every page shows — "in all footer" needed one edit, not a sweep.
 Kept deliberately: the stray space before the full stop after Techinfinity (the user supplied that line verbatim and asked for it unchanged), and the Techinfinity substring link, which still resolves because `credit_name` is matched inside the line rather than the line being split.
 **Not changed, and worth knowing why:** "The Chemist Pharmacy" also appears twice in `templates/page.the-pharmacists.json`, inside Zach's biography ("After joining The Chemist Pharmacy, he reconnected professionally with Harin…"). Those are factual references to the pharmacy he worked at, not branding — rewriting them to "Chemistrie" would make the bios say something untrue.
+
+## 2026-10-01 — GA4 tag installed (G-H1EZ7GHQX3)
+Pasted gtag.js into `layout/theme.liquid` immediately after `<head>`, as Google's instructions require, above the charset/viewport metas and `content_for_header`. One layout file in this theme, so one insertion covers every storefront page; verified there is exactly one `gtag('config'` in the whole theme, since Google is explicit that a second Google tag on a page breaks measurement.
+
+**Added a guard Google's snippet does not include:** `{%- unless request.design_mode -%}`. The Shopify theme editor renders the live storefront in an iframe, so without it every section drag and setting tweak fires a real pageview and the property fills up with the team's own editing sessions.
+
+**Two things flagged to the user rather than assumed:**
+- Shopify can also install GA4 itself, via the Google & YouTube channel or a Customer Events pixel. If that is already connected to the same property, this theme tag double-counts every pageview — worth checking Settings > Customer events before trusting the numbers.
+- The storefront is still password-protected, so nothing will be recorded until the password comes off (see the separate note on the incomplete store address blocking that).
+Checkout pages are not covered: a theme layout does not render there. That needs Customer Events, not this tag.

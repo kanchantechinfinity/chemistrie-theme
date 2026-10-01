@@ -6,6 +6,29 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Google Analytics 4 installed
+
+**Task:** add the GA4 tag (G-H1EZ7GHQX3) to every page.
+
+**Shipped.** `layout/theme.liquid` — gtag.js immediately after `<head>`, per
+Google's instructions. One layout covers every storefront page.
+
+Added `{%- unless request.design_mode -%}` around it, which Google's snippet
+does not include: the theme editor loads the storefront in an iframe, so
+without it every edit fires a real pageview.
+
+**Verified:** exactly one `gtag('config'` exists in the theme — a second
+Google tag on a page breaks measurement.
+
+**Flagged, not assumed:**
+- If GA4 is also connected through Shopify's Google & YouTube channel or a
+  Customer Events pixel on the same property, pageviews will double-count.
+  Check Settings > Customer events.
+- Nothing records until the storefront password is removed.
+- Checkout is not covered — a theme layout does not render there.
+
+---
+
 ## 2026-10-01 — Footer copyright updated
 
 **Task:** change "2025 The Chemist Pharmacy" to "2026 Chemistrie", in all footers.
