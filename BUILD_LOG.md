@@ -6,6 +6,33 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Tablet navbar fixed
+
+**Task:** the navbar was broken at tablet width — wordmark colliding with the
+first link, labels wrapping to two lines, cart running off the right edge.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| Mobile drawer breakpoint `900px` → `1100px` | `assets/pages.css` |
+| Compact nav sizes moved from `max-width:1024` (dead, inside the drawer band) to `max-width:1280` | `assets/chemistrie.css` |
+| `.nav` gains `column-gap: clamp(16px,2vw,32px)` — the `1fr auto 1fr` grid could squeeze its outer tracks to zero | `assets/chemistrie.css` |
+| `.nav__links a` gains `white-space: nowrap` | `assets/chemistrie.css` |
+
+Root cause: the drawer activated at ≤900px, so **901–1024px** laid out the full
+horizontal nav — a ~200px wordmark, five uppercase links and four action
+controls — with nowhere near the room. Separately, the "compact nav" sizes were
+written at `max-width:1024`, entirely inside the drawer band, so they had never
+applied to a horizontal nav at all.
+
+**Verified:** both stylesheets parse with balanced braces; no duplicate
+selector blocks introduced; drawer markup and JS already existed and are
+untouched. **Not verified:** breakpoints were derived from hand-computed text
+widths, not measured in a browser. Worth a look at 1101–1280px.
+
+---
+
 ## 2026-10-01 — Journal category pills made non-clickable
 
 **Task:** make the Journal filter buttons not clickable.

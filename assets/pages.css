@@ -121,7 +121,13 @@
 /* ───────── Mobile navigation (additive — desktop unchanged, matches Vercel) ───────── */
 .nav__toggle { display: none; }
 .nav__links-close { display: none; }
-@media (max-width: 900px) {
+/* 1100, not 900: the horizontal nav is a ~200px wordmark, five uppercase links
+   and four action controls. Between 901 and 1024 it was still being laid out
+   horizontally with nowhere near the width for it, so the wordmark collided
+   with the first link, the link labels broke onto two lines, and the cart ran
+   off the right edge. The drawer already existed — it was simply handed over
+   to too late. */
+@media (max-width: 1100px) {
   .nav__toggle {
     display: inline-flex; align-items: center; justify-content: center;
     width: 40px; height: 40px; margin-left: 4px; color: var(--c-forest);

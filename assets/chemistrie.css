@@ -200,6 +200,10 @@ body.template-product::-webkit-scrollbar { display: none; }
   z-index: 40;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
+  /* The centre track is auto, so a wide link row squeezes the outer two tracks
+     toward zero and the wordmark ends up touching the first link. This gap is
+     the floor that cannot be squeezed out. */
+  column-gap: clamp(16px, 2vw, 32px);
   align-items: center;
   padding: 18px var(--pad-x);
   background: rgba(240,232,219,.82);
@@ -236,6 +240,10 @@ body.template-product::-webkit-scrollbar { display: none; }
   font-size: 12px;
   letter-spacing: .18em;
   text-transform: uppercase;
+  /* "THE COLLECTION" was breaking onto two lines rather than admitting it had
+     run out of room. A nav that has outgrown its width should say so, not
+     silently reflow into something that looks like a layout bug. */
+  white-space: nowrap;
   color: var(--c-ink-soft);
   font-weight: 500;
   position: relative;
@@ -2582,12 +2590,18 @@ body.template-product::-webkit-scrollbar { display: none; }
    ───────────────────────────────────────────── */
 
 /* ── Tablet (≤1024px) ── */
-@media (max-width: 1024px) {
-  :root { --pad-x: clamp(24px, 5vw, 56px); }
-
+/* The compact nav band: below 1100 the drawer takes over, so these sizes are
+   what the horizontal nav wears in the narrow strip just above it. They were
+   written under max-width:1024, which is inside the drawer band and therefore
+   never applied to a horizontal nav at all. */
+@media (max-width: 1280px) {
   .nav__links { gap: 22px; }
   .nav__links a { font-size: 11px; letter-spacing: .14em; }
   .nav__wordmark { font-size: 18px; letter-spacing: .36em; }
+}
+
+@media (max-width: 1024px) {
+  :root { --pad-x: clamp(24px, 5vw, 56px); }
 
   .hero__title { font-size: clamp(64px, 14vw, 200px); }
   .hero[data-layout="split"] .hero__inner { max-width: 100%; text-align: center; }
