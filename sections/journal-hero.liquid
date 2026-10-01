@@ -25,7 +25,7 @@
       </div>
       <a class="jhero__media" href="{{ feat.url }}" aria-label="{{ feat.title | escape }}">
         {%- if feat.image -%}
-          {{ feat.image | image_url: width: 1600 | image_tag: loading: 'eager', widths: '600,900,1200,1600', alt: feat.image.alt | default: feat.title, class: 'jhero__img' }}
+          {{ feat.image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', decoding: 'async', widths: '600,900,1200,1600', alt: feat.image.alt | default: feat.title, class: 'jhero__img' }}
         {%- else -%}
           <img src="{{ 'hero-journal.jpg' | asset_url }}" alt="{{ feat.title | escape }}" loading="eager" class="jhero__img jhero__ph">
         {%- endif -%}

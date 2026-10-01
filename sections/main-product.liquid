@@ -195,14 +195,15 @@
         {%- endif -%}
         <div class="mprod__main">
           {%- if gallery_list.size > 0 -%}
-            <img id="mprod-main-image" src="{{ gallery_list.first | asset_url }}" alt="{{ product.title | escape }}">
+            <img id="mprod-main-image" src="{{ gallery_list.first | asset_url }}" alt="{{ product.title | escape }}" fetchpriority="high" decoding="async">
           {%- elsif card_asset != blank -%}
-            <img id="mprod-main-image" src="{{ card_asset | asset_url }}" alt="{{ product.title | escape }}">
+            <img id="mprod-main-image" src="{{ card_asset | asset_url }}" alt="{{ product.title | escape }}" fetchpriority="high" decoding="async">
           {%- elsif product.featured_image -%}
             <img
               id="mprod-main-image"
               src="{{ product.featured_image | image_url: width: 1800 }}"
               alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              fetchpriority="high" decoding="async"
               width="1000" height="1000">
           {%- else -%}
             <img src="{{ 'stock-product.jpg' | asset_url }}" alt="{{ product.title | escape }}" class="mprod__ph">

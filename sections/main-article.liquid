@@ -20,7 +20,7 @@
 
   {%- if article.image -%}
     <div class="art__hero">
-      {{ article.image | image_url: width: 1800 | image_tag: loading: 'eager', widths: '800,1200,1600,1800', alt: article.image.alt | default: article.title, class: 'art__hero-img' }}
+      {{ article.image | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', decoding: 'async', widths: '800,1200,1600,1800', alt: article.image.alt | default: article.title, class: 'art__hero-img' }}
     </div>
   {%- endif -%}
 

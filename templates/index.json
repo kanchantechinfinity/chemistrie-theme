@@ -40,7 +40,7 @@
             "title": "Pharmacist-Formulated",
             "lede": "Every formula is developed with the precision, intention, and accountability we bring to pharmacy.",
             "crest_mono": "Rx",
-            "image_asset": "pillar-pharmacist-formulated.png"
+            "image_asset": "pillar-pharmacist-formulated.jpg"
           }
         },
         "pillar_TyVrzy": {
@@ -49,7 +49,7 @@
             "title": "Purposefully Formulated",
             "lede": "Every ingredient earns its place, selected not for the label, but for what it contributes to the formula as a whole.",
             "crest_mono": "C.",
-            "image_asset": "pillar-purposefully-formulated.png"
+            "image_asset": "pillar-purposefully-formulated.jpg"
           }
         },
         "pillar_cCqT3t": {
@@ -58,7 +58,7 @@
             "title": "Designed to Work Together",
             "lede": "A focused collection made to layer with intention, so your ritual includes what your skin needs and leaves out what it doesn't.",
             "crest_mono": "for her",
-            "image_asset": "pillar-designed-together.png"
+            "image_asset": "pillar-designed-together.jpg"
           }
         }
       },
@@ -237,7 +237,7 @@
         "chapter_3_year": "",
         "chapter_3_heading": "Chemistrie",
         "chapter_3_body": "Skincare felt like a natural extension of what they already understood as pharmacists: ingredients, formulation, precision, and the importance of getting the details right. They weren't trying to reinvent skincare. They simply believed they could do it better, creating skincare with the thoughtful formulation and elevated experience they wanted to give the people closest to them.",
-        "chapter_3_image_asset": "pillar-designed-together.png"
+        "chapter_3_image_asset": "pillar-designed-together.jpg"
       }
     },
     "instagram_GV7ThA": {
@@ -246,7 +246,7 @@
         "post_bench": {
           "type": "post",
           "settings": {
-            "image_asset": "pillar-pharmacist-formulated.png",
+            "image_asset": "pillar-pharmacist-formulated.jpg",
             "caption": "",
             "link": ""
           }

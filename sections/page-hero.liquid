@@ -28,10 +28,12 @@
         aria-hidden="true">
         {%- if section.settings.hero_image != blank -%}
           {%- comment -%} The visual column is ~750 CSS px at the 1440 max-width, so 700 was serving a half-resolution image to every retina screen. {%- endcomment -%}
-          {{ section.settings.hero_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '700,1000,1400,1600', alt: '' }}
+          {{ section.settings.hero_image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', decoding: 'async', widths: '700,1000,1400,1600', alt: '' }}
         {%- else -%}
           {%- comment -%} Temporary Unsplash stock photo, page-specific — replace via this section's "Hero image" setting whenever a real shot is ready {%- endcomment -%}
-          <img src="{{ section.settings.hero_fallback_asset | default: 'hero-visual.jpg' | asset_url }}" alt="" loading="lazy">
+          {%- comment -%} eager + high priority: this is the largest element above the fold, so
+             lazy-loading it made the browser discover it late and delayed first paint of the page. {%- endcomment -%}
+          <img src="{{ section.settings.hero_fallback_asset | default: 'hero-visual.jpg' | asset_url }}" alt="" loading="eager" fetchpriority="high" decoding="async" width="1349" height="650">
         {%- endif -%}
       </div>
     {%- endif -%}

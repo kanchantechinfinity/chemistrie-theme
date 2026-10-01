@@ -41,15 +41,19 @@
       {%- assign card_copy = card_copy | strip -%}
       {%- capture card_asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}
       {%- assign card_asset = card_asset | strip -%}
+      {%- comment -%} The first row of cards is above the fold, so lazy-loading them only
+         delayed images the visitor is already looking at. Everything past it stays lazy. {%- endcomment -%}
+      {%- assign card_load = 'lazy' -%}
+      {%- if forloop.index <= 3 -%}{%- assign card_load = 'eager' -%}{%- endif -%}
       <article class="pcard">
         <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
         </button>
         <a class="pcard__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
           {%- if card_asset != blank -%}
-            <img class="pcard__img" src="{{ card_asset | asset_url }}" alt="{{ card_name | escape }}" loading="lazy">
+            <img class="pcard__img" src="{{ card_asset | asset_url }}" alt="{{ card_name | escape }}" loading="{{ card_load }}" decoding="async">
           {%- elsif product.featured_image -%}
-            {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', class: 'pcard__img', alt: product.featured_image.alt | default: product.title }}
+            {{ product.featured_image | image_url: width: 700 | image_tag: loading: card_load, decoding: 'async', widths: '350,700', class: 'pcard__img', alt: product.featured_image.alt | default: product.title }}
             {%- if product.images.size > 1 -%}
               {{ product.images[1] | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,700', class: 'pcard__img pcard__img--alt', alt: '' }}
             {%- endif -%}

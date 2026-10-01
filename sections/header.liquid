@@ -20,7 +20,7 @@
     </button>
     <div class="nav__links-brand">
       {%- if section.settings.mobile_logo != blank -%}
-        {{ section.settings.mobile_logo | image_url: width: 240 | image_tag: alt: 'Chemistrie', loading: 'lazy' }}
+        {{ section.settings.mobile_logo | image_url: width: 240 | image_tag: alt: 'Chemistrie', loading: 'eager', fetchpriority: 'high', decoding: 'async' }}
       {%- else -%}
         <span class="nav__links-wordmark">CHEMISTRIE</span>
       {%- endif -%}
