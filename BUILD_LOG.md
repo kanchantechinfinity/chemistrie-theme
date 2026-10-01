@@ -6,6 +6,26 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Hero redesign REVERTED
+
+**Task:** put the homepage hero back.
+
+**Shipped.** `assets/chemistrie.css` and `sections/hero.liquid` restored to
+`b38d169` — byte-identical to the state before the redesign, verified with
+`git diff`. The two entries below describe work that is no longer live.
+
+Why it failed: the centred stack deployed fine, but at `clamp(42px,7vw,104px)`
+the headline was roughly five times the deck's size, so the deck read as a
+caption rather than as a second level. The reference tolerates that ratio
+because its headline is a heavy sans on far more empty space.
+
+**Known issue reintroduced by the revert:** the legacy
+`.hero__title { font-size: clamp(64px, 14vw, 200px) }` under `max-width: 1024`
+is live again between 761 and 1024px — a ~143px headline at tablet width. Left
+in deliberately; restoring means restoring. One-line fix available on request.
+
+---
+
 ## 2026-10-01 — Hero stripped to type + button (second pass)
 
 **Task:** first pass read as "no major difference" — go further.
