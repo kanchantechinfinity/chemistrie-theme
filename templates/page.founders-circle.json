@@ -3,8 +3,8 @@
     "page-hero": {
       "type": "page-hero",
       "settings": {
-        "eyebrow": "— Founder's Circle —",
-        "heading": "Founder's Circle.<br/><em>A relationship, extended.</em>",
+        "eyebrow": "",
+        "heading": "",
         "deck": "Never a transaction, tracked. Founder's Circle exists because the founders can't personally know every customer forever — not because they've stopped wanting to. It's how proximity survives growth: the Letters, an early seat closer to the Bench, and recognition that deepens the longer the relationship lasts.",
         "deck2": "Membership isn't purchased and isn't applied for. It's extended, when a relationship has reached the kind of depth a founder would recognize by name.",
         "show_visual": true,
@@ -12,7 +12,7 @@
         "cta_url": "#request-invitation",
         "cta2_label": "Read a Letter",
         "cta2_url": "#letter-sample",
-        "hero_fallback_asset": "stock-note.jpg"
+        "hero_fallback_asset": "hero-founders-circle.jpg"
       }
     },
     "stat-bar": {
