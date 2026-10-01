@@ -1,0 +1,50 @@
+# Build Log — Chemistrie Theme
+
+Running record of completed build tasks. Newest first.
+Detailed reasoning and gotchas live in `memory.md`; this file is the
+what-shipped-when summary.
+
+---
+
+## 2026-10-01 — Image delivery: weight and priority
+
+**Task:** make site images load fast on page load; use the supplied
+Founder's Circle banner in that page's Purpose block.
+
+**Shipped** — commit `d26cc54`, pushed to `main` (auto-deploys).
+
+| Change | File(s) | Result |
+| --- | --- | --- |
+| 3 pillar + 20 gallery photos re-encoded PNG → JPEG q85 | `assets/` | 16.1 MB → 2.1 MB |
+| 4 oversized stock JPEGs re-encoded q82 | `assets/` | −9% each |
+| References rewritten `.png` → `.jpg` | `product-gallery-images.liquid`, `pillars.liquid`, `story.liquid`, `index.json` | 29 refs |
+| Page hero un-lazied, `fetchpriority="high"` | `page-hero.liquid` | LCP discovered at parse time |
+| Header logo un-lazied | `header.liquid` | — |
+| `fetchpriority="high"` on home/journal/article heroes, product gallery | `hero.liquid`, `journal-hero.liquid`, `main-article.liquid`, `main-product.liquid` | — |
+| First 3 grid cards eager via `forloop.index <= 3` | `shop.liquid`, `main-collection.liquid` | first row no longer deferred |
+| `preconnect` + `dns-prefetch` to `cdn.shopify.com` | `layout/theme.liquid` | DNS/TLS off the hero's critical path |
+| Purpose block → `hero-founders-circle.jpg` via new `intro_image_asset` setting | `founders-circle-content.liquid` | — |
+
+**Total theme image weight: 24.3 MB → 9.5 MB (−61%).**
+
+**Verified:** script-checked that every image filename quoted in
+`sections/`, `snippets/`, `layout/`, `templates/` and `config/` resolves to a
+real file in `assets/` after the rename — no broken references. Per-file
+alpha check before converting confirmed every PNG was fully opaque.
+
+**Not verified:** nothing was opened in a browser. The theme needs store
+auth from this machine, so the visual result of the re-encodes and the
+measured load improvement are unconfirmed.
+
+**Deliberately not done:** eager-loading every image on the site, which is
+the literal reading of the request. Below-the-fold images stay lazy —
+making them eager would make the hero slower, not faster, by splitting the
+browser's early connections across images nobody has scrolled to.
+
+**Still open (user-side):**
+- Fill the 12 bundle pickers on the **gift page** (Ritual page is done).
+- Set the GoHighLevel webhook URL on the Ritual Finder section.
+- Fix the Q5 "Nothing else" dead-end in GoHighLevel.
+- Upload approved images to the bundle products in Shopify admin — the
+  theme-side fix covers the storefront only; checkout, emails and admin
+  still show Shopify's placeholders.
