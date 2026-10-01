@@ -6,6 +6,38 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Homepage hero rebuilt as a centred stack
+
+**Task:** redesign the homepage hero to match a supplied reference, without
+changing the site's colours or content.
+
+**Shipped** — CSS only, no markup change.
+
+| Change | Detail |
+| --- | --- |
+| `.hero__inner` | `1fr 1.15fr` split -> one centred column |
+| `.hero__copy` | centred, `text-align: center`, max 940px |
+| `.hero__title` | centred; `clamp(36px,4.6vw,66px)` -> `clamp(38px,5.4vw,78px)` |
+| `.hero__deck` | 42ch -> 48ch, auto margins |
+| `.hero__cta-row`, `.hero__trust` | centred; trust gap opened to 18-30px |
+| `.hero__stage` | full-width band under the copy, capped at `--maxw` |
+| **Removed** 3 legacy `.hero__title` size rules | see below |
+
+Colours untouched — the hero was already cream-on-forest with a tan pill,
+the same roles as the reference. All content kept, photo included; it moves
+below the centred copy rather than being dropped.
+
+**Bug found and fixed in passing:** a legacy `.hero__title { font-size:
+clamp(64px, 14vw, 200px) }` under `max-width: 1024` was live between 761 and
+1024px — a 143px headline at tablet width. Two sibling rules at 640 and 380
+were dead (beaten by the later 760 rule). All three removed.
+
+**Verified:** braces balanced; no legacy title rules remain; remaining hero
+rules in media queries checked for conflicts with the centred layout.
+**Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — 404s redirect to the homepage
 
 **Task:** make CTAs and pages that 404 go to the homepage instead.

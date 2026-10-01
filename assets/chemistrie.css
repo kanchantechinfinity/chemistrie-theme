@@ -368,14 +368,12 @@ body.template-product::-webkit-scrollbar { display: none; }
   z-index: 2;
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  /* gap, max-width and margin all match .page-hero__inner so the two columns
-     land on the same measure as every other page hero. */
-  gap: clamp(32px, 5vw, 80px);
-  /* stretch so the stage column matches the copy's height and the frame's
-     height: 100% has something definite to resolve against — same as
-     .page-hero__inner. */
-  align-items: stretch;
+  /* One centred column, not a 1fr/1.15fr split: the copy reads down the middle
+     and the photo sits beneath it as a full-width band. */
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: clamp(36px, 4.5vw, 64px);
+  align-items: start;
   max-width: var(--maxw);
   margin: 0 auto;
   width: 100%;
@@ -387,7 +385,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 /* Tight spacing because this column carries a CTA row and trust strip the
    other heroes don't, and it alone sets the band's height. margin-top is 0:
    the column is centred now, so a top margin only pushed it off centre. */
-.hero__copy { display: flex; flex-direction: column; justify-content: center; gap: clamp(10px, 1.3vw, 16px); margin-top: 0; }
+.hero__copy { display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; gap: clamp(12px, 1.4vw, 18px); margin-top: 0; max-width: 940px; }
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -405,13 +403,14 @@ body.template-product::-webkit-scrollbar { display: none; }
 .hero__title {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: clamp(36px, 4.6vw, 66px);
-  line-height: 1;
+  font-size: clamp(38px, 5.4vw, 78px);
+  line-height: 1.04;
   letter-spacing: -.022em;
   color: var(--c-cream);
   margin: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 6px;
 }
 .hero__title-row {
@@ -435,15 +434,17 @@ body.template-product::-webkit-scrollbar { display: none; }
   font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.5;
   color: rgba(240,232,219,.72);
-  margin: 0;
-  max-width: 42ch;
+  margin: 0 auto;
+  max-width: 48ch;
 }
 
 .hero__cta-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 28px;
   flex-wrap: wrap;
+  margin-top: clamp(6px, 1vw, 12px);
 }
 .hero__cta-primary {
   display: inline-flex;
@@ -503,8 +504,9 @@ body.template-product::-webkit-scrollbar { display: none; }
      dropped to a second line and took the whole band down with it. */
   flex-wrap: wrap;
   align-items: stretch;
-  gap: clamp(14px, 1.6vw, 20px);
-  padding-top: clamp(12px, 1.6vw, 18px);
+  justify-content: center;
+  gap: clamp(18px, 2.2vw, 30px);
+  padding-top: clamp(14px, 1.8vw, 20px);
   border-top: 1px solid rgba(255,255,255,.14);
   /* clear of the CTA above — the rule sat right under the button at 0. */
   margin-top: clamp(14px, 1.8vw, 22px);
@@ -538,6 +540,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 .hero__stage {
   position: relative;
   width: 100%;
+  max-width: var(--maxw);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -783,12 +786,12 @@ body.template-product::-webkit-scrollbar { display: none; }
   100% { transform: scaleY(1); opacity: 0; transform-origin: bottom; }
 }
 
-/* Responsive — collapses at 760px, the same width .page-hero__inner does, so
-   the homepage isn't stacked while every other hero is still side by side. */
+/* The hero is a single centred column at every width now, so nothing here
+   collapses a split any more — this block only tightens the measure and the
+   spacing once the viewport stops being wide enough for the full one. */
 @media (max-width: 760px) {
-  .hero__inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero__inner { gap: 44px; }
   .hero__stage { min-height: auto; max-width: 640px; margin: 0 auto; width: 100%; }
-  .hero__title { text-align: left; }
   .hero__copy { max-width: 640px; }
   .hero__trust-num { font-size: 22px; }
 }
@@ -2603,7 +2606,6 @@ body.template-product::-webkit-scrollbar { display: none; }
 @media (max-width: 1024px) {
   :root { --pad-x: clamp(24px, 5vw, 56px); }
 
-  .hero__title { font-size: clamp(64px, 14vw, 200px); }
   .hero[data-layout="split"] .hero__inner { max-width: 100%; text-align: center; }
 
   .pillar__visual { border-left: 0; padding-left: 0; padding-top: 20px; border-top: 1px solid var(--c-line); justify-content: flex-start; }
@@ -2668,7 +2670,6 @@ body.template-product::-webkit-scrollbar { display: none; }
   .hero__meta--left { top: 18px; left: var(--pad-x); }
   .hero__meta--right { top: 18px; right: var(--pad-x); }
   .hero__eyebrow { font-size: 10.5px; letter-spacing: .24em; }
-  .hero__title { font-size: clamp(54px, 22vw, 110px); letter-spacing: .03em; }
   .hero__tag { font-size: 16px; }
   .hero__rule { max-width: 32px; }
   .hero__cta-row { flex-direction: column; gap: 16px; align-items: stretch; width: 100%; max-width: 320px; margin-left: auto; margin-right: auto; }
@@ -2754,7 +2755,6 @@ body.template-product::-webkit-scrollbar { display: none; }
 
 /* ── Very small phones (≤380px) ── */
 @media (max-width: 380px) {
-  .hero__title { font-size: clamp(48px, 20vw, 90px); }
   .pillar__title { font-size: 30px; }
   .testimonial { flex: 0 0 86vw; }
 }
