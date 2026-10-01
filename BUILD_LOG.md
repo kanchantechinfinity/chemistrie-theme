@@ -6,6 +6,28 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Portrait image in the Founder's Circle Purpose block
+
+**Task:** use the supplied portrait image in the Purpose section.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| New `founders-purpose.jpg` (1172x1342, 289KB, from a 2137KB PNG) | `assets/` |
+| `intro_image_asset` default repointed to it | `sections/founders-circle-content.liquid` |
+| Slot reshaped landscape -> portrait: row height now content-driven, media gets `aspect-ratio: 1172/1342` at `clamp(240px,27vw,340px)` | same file |
+| Mobile frame `width: min(300px,72vw)` centred instead of full-width stretch | same file |
+
+The slot was a fixed 300-420px landscape band with `object-fit: cover`. A
+portrait image in it would have had its title cropped off the top, so the
+frame had to change shape, not just filename.
+
+**Verified:** schema parses, `intro_image_asset` default is the new file, asset
+exists on disk. **Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Tablet navbar fixed
 
 **Task:** the navbar was broken at tablet width — wordmark colliding with the

@@ -11,8 +11,8 @@
         {%- if section.settings.intro_image != blank -%}
           {{ section.settings.intro_image | image_url: width: 1400 | image_tag: loading: 'lazy', decoding: 'async', widths: '500,700,1000,1400', alt: '' }}
         {%- else -%}
-          {%- comment -%} Same banner as this page's hero, so the Purpose block reads as its continuation. {%- endcomment -%}
-          <img src="{{ section.settings.intro_image_asset | default: 'hero-founders-circle.jpg' | asset_url }}" alt="" loading="lazy" decoding="async" width="2080" height="1001">
+          {%- comment -%} Portrait cut of the Founder's Circle banner, framed to match. {%- endcomment -%}
+          <img src="{{ section.settings.intro_image_asset | default: 'founders-purpose.jpg' | asset_url }}" alt="" loading="lazy" decoding="async" width="1172" height="1342">
         {%- endif -%}
       </div>
     </div>
@@ -72,15 +72,31 @@
 .fcircle__block { margin-bottom: clamp(56px, 7vw, 96px); }
 .fcircle__block:last-child { margin-bottom: 0; }
 
-.fcircle__intro { max-width: none; height: clamp(300px, 32vw, 420px); display: flex; align-items: stretch; gap: clamp(32px, 5vw, 72px); }
-.fcircle__intro-copy-col { flex: 1 1 50%; max-width: 560px; display: flex; flex-direction: column; justify-content: center; }
+/* The row no longer sets its own height. It used to be a fixed 300-420px band
+   with the media stretching to fill it, which suited a landscape photo; the
+   image here is portrait (1172x1342) and object-fit: cover would have cropped
+   the title straight off the top of it. The media now states its own aspect
+   ratio and the row takes its height from whichever column is taller. */
+.fcircle__intro { max-width: none; display: flex; align-items: center; gap: clamp(32px, 5vw, 72px); }
+.fcircle__intro-copy-col { flex: 1 1 auto; max-width: 560px; display: flex; flex-direction: column; justify-content: center; }
 .fcircle__intro .eyebrow { display: inline-block; margin-bottom: 18px; }
 .fcircle__intro-copy { font-family: var(--ff-display); font-size: clamp(22px, 2.6vw, 30px); line-height: 1.45; color: var(--c-forest); }
-.fcircle__intro-media { flex: 1 1 0; min-width: 0; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 60px -28px rgba(26,58,45,.4); }
+/* Width-constrained rather than flexible: left to flex: 1 1 0 a portrait frame
+   grows about 1.15x taller than it is wide, and half the row is wide enough to
+   push this block past 600px tall on its own. */
+.fcircle__intro-media {
+  flex: 0 0 auto; width: clamp(240px, 27vw, 340px);
+  aspect-ratio: 1172 / 1342;
+  border-radius: 18px; overflow: hidden;
+  box-shadow: 0 30px 60px -28px rgba(26,58,45,.4);
+}
 .fcircle__intro-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (max-width: 800px) {
-  .fcircle__intro { height: auto; flex-direction: column; align-items: stretch; }
-  .fcircle__intro-media { order: -1; max-width: 100%; height: 260px; }
+  .fcircle__intro { flex-direction: column; align-items: center; }
+  /* auto margins, not stretch: the frame has a fixed aspect ratio now, so
+     stretching it full-width would make it as tall as the phone screen. */
+  .fcircle__intro-media { order: -1; width: min(300px, 72vw); }
+  .fcircle__intro-copy-col { max-width: 100%; }
 }
 
 .fcircle__h { font-family: var(--ff-display); font-size: clamp(24px, 3vw, 32px); font-weight: 500; color: var(--c-forest); text-align: center; margin: 0 0 14px; }
@@ -129,7 +145,7 @@
   "settings": [
     { "type": "text", "id": "intro_eyebrow", "label": "Intro eyebrow", "default": "— Purpose —" },
     { "type": "textarea", "id": "intro_copy", "label": "Intro copy", "default": "As the catalog grows, the founders cannot personally know every customer the way they once could. Founder's Circle is the structure that preserves proximity for the customers who have earned it, rather than letting scale quietly replace relationship with reach." },
-    { "type": "text", "id": "intro_image_asset", "label": "Purpose image (theme asset filename)", "default": "hero-founders-circle.jpg", "info": "Used when no Purpose image is uploaded above." },
+    { "type": "text", "id": "intro_image_asset", "label": "Purpose image (theme asset filename)", "default": "founders-purpose.jpg", "info": "Used when no Purpose image is uploaded above." },
     { "type": "image_picker", "id": "intro_image", "label": "Purpose image", "info": "Optional. Falls back to a temporary stock photo until a real image is uploaded." },
     { "type": "text", "id": "expressions_heading", "label": "Expressions heading", "default": "Three Expressions of Membership" },
     { "type": "textarea", "id": "expressions_lede", "label": "Expressions lede", "default": "Presented in the order a relationship might deepen over time — never a ladder to climb by spending, and never a status displayed to track. A member is told what she has; she is not shown what she doesn't have yet." },
