@@ -6,6 +6,30 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Hero stripped to type + button (second pass)
+
+**Task:** first pass read as "no major difference" — go further.
+
+**Shipped.**
+
+| Change | Detail |
+| --- | --- |
+| Trust strip + photo moved out of the hero band | new `.hero__below` wrapper in `sections/hero.liquid` |
+| `.hero__inner` padding | `clamp(48px,9vw,130px)` top / `clamp(44px,7.5vw,104px)` bottom |
+| `.hero__title` | `clamp(38px,5.4vw,78px)` -> `clamp(42px,7vw,104px)` |
+| `.hero__cta-primary` | padding 13/26 -> 16/34 |
+| `.hero__trust` | lost its `border-top`; gap opened to 24-56px |
+
+Ruled out first: the change *was* pushed, nothing in the later-loading
+stylesheets overrides `.hero__inner`, and both `index.json` and
+`page.home.json` use the same section. The gap was that keeping the photo and
+stats inside the band left it crowded no matter how it was aligned.
+
+**Verified:** braces balanced; one definition each of the hero blocks; div
+tags balanced 16/16. **Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Homepage hero rebuilt as a centred stack
 
 **Task:** redesign the homepage hero to match a supplied reference, without
