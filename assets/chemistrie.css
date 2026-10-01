@@ -293,7 +293,7 @@ body.template-product::-webkit-scrollbar { display: none; }
    other page's, which is what put it out of step with them. */
 .hero {
   position: relative;
-  padding: clamp(24px, 3.5vw, 52px) var(--pad-x) clamp(60px, 8vw, 110px);
+  padding: clamp(24px, 3.5vw, 52px) var(--pad-x) clamp(56px, 7vw, 96px);
   overflow: hidden;
   background: var(--c-forest-2);
   display: flex;
@@ -372,8 +372,11 @@ body.template-product::-webkit-scrollbar { display: none; }
      and the photo sits beneath it as a full-width band. */
   grid-template-columns: 1fr;
   justify-items: center;
-  gap: clamp(36px, 4.5vw, 64px);
-  align-items: start;
+  align-items: center;
+  /* The open space IS the design here — the headline needs room above and
+     below it or centring alone just moves the same crowded block to the
+     middle. */
+  padding: clamp(48px, 9vw, 130px) 0 clamp(44px, 7.5vw, 104px);
   max-width: var(--maxw);
   margin: 0 auto;
   width: 100%;
@@ -385,7 +388,20 @@ body.template-product::-webkit-scrollbar { display: none; }
 /* Tight spacing because this column carries a CTA row and trust strip the
    other heroes don't, and it alone sets the band's height. margin-top is 0:
    the column is centred now, so a top margin only pushed it off centre. */
-.hero__copy { display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; gap: clamp(12px, 1.4vw, 18px); margin-top: 0; max-width: 940px; }
+/* A px cap, not a ch one: ch resolves against THIS element's font-size, which
+   is body size here, not the 104px headline inside it — 18ch would have been
+   about 160px and crushed the hero into a column. */
+.hero__copy { display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; gap: 0; margin-top: 0; max-width: min(100%, 1040px); }
+.hero__below {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(26px, 3.2vw, 44px);
+}
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -403,8 +419,8 @@ body.template-product::-webkit-scrollbar { display: none; }
 .hero__title {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: clamp(38px, 5.4vw, 78px);
-  line-height: 1.04;
+  font-size: clamp(42px, 7vw, 104px);
+  line-height: 1.02;
   letter-spacing: -.022em;
   color: var(--c-cream);
   margin: 0;
@@ -431,11 +447,11 @@ body.template-product::-webkit-scrollbar { display: none; }
   font-family: var(--ff-display);
   font-style: italic;
   /* matches .page-hero__deck in assets/pages.css */
-  font-size: clamp(15px, 1.3vw, 18px);
-  line-height: 1.5;
-  color: rgba(240,232,219,.72);
-  margin: 0 auto;
-  max-width: 48ch;
+  font-size: clamp(16px, 1.45vw, 21px);
+  line-height: 1.55;
+  color: rgba(240,232,219,.68);
+  margin: clamp(10px, 1.4vw, 20px) auto 0;
+  max-width: 46ch;
 }
 
 .hero__cta-row {
@@ -444,13 +460,13 @@ body.template-product::-webkit-scrollbar { display: none; }
   justify-content: center;
   gap: 28px;
   flex-wrap: wrap;
-  margin-top: clamp(6px, 1vw, 12px);
+  margin-top: clamp(22px, 3vw, 40px);
 }
 .hero__cta-primary {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 13px 26px;
+  padding: 16px 34px;
   background: var(--c-tan);
   color: var(--c-forest);
   border-radius: 999px;
@@ -505,11 +521,12 @@ body.template-product::-webkit-scrollbar { display: none; }
   flex-wrap: wrap;
   align-items: stretch;
   justify-content: center;
-  gap: clamp(18px, 2.2vw, 30px);
-  padding-top: clamp(14px, 1.8vw, 20px);
-  border-top: 1px solid rgba(255,255,255,.14);
-  /* clear of the CTA above — the rule sat right under the button at 0. */
-  margin-top: clamp(14px, 1.8vw, 22px);
+  gap: clamp(24px, 3.4vw, 56px);
+  /* no top rule any more: it used to divide the stats from the CTA above them
+     inside the copy column. Down here under the photo there is nothing to
+     divide them from, and a full-width line just boxed the band in. */
+  padding-top: 0;
+  margin-top: 0;
 }
 .hero__trust-item {
   display: flex;
@@ -2955,7 +2972,8 @@ body.template-product::-webkit-scrollbar { display: none; }
   .cta__form .btn { width: 100%; justify-content: center; }
 
   /* Hero copy tighter on phone */
-  .hero__copy { gap: clamp(14px, 2.5vw, 20px); }
+  /* the copy column spaces itself with margins on the deck and CTA now, so a
+     gap here would stack on top of them. */
   .hero { padding-bottom: 48px; }
 
   /* Nav */

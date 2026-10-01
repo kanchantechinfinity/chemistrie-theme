@@ -33,27 +33,17 @@
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
-
-      <!-- Trust strip -->
-      <div class="hero__trust">
-        <div class="hero__trust-item">
-          <span class="hero__trust-num">{{ section.settings.trust1_num }}</span>
-          <span class="hero__trust-label">{{ section.settings.trust1_label }}</span>
-        </div>
-        <div class="hero__trust-divider"></div>
-        <div class="hero__trust-item">
-          <span class="hero__trust-num">{{ section.settings.trust2_num }}</span>
-          <span class="hero__trust-label">{{ section.settings.trust2_label }}</span>
-        </div>
-        <div class="hero__trust-divider"></div>
-        <div class="hero__trust-item">
-          <span class="hero__trust-num">{{ section.settings.trust3_num }}</span>
-          <span class="hero__trust-label">{{ section.settings.trust3_label }}</span>
-        </div>
-      </div>
     </div>
 
-    <!-- Right: visual stage -->
+  </div>
+
+  {%- comment -%}
+    The photo and the proof stats sit below the hero band rather than inside
+    it. The hero itself is type and one button on open space — crowding the
+    headline with a photo beside it and a stat row beneath is what flattened
+    it. Nothing is removed from the page, only from the band.
+  {%- endcomment -%}
+  <div class="hero__below">
     <div class="hero__stage">
       <div class="hero__visual-frame">
         {%- if section.settings.hero_image != blank -%}
@@ -63,6 +53,23 @@
         {%- else -%}
           <img class="hero__visual-img" src="{{ 'hero-home.jpg' | asset_url }}" alt="{{ section.settings.title_aria | escape }}" loading="eager" fetchpriority="high" decoding="async" width="1024" height="493">
         {%- endif -%}
+      </div>
+    </div>
+
+    <div class="hero__trust">
+      <div class="hero__trust-item">
+        <span class="hero__trust-num">{{ section.settings.trust1_num }}</span>
+        <span class="hero__trust-label">{{ section.settings.trust1_label }}</span>
+      </div>
+      <div class="hero__trust-divider"></div>
+      <div class="hero__trust-item">
+        <span class="hero__trust-num">{{ section.settings.trust2_num }}</span>
+        <span class="hero__trust-label">{{ section.settings.trust2_label }}</span>
+      </div>
+      <div class="hero__trust-divider"></div>
+      <div class="hero__trust-item">
+        <span class="hero__trust-num">{{ section.settings.trust3_num }}</span>
+        <span class="hero__trust-label">{{ section.settings.trust3_label }}</span>
       </div>
     </div>
   </div>
