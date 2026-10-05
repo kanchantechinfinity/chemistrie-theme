@@ -1325,21 +1325,13 @@ body.template-product::-webkit-scrollbar { display: none; }
 .founders__fig { position: static; margin: 0; min-width: 0; }
 /* the stagger that used to come from absolute offsets */
 .founders__fig--b { margin-top: clamp(36px, 9vw, 96px); }
-.founders__who {
-  display: flex; flex-direction: column; gap: 3px;
-  margin: 14px 0 0; text-align: center;
-  /* the role is long and uppercase - it has to be allowed to wrap inside the
-     column rather than run past its edge */
-  max-width: 100%;
-}
+/* 26px, not 14: the frame is an ellipse, so its lowest point is at the centre
+   of the box - exactly where a centred name sits. A gap that looks right
+   against a rectangle reads as touching against a curve. */
+.founders__who { margin: 26px 0 0; text-align: center; max-width: 100%; }
 .founders__who-name {
-  font-family: var(--ff-display); font-size: clamp(17px, 1.5vw, 21px);
+  font-family: var(--ff-display); font-size: clamp(18px, 1.6vw, 23px);
   color: var(--c-forest); line-height: 1.2;
-}
-.founders__who-role {
-  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--c-ink-mute); line-height: 1.5;
-  overflow-wrap: break-word;
 }
 .founders__photo {
   position: relative;
