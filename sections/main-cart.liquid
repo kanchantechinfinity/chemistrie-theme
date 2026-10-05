@@ -195,7 +195,22 @@
 .cart__row--note { border-bottom: 1px solid var(--c-line-soft); }
 .cart__note-label { display: block; margin: 18px 0 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); }
 .cart__note { width: 100%; padding: 12px 14px; border: 1px solid var(--c-line); border-radius: 10px; background: var(--c-paper); font-family: var(--ff-body); font-size: 14px; color: var(--c-forest); resize: vertical; }
-.cart__checkout { width: 100%; justify-content: center; margin-top: 18px; }
+/* Doubled class for specificity: this sits in a section stylesheet, and whether
+   that file loads before or after chemistrie.css is not guaranteed, so a single
+   class ties with .btn and the winner depends on load order. */
+.cart__checkout.cart__checkout {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  /* sized to its own label and centred under the summary, rather than a
+     full-width slab with the word stranded at the left edge */
+  width: auto;
+  min-width: 190px;
+  max-width: 100%;
+  margin: 18px auto 0;
+  padding: 13px 34px;
+  font-size: 11.5px;
+}
 .cart__trust { list-style: none; margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--c-line-soft); display: flex; flex-direction: column; gap: 8px; font-size: 12px; letter-spacing: .04em; color: var(--c-ink-mute); }
 .cart__trust li::before { content: "✓ "; color: var(--c-sage); }
 

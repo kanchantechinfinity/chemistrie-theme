@@ -6,6 +6,28 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Cart checkout button centred and shrunk
+
+**Task:** centre the CHECKOUT label and make the button smaller.
+
+**Shipped.** `sections/main-cart.liquid`:
+
+| | Before | After |
+| --- | --- | --- |
+| width | `100%` | `auto`, `min-width: 190px`, centred with `margin: 18px auto 0` |
+| padding | `16px 28px` (from `.btn`) | `13px 34px` |
+| font-size | 12.5px | 11.5px |
+| selector | `.cart__checkout` | `.cart__checkout.cart__checkout` |
+
+`justify-content: center` was already declared and had no effect: the rule is
+in a section stylesheet, which may load before or after `chemistrie.css`, and
+at equal specificity with `.btn` the winner depends on load order. Doubling the
+class settles it.
+
+**Verified:** section CSS braces balanced, schema parses. Live check after sync.
+
+---
+
 ## 2026-10-01 — Founder portraits named; layout rebuilt as a grid
 
 **Task:** identify which founder is which; then remove the role line.
