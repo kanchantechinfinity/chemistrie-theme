@@ -1300,31 +1300,52 @@ body.template-product::-webkit-scrollbar { display: none; }
 }
 .founders__head { grid-column: 2; grid-row: 1; align-self: end; }
 .founders__body { grid-column: 2; grid-row: 2; }
-.founders__media { grid-column: 1; grid-row: 1 / span 2; position: relative; min-height: 760px; align-self: stretch; }
-/* The figure is placed; the photo just fills it. The ellipse keeps its own
-   overflow: hidden, so the caption has to live outside it - that is the whole
-   reason for the wrapper. */
-.founders__fig { position: absolute; margin: 0; }
-.founders__fig--a { width: 47%; height: 44%; top: 0; left: 0; z-index: 3; }
-/* 52%, not 40%: photo A's caption now occupies the band under it, and at the
-   old offset photo B started inside that band and sat on top of the name. */
-.founders__fig--b { width: 47%; height: 44%; top: 52%; left: 20%; z-index: 1; }
+/* A grid, not two absolutely-placed ovals.
+
+   The overlapping collage worked while the photos were the only things here.
+   Once each one carried a name under it, the captions had nowhere safe to go:
+   a caption is as wide as its figure and sits in the band directly below the
+   oval, which is exactly where the other oval was placed. The first attempt at
+   dodging that shifted photo B down and the second name still landed on top of
+   the photo, because an absolutely-positioned figure has a fixed height while
+   its photo and caption do not.
+
+   Two columns with the second one offset downward keeps the staggered feel,
+   sizes every figure to its own content, and makes an overlap impossible
+   rather than something to be tuned around. */
+.founders__media {
+  grid-column: 1; grid-row: 1 / span 2;
+  position: relative;
+  align-self: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2.4vw, 34px);
+  align-items: start;
+}
+.founders__fig { position: static; margin: 0; min-width: 0; }
+/* the stagger that used to come from absolute offsets */
+.founders__fig--b { margin-top: clamp(36px, 9vw, 96px); }
 .founders__who {
   display: flex; flex-direction: column; gap: 3px;
-  margin: 12px 0 0; text-align: center;
+  margin: 14px 0 0; text-align: center;
+  /* the role is long and uppercase - it has to be allowed to wrap inside the
+     column rather than run past its edge */
+  max-width: 100%;
 }
 .founders__who-name {
   font-family: var(--ff-display); font-size: clamp(17px, 1.5vw, 21px);
   color: var(--c-forest); line-height: 1.2;
 }
 .founders__who-role {
-  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
   color: var(--c-ink-mute); line-height: 1.5;
+  overflow-wrap: break-word;
 }
 .founders__photo {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
   border-radius: 280px / 360px;
   overflow: hidden;
   box-shadow: 0 30px 60px -20px rgba(26,58,45,.3);
@@ -1340,8 +1361,8 @@ body.template-product::-webkit-scrollbar { display: none; }
 .founders__photo--a { border-radius: 50% / 46%; }
 .founders__photo--b { border-radius: 46% / 50%; }
 .founders__caption {
-  position: absolute;
-  bottom: -32px; left: 12%;
+  grid-column: 1 / -1;
+  margin-top: 14px;
   font-family: var(--ff-display);
   font-style: italic;
   font-size: 14px;
@@ -2636,16 +2657,8 @@ body.template-product::-webkit-scrollbar { display: none; }
   .founders__head { order: 1; }
   .founders__media { order: 2; }
   .founders__body { order: 3; }
-  /* Stacked layouts can't hold the desktop overlap: two ovals side by side, caption in flow. */
-  .founders__media {
-    position: static;
-    min-height: 0; max-width: none; width: 100%; margin: 14px 0 0; padding: 0;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: clamp(12px, 2.5vw, 24px);
-    align-items: start;
-  }
-  .founders__fig { position: static; width: auto; height: auto; }
-  .founders__photo { position: static; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+  /* The base layout is already this grid, so only the spacing differs here. */
+  .founders__media { max-width: none; width: 100%; margin: 14px 0 0; padding: 0; gap: clamp(12px, 2.5vw, 24px); }
   .founders__who { margin-top: 10px; }
   .founders__photo img { object-position: center 22%; }
   .founders__caption { position: static; grid-column: 1 / -1; max-width: none; margin: 6px 0 0; }
@@ -2901,6 +2914,9 @@ body.template-product::-webkit-scrollbar { display: none; }
   /* Founders */
   .founders__media { max-width: 100%; }
   .founders__caption { font-size: 11.5px; }
+  /* Two ovals plus two wrapping role lines stop fitting side by side here. */
+  .founders__media { grid-template-columns: 1fr; }
+  .founders__fig--b { margin-top: 0; }
 
   /* Actives — phones get the same pinned horizontal scroll as desktop, driven
      by ScrollTrigger, which adds .is-pinned once it takes over. Everything
