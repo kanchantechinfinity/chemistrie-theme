@@ -1300,9 +1300,31 @@ body.template-product::-webkit-scrollbar { display: none; }
 }
 .founders__head { grid-column: 2; grid-row: 1; align-self: end; }
 .founders__body { grid-column: 2; grid-row: 2; }
-.founders__media { grid-column: 1; grid-row: 1 / span 2; position: relative; min-height: 680px; align-self: stretch; }
+.founders__media { grid-column: 1; grid-row: 1 / span 2; position: relative; min-height: 760px; align-self: stretch; }
+/* The figure is placed; the photo just fills it. The ellipse keeps its own
+   overflow: hidden, so the caption has to live outside it - that is the whole
+   reason for the wrapper. */
+.founders__fig { position: absolute; margin: 0; }
+.founders__fig--a { width: 47%; height: 44%; top: 0; left: 0; z-index: 3; }
+/* 52%, not 40%: photo A's caption now occupies the band under it, and at the
+   old offset photo B started inside that band and sat on top of the name. */
+.founders__fig--b { width: 47%; height: 44%; top: 52%; left: 20%; z-index: 1; }
+.founders__who {
+  display: flex; flex-direction: column; gap: 3px;
+  margin: 12px 0 0; text-align: center;
+}
+.founders__who-name {
+  font-family: var(--ff-display); font-size: clamp(17px, 1.5vw, 21px);
+  color: var(--c-forest); line-height: 1.2;
+}
+.founders__who-role {
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--c-ink-mute); line-height: 1.5;
+}
 .founders__photo {
-  position: absolute;
+  position: relative;
+  width: 100%;
+  height: 100%;
   border-radius: 280px / 360px;
   overflow: hidden;
   box-shadow: 0 30px 60px -20px rgba(26,58,45,.3);
@@ -1315,18 +1337,8 @@ body.template-product::-webkit-scrollbar { display: none; }
 }
 .founders__ph svg { width: 36px; height: 36px; }
 .founders__ph span { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
-.founders__photo--a {
-  width: 47%; height: 48%;
-  top: 0; left: 0;
-  z-index: 3;
-  border-radius: 50% / 46%;
-}
-.founders__photo--b {
-  width: 47%; height: 48%;
-  top: 40%; left: 20%;
-  z-index: 1;
-  border-radius: 46% / 50%;
-}
+.founders__photo--a { border-radius: 50% / 46%; }
+.founders__photo--b { border-radius: 46% / 50%; }
 .founders__caption {
   position: absolute;
   bottom: -32px; left: 12%;
@@ -2632,7 +2644,9 @@ body.template-product::-webkit-scrollbar { display: none; }
     gap: clamp(12px, 2.5vw, 24px);
     align-items: start;
   }
+  .founders__fig { position: static; width: auto; height: auto; }
   .founders__photo { position: static; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+  .founders__who { margin-top: 10px; }
   .founders__photo img { object-position: center 22%; }
   .founders__caption { position: static; grid-column: 1 / -1; max-width: none; margin: 6px 0 0; }
   .founders__body { margin-top: 28px; }
