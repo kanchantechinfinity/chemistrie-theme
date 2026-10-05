@@ -3719,3 +3719,14 @@ Pasted gtag.js into `layout/theme.liquid` immediately after `<head>`, as Google'
 - Shopify can also install GA4 itself, via the Google & YouTube channel or a Customer Events pixel. If that is already connected to the same property, this theme tag double-counts every pageview — worth checking Settings > Customer events before trusting the numbers.
 - The storefront is still password-protected, so nothing will be recorded until the password comes off (see the separate note on the incomplete store address blocking that).
 Checkout pages are not covered: a theme layout does not render there. That needs Customer Events, not this tag.
+
+## 2026-10-01 — Product trust badges: three to five, editable, proof-ordered
+Brief asked for 4–5 badges ordered by strength of proof, mixing product claims with conversion badges; user capped it at "total only 5 badges, for all products". The three hardcoded `<li>`s in `sections/main-product.liquid` became five `trust_badge_1..5` text settings rendered through a loop over `section.settings[key]` (Shopify Liquid does support a variable key there).
+
+**Order is the deliverable, not just the count.** Strongest proof first: who formulated it (Pharmacist-formulated), how it is made (Hand-numbered), where (Made in Houston), then the two commercial promises. A claim about the product outranks a claim about the shipping policy, so the policy badges sit last and the row degrades from the weakest end when a slot is cleared.
+
+**Refused to invent the claims the brief suggested, and said so.** "Fragrance-free" is asserted in this theme's own per-product copy for **Veil and Aura only** — Velvet's copy says "suitable for … sensitive skin" instead — so shipping it as a badge on *all* products would have made it false on at least one. "Dermatologist-tested" appears nowhere in the theme and is a testing claim nobody here can substantiate. Both left out; the slots are editable so the client can add them once they can stand behind them, ideally per product rather than globally.
+
+**Reused real data instead of a made-up number.** Badge 4 is `Free shipping over $[threshold]`, where `[threshold]` is replaced at render time by `settings.free_shipping_threshold` — the same value `sections/main-cart.liquid` already counts toward in its free-shipping progress bar (default 120). So the badge cannot drift out of step with the cart. If the threshold is ever set to 0 the badge is skipped via `continue` rather than printed as "over $0".
+Badge 5 "Easy returns" is the one default that is a policy claim taken on the user's instruction rather than verified against anything in the repo — flagged as theirs to confirm.
+CSS: gap `10px` -> `9px 10px`, since five pills wrap to a second row in the product column and row spacing now matters separately from column spacing.

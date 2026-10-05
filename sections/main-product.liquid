@@ -395,10 +395,33 @@
           <p class="mprod__soldout-note">{{ pd_name }} is temporarily out of stock. Join the waitlist to hear when it's back.</p>
         {%- endunless -%}
 
+        {%- comment -%}
+          Five slots, ordered strongest proof first: who formulated it, how it
+          is made, where, then the two commercial promises. A claim about the
+          product itself outranks a claim about the shipping policy, so the
+          policy badges sit last and the row degrades from the bottom when a
+          slot is cleared.
+
+          [threshold] in a label is replaced by the store's real free-shipping
+          setting — the same number the cart's progress bar counts toward, so
+          the badge can never drift out of step with it. If that setting is 0,
+          a badge mentioning the threshold is dropped rather than printed as
+          "over $0".
+        {%- endcomment -%}
+        {%- liquid
+          assign ship_amt = settings.free_shipping_threshold | default: 0
+          assign badge_keys = 'trust_badge_1,trust_badge_2,trust_badge_3,trust_badge_4,trust_badge_5' | split: ','
+        -%}
         <ul class="mprod__trust">
-          <li>Pharmacist-formulated</li>
-          <li>Hand-numbered</li>
-          <li>Made in Houston</li>
+          {%- for key in badge_keys -%}
+            {%- assign badge = section.settings[key] | strip -%}
+            {%- if badge != blank -%}
+              {%- if badge contains '[threshold]' and ship_amt <= 0 -%}
+                {%- continue -%}
+              {%- endif -%}
+              <li>{{ badge | replace: '[threshold]', ship_amt }}</li>
+            {%- endif -%}
+          {%- endfor -%}
         </ul>
 
         {%- comment -%} Routine Placement, Key Benefits, and How to Use now live as always-visible visual sections in product-details.liquid, not hidden in this accordion. Story/Warnings show only if there's content; Feeling always has a fallback. {%- endcomment -%}
@@ -689,13 +712,14 @@
   .mprod__row--actions .mprod__wish { justify-content: center; }
 }
 
-/* Three static badges rather than a run of faint middot-separated text —
-   picks up the pill shape already used by the theme's buttons. Not
-   interactive: no hover, cursor or focus treatment, so they never read
-   as something you can click. */
+/* Static badges rather than a run of faint middot-separated text — picks up
+   the pill shape already used by the theme's buttons. Not interactive: no
+   hover, cursor or focus treatment, so they never read as something you can
+   click. At five they wrap to a second row on a narrow column, which is why
+   the row-gap is set separately from the column-gap below. */
 .mprod__trust {
   list-style: none; margin: 26px 0 0; padding: 22px 0 0; border-top: 1px solid var(--c-line-soft);
-  display: flex; flex-wrap: wrap; gap: 10px;
+  display: flex; flex-wrap: wrap; gap: 9px 10px;
 }
 .mprod__trust li {
   display: inline-flex; align-items: center; gap: 8px;
@@ -1073,6 +1097,13 @@
     { "type": "header", "content": "Pre-order" },
     { "type": "text", "id": "preorder_until", "label": "Pre-order until", "default": "2026-10-07", "info": "YYYY-MM-DD, inclusive. While this date has not passed, the buy button reads Pre-order and every order is tagged. Clear the field to switch pre-orders off early. Note: this changes wording and tagging only — for a variant with no stock to be orderable, set it to 'Continue selling when out of stock' in the product's inventory settings." },
     { "type": "text", "id": "preorder_label", "label": "Button label", "default": "Pre-order" },
+    { "type": "header", "content": "Trust badges" },
+    { "type": "paragraph", "content": "Shown under Add to Ritual on every product. Ordered strongest proof first. Clear a field to drop that badge. Write [threshold] to insert the free-shipping amount set in Theme settings." },
+    { "type": "text", "id": "trust_badge_1", "label": "Badge 1", "default": "Pharmacist-formulated" },
+    { "type": "text", "id": "trust_badge_2", "label": "Badge 2", "default": "Hand-numbered" },
+    { "type": "text", "id": "trust_badge_3", "label": "Badge 3", "default": "Made in Houston" },
+    { "type": "text", "id": "trust_badge_4", "label": "Badge 4", "default": "Free shipping over $[threshold]" },
+    { "type": "text", "id": "trust_badge_5", "label": "Badge 5", "default": "Easy returns" },
     { "type": "text", "id": "preorder_property", "label": "Order tag", "default": "Pre-order", "info": "Shown on the cart line and saved with the order, so pre-orders are identifiable at fulfilment. Keep \"Pre-order\" as the leading word if you filter orders on it." },
     { "type": "textarea", "id": "preorder_note", "label": "Note under the button", "default": "Pre-order now.", "info": "Leave empty to show no note at all." }
   ],

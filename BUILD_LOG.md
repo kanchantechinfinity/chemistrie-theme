@@ -6,6 +6,36 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Product trust badges: 3 to 5
+
+**Task:** expand the badges under Add to Ritual to five, ordered by strength of
+proof, on all products.
+
+**Shipped.** `sections/main-product.liquid` — three hardcoded list items became
+five editable `trust_badge_1..5` settings, rendered in order:
+
+| # | Default | Basis |
+| --- | --- | --- |
+| 1 | Pharmacist-formulated | existing |
+| 2 | Hand-numbered | existing |
+| 3 | Made in Houston | existing |
+| 4 | Free shipping over $[threshold] | reads the real `free_shipping_threshold` setting |
+| 5 | Easy returns | policy claim, per the brief |
+
+`[threshold]` is substituted at render time from the same setting the cart's
+free-shipping bar uses, so the two can't disagree. If it is 0, the badge is
+skipped rather than printed as "over $0".
+
+**Not added, deliberately:** "Fragrance-free" — the theme's own copy claims it
+for Veil and Aura only, not Velvet, so it would be false as a site-wide badge.
+"Dermatologist-tested" — unsubstantiated anywhere in the repo. Both slots are
+editable if the client can stand behind them.
+
+**Verified:** schema parses; render simulated at threshold 120 (5 badges) and
+0 (4 badges). **Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Google Analytics 4 installed
 
 **Task:** add the GA4 tag (G-H1EZ7GHQX3) to every page.
