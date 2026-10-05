@@ -147,6 +147,35 @@
       });
   });
 
+  /* Buy now on a product card: add the single variant, then go to the cart.
+     Deliberately a full page move to /cart rather than the drawer used above —
+     this button exists for someone who has decided, and the cart page is the
+     one that leads to checkout. The drawer is still what the normal
+     add-to-cart path opens. */
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-buy-now]");
+    if (!btn) return;
+    e.preventDefault();
+    if (btn.disabled) return;
+    var id = btn.getAttribute("data-variant-id");
+    if (!id) return;
+    var original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Adding…";
+    addToCart(id)
+      .then(function (res) {
+        /* /cart/add.js answers 200 with the line item, or a body carrying a
+           status code when it refuses - sold out, or stock taken between the
+           page rendering and the click. Treat that as a failure, not a win. */
+        if (res && res.status) throw new Error(res.description || "unavailable");
+        window.location.href = "/cart";
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = original;
+      });
+  });
+
   /* Remove line item */
   if (cartItemsEl) {
     cartItemsEl.addEventListener("click", function (e) {

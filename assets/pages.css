@@ -89,6 +89,20 @@
 .pcard__btn { display: block; margin-top: auto; width: 100%; padding: 13px; background: var(--c-forest); color: var(--c-cream); border-radius: 8px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-align: center; text-decoration: none; transition: background .3s; }
 .pcard__btn:hover { background: var(--c-forest-2); }
 .pcard__btn[disabled], .pcard__btn--soldout { background: var(--c-sage); cursor: default; opacity: .8; }
+/* View takes the room it needs for the product name; Buy now is two fixed
+   words, so it sizes to its content and never squeezes the longer label. */
+.pcard__actions { display: flex; gap: 8px; margin-top: auto; }
+.pcard__actions .pcard__btn { margin-top: 0; font-size: 11px; letter-spacing: .1em; padding: 13px 14px; white-space: nowrap; }
+.pcard__actions .pcard__btn:not(.pcard__btn--buy) { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.pcard__btn--buy { flex: 0 0 auto; border: 0; cursor: pointer; font-family: inherit; background: var(--c-tan); color: var(--c-forest); }
+.pcard__btn--buy:hover { background: var(--c-tan-2); color: var(--c-cream); }
+.pcard__btn--buy[disabled] { background: var(--c-tan); opacity: .6; cursor: default; }
+/* Below this the two labels cannot share a line without truncating the
+   product name, so they stack instead of being cut off. */
+@media (max-width: 560px) {
+  .pcard__actions { flex-direction: column; }
+  .pcard__actions .pcard__btn { flex: 1 1 auto; }
+}
 
 @media (max-width: 900px) {
   .statbar__inner { grid-template-columns: 1fr 1fr; }

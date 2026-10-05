@@ -53,7 +53,21 @@
                 </div>
                 <p class="pcard__copy">{{ card_copy }}</p>
                 {%- if product.available -%}
-                  <a class="pcard__btn product__cta" href="{{ product.url }}">View {{ card_name }} →</a>
+                  {%- comment -%}
+                    Buy now sits beside View for the shopper who already knows
+                    what they want. It only becomes a real one-click add when
+                    the product has a single variant — with options to choose
+                    there is no honest default, so it falls back to the product
+                    page rather than quietly picking one for them.
+                  {%- endcomment -%}
+                  <div class="pcard__actions">
+                    <a class="pcard__btn product__cta" href="{{ product.url }}">View {{ card_name }} →</a>
+                    {%- if product.variants.size == 1 and product.selected_or_first_available_variant.available -%}
+                      <button type="button" class="pcard__btn pcard__btn--buy" data-buy-now data-variant-id="{{ product.selected_or_first_available_variant.id }}">Buy now</button>
+                    {%- else -%}
+                      <a class="pcard__btn pcard__btn--buy" href="{{ product.url }}">Buy now</a>
+                    {%- endif -%}
+                  </div>
                 {%- else -%}
                   <span class="pcard__btn pcard__btn--soldout">Sold Out</span>
                 {%- endif -%}

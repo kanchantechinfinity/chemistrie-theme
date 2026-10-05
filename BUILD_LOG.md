@@ -6,6 +6,36 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Buy now button on product cards
+
+**Task:** add a Buy now button next to View on the product grid, going to the
+cart, for impulse buyers.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| `.pcard__actions` row with View + Buy now | `sections/shop.liquid`, `sections/main-collection.liquid` |
+| Delegated `[data-buy-now]` handler: add variant, then go to `/cart` | `assets/shop-ux.js` |
+| Action-row styling; stacks below 560px | `assets/pages.css` |
+
+One-click add only when the product has a single available variant — with
+options to choose, the button links to the product page instead of guessing a
+variant. Goes to `/cart` rather than the existing drawer: this button is for
+someone who has decided, and the cart page leads to checkout.
+
+Handles `/cart/add.js` refusals (sold out, stock taken between render and
+click) by restoring the button instead of navigating to a cart that never
+received the item.
+
+**Verified:** JS passes `node --check`; CSS braces balanced; both grids carry
+exactly one button each. **Not verified:** not opened in a browser.
+
+**Open question:** "on image clicking it should got to cart" was read as the
+Buy now button going to the cart. The card image still opens the product page.
+
+---
+
 ## 2026-10-01 — Product trust badges: 3 to 5
 
 **Task:** expand the badges under Add to Ritual to five, ordered by strength of
