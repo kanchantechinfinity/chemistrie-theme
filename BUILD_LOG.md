@@ -6,6 +6,24 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Homepage: Shop and Ritual Finder swapped
+
+**Task:** swap the Ritual Finder and collection sections on the home page.
+
+**Shipped.** `templates/index.json` and `templates/page.home.json` — Shop now
+sits above The Ritual Finder in both.
+
+Matched by section `type`, not key: the keys differ between the two files
+(`ritual_raGNG4` / `shop_jAJymM` vs plain `ritual` / `shop`). Only the `order`
+array changed; no section settings touched.
+
+New order: hero -> pillars -> **shop -> ritual** -> founders -> ...
+
+**Verified:** both templates parse; assertion that `shop` now precedes
+`ritual` passes in both. **Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Hero gap closed, proof labels enlarged
 
 **Task:** too much space between hero headline and subhead; labels under the
