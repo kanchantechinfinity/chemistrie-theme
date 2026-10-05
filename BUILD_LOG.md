@@ -6,6 +6,27 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Review badge shows 4.96 (and why it took four pushes)
+
+**Verified live** on Veil, Aura and Velvet: `★ 4.96`, linking to the reviews
+section.
+
+**Root cause of the delay:** `"default": ""` on the `fallback_rating_count`
+setting. An empty string is not a valid schema default. Shopify validates a
+section's schema on upload, keeps the last valid version when it fails, and
+reports nothing back — so the push succeeded, the commit was on `origin/main`,
+and the storefront quietly kept serving `sections/main-product.liquid` from
+two commits earlier while every other file deployed normally.
+
+**How it was found:** `curl` + `grep` on the raw HTML, not WebFetch's markdown.
+The live page still had the class `mprod__reviews-stars` (plural) from commit
+`0751ab3`, which pinned the deployed file to an exact commit.
+
+**Rule:** if one file's changes don't appear while others from the same push
+do, validate that file's `{% schema %}` — don't wait and don't re-push.
+
+---
+
 ## 2026-10-01 — Fixed dead product links (real 404s)
 
 **Found while verifying something else:** `/products/aura` returns 404. The
