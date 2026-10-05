@@ -6,6 +6,32 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Hero copy rewritten for cold traffic
+
+**Task:** replace the hero headline, subhead and CTA with ad-perspective copy
+that says what the brand does.
+
+**Shipped.**
+
+| | New |
+| --- | --- |
+| Headline | Skincare formulated *by pharmacists.* / Five essentials. |
+| Subhead | A simple daily routine of cleanser, serum, lotion and creams, made by licensed pharmacists. |
+| CTA | Find your ritual -> `/pages/the-ritual` |
+
+Applied in **both** `sections/hero.liquid` (schema defaults — `page.home.json`
+stores none and falls through to them) and `templates/index.json` (stored
+settings). The two had already drifted apart.
+
+Also guarded the three `.hero__title-row` spans against being empty — the same
+defect fixed earlier in `page-hero.liquid`. Clearing row 3 would otherwise have
+left a ~100px hole under the headline.
+
+**Verified:** hero schema and both templates parse; defaults and stored
+settings both show the new copy. **Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Cart steppers update in place (no reload)
 
 **Task:** stop the quantity steppers reloading the page on every click.
