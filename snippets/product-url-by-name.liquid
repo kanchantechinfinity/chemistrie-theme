@@ -1,0 +1,29 @@
+{%- comment -%}
+  Resolves a formula name ("Velvet") to that product's real URL.
+
+  Needed because the products are not handled by their short names: Velvet is
+  /products/velvet-foaming-facial-cleanser, so every hand-built
+  "/products/{{ name | downcase }}" link in this theme was a 404.
+
+  Matches on the first segment of the handle rather than `contains`, so a name
+  cannot pick up a bundle or a longer product that merely mentions it.
+  Falls back to the short handle, which is what the old links did, so a product
+  that genuinely is handled that way still works.
+
+  Usage: {%- render 'product-url-by-name', name: 'Velvet' -%}
+{%- endcomment -%}
+{%- liquid
+  assign key = name | downcase | strip
+  assign found = ''
+  for p in collections.all.products
+    assign stem = p.handle | split: '-' | first
+    if stem == key
+      assign found = p.url
+      break
+    endif
+  endfor
+  if found == blank
+    assign found = '/products/' | append: key
+  endif
+  echo found
+-%}

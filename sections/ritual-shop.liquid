@@ -74,7 +74,8 @@
         {%- assign fallback_copy = 'The step that makes everything after it work harder.|A featherlight solution that settles into skin like a veil, hydration without a single ounce of weight.|Effortless hydration, worn every day without a second thought.|The signature renewal cream, formulated around a pharmacist-selected peptide complex, for skin that looks and feels quietly renewed.|A precise, everyday ritual for the areas of skin that deserve focused attention.' | split: '|' -%}
         {%- for name in fallback_names -%}
         <article class="product" data-color="forest">
-          <a class="product__link" href="/products/{{ name | handleize }}" aria-label="{{ name | escape }}"></a>
+          {%- capture prod_url -%}{%- render 'product-url-by-name', name: name -%}{%- endcapture -%}
+          <a class="product__link" href="{{ prod_url | strip }}" aria-label="{{ name | escape }}"></a>
           <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ name | handleize }}" data-title="{{ name | escape }}" data-price="{{ fallback_prices[forloop.index0] }}" data-image="" data-url="#" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg></button>
           <div class="product__media">
             <span class="product__tag">{{ fallback_roles[forloop.index0] | upcase }}</span>
@@ -89,7 +90,7 @@
               </div>
               <span class="product__price">{{ fallback_prices[forloop.index0] }}</span>
             </div>
-            <a class="product__cta" href="/products/{{ name | handleize }}">View {{ name }} →</a>
+            <a class="product__cta" href="{{ prod_url | strip }}">View {{ name }} →</a>
           </div>
         </article>
         {%- endfor -%}

@@ -6,6 +6,33 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Fixed dead product links (real 404s)
+
+**Found while verifying something else:** `/products/aura` returns 404. The
+real handles are full titles — `aura-advanced-renewal-cream`,
+`velvet-foaming-facial-cleanser`, etc.
+
+**Dead links fixed:**
+
+| Where | Link |
+| --- | --- |
+| `sections/actives.liquid` | "Found in product: Velvet & Veil" on all six ingredient cards |
+| `sections/ritual-shop.liquid` | card link + "View Velvet →" CTA |
+
+**Shipped.** New `snippets/product-url-by-name.liquid` resolves a formula name
+to the real product URL by matching the first handle segment (not `contains`,
+so a name can't catch a bundle), falling back to the old short handle.
+
+This is the answer to the earlier "CTAs that 404" request. That audit found
+"no dead internal links" because it checked handles were *consistent*, not
+that they *existed* — the store was password-protected so nothing could be
+resolved. A link audit that never fetches a URL proves nothing.
+
+The two Ritual Finder sections were already safe (they search
+`collections.all.products`).
+
+---
+
 ## 2026-10-01 — Review badge: rating number + star icon
 
 **Task:** show the rating number with a star icon instead of the word
