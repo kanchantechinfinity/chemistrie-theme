@@ -6,6 +6,34 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Cart steppers update in place (no reload)
+
+**Task:** stop the quantity steppers reloading the page on every click.
+
+**Shipped.** `sections/main-cart.liquid` — steppers now POST `/cart/change.js`
+and patch the page from the response:
+
+| Patched from the response | Hook |
+| --- | --- |
+| line total (and struck original) | `data-line-price` |
+| subtotal / estimated total | `data-cart-subtotal`, `data-cart-total` |
+| header bag count | `.nav__bag-count` |
+| free-shipping sentence, fill, met state | `data-ship-text`, `data-ship-fill`, `data-ship-bar` |
+
+Every figure is re-read from the response rather than recalculated in JS, so
+the page cannot drift from what Shopify holds. Line keys go through
+`CSS.escape` — they contain `:` and would break a selector otherwise.
+
+On a failed request the handler reloads rather than leaving a total it cannot
+vouch for. The form and Update cart button are untouched, so the page still
+works with JS off.
+
+**Verified:** extracted JS passes `node --check`, no Liquid leaked into the
+block, all eight hooks present in markup. **Not verified:** not opened in a
+browser.
+
+---
+
 ## 2026-10-01 — Cart quantity steppers; equal card buttons
 
 **Task:** make View and Buy now equal width; add +/- to the cart quantity column.

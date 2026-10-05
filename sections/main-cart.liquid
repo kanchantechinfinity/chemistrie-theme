@@ -12,13 +12,16 @@
 
       {%- if threshold > 0 -%}
         {%- assign remaining = threshold | minus: cart.total_price -%}
-        <div class="cart__ship {% if remaining <= 0 %}cart__ship--met{% endif %}">
-          {%- if remaining > 0 -%}
-            You're {{ remaining | money }} away from <strong>free shipping</strong>.
-          {%- else -%}
-            You've unlocked <strong>free shipping</strong>.
-          {%- endif -%}
-          <span class="cart__ship-bar"><span class="cart__ship-fill" style="width: {% if remaining <= 0 %}100{% else %}{{ cart.total_price | times: 100 | divided_by: threshold }}{% endif %}%;"></span></span>
+        <div class="cart__ship {% if remaining <= 0 %}cart__ship--met{% endif %}" data-ship-bar data-threshold="{{ threshold }}">
+          {%- comment -%} Its own element so the script can replace just this sentence. {%- endcomment -%}
+          <span data-ship-text>
+            {%- if remaining > 0 -%}
+              You're {{ remaining | money }} away from <strong>free shipping</strong>.
+            {%- else -%}
+              You've unlocked <strong>free shipping</strong>.
+            {%- endif -%}
+          </span>
+          <span class="cart__ship-bar"><span class="cart__ship-fill" data-ship-fill style="width: {% if remaining <= 0 %}100{% else %}{{ cart.total_price | times: 100 | divided_by: threshold }}{% endif %}%;"></span></span>
         </div>
       {%- endif -%}
 
@@ -31,7 +34,7 @@
               <span class="cart__thead-price">Total</span>
             </div>
             {%- for item in cart.items -%}
-              <div class="cart__item">
+              <div class="cart__item" data-line-key="{{ item.key }}">
                 <a class="cart__media" href="{{ item.url }}">
                   {%- comment -%}
                     Same approved theme asset the product card and product page
@@ -71,13 +74,13 @@
                     delete something — Remove is right there in the row and says
                     what it does. Typing 0 in the field still works.
                   {%- endcomment -%}
-                  <div class="cart__stepper">
+                  <div class="cart__stepper" data-stepper>
                     <button type="button" class="cart__step" data-qty-step="-1" aria-label="Decrease quantity for {{ item.title | escape }}">&minus;</button>
                     <input class="cart__qty-input" id="updates_{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric">
                     <button type="button" class="cart__step" data-qty-step="1" aria-label="Increase quantity for {{ item.title | escape }}">+</button>
                   </div>
                 </div>
-                <div class="cart__line-price">
+                <div class="cart__line-price" data-line-price>
                   {%- if item.original_line_price != item.final_line_price -%}
                     <s class="cart__line-was">{{ item.original_line_price | money }}</s>
                   {%- endif -%}
@@ -93,7 +96,7 @@
 
           <aside class="cart__summary">
             <h2 class="cart__summary-title">Order summary</h2>
-            <div class="cart__row"><span>Subtotal</span><span>{{ cart.original_total_price | money }}</span></div>
+            <div class="cart__row"><span>Subtotal</span><span data-cart-subtotal>{{ cart.original_total_price | money }}</span></div>
             {%- if cart.cart_level_discount_applications != empty -%}
               {%- for d in cart.cart_level_discount_applications -%}
                 <div class="cart__row cart__row--disc"><span>◆ {{ d.title }}</span><span>−{{ d.total_allocated_amount | money }}</span></div>
@@ -102,7 +105,7 @@
               <div class="cart__row cart__row--disc"><span>Discounts</span><span>−{{ cart.total_discounts | money }}</span></div>
             {%- endif -%}
             {%- if cart.total_discounts > 0 -%}
-              <div class="cart__row cart__row--total"><span>Estimated total</span><span>{{ cart.total_price | money }}</span></div>
+              <div class="cart__row cart__row--total"><span>Estimated total</span><span data-cart-total>{{ cart.total_price | money }}</span></div>
             {%- endif -%}
             <div class="cart__coupon">
               <label class="visually-hidden" for="cart-coupon">Coupon code</label>
@@ -217,44 +220,116 @@
 {% endstylesheet %}
 
 {% javascript %}
-/* Quantity steppers. They write the new value into the same updates[] field
-   the form already posts and then click the real Update cart button, so the
-   whole thing goes through Shopify's normal cart update rather than a second,
-   parallel way of changing quantity that could disagree with it. */
+/* Quantity steppers.
+
+   These talk to /cart/change.js and patch the figures in place. An earlier
+   version wrote into updates[] and clicked Update cart, which was correct but
+   reloaded the whole page on every single click — unusable for anything but a
+   one-off change. The form still works untouched for anyone without JS.
+
+   Every number the page shows for a line or a total gets re-read from the
+   response rather than recalculated here, so the page can never drift from
+   what Shopify actually holds. */
 (function () {
   var form = document.querySelector('.cart__form');
   if (!form) return;
-  var updateBtn = form.querySelector('[name="update"]');
+
+  function money(cents) {
+    return '$' + (Number(cents) / 100).toFixed(2);
+  }
 
   function syncDisabled() {
-    form.querySelectorAll('.cart__stepper').forEach(function (wrap) {
+    form.querySelectorAll('[data-stepper]').forEach(function (wrap) {
       var input = wrap.querySelector('.cart__qty-input');
       var minus = wrap.querySelector('[data-qty-step="-1"]');
       if (input && minus) minus.disabled = (parseInt(input.value, 10) || 0) <= 1;
     });
   }
-  syncDisabled();
+
+  function setBusy(on) {
+    form.querySelectorAll('[data-qty-step]').forEach(function (b) { b.disabled = on; });
+    if (!on) syncDisabled();
+  }
+
+  function paint(cart) {
+    /* line totals */
+    (cart.items || []).forEach(function (item) {
+      var row = form.querySelector('[data-line-key="' + (window.CSS && CSS.escape ? CSS.escape(item.key) : item.key) + '"]');
+      if (!row) return;
+      var cell = row.querySelector('[data-line-price]');
+      if (!cell) return;
+      var was = item.original_line_price !== item.final_line_price
+        ? '<s class="cart__line-was">' + money(item.original_line_price) + '</s>'
+        : '';
+      cell.innerHTML = was + money(item.final_line_price);
+    });
+
+    var sub = document.querySelector('[data-cart-subtotal]');
+    if (sub) sub.textContent = money(cart.original_total_price);
+    var tot = document.querySelector('[data-cart-total]');
+    if (tot) tot.textContent = money(cart.total_price);
+
+    var count = document.querySelector('.nav__bag-count');
+    if (count) count.textContent = cart.item_count;
+
+    var ship = document.querySelector('[data-ship-bar]');
+    if (ship) {
+      var threshold = parseInt(ship.getAttribute('data-threshold'), 10) || 0;
+      var fill = ship.querySelector('[data-ship-fill]');
+      if (threshold > 0) {
+        var remaining = threshold - cart.total_price;
+        var met = remaining <= 0;
+        ship.classList.toggle('cart__ship--met', met);
+        var pct = met ? 100 : Math.round((cart.total_price * 100) / threshold);
+        if (fill) fill.style.width = pct + '%';
+        var text = ship.querySelector('[data-ship-text]');
+        if (text) {
+          text.innerHTML = met
+            ? "You've unlocked <strong>free shipping</strong>."
+            : "You're " + money(remaining) + ' away from <strong>free shipping</strong>.';
+        }
+      }
+    }
+  }
 
   form.addEventListener('click', function (e) {
     var step = e.target.closest('[data-qty-step]');
     if (!step || step.disabled) return;
     e.preventDefault();
-    var wrap = step.closest('.cart__stepper');
+    var wrap = step.closest('[data-stepper]');
+    var row = step.closest('[data-line-key]');
     var input = wrap && wrap.querySelector('.cart__qty-input');
-    if (!input) return;
+    if (!input || !row) return;
+
     var next = (parseInt(input.value, 10) || 0) + parseInt(step.getAttribute('data-qty-step'), 10);
     if (next < 1) next = 1;
+    if (next === (parseInt(input.value, 10) || 0)) return;
     input.value = next;
-    syncDisabled();
-    /* click(), not form.submit(): submit() leaves out the button's own name,
-       and Shopify needs the update parameter to act on updates[]. */
-    form.querySelectorAll('[data-qty-step]').forEach(function (b) { b.disabled = true; });
-    if (updateBtn) updateBtn.click(); else form.submit();
+    setBusy(true);
+
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ id: row.getAttribute('data-line-key'), quantity: next })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (cart) {
+        if (!cart || typeof cart.item_count !== 'number') throw new Error('bad cart');
+        paint(cart);
+        setBusy(false);
+      })
+      .catch(function () {
+        /* Could not confirm what the cart now holds, so stop guessing and let
+           the server redraw it rather than showing a number that may be wrong. */
+        window.location.reload();
+      });
   });
 
   form.addEventListener('change', function (e) {
     if (e.target.classList.contains('cart__qty-input')) syncDisabled();
   });
+
+  syncDisabled();
 }());
 
 (function () {
