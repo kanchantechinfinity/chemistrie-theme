@@ -6,6 +6,29 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Hero gap closed, proof labels enlarged
+
+**Task:** too much space between hero headline and subhead; labels under the
+numbers too small.
+
+**Shipped.**
+
+| Change | From | To |
+| --- | --- | --- |
+| `.hero__copy` gap | `clamp(10px,1.3vw,16px)` | `clamp(6px,0.7vw,10px)` |
+| `.proof__label` | 15.5px / 14.5px mobile | **19px / 17px** |
+| `.proof__label` measure | 24ch | 26ch |
+| `.proof__head` margin-bottom | `clamp(32px,4vw,52px)` | `clamp(24px,2.6vw,34px)` |
+
+The hero title sets `line-height: 1`, so its last row adds almost no space of
+its own — the flex gap was the entire distance to the deck. The proof labels
+sit under 68px numerals, so at 15.5px they read as captions and got skipped.
+
+**Verified:** braces balanced in both files; proof schema parses.
+**Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Hero copy rewritten for cold traffic
 
 **Task:** replace the hero headline, subhead and CTA with ad-perspective copy

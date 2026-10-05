@@ -34,7 +34,7 @@
    Type, colour and copy are unchanged — this is purely scale + alignment. */
 .proof.proof { padding: clamp(56px, 7vw, 92px) var(--pad-x); }
 
-.proof .proof__head { margin-bottom: clamp(32px, 4vw, 52px); }
+.proof .proof__head { margin-bottom: clamp(24px, 2.6vw, 34px); }
 
 .proof .proof__grid {
   max-width: 1200px;
@@ -56,16 +56,18 @@
   justify-content: center;
 }
 
+/* These read as captions under 68px numerals, so they need real size to be
+   read at all - at 15.5px they were being skipped. */
 .proof .proof__label {
-  font-size: 15.5px;
-  line-height: 1.5;
-  max-width: 24ch;
+  font-size: 19px;
+  line-height: 1.45;
+  max-width: 26ch;
   margin-inline: auto;
 }
 
 @media (max-width: 900px) {
   .proof .proof__num { font-size: clamp(38px, 8vw, 56px); }
-  .proof .proof__label { font-size: 14.5px; }
+  .proof .proof__label { font-size: 17px; }
 }
 {% endstylesheet %}
 

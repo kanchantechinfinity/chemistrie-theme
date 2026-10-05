@@ -387,7 +387,10 @@ body.template-product::-webkit-scrollbar { display: none; }
 /* Tight spacing because this column carries a CTA row and trust strip the
    other heroes don't, and it alone sets the band's height. margin-top is 0:
    the column is centred now, so a top margin only pushed it off centre. */
-.hero__copy { display: flex; flex-direction: column; justify-content: center; gap: clamp(10px, 1.3vw, 16px); margin-top: 0; }
+/* The title sets line-height: 1, so its last row leaves almost no space of
+   its own underneath - the flex gap was the whole distance to the deck and
+   read as a hole. */
+.hero__copy { display: flex; flex-direction: column; justify-content: center; gap: clamp(6px, 0.7vw, 10px); margin-top: 0; }
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
