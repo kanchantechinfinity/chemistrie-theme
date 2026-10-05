@@ -263,9 +263,10 @@
       <div class="mprod__buy">
         {%- comment -%}
           The eyebrow shares its line with a jump to the reviews block further
-          down the page. It shows the real rating when the store has one in the
-          standard reviews metafield, and says just "Reviews" when it does not -
-          never a number this theme invented.
+          down the page. It shows the per-product rating when a reviews app has
+          written one to the standard metafield, and otherwise the Rating value
+          from this section's settings. Clearing that setting hides the badge
+          rather than printing an empty one.
         {%- endcomment -%}
         <div class="mprod__eyebrow-row">
           {%- if pd_eyebrow != blank or product.type != blank -%}
