@@ -31,7 +31,7 @@
 
   --maxw: 1440px;
   --pad-x: clamp(24px, 5vw, 80px);
-  --section-pad-y: clamp(40px, 6vw, 80px);
+  --section-pad-y: clamp(28px, 4.2vw, 56px);
 
   /* Ceiling for the article hero, the one hero that sizes off its image's own
      height rather than the shared 1349/650 frame the others use. */
@@ -293,7 +293,7 @@ body.template-product::-webkit-scrollbar { display: none; }
    other page's, which is what put it out of step with them. */
 .hero {
   position: relative;
-  padding: clamp(24px, 3.5vw, 52px) var(--pad-x) clamp(60px, 8vw, 110px);
+  padding: clamp(20px, 2.6vw, 38px) var(--pad-x) clamp(42px, 5.6vw, 76px);
   overflow: hidden;
   background: var(--c-forest-2);
   display: flex;
@@ -853,7 +853,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 
 /* ───────── Vision ───────── */
 .vision {
-  padding: var(--section-pad-y) var(--pad-x) clamp(56px, 7vw, 96px);
+  padding: var(--section-pad-y) var(--pad-x) clamp(40px, 5vw, 68px);
   background: var(--c-cream);
   position: relative;
 }
@@ -1000,7 +1000,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 
 /* ───────── Pillars ───────── */
 .pillars {
-  padding: clamp(56px, 7vw, 96px) var(--pad-x) 0;
+  padding: clamp(40px, 5vw, 68px) var(--pad-x) 0;
   background: var(--c-cream-2);
 }
 .pillars__intro {
@@ -1321,6 +1321,9 @@ body.template-product::-webkit-scrollbar { display: none; }
   grid-template-columns: 1fr 1fr;
   gap: clamp(16px, 2.4vw, 34px);
   align-items: start;
+  /* the portraits sat flush against the band's top edge once the section
+     padding came down - this gives them air without reinstating it */
+  margin-top: clamp(14px, 2.6vw, 38px);
 }
 .founders__fig { position: static; margin: 0; min-width: 0; }
 /* the stagger that used to come from absolute offsets */
@@ -1415,7 +1418,7 @@ body.template-product::-webkit-scrollbar { display: none; }
   overflow: hidden;
 }
 .actives__intro {
-  padding: clamp(48px, 6vw, 88px) var(--pad-x) clamp(20px, 2.4vw, 32px);
+  padding: clamp(34px, 4.2vw, 62px) var(--pad-x) clamp(14px, 1.7vw, 22px);
   position: relative;
 }
 .actives__intro .display-h { margin-top: 12px; }
@@ -1740,7 +1743,7 @@ body.template-product::-webkit-scrollbar { display: none; }
   background: var(--c-forest);
   background: linear-gradient(135deg, #163628 0%, #0c1e15 65%, #143024 100%);
   color: var(--c-cream);
-  padding: clamp(72px, 9vw, 130px) var(--pad-x);
+  padding: clamp(50px, 6.3vw, 90px) var(--pad-x);
   overflow: hidden;
   border-top: 1px solid rgba(200, 170, 122, 0.18);
   border-bottom: 1px solid rgba(200, 170, 122, 0.18);
@@ -2051,7 +2054,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 .footer {
   background: var(--c-forest-2);
   color: var(--c-cream);
-  padding: clamp(60px, 8vw, 100px) var(--pad-x) 0;
+  padding: clamp(42px, 5.6vw, 70px) var(--pad-x) 0;
   position: relative;
   overflow: hidden;
 }
@@ -2670,7 +2673,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 
 /* ── Phone (≤640px) ── */
 @media (max-width: 640px) {
-  :root { --pad-x: 20px; --section-pad-y: 72px; }
+  :root { --pad-x: 20px; --section-pad-y: 48px; }
 
   /* Nav — hide center links, keep wordmark + bag */
   .nav { grid-template-columns: 1fr auto; padding: 14px var(--pad-x); }
@@ -2881,7 +2884,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 }
 
 @media (max-width: 700px) {
-  :root { --section-pad-y: clamp(32px, 6vw, 48px); }
+  :root { --section-pad-y: clamp(24px, 4.5vw, 36px); }
 
   /* Pillars — phone text sizing (tab-card shell sizing lives in pillars.liquid) */
   .pillar__title { font-size: clamp(26px, 8vw, 40px); }

@@ -6,6 +6,34 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Section padding reduced ~30% site-wide
+
+**Task:** reduce top/bottom empty space on all sections; push the founder
+portraits down a little.
+
+**Shipped.**
+
+| Scope | Change |
+| --- | --- |
+| `--section-pad-y` (root) | `clamp(40px,6vw,80px)` -> `clamp(28px,4.2vw,56px)` |
+| `--section-pad-y` @640px | `72px` -> `48px` |
+| `--section-pad-y` @small | `clamp(32px,6vw,48px)` -> `clamp(24px,4.5vw,36px)` |
+| 18 section-level paddings | cut ~30% each |
+| `.founders__media` | `margin-top: clamp(14px,2.6vw,38px)` |
+
+Files: `assets/chemistrie.css`, `assets/pages.css`, and the stylesheet blocks
+in `closing-statement`, `journal-hero`, `main-article`, `proof`, `ritual-faq`,
+`contact-main`, `pillars`.
+
+The token alone was not enough — 18 declarations set their own vertical
+padding and ignore it. Also caught a `72px` mobile override that was *larger*
+than the shrunken desktop maximum, and an inline 120px spacer div on Contact
+that no stylesheet could have reached.
+
+**Verified:** braces balanced in both stylesheets and all seven section blocks.
+
+---
+
 ## 2026-10-01 — Cart checkout button centred and shrunk
 
 **Task:** centre the CHECKOUT label and make the button smaller.
