@@ -714,6 +714,12 @@
 </section>
 
 {% stylesheet %}
+/* The nav is sticky, so an anchor jump would otherwise park this heading
+   underneath it. scroll-margin-top rather than a scroll-behavior change,
+   because html keeps scroll-behavior: auto on purpose - this theme has
+   scroll-scrubbed sections that a smooth scroll would fight. */
+.pdet__reviews { scroll-margin-top: clamp(84px, 11vh, 120px); }
+
 /* .page-section's shared padding-top (up to 160px) stacked on top of .mprod's
    own bottom padding above, leaving a huge combined gap between the buy box
    and this section — match .mprod's tightened spacing so it reads as one

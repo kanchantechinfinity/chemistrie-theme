@@ -6,6 +6,32 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Review jump button on product pages
+
+**Task:** small review button top-right of the product block, linking to the
+reviews section further down the page. All products.
+
+**Shipped.**
+
+| Change | File |
+| --- | --- |
+| `.mprod__eyebrow-row` — eyebrow left, review jump right | `sections/main-product.liquid` |
+| `.mprod__reviews-jump` pill styling | same |
+| `scroll-margin-top` on the reviews block | `sections/product-details.liquid` |
+
+Shows the real rating from `product.metafields.reviews.rating` when the store
+has one, and the word "Reviews" when it does not — no invented number. (The
+4.96 elsewhere on the site is a site-wide average, not per product.)
+
+The `#mprod-reviews` anchor already existed. `scroll-margin-top` keeps the
+heading clear of the sticky nav; `html { scroll-behavior }` left as `auto`
+because this theme has scroll-scrubbed sections a smooth scroll would fight.
+
+**Verified:** section CSS braces balanced, schema parses, div tags balanced,
+anchor target confirmed present.
+
+---
+
 ## 2026-10-01 — Cart DRAWER checkout button (the one actually on screen)
 
 **Task:** the centred/smaller checkout button still looked wrong.

@@ -261,9 +261,30 @@
 
       {%- comment -%} ───── RIGHT: buy box ───── {%- endcomment -%}
       <div class="mprod__buy">
-        {%- if pd_eyebrow != blank or product.type != blank -%}
-          <span class="eyebrow mprod__eyebrow">{{ pd_eyebrow | default: product.type }}</span>
-        {%- endif -%}
+        {%- comment -%}
+          The eyebrow shares its line with a jump to the reviews block further
+          down the page. It shows the real rating when the store has one in the
+          standard reviews metafield, and says just "Reviews" when it does not -
+          never a number this theme invented.
+        {%- endcomment -%}
+        <div class="mprod__eyebrow-row">
+          {%- if pd_eyebrow != blank or product.type != blank -%}
+            <span class="eyebrow mprod__eyebrow">{{ pd_eyebrow | default: product.type }}</span>
+          {%- else -%}
+            <span></span>
+          {%- endif -%}
+          <a class="mprod__reviews-jump" href="#mprod-reviews">
+            <span class="mprod__reviews-stars" aria-hidden="true">★</span>
+            {%- if product.metafields.reviews.rating != blank -%}
+              <span class="mprod__reviews-val">{{ product.metafields.reviews.rating.value }}</span>
+              {%- if product.metafields.reviews.rating_count != blank -%}
+                <span class="mprod__reviews-count">({{ product.metafields.reviews.rating_count }})</span>
+              {%- endif -%}
+            {%- else -%}
+              <span class="mprod__reviews-val">Reviews</span>
+            {%- endif -%}
+          </a>
+        </div>
         {%- assign pd_title = product.title | split: '—' | first | strip -%}
         <h1 class="display-h mprod__title">{{ pd_title }}</h1>
 
@@ -604,7 +625,22 @@
 .mprod__gallery { position: sticky; top: 100px; align-self: start; z-index: 1; }
 .mprod__gallery.is-zooming { z-index: 20; }
 .mprod__buy { align-self: start; }
-.mprod__eyebrow { display: inline-block; margin-bottom: 14px; color: var(--c-tan); }
+/* The eyebrow keeps its own bottom margin; the row just puts the reviews jump
+   opposite it on the same baseline. */
+.mprod__eyebrow-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+.mprod__eyebrow { display: inline-block; margin-bottom: 0; color: var(--c-tan); }
+.mprod__reviews-jump {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--c-line); background: var(--c-cream);
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--c-forest); white-space: nowrap;
+  transition: border-color .25s ease, background .25s ease;
+}
+.mprod__reviews-jump:hover { border-color: var(--c-forest); background: var(--c-tan-3); }
+.mprod__reviews-stars { color: var(--c-tan); font-size: 12px; line-height: 1; }
+.mprod__reviews-count { color: var(--c-ink-mute); }
 /* Pulled left by its own optical side bearing. The display serif carries more
    space to the left of a capital than the uppercase sans beneath it, so at
    matched margins the heading reads as indented against its own subheading. */
