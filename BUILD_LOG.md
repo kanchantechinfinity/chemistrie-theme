@@ -6,6 +6,32 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Cart quantity steppers; equal card buttons
+
+**Task:** make View and Buy now equal width; add +/- to the cart quantity column.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| Both card buttons `flex: 1 1 0` — equal halves from a zero basis | `assets/pages.css` |
+| `.cart__stepper` with -/+ around the quantity input | `sections/main-cart.liquid` |
+| Qty grid column 84px -> 124px; native spinners suppressed | same file |
+| Stepper JS driving the existing cart form | same file |
+
+The steppers write into the same `updates[]` field the form already posts and
+click the real Update cart button — not a parallel `/cart/change.js` path that
+could disagree with it. `click()` rather than `form.submit()`, because
+`submit()` drops the button's name and Shopify needs `update` to act on
+`updates[]`. Minus stops at 1 and disables there: 0 deletes the line, and
+Remove is in the same row for that.
+
+**Verified:** extracted `{% javascript %}` block passes `node --check` and
+contains no Liquid; section CSS and `pages.css` braces balanced.
+**Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Buy now: collection only, photo click, width fix
 
 **Task:** keep Buy now on the collection page only (homepage keeps View alone),

@@ -65,7 +65,17 @@
                 </div>
                 <div class="cart__qty">
                   <label class="visually-hidden" for="updates_{{ item.key }}">Quantity for {{ item.title }}</label>
-                  <input class="cart__qty-input" id="updates_{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric">
+                  {%- comment -%}
+                    The minus stops at 1, not 0. Dropping to 0 deletes the line,
+                    and a stepper people click quickly is the wrong way to
+                    delete something — Remove is right there in the row and says
+                    what it does. Typing 0 in the field still works.
+                  {%- endcomment -%}
+                  <div class="cart__stepper">
+                    <button type="button" class="cart__step" data-qty-step="-1" aria-label="Decrease quantity for {{ item.title | escape }}">&minus;</button>
+                    <input class="cart__qty-input" id="updates_{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric">
+                    <button type="button" class="cart__step" data-qty-step="1" aria-label="Increase quantity for {{ item.title | escape }}">+</button>
+                  </div>
                 </div>
                 <div class="cart__line-price">
                   {%- if item.original_line_price != item.final_line_price -%}
@@ -134,11 +144,11 @@
 .cart__ship-bar { display: block; height: 6px; margin-top: 12px; border-radius: 999px; background: var(--c-line-soft); overflow: hidden; }
 .cart__ship-fill { display: block; height: 100%; background: var(--c-forest); transition: width .5s var(--ease-out); }
 .cart__grid { display: grid; grid-template-columns: 1fr 360px; gap: clamp(32px, 4vw, 64px); align-items: start; }
-.cart__thead { display: grid; grid-template-columns: 90px 1fr 84px 96px; gap: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--c-line); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink-mute); }
+.cart__thead { display: grid; grid-template-columns: 90px 1fr 124px 96px; gap: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--c-line); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink-mute); }
 .cart__thead-product { grid-column: 1 / span 2; }
 .cart__thead-qty { text-align: center; }
 .cart__thead-price { text-align: right; }
-.cart__item { display: grid; grid-template-columns: 90px 1fr 84px 96px; gap: 20px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--c-line-soft); }
+.cart__item { display: grid; grid-template-columns: 90px 1fr 124px 96px; gap: 20px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--c-line-soft); }
 .cart__media { border-radius: 10px; overflow: hidden; background: var(--grad-cream); }
 .cart__img { width: 90px; height: 90px; object-fit: cover; }
 .cart__info { display: flex; flex-direction: column; gap: 4px; }
@@ -147,7 +157,18 @@
 .cart__unit { font-size: 13px; color: var(--c-ink-soft); }
 .cart__remove { margin-top: 6px; font-size: 12px; letter-spacing: .04em; color: var(--c-ink-mute); text-decoration: underline; align-self: flex-start; }
 .cart__remove:hover { color: var(--c-forest); }
-.cart__qty-input { width: 64px; padding: 10px; text-align: center; border: 1px solid var(--c-line); border-radius: 8px; background: var(--c-cream); font-family: var(--ff-body); font-size: 15px; color: var(--c-forest); }
+/* One bordered control, not three: the stepper carries the border and the two
+   buttons sit inside it, so it reads as a single field rather than a row of
+   loose chrome. */
+.cart__stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--c-line); border-radius: 8px; background: var(--c-cream); overflow: hidden; }
+.cart__step { width: 34px; flex: 0 0 auto; border: 0; background: none; cursor: pointer; font-family: var(--ff-body); font-size: 16px; line-height: 1; color: var(--c-forest); transition: background .2s ease, opacity .2s ease; }
+.cart__step:hover { background: var(--c-tan-3); }
+.cart__step[disabled] { opacity: .35; cursor: default; background: none; }
+.cart__qty-input { width: 48px; padding: 10px 0; text-align: center; border: 0; background: none; font-family: var(--ff-body); font-size: 15px; color: var(--c-forest); }
+.cart__qty-input:focus { outline: 2px solid var(--c-forest); outline-offset: -2px; }
+/* the native spinners duplicate the buttons we just added */
+.cart__qty-input::-webkit-outer-spin-button, .cart__qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.cart__qty-input { -moz-appearance: textfield; appearance: textfield; }
 .cart__line-price { font-size: 15px; color: var(--c-forest); text-align: right; white-space: nowrap; }
 .cart__actions { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 28px; flex-wrap: wrap; }
 .cart__continue { font-size: 13px; letter-spacing: .04em; color: var(--c-ink-soft); }
@@ -196,6 +217,46 @@
 {% endstylesheet %}
 
 {% javascript %}
+/* Quantity steppers. They write the new value into the same updates[] field
+   the form already posts and then click the real Update cart button, so the
+   whole thing goes through Shopify's normal cart update rather than a second,
+   parallel way of changing quantity that could disagree with it. */
+(function () {
+  var form = document.querySelector('.cart__form');
+  if (!form) return;
+  var updateBtn = form.querySelector('[name="update"]');
+
+  function syncDisabled() {
+    form.querySelectorAll('.cart__stepper').forEach(function (wrap) {
+      var input = wrap.querySelector('.cart__qty-input');
+      var minus = wrap.querySelector('[data-qty-step="-1"]');
+      if (input && minus) minus.disabled = (parseInt(input.value, 10) || 0) <= 1;
+    });
+  }
+  syncDisabled();
+
+  form.addEventListener('click', function (e) {
+    var step = e.target.closest('[data-qty-step]');
+    if (!step || step.disabled) return;
+    e.preventDefault();
+    var wrap = step.closest('.cart__stepper');
+    var input = wrap && wrap.querySelector('.cart__qty-input');
+    if (!input) return;
+    var next = (parseInt(input.value, 10) || 0) + parseInt(step.getAttribute('data-qty-step'), 10);
+    if (next < 1) next = 1;
+    input.value = next;
+    syncDisabled();
+    /* click(), not form.submit(): submit() leaves out the button's own name,
+       and Shopify needs the update parameter to act on updates[]. */
+    form.querySelectorAll('[data-qty-step]').forEach(function (b) { b.disabled = true; });
+    if (updateBtn) updateBtn.click(); else form.submit();
+  });
+
+  form.addEventListener('change', function (e) {
+    if (e.target.classList.contains('cart__qty-input')) syncDisabled();
+  });
+}());
+
 (function () {
   var btn = document.getElementById('cartCouponApply');
   var input = document.getElementById('cart-coupon');
