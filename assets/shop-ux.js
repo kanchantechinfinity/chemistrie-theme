@@ -147,21 +147,16 @@
       });
   });
 
-  /* Buy now on a product card: add the single variant, then go to the cart.
-     Deliberately a full page move to /cart rather than the drawer used above —
-     this button exists for someone who has decided, and the cart page is the
-     one that leads to checkout. The drawer is still what the normal
-     add-to-cart path opens. */
-  document.addEventListener("click", function (e) {
-    var btn = e.target.closest("[data-buy-now]");
-    if (!btn) return;
-    e.preventDefault();
-    if (btn.disabled) return;
-    var id = btn.getAttribute("data-variant-id");
-    if (!id) return;
-    var original = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = "Adding…";
+  /* Buy now on a product card, from either the button or the photo: add the
+     single variant, then go to the cart. Deliberately a full page move to
+     /cart rather than the drawer used above - these exist for someone who has
+     decided, and the cart page is the one that leads to checkout. The ordinary
+     add-to-cart path still opens the drawer. */
+  function cardBuy(el, restore) {
+    var id = el.getAttribute("data-variant-id");
+    if (!id || el.dataset.busy) return;
+    el.dataset.busy = "1";
+    el.classList.add("is-adding");
     addToCart(id)
       .then(function (res) {
         /* /cart/add.js answers 200 with the line item, or a body carrying a
@@ -171,9 +166,37 @@
         window.location.href = "/cart";
       })
       .catch(function () {
+        delete el.dataset.busy;
+        el.classList.remove("is-adding");
+        if (restore) restore();
+      });
+  }
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-buy-now]");
+    if (btn) {
+      e.preventDefault();
+      if (btn.disabled) return;
+      var original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Adding…";
+      cardBuy(btn, function () {
         btn.disabled = false;
         btn.textContent = original;
       });
+      return;
+    }
+
+    var media = e.target.closest("[data-card-buy]");
+    if (!media) return;
+    /* Leave every click that means "open this somewhere else" alone: a
+       modified click, a middle click, or anything but the primary button.
+       Only a plain left click is treated as intent to buy. */
+    if (e.defaultPrevented) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (typeof e.button === "number" && e.button !== 0) return;
+    e.preventDefault();
+    cardBuy(media, null);
   });
 
   /* Remove line item */

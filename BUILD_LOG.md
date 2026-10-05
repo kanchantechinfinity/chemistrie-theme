@@ -6,6 +6,33 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Buy now: collection only, photo click, width fix
+
+**Task:** keep Buy now on the collection page only (homepage keeps View alone),
+make the card photo add to cart too, and fix the squashed button row.
+
+**Shipped.**
+
+| Change | File(s) |
+| --- | --- |
+| Homepage grid reverted to View only | `sections/shop.liquid` (back to `eb5aba1`) |
+| Photo click adds to cart, plain left click only | `sections/main-collection.liquid`, `assets/shop-ux.js` |
+| `width: auto` inside `.pcard__actions` | `assets/pages.css` |
+
+**The width bug:** `.pcard__btn` has `width: 100%` — it was the card's only
+button. Two of them in a flex row both claimed the full card width as their
+basis, so `flex: 0 0 auto` on Buy now held 100% and crushed View to "VIE…".
+
+**Photo click** keeps the real `href` and only intercepts an unmodified left
+click, so ctrl/cmd/middle-click, crawlers, screen readers and no-JS all still
+reach the product page.
+
+**Verified:** `node --check` passes; CSS braces balanced; homepage card is
+byte-identical to before the Buy now work; collection card carries exactly one
+of each attribute. **Not verified:** not opened in a browser.
+
+---
+
 ## 2026-10-01 — Buy now button on product cards
 
 **Task:** add a Buy now button next to View on the product grid, going to the

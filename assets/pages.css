@@ -92,11 +92,20 @@
 /* View takes the room it needs for the product name; Buy now is two fixed
    words, so it sizes to its content and never squeezes the longer label. */
 .pcard__actions { display: flex; gap: 8px; margin-top: auto; }
-.pcard__actions .pcard__btn { margin-top: 0; font-size: 11px; letter-spacing: .1em; padding: 13px 14px; white-space: nowrap; }
+/* width: auto overrides the base .pcard__btn's width: 100%. Left as 100% both
+   buttons demand the whole card on their own, so the row overflowed and
+   whichever one could not shrink squeezed the other down to "VIE...". */
+.pcard__actions .pcard__btn { width: auto; margin-top: 0; font-size: 11px; letter-spacing: .1em; padding: 13px 12px; white-space: nowrap; }
 .pcard__actions .pcard__btn:not(.pcard__btn--buy) { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .pcard__btn--buy { flex: 0 0 auto; border: 0; cursor: pointer; font-family: inherit; background: var(--c-tan); color: var(--c-forest); }
 .pcard__btn--buy:hover { background: var(--c-tan-2); color: var(--c-cream); }
 .pcard__btn--buy[disabled] { background: var(--c-tan); opacity: .6; cursor: default; }
+/* The photo is a buy target now, so say so with the cursor, and give the tap
+   an acknowledgement - the request goes to the network before the page moves,
+   and a photo that does nothing for half a second reads as a dead click. */
+.pcard__media[data-card-buy] { cursor: pointer; }
+.pcard__media.is-adding { opacity: .62; transition: opacity .2s ease; }
+.pcard__btn--buy.is-adding { opacity: .6; }
 /* Below this the two labels cannot share a line without truncating the
    product name, so they stack instead of being cut off. */
 @media (max-width: 560px) {

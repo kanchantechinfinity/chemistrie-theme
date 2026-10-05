@@ -27,7 +27,17 @@
               <button class="wish-btn" type="button" data-wishlist-toggle data-handle="{{ product.handle }}" data-title="{{ product.title | escape }}" data-price="{{ product.price | money }}" data-image="{{ product.featured_image | image_url: width: 200 }}" data-url="{{ product.url }}" aria-label="Save to wishlist">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.4 12 20 12 20Z"/></svg>
               </button>
-              <a class="pcard__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+              <a class="pcard__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}"
+                {%- comment -%}
+                  The href stays the product page on purpose. The click is only
+                  intercepted by JS, and only for a plain left click, so
+                  ctrl/cmd/middle-click still open the product in a new tab,
+                  crawlers and screen readers still follow a real product link, and
+                  with JS off the card behaves exactly as it always did.
+                {%- endcomment -%}
+                {%- if product.available and product.variants.size == 1 and product.selected_or_first_available_variant.available -%}
+                  data-card-buy data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                {%- endif -%}>
                 {%- capture card_asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}
                 {%- assign card_asset = card_asset | strip -%}
                 {%- comment -%} The first row of cards is above the fold, so lazy-loading them only
