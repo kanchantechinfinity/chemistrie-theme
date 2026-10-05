@@ -6,6 +6,24 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Ingredient cards: "Found in product(s):"
+
+**Task:** add the word "product" to the "Found in:" label on the six
+ingredient cards.
+
+**Shipped.** `sections/actives.liquid` — label now reads "Found in product:"
+for one product and "Found in products:" for more than one, driven by the
+`found_items.size` already computed for the loop.
+
+Pluralised because four of the six cards list a single product; a fixed
+"products" would read as a slip on those.
+
+**Verified:** schema parses, no hardcoded label remains, the row already
+wraps so the longer label is safe. **Not verified in a browser yet** —
+checking the live page after deploy.
+
+---
+
 ## 2026-10-01 — Homepage: Shop and Ritual Finder swapped
 
 **Task:** swap the Ritual Finder and collection sections on the home page.

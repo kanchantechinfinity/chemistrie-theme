@@ -3790,3 +3790,8 @@ Both edits stay inside the existing `.proof .proof__*` compound selectors, which
 User: "replace the ritualfinder section and the collection section up and down in hero page" — swap their order on the home page. Shop ("the collection section") now sits above The Ritual Finder, where it was below.
 Done in **both** home templates again — `templates/index.json` and `templates/page.home.json` — since it is still unconfirmed which one the store serves, and they already differ in content (`page.home.json` also carries `vision` and `testimonials` sections that `index.json` does not). Swapped by locating each section by its `type` rather than its key, because the keys differ between the two files (`ritual_raGNG4`/`shop_jAJymM` in index.json, plain `ritual`/`shop` in page.home.json).
 Order is now hero -> pillars -> **shop -> ritual** -> founders -> … in both; only the two entries in `order` moved, no section settings touched.
+
+## 2026-10-01 — Ingredient cards: "Found in:" becomes "Found in product(s):"
+User wanted the word "product" in the label above the product names on the six ingredient cards. The label was hardcoded `Found in:` in `sections/actives.liquid`.
+**Pluralised rather than fixed.** The same label sits over one name on some cards (Veil, Velvet, Aura, Silken) and two on others (Velvet & Veil), so a single hardcoded "Found in products:" would read as a slip on four of the six. `found_items.size` is already computed one line above for the loop, so the branch is free: "Found in product:" / "Found in products:".
+The row is `flex-wrap: wrap` already, so the longer label cannot break the layout.

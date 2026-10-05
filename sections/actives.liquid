@@ -85,9 +85,17 @@
         {%- if block.settings.found_in != blank -%}
           {%- liquid
             assign found_items = block.settings.found_in | replace: '&', '+' | split: '+'
+            comment
+              Pluralised, because the same label sits over one name on some cards
+              and two on others - "Found in products: Veil" would read as a slip.
+            endcomment
+            assign found_label = 'Found in product:'
+            if found_items.size > 1
+              assign found_label = 'Found in products:'
+            endif
           -%}
           <div class="active-card__found">
-            <span class="active-card__found-label">Found in:</span>
+            <span class="active-card__found-label">{{ found_label }}</span>
             <span class="active-card__found-products">
               {%- for item in found_items -%}
                 {%- assign prod_name = item | strip -%}
