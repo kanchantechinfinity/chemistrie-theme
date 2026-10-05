@@ -6,6 +6,34 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Founder portraits named; layout rebuilt as a grid
+
+**Task:** identify which founder is which; then remove the role line.
+
+**Shipped** (live-verified on chemistrieco.com).
+
+| Change | File |
+| --- | --- |
+| Each portrait wrapped in a `<figure>` with its name below | `sections/founders.liquid` |
+| `.founders__media` absolute collage -> `1fr 1fr` grid, stagger via `margin-top` | `assets/chemistrie.css` |
+| Photo `aspect-ratio: 4/5` instead of filling a fixed parent height | same |
+| One column below 700px | same |
+| Role line and `founderN_role` settings removed | both |
+| Name clearance 14px -> 26px | `assets/chemistrie.css` |
+
+Captions now read simply **Harin** and **Zach**.
+
+Took three attempts. The absolute collage could not hold captions — a caption
+is as wide as its figure and lands where the other oval sits — and shifting
+the photos was tuning around a structural problem, since an absolute figure
+has a fixed height while its contents do not.
+
+**Flagged, not removed:** "Co-founders · Compounding Pharmacists" still appears
+in the signature block under the body paragraphs (`sig_sub`), which is not the
+line under the photos.
+
+---
+
 ## 2026-10-01 — Ingredient cards: "Found in product(s):"
 
 **Task:** add the word "product" to the "Found in:" label on the six
