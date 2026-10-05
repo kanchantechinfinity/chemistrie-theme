@@ -6,6 +6,31 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Review badge: rating number + star icon
+
+**Task:** show the rating number with a star icon instead of the word
+"Reviews", on all products.
+
+**Shipped.** `sections/main-product.liquid`:
+
+- Badge reads `product.metafields.reviews.rating` first, then falls back to a
+  new `fallback_rating` setting (default `4.96`) and optional
+  `fallback_rating_count`.
+- `★` glyph replaced with an inline SVG star.
+- `aria-label` added, since the badge is now an icon and a number with no
+  explanatory text.
+
+The fallback is a setting, not a literal: a reviews app takes over per product
+automatically, the number is editable in one place, and clearing it hides the
+badge rather than rendering an empty one.
+
+**Note:** 4.96 is the site-wide average the trust strip already quotes, not a
+per-product figure. Flagged before building; user asked for it.
+
+**Verified:** schema parses, settings present, braces and div tags balanced.
+
+---
+
 ## 2026-10-01 — Review jump button on product pages
 
 **Task:** small review button top-right of the product block, linking to the

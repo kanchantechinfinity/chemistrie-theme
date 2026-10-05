@@ -273,17 +273,27 @@
           {%- else -%}
             <span></span>
           {%- endif -%}
-          <a class="mprod__reviews-jump" href="#mprod-reviews">
-            <span class="mprod__reviews-stars" aria-hidden="true">★</span>
-            {%- if product.metafields.reviews.rating != blank -%}
-              <span class="mprod__reviews-val">{{ product.metafields.reviews.rating.value }}</span>
-              {%- if product.metafields.reviews.rating_count != blank -%}
-                <span class="mprod__reviews-count">({{ product.metafields.reviews.rating_count }})</span>
-              {%- endif -%}
-            {%- else -%}
-              <span class="mprod__reviews-val">Reviews</span>
-            {%- endif -%}
-          </a>
+          {%- liquid
+            comment
+              A real per-product rating wins whenever a reviews app has written
+              one. The fallback is a theme setting rather than a literal, so the
+              number stays the merchant's to change in one place and is never
+              something the theme made up on its own.
+            endcomment
+            assign rv = product.metafields.reviews.rating.value
+            assign rc = product.metafields.reviews.rating_count
+            if rv == blank
+              assign rv = section.settings.fallback_rating
+              assign rc = section.settings.fallback_rating_count
+            endif
+          -%}
+          {%- if rv != blank -%}
+            <a class="mprod__reviews-jump" href="#mprod-reviews" aria-label="Rated {{ rv }} out of 5 — read the reviews">
+              <svg class="mprod__reviews-star" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+              <span class="mprod__reviews-val">{{ rv }}</span>
+              {%- if rc != blank -%}<span class="mprod__reviews-count">({{ rc }})</span>{%- endif -%}
+            </a>
+          {%- endif -%}
         </div>
         {%- assign pd_title = product.title | split: '—' | first | strip -%}
         <h1 class="display-h mprod__title">{{ pd_title }}</h1>
@@ -639,7 +649,8 @@
   transition: border-color .25s ease, background .25s ease;
 }
 .mprod__reviews-jump:hover { border-color: var(--c-forest); background: var(--c-tan-3); }
-.mprod__reviews-stars { color: var(--c-tan); font-size: 12px; line-height: 1; }
+.mprod__reviews-star { color: var(--c-tan); flex: 0 0 auto; display: block; }
+.mprod__reviews-val { font-weight: 500; }
 .mprod__reviews-count { color: var(--c-ink-mute); }
 /* Pulled left by its own optical side bearing. The display serif carries more
    space to the left of a capital than the uppercase sans beneath it, so at
@@ -1133,6 +1144,10 @@
     { "type": "header", "content": "Pre-order" },
     { "type": "text", "id": "preorder_until", "label": "Pre-order until", "default": "2026-10-07", "info": "YYYY-MM-DD, inclusive. While this date has not passed, the buy button reads Pre-order and every order is tagged. Clear the field to switch pre-orders off early. Note: this changes wording and tagging only — for a variant with no stock to be orderable, set it to 'Continue selling when out of stock' in the product's inventory settings." },
     { "type": "text", "id": "preorder_label", "label": "Button label", "default": "Pre-order" },
+    { "type": "header", "content": "Review badge" },
+    { "type": "paragraph", "content": "Shown beside the eyebrow on every product, linking down to the reviews section. A per-product rating from a reviews app is used instead whenever one exists. Clear the rating to hide the badge." },
+    { "type": "text", "id": "fallback_rating", "label": "Rating", "default": "4.96" },
+    { "type": "text", "id": "fallback_rating_count", "label": "Review count", "default": "", "info": "Optional — shown in brackets after the rating." },
     { "type": "header", "content": "Trust badges" },
     { "type": "paragraph", "content": "Shown under Add to Ritual on every product. Ordered strongest proof first. Clear a field to drop that badge. Write [threshold] to insert the free-shipping amount set in Theme settings." },
     { "type": "text", "id": "trust_badge_1", "label": "Badge 1", "default": "Pharmacist-formulated" },
