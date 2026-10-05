@@ -6,6 +6,30 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-01 — Cart DRAWER checkout button (the one actually on screen)
+
+**Task:** the centred/smaller checkout button still looked wrong.
+
+**Cause:** there are two checkout buttons. The earlier fix hit the cart *page*
+(`.cart__checkout`); the screenshot was the cart *drawer*
+(`.drawer__checkout`, `assets/shop-ux.css`).
+
+**Shipped.** `.drawer__checkout` now:
+
+| | Before | After |
+| --- | --- | --- |
+| centring | `text-align: center` (inert on a flex button) | `justify-content: center` |
+| width | `100%` | `auto`, `min-width: 190px`, `align-self: center` |
+| padding / size | from `.btn` | `13px 34px` / 11.5px |
+
+`text-align` could never have worked: `.btn` is `inline-flex`, so the label is
+a flex item. And `.drawer__foot` is a flex column, where a child that sets a
+width still stretches unless it sets `align-self`.
+
+Both checkout buttons now match.
+
+---
+
 ## 2026-10-01 — Section padding reduced ~30% site-wide
 
 **Task:** reduce top/bottom empty space on all sections; push the founder
