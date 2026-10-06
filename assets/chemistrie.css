@@ -1329,9 +1329,13 @@ body.template-product::-webkit-scrollbar { display: none; }
      padding came down - this gives them air without reinstating it */
   margin-top: clamp(14px, 2.6vw, 38px);
 }
-.founders__fig { position: static; margin: 0; min-width: 0; }
-/* the stagger that used to come from absolute offsets */
-.founders__fig--b { margin-top: clamp(36px, 9vw, 96px); }
+.founders__fig { position: static; margin: 0; min-width: 0; align-self: start; }
+/* No stagger. Both captions sit the same distance below their own photo, but
+   with one figure pushed down they landed at different heights with nothing to
+   compare them against - and each oval's bottom edge is invisible (cream
+   border, pale photo content against a pale page), so the eye read the equal
+   gaps as unequal. Level figures make the two names share a baseline, which is
+   the only arrangement where that reads as deliberate. */
 /* 26px, not 14: the frame is an ellipse, so its lowest point is at the centre
    of the box - exactly where a centred name sits. A gap that looks right
    against a rectangle reads as touching against a curve. */
@@ -2913,9 +2917,8 @@ body.template-product::-webkit-scrollbar { display: none; }
   /* Founders */
   .founders__media { max-width: 100%; }
   .founders__caption { font-size: 11.5px; }
-  /* Two ovals plus two wrapping role lines stop fitting side by side here. */
+  /* Two ovals stop fitting side by side here. */
   .founders__media { grid-template-columns: 1fr; }
-  .founders__fig--b { margin-top: 0; }
 
   /* Actives — phones get the same pinned horizontal scroll as desktop, driven
      by ScrollTrigger, which adds .is-pinned once it takes over. Everything
