@@ -12,7 +12,6 @@
   --c-tan:      #c8aa7a;
   --c-tan-2:    #a78a5e;
   --c-tan-3:    #e8d9bf;
-  --c-gold:     #d4af37;
   --c-cream:    #f0e8db;
   --c-cream-2:  #e6d9c8;
   --c-paper:    #f5edd9;
@@ -156,12 +155,11 @@ body.template-product::-webkit-scrollbar { display: none; }
    read far too loud. Sage keeps the bar in the green family, stays
    distinct from the nav, and forest on --c-sage-3 measures ~8.4:1. */
 .utility-strip {
-  /* A true gold, deliberately outside the tan ramp - the palette's tans are
-     desaturated and never read as gold, which is what was asked for here.
-     Forest text sits on it at 5.92:1, so the strip is still legible at its
-     10.5px uppercase size. Kept as its own token so the one place the site
-     goes properly gold is tunable from the palette block. */
-  background: var(--c-gold);
+  /* --c-tan, the gold already carrying the hero CTA, the review star and the
+     claim-chip borders. No new colour: the strip now reads as the same accent
+     those do rather than introducing a second gold beside them. Forest text
+     sits on it at 5.62:1, legible at this 10.5px uppercase size. */
+  background: var(--c-tan);
   color: var(--c-forest);
   font-size: 10.5px;
   letter-spacing: .2em;
