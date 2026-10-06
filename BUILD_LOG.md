@@ -6,6 +6,27 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-06 — Ritual Finder result: image left, contents right
+
+**Task:** on the final result screen, move the image left and list the
+bundle's products on the right.
+
+**Shipped.** `sections/gift-ritual-finder.liquid`:
+
+- New `.gfinder__result-grid` — `1.25fr 1fr`, one column below 760px.
+- New `.gfinder__includes` column: eyebrow "In this ritual" plus a ruled list
+  of each product's name and subtitle.
+- List built from `res.items`, the same array the add-to-cart call uses, so it
+  cannot disagree with what goes in the bag.
+
+The lineup photo alone never said which bottles were in the set — the labels
+aren't legible at that size.
+
+**Verified:** schema parses, no empty defaults, div/ul tags balanced, and the
+inline JS passes `node --check` with Liquid neutralised.
+
+---
+
 ## 2026-10-06 — Hero headline/subhead gap: an invisible empty row
 
 **Task:** reduce the space between the hero headline and subheadline.

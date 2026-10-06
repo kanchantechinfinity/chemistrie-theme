@@ -173,7 +173,18 @@
       <div class="gfinder__result" data-gf-result hidden>
         <span class="gfinder__result-eyebrow">Your ritual</span>
         <h3 class="display-h gfinder__result-title" data-gf-result-title></h3>
-        <div class="gfinder__shot" data-gf-shot hidden></div>
+        {%- comment -%}
+          The lineup shot and the list of what is in the set, side by side. The
+          photo alone never said which five bottles the visitor was agreeing to
+          buy - the names were only legible to someone who already knew them.
+        {%- endcomment -%}
+        <div class="gfinder__result-grid">
+          <div class="gfinder__shot" data-gf-shot hidden></div>
+          <div class="gfinder__includes" data-gf-includes hidden>
+            <span class="gfinder__includes-label">In this ritual</span>
+            <ul class="gfinder__includes-list" data-gf-includes-list></ul>
+          </div>
+        </div>
         <div class="gfinder__result-actions">
           <button type="button" class="btn btn--primary" data-gf-add>Add the ritual to cart</button>
           <a class="gfinder__restart" href="#" data-gf-restart>Start again</a>
@@ -414,6 +425,30 @@
       shot.hidden = true;
     }
 
+    /* Built from res.items, the same array the add-to-cart call uses, so the
+       list can never disagree with what actually goes in the bag. */
+    var incWrap = root.querySelector('[data-gf-includes]');
+    var incList = root.querySelector('[data-gf-includes-list]');
+    if (incList) {
+      incList.innerHTML = '';
+      (res.items || []).forEach(function (key) {
+        var p = PRODUCTS[key];
+        if (!p) return;
+        var li = document.createElement('li');
+        li.className = 'gfinder__includes-item';
+        var name = document.createElement('span');
+        name.className = 'gfinder__includes-name';
+        name.textContent = p.title;
+        var sub = document.createElement('span');
+        sub.className = 'gfinder__includes-sub';
+        sub.textContent = p.subtitle || '';
+        li.appendChild(name);
+        li.appendChild(sub);
+        incList.appendChild(li);
+      });
+      if (incWrap) incWrap.hidden = incList.children.length === 0;
+    }
+
     var secEl = root.querySelector('[data-gf-secondary]');
     if (res.secondary && PRODUCTS[res.secondary]) {
       secEl.textContent = 'Noted for later: ' + PRODUCTS[res.secondary].title + ', for your secondary focus.';
@@ -598,6 +633,24 @@
 }
 .gfinder__shot img { display: block; width: 100%; height: auto; }
 
+.gfinder__result-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+}
+.gfinder__includes-label { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin-bottom: 12px; }
+.gfinder__includes-list { list-style: none; margin: 0; padding: 0; }
+/* A ruled column, not cards: these are the contents of one set, so they should
+   read as rows of a single object rather than five things to choose between. */
+.gfinder__includes-item { display: flex; flex-direction: column; gap: 2px; padding: 11px 0; border-bottom: 1px solid var(--c-line-soft); }
+.gfinder__includes-item:first-child { padding-top: 0; }
+.gfinder__includes-item:last-child { border-bottom: 0; padding-bottom: 0; }
+.gfinder__includes-name { font-family: var(--ff-display); font-size: clamp(17px, 1.6vw, 20px); color: var(--c-forest); line-height: 1.2; }
+.gfinder__includes-sub { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-ink-mute); }
+@media (max-width: 760px) {
+  .gfinder__result-grid { grid-template-columns: 1fr; }
+}
 .gfinder__result-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: clamp(22px, 2.6vw, 32px); }
 .gfinder__restart { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); border-bottom: 1px solid var(--c-line); padding-bottom: 3px; }
 .gfinder__restart:hover { color: var(--c-forest); border-color: var(--c-forest); }

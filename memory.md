@@ -3875,3 +3875,11 @@ Cause, found by reading the live HTML rather than the stylesheet: a **third `.he
 2. **`sections/hero.liquid` had not reached the live theme since that commit at all**, because its schema carried `"default": ""` on `title_em_accent` — the same invalid-schema pattern that silently blocked `main-product.liquid` earlier the same week. The new headline copy looked live only because copy lives in `templates/index.json`, and templates are not schema-validated; the section file beside it was being rejected and the storefront kept serving the old Liquid.
 Swept every section and snippet schema for empty-string defaults afterwards: `hero.liquid` was the only remaining one, and all schemas now parse. **Added this to the standing checks — `"default": ""` is never valid; omit the key.**
 Also worth recording: removing the key programmatically left a trailing comma, which made the schema unparseable — a second way to get the same silent rejection. Always re-validate the JSON after editing a schema by script.
+
+## 2026-10-06 — Ritual Finder result: lineup shot left, contents listed right
+User: after the questionnaire, put the image on the left and list the products in the bundle on the right.
+`sections/gift-ritual-finder.liquid` showed only the lineup photo for the result. The photo is a flat-lay of five bottles whose labels are barely legible at that size, so nothing on the final screen told the visitor which products they were about to buy — the one screen where that matters most.
+Added `.gfinder__result-grid` (`1.25fr 1fr`, image wider, stacking to one column under 760px) with the shot on the left and a new `.gfinder__includes` column on the right.
+**The list is built from `res.items`, the same array the add-to-cart call iterates**, rather than from a parallel lookup — so what is listed can never disagree with what actually goes in the bag. Each row prints `PRODUCTS[key].title` and `.subtitle`, both already in that map.
+Styled as a ruled column rather than cards: these are the contents of one set, so they should read as rows of a single object, not five things to choose between.
+This section carries its own inline `<script>` with Liquid in it, so `node --check` needs the Liquid neutralised first — `{{ … }}` to `null`, `{% … %}` stripped — then it parses. Worth reusing; it is the only way to syntax-check these sections.
