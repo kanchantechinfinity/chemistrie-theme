@@ -6,6 +6,25 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-06 — Collection sorting fixed (it was doing nothing)
+
+**Task:** default the collection page to Best selling instead of A-Z.
+
+**Bug found and shipped.** `sections/main-collection.liquid` rendered the grid
+from `section.settings.collection` (set to `frontpage` by Shopify admin) while
+the sort toolbar read the URL's `collection`. `?sort_by=` only re-sorts the URL
+collection, so **no sort choice changed the grid**. Now both use the same
+object, with the section setting as the fallback.
+
+**The default itself is an admin setting, not a theme one.**
+`collection.default_sort_by` lives on the collection in Shopify admin
+(Products > Collections > [collection] > Sort > Best selling). Liquid has no
+sales data to sort by, so the theme cannot do it; the only code route is a
+redirect to `?sort_by=best-selling`, which adds a hop on every first visit and
+muddies canonical URLs.
+
+---
+
 ## 2026-10-06 — Claim tags above each product name
 
 **Task:** three short, genuine tags per product, above the name.
