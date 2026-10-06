@@ -26,8 +26,29 @@
       {%- endif -%}
 
       {%- if col.products.size > 0 -%}
+        {%- assign shown = 0 -%}
         <div class="col-grid">
           {%- for product in col.products -%}
+            {%- comment -%}
+              Only list products that belong to the "Collection to display"
+              setting (frontpage), while sorting still runs on the URL's
+              collection. That keeps the sort working AND keeps the grid to the
+              five formulas - /collections/all also holds the seven bundles,
+              which are sold from the Ritual Finder, not browsed as products.
+              Turn "Limit grid" off to list everything the URL collection has.
+            {%- endcomment -%}
+            {%- assign in_scope = true -%}
+            {%- if section.settings.limit_to_collection and section.settings.collection != blank -%}
+              {%- assign in_scope = false -%}
+              {%- for c in product.collections -%}
+                {%- if c.handle == section.settings.collection.handle -%}
+                  {%- assign in_scope = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+            {%- if in_scope -%}
+            {%- assign shown = shown | plus: 1 -%}
             {%- assign card_name = product.title | split: '—' | first | strip -%}
             {%- capture card_copy -%}{%- render 'product-descriptor', product: product -%}{%- endcapture -%}
             {%- assign card_copy = card_copy | strip -%}
@@ -51,7 +72,7 @@
                 {%- comment -%} The first row of cards is above the fold, so lazy-loading them only
                    delayed images the visitor is already looking at. Everything past it stays lazy. {%- endcomment -%}
                 {%- assign card_load = 'lazy' -%}
-                {%- if forloop.index <= 3 -%}{%- assign card_load = 'eager' -%}{%- endif -%}
+                {%- if shown <= 3 -%}{%- assign card_load = 'eager' -%}{%- endif -%}
                 {%- if card_asset != blank -%}
                   <img class="pcard__img" src="{{ card_asset | asset_url }}" alt="{{ card_name | escape }}" loading="{{ card_load }}" decoding="async">
                 {%- elsif product.featured_image -%}
@@ -91,6 +112,7 @@
                 {%- endif -%}
               </div>
             </article>
+            {%- endif -%}
           {%- endfor -%}
         </div>
 
@@ -174,6 +196,7 @@
   "name": "Collection Grid",
   "settings": [
     { "type": "collection", "id": "collection", "label": "Collection to display", "info": "Leave blank to use the current collection; pick \"All\" to show every product." },
+    { "type": "checkbox", "id": "limit_to_collection", "label": "Limit grid to that collection", "default": true, "info": "On: only products that are in the collection above are listed, even when the page URL is a bigger collection like All. Sorting still works. Off: list everything the URL collection has." },
     { "type": "header", "content": "Guided-shopping CTAs" },
     { "type": "paragraph", "content": "Two prompts shown as buttons in a band below the product grid." },
     { "type": "text", "id": "prompt1_question", "label": "Prompt 1 — question", "default": "Not sure where to start?" },

@@ -6,6 +6,21 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-06 — Collection grid restored to five products
+
+**Problem:** the collection page listed 12 products, seven of them bundles.
+
+**Cause:** `8aec730` pointed the grid at the URL's collection (`all`, 12)
+instead of `frontpage` (5) so sorting would work.
+
+**Shipped.** `sections/main-collection.liquid` — grid skips products outside the
+"Collection to display" setting; new `limit_to_collection` checkbox (default
+on). Sorting still runs on the URL collection.
+
+**Verified:** schema parses, no empty defaults, loop/if tags balanced.
+
+---
+
 ## 2026-10-06 — Ritual Finder result: image left, contents right
 
 **Task:** on the final result screen, move the image left and list the
