@@ -1340,6 +1340,10 @@ body.template-product::-webkit-scrollbar { display: none; }
    of the box - exactly where a centred name sits. A gap that looks right
    against a rectangle reads as touching against a curve. */
 .founders__who { margin: 26px 0 0; text-align: center; max-width: 100%; }
+/* Per-name nudges: Harin's sits closer to his photo, Zach's further from his.
+   Only the caption moves - the portraits stay level. */
+.founders__fig--a .founders__who { margin-top: 10px; }
+.founders__fig--b .founders__who { margin-top: 44px; }
 .founders__who-name {
   font-family: var(--ff-display); font-size: clamp(18px, 1.6vw, 23px);
   color: var(--c-forest); line-height: 1.2;
