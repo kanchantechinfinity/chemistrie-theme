@@ -672,15 +672,20 @@
 .mprod__reviews-star { color: var(--c-tan); flex: 0 0 auto; display: block; }
 .mprod__reviews-val { font-weight: 500; }
 .mprod__reviews-count { color: var(--c-ink-mute); }
-/* Claim chips, deliberately quieter than the trust badges under the buy
-   button: no fill and a hairline border, so they read as qualifiers on the
-   name rather than competing with it. */
-.mprod__tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; padding: 0; }
+/* Filled, not outlined. Sage text on a hairline border read as disabled
+   chrome against the cream page and got skipped - which is the one thing a
+   claim chip must not do. These take the accent fill the primary CTA uses, so
+   they carry the same weight the eye already associates with action here.
+   The first one is the strongest claim and keeps the solid accent; the rest
+   step down to the tint so the row has a read order instead of three equal
+   shouts. */
+.mprod__tags { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 14px; padding: 0; }
 .mprod__tag {
-  font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--c-sage); border: 1px solid var(--c-line); border-radius: 999px;
-  padding: 4px 10px; white-space: nowrap; line-height: 1.4;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600;
+  color: var(--c-forest); background: var(--c-tan-3); border: 1px solid var(--c-tan);
+  border-radius: 999px; padding: 5px 12px; white-space: nowrap; line-height: 1.4;
 }
+.mprod__tag:first-child { background: var(--c-tan); border-color: var(--c-tan); }
 /* Pulled left by its own optical side bearing. The display serif carries more
    space to the left of a capital than the uppercase sans beneath it, so at
    matched margins the heading reads as indented against its own subheading. */

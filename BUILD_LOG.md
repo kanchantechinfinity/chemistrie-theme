@@ -6,6 +6,30 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-06 — Claim tags above each product name
+
+**Task:** three short, genuine tags per product, above the name.
+
+**Shipped.** `sections/main-product.liquid`:
+
+| Product | Tags |
+| --- | --- |
+| Velvet | NON-STRIPPING · SENSITIVE-SAFE · NO FILM |
+| Veil | WEIGHTLESS · ABSORBS IN SECONDS · FRAGRANCE-FREE |
+| Cashmere | MAKEUP-READY · LAYERS UNDER SPF · EVERYDAY LIGHT |
+| Aura | NATURALLY BLUE · COPPER PEPTIDES · FRAGRANCE-FREE |
+| Silken | SCAR CARE · BREATHABLE · BOTANICAL OILS |
+
+Every tag restates a line already in that product's copy. Fragrance-free is on
+Veil and Aura only — the two that state it.
+
+**Styling corrected after first attempt.** Sage on a hairline border measured
+**2.95:1** contrast, below the 4.5:1 floor for small text — genuinely hard to
+see. Now forest on `--c-tan` for the first tag (5.62:1) and on `--c-tan-3` for
+the rest (8.96:1), 600 weight.
+
+---
+
 ## 2026-10-01 — Review badge shows 4.96 (and why it took four pushes)
 
 **Verified live** on Veil, Aura and Velvet: `★ 4.96`, linking to the reviews
