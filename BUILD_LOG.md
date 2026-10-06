@@ -6,6 +6,25 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-06 — Pre-order stays on; ship-date tag removed
+
+**Task:** show just "Pre-order" until the merchant changes it; fix the
+"delivered in 2-3 days" confirmation text; apply to existing orders.
+
+**Shipped.** `sections/main-product.liquid`:
+
+| Setting | Before | Now |
+| --- | --- | --- |
+| `preorder_property` | Pre-order. Ships from 8 October 2026 | Pre-order |
+| `preorder_enabled` | (none) | checkbox, default on, the real switch |
+| `preorder_until` | default 2026-10-07, auto-expired | optional, no default |
+
+**Not done, outside the theme:** the 2-3 days wording is not in the theme at
+all; it comes from Shopify checkout / the confirmation email. Existing orders
+cannot be edited from here. Admin steps given to the user.
+
+---
+
 ## 2026-10-06 — Collection grid restored to five products
 
 **Problem:** the collection page listed 12 products, seven of them bundles.

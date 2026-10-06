@@ -409,12 +409,21 @@
             product.available stays false and the Sold Out branch still wins.
           {%- endcomment -%}
           {%- liquid
+            comment
+              On until the merchant switches it off. The end date used to be the
+              only switch, so pre-order mode quietly expired at midnight on the
+              date and the buy button reverted by itself. It is now optional:
+              leave it blank and nothing expires.
+            endcomment
             assign preorder_on = false
-            if section.settings.preorder_until != blank
-              assign now_s = 'now' | date: '%s' | times: 1
-              assign until_s = section.settings.preorder_until | date: '%s' | times: 1 | plus: 86400
-              if until_s > now_s
-                assign preorder_on = true
+            if section.settings.preorder_enabled
+              assign preorder_on = true
+              if section.settings.preorder_until != blank
+                assign now_s = 'now' | date: '%s' | times: 1
+                assign until_s = section.settings.preorder_until | date: '%s' | times: 1 | plus: 86400
+                if until_s <= now_s
+                  assign preorder_on = false
+                endif
               endif
             endif
           -%}
@@ -1175,7 +1184,8 @@
   "name": "Product Main",
   "settings": [
     { "type": "header", "content": "Pre-order" },
-    { "type": "text", "id": "preorder_until", "label": "Pre-order until", "default": "2026-10-07", "info": "YYYY-MM-DD, inclusive. While this date has not passed, the buy button reads Pre-order and every order is tagged. Clear the field to switch pre-orders off early. Note: this changes wording and tagging only — for a variant with no stock to be orderable, set it to 'Continue selling when out of stock' in the product's inventory settings." },
+    { "type": "checkbox", "id": "preorder_enabled", "label": "Pre-order mode", "default": true, "info": "On: the buy button reads Pre-order and sends the shopper to checkout, and every order is tagged. It stays on until you switch it off here." },
+    { "type": "text", "id": "preorder_until", "label": "Auto-end date (optional)", "info": "YYYY-MM-DD, inclusive. Leave blank for no end date. Only fill this in if you want pre-orders to switch themselves off. Note: this changes wording and tagging only. For a variant with no stock to be orderable, set it to Continue selling when out of stock in the product inventory settings." },
     { "type": "text", "id": "preorder_label", "label": "Button label", "default": "Pre-order" },
     { "type": "header", "content": "Review badge" },
     { "type": "paragraph", "content": "Shown beside the eyebrow on every product, linking down to the reviews section. A per-product rating from a reviews app is used instead whenever one exists. Clear the rating to hide the badge." },
@@ -1188,7 +1198,7 @@
     { "type": "text", "id": "trust_badge_3", "label": "Badge 3", "default": "Made in Houston" },
     { "type": "text", "id": "trust_badge_4", "label": "Badge 4", "default": "Free shipping over $[threshold]" },
     { "type": "text", "id": "trust_badge_5", "label": "Badge 5", "default": "Easy returns" },
-    { "type": "text", "id": "preorder_property", "label": "Order tag", "default": "Pre-order. Ships from 8 October 2026", "info": "Shown under the product in the checkout order summary, where the card details are entered, and saved with the order. The cart page and drawer do not print it. Keep \"Pre-order\" as the leading word if you filter orders on it." },
+    { "type": "text", "id": "preorder_property", "label": "Order tag", "default": "Pre-order", "info": "Shown under the product in the checkout order summary and saved with the order, so pre-orders can be picked out at fulfilment. Add a ship date here yourself when you are ready to promise one." },
     { "type": "textarea", "id": "preorder_note", "label": "Note under the button", "default": "Pre-order now.", "info": "Leave empty to show no note at all." }
   ],
   "presets": [{ "name": "Product Main" }]
