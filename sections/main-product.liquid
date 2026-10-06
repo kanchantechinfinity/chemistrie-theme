@@ -690,7 +690,24 @@
    matched margins the heading reads as indented against its own subheading. */
 .mprod__title { margin: 0 0 8px -0.045em; }
 .mprod__subhead { font-family: var(--ff-body); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 16px; }
-.mprod__benefit { font-family: var(--ff-display); font-size: 20px; font-style: italic; color: var(--c-ink-soft); margin: 0 0 22px; max-width: none; }
+/* The lede, not a caption. It was 20px italic at --c-ink-soft, which is forest
+   at 70% opacity - legible on paper, but italic serif in a faded tone is the
+   visual language of a footnote, so the one sentence that explains the product
+   was the easiest thing on the page to skip. Now upright, full-strength forest
+   (10.2:1 on cream against 6.8:1 before), a size up, with a tan rule marking it
+   as the line to read first. */
+.mprod__benefit {
+  font-family: var(--ff-display);
+  font-size: clamp(20px, 1.9vw, 25px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--c-forest);
+  margin: 0 0 24px;
+  padding-left: 14px;
+  border-left: 2px solid var(--c-tan);
+  max-width: none;
+}
 
 .mprod__rating { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; font-size: 13px; color: var(--c-ink-mute); }
 .mprod__rating-stars { color: var(--c-tan); letter-spacing: .08em; font-size: 13px; }
