@@ -54,6 +54,7 @@
 {%- case pd_key -%}
   {%- when 'velvet' -%}
     {%- assign pd_eyebrow = 'Chemistrie Essentials' -%}
+    {%- assign pd_tags = 'NON-STRIPPING,SENSITIVE-SAFE,NO FILM' -%}
     {%- assign pd_routine_am = 'Velvet (Cleanse) → Veil (Treat) → Cashmere (Moisturize) → Your Own SPF (Protect)' -%}
     {%- assign pd_routine_pm = 'Velvet (Cleanse) → Veil (Treat) → Aura (Renew)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -77,6 +78,7 @@
     </ol>{%- endcapture -%}
   {%- when 'veil' -%}
     {%- assign pd_eyebrow = 'Chemistrie Essentials' -%}
+    {%- assign pd_tags = 'WEIGHTLESS,ABSORBS IN SECONDS,FRAGRANCE-FREE' -%}
     {%- assign pd_routine_am = 'Velvet (Cleanse) → Veil (Treat) → Cashmere (Moisturize) → Your Own SPF (Protect)' -%}
     {%- assign pd_routine_pm = 'Velvet (Cleanse) → Veil (Treat) → Aura (Renew)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -102,6 +104,7 @@
     </ol>{%- endcapture -%}
   {%- when 'aura' -%}
     {%- assign pd_eyebrow = 'Chemistrie Signature' -%}
+    {%- assign pd_tags = 'NATURALLY BLUE,COPPER PEPTIDES,FRAGRANCE-FREE' -%}
     {%- assign pd_routine_am = blank -%}
     {%- assign pd_routine_pm = 'Velvet (Cleanse) → Veil (Treat) → Aura (Renew)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -125,6 +128,7 @@
     </ol>{%- endcapture -%}
   {%- when 'cashmere' -%}
     {%- assign pd_eyebrow = 'Chemistrie Essentials' -%}
+    {%- assign pd_tags = 'MAKEUP-READY,LAYERS UNDER SPF,EVERYDAY LIGHT' -%}
     {%- assign pd_routine_am = 'Velvet → Veil → Cashmere → Your Own SPF' -%}
     {%- assign pd_routine_pm = 'Velvet → Veil → Aura (Cashmere may also be layered in the evening if additional hydration is desired.)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -148,6 +152,7 @@
     </ol>{%- endcapture -%}
   {%- when 'silken' -%}
     {%- assign pd_eyebrow = 'Chemistrie Precision' -%}
+    {%- assign pd_tags = 'SCAR CARE,BREATHABLE,BOTANICAL OILS' -%}
     {%- assign pd_routine_am = 'Velvet → Veil → Cashmere → Your Own SPF (apply Silken to targeted areas after Veil and before moisturizer)' -%}
     {%- assign pd_routine_pm = 'Velvet → Veil → Aura (apply Silken to targeted areas after Veil and before moisturizer)' -%}
     {%- capture pd_warnings -%}<ul class="pdet__warnlist">
@@ -296,6 +301,20 @@
             </a>
           {%- endif -%}
         </div>
+        {%- comment -%}
+          Between the eyebrow and the name: the eyebrow says which tier the
+          product belongs to, the tags say what it does. Products without a tag
+          list - the bundles - render nothing rather than an empty row.
+        {%- endcomment -%}
+        {%- if pd_tags != blank -%}
+          <ul class="mprod__tags">
+            {%- assign pd_tag_list = pd_tags | split: ',' -%}
+            {%- for t in pd_tag_list -%}
+              {%- assign t = t | strip -%}
+              {%- if t != blank -%}<li class="mprod__tag">{{ t }}</li>{%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
         {%- assign pd_title = product.title | split: '—' | first | strip -%}
         <h1 class="display-h mprod__title">{{ pd_title }}</h1>
 
@@ -653,6 +672,15 @@
 .mprod__reviews-star { color: var(--c-tan); flex: 0 0 auto; display: block; }
 .mprod__reviews-val { font-weight: 500; }
 .mprod__reviews-count { color: var(--c-ink-mute); }
+/* Claim chips, deliberately quieter than the trust badges under the buy
+   button: no fill and a hairline border, so they read as qualifiers on the
+   name rather than competing with it. */
+.mprod__tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; padding: 0; }
+.mprod__tag {
+  font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--c-sage); border: 1px solid var(--c-line); border-radius: 999px;
+  padding: 4px 10px; white-space: nowrap; line-height: 1.4;
+}
 /* Pulled left by its own optical side bearing. The display serif carries more
    space to the left of a capital than the uppercase sans beneath it, so at
    matched margins the heading reads as indented against its own subheading. */
