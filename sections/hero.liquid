@@ -12,24 +12,32 @@
     <div class="hero__copy">
       <h1 class="hero__title" aria-label="{{ section.settings.title_aria }}">
         {%- comment -%}
-          Guarded: the headline is three rows only when it needs three. An
-          unguarded empty row still takes a full line-height, which at this
-          type size is a 100px hole under the headline.
+          Stripped before testing, not just `!= blank`. Liquid treats only an
+          empty string or nil as blank, so a field holding a space or a stray
+          newline passes the test and renders an empty row - which at this type
+          size with line-height 1 is a ~66px hole under the headline. That is
+          exactly what was sitting between the headline and the deck.
         {%- endcomment -%}
-        {%- if section.settings.title_word_1 != blank or section.settings.title_em_1 != blank -%}
+        {%- liquid
+          assign t_word_1 = section.settings.title_word_1 | strip
+          assign t_em_1 = section.settings.title_em_1 | strip
+          assign t_row_2 = section.settings.title_row_2 | strip
+          assign t_accent = section.settings.title_em_accent | strip
+        -%}
+        {%- if t_word_1 != blank or t_em_1 != blank -%}
           <span class="hero__title-row">
-            {%- if section.settings.title_word_1 != blank -%}<span class="hero__title-word">{{ section.settings.title_word_1 }}</span>{%- endif -%}
-            {%- if section.settings.title_em_1 != blank -%}<em class="hero__title-em">{{ section.settings.title_em_1 }}</em>{%- endif -%}
+            {%- if t_word_1 != blank -%}<span class="hero__title-word">{{ t_word_1 }}</span>{%- endif -%}
+            {%- if t_em_1 != blank -%}<em class="hero__title-em">{{ t_em_1 }}</em>{%- endif -%}
           </span>
         {%- endif -%}
-        {%- if section.settings.title_row_2 != blank -%}
+        {%- if t_row_2 != blank -%}
           <span class="hero__title-row">
-            <span class="hero__title-word">{{ section.settings.title_row_2 }}</span>
+            <span class="hero__title-word">{{ t_row_2 }}</span>
           </span>
         {%- endif -%}
-        {%- if section.settings.title_em_accent != blank -%}
+        {%- if t_accent != blank -%}
           <span class="hero__title-row">
-            <em class="hero__title-em hero__title-em--accent">{{ section.settings.title_em_accent }}</em>
+            <em class="hero__title-em hero__title-em--accent">{{ t_accent }}</em>
           </span>
         {%- endif -%}
       </h1>
@@ -110,8 +118,7 @@
     {
       "type": "text",
       "id": "title_em_accent",
-      "label": "Title row 3 accent",
-      "default": ""
+      "label": "Title row 3 accent"
     },
     {
       "type": "textarea",

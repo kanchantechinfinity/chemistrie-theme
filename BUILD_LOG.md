@@ -6,6 +6,29 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-06 — Hero headline/subhead gap: an invisible empty row
+
+**Task:** reduce the space between the hero headline and subheadline.
+
+**Cause:** a third `.hero__title-row` was rendering with an empty `<em>` —
+~66px of dead space at 66px/line-height 1.
+
+**Two faults, both mine:**
+
+1. The guard tested `!= blank`; Liquid only counts `nil`/`""` as blank, so a
+   stray space or newline passed it. All four title fields are now `| strip`-ed
+   before testing.
+2. **`sections/hero.liquid` had not deployed since `73dea8e`** — its schema
+   carried `"default": ""` on `title_em_accent`, the same invalid pattern that
+   silently blocked `main-product.liquid`. The new headline *looked* live only
+   because copy lives in `templates/index.json`, and templates aren't
+   schema-validated.
+
+**Swept every section and snippet schema** for empty-string defaults — all
+clean and parsing now.
+
+---
+
 ## 2026-10-06 — Collection sorting fixed (it was doing nothing)
 
 **Task:** default the collection page to Best selling instead of A-Z.
