@@ -6,6 +6,29 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - Policy and FAQ pages work without a template step
+
+**Problem:** the new pages showed no content - the Theme template had not been
+assigned in admin.
+
+**Shipped.**
+
+| Change | File |
+| --- | --- |
+| `only_on_handle` setting on the policy and FAQ sections | `sections/policy-content.liquid`, `sections/faq-groups.liquid` |
+| All three documents in the default page template, each tied to its handle | `templates/page.json` |
+| Dedicated templates removed (one copy of each document) | - |
+| Empty body band skipped when the page has no content | `sections/main-page.liquid` |
+| Default page hero centred (was split across two grid columns) | `sections/main-page.liquid` |
+
+**No admin step needed** for Shipping Information, Refund & Exchange Policy, or
+the FAQ: a page with handle `faq` will show the FAQ as soon as it is created.
+
+**Verified:** screenshots of both live pages; other default-template pages
+unaffected.
+
+---
+
 ## 2026-10-07 - Ritual list numbers and gold labels
 
 **Shipped** (`sections/gift-ritual-finder.liquid`): step numbers use lining
