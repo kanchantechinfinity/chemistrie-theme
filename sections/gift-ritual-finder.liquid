@@ -831,6 +831,9 @@
 }
 .gfinder__shot img { display: block; width: 100%; height: auto; }
 
+/* Result state only: the card's question-sized padding (up to 56px top and
+   bottom) is what pushed the last row below the fold at 1440x900. */
+.gfinder__card:has(.gfinder__result:not([hidden])) { padding-top: clamp(20px, 2.2vw, 30px); padding-bottom: clamp(20px, 2.2vw, 30px); }
 .gfinder__result-head {
   display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap;
   margin-bottom: clamp(16px, 2vw, 24px);
@@ -872,12 +875,12 @@
   background: var(--c-cream);
   border: 1px solid var(--c-line-soft);
   border-radius: 16px;
-  padding: clamp(16px, 1.8vw, 22px);
+  padding: clamp(14px, 1.6vw, 20px);
   box-shadow: 0 22px 44px -32px rgba(26, 58, 45, .38);
 }
 .gfinder__why .gfinder__ex { border-top: 3px solid var(--c-tan); }
 .gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 8px; }
-.gfinder__ex-p { font-size: 14px; line-height: 1.6; color: var(--c-ink-soft); margin: 0 0 8px; }
+.gfinder__ex-p { font-size: 13.5px; line-height: 1.55; color: var(--c-ink-soft); margin: 0 0 7px; }
 .gfinder__ex-p:last-child { margin-bottom: 0; }
 /* the opening "You told us..." sentence is the headline of the why card */
 .gfinder__why .gfinder__ex-p:first-of-type {
@@ -885,7 +888,7 @@
   font-size: clamp(17px, 1.5vw, 19px); line-height: 1.35; color: var(--c-forest);
   margin-bottom: 10px;
 }
-.gfinder__secondary { margin: 12px 0 0; font-size: 13.5px; color: var(--c-ink-soft); font-style: italic; }
+.gfinder__secondary { margin: 10px 0 0; font-size: 13.5px; color: var(--c-ink-soft); font-style: italic; }
 
 /* Below desktop the three columns get too narrow: photo and list side by side,
    the why card full width under them; then one column on phones. */
