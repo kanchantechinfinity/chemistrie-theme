@@ -6,6 +6,14 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - One-screen finder layout UNDONE
+
+Restored `sections/gift-ritual-finder.liquid` to `f90eb22` at the user's
+request. Kept only the `[hidden]` guard that stops "Question 6 of 6" showing
+under the result. The entry below describes a layout that is no longer live.
+
+---
+
 ## 2026-10-07 - Ritual Finder result fits one desktop screen
 
 **Task:** hide "Question 6 of 6" on the result; fit the result in one desktop view.
