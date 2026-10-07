@@ -6,6 +6,32 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - Ritual Finder result fits one desktop screen
+
+**Task:** hide "Question 6 of 6" on the result; fit the result in one desktop view.
+
+**Shipped** (`sections/gift-ritual-finder.liquid`):
+
+- `.gfinder [hidden] { display: none !important; }` - the progress bar's own
+  `display: block` had been overriding `hidden`.
+- Desktop layout: title + actions in one row; photo | ritual list | why card;
+  other cards in one row below. Tighter rhythm on desktops 900px tall or less.
+- Page scrolls the finished card into view below the sticky header.
+
+**Verified in headless Chrome against the live site** (fullest result):
+
+| Viewport | Card height | Space below header | Fits |
+| --- | --- | --- | --- |
+| 1920x1080 | 799px | 1005px | yes |
+| 1536x864 | 671px | 789px | yes |
+| 1440x900 | 671px | 825px | yes |
+| 1280x800 | 681px | 725px | yes |
+| 1366x768 | 670px | 693px | yes |
+
+Before: 1,444px at 1440x900. Phones stack in one column.
+
+---
+
 ## 2026-10-07 - Finder cards on one row; non-document content removed
 
 **Task:** all explanation cards on one line; remove anything not in the
