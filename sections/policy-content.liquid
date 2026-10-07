@@ -1,13 +1,13 @@
 {%- comment -%}
-  A policy / information block: title and intro on the left, titled parts on
-  the right. Used twice on /pages/shipping-returns - once for shipping, once
-  for returns - each with its own anchor so the page can be jumped into.
-  Self-contained for the same reason as faq-groups.
+  A policy / information block: intro on the left, titled parts on the right.
+  Used on /pages/shipping-information and /pages/refund-and-exchange-policy,
+  one document each; the page hero carries the title, so show_title is off
+  there. Self-contained for the same reason as faq-groups.
 {%- endcomment -%}
 <section class="pol pol--{{ section.settings.tone }}" id="{{ section.settings.anchor | default: 'policy' }}" data-screen-label="{{ section.settings.title | escape }}">
   <div class="pol__inner">
     <header class="pol__head">
-      <h2 class="pol__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.show_title -%}<h2 class="pol__title">{{ section.settings.title }}</h2>{%- endif -%}
       {%- assign meta = section.settings.meta | strip -%}
       {%- if meta != blank -%}<p class="pol__meta">{{ meta }}</p>{%- endif -%}
       <div class="pol__intro">{{ section.settings.intro }}</div>
@@ -58,6 +58,7 @@
       { "value": "paper", "label": "Paper" }
     ] },
     { "type": "text", "id": "title", "label": "Title", "default": "Policy" },
+    { "type": "checkbox", "id": "show_title", "label": "Show title", "default": true, "info": "Turn off when the page heading above already says it." },
     { "type": "text", "id": "meta", "label": "Small line under the title", "info": "For example: Last Updated: October 2026. Leave blank for none." },
     { "type": "richtext", "id": "intro", "label": "Introduction", "default": "<p>Introduction.</p>" }
   ],

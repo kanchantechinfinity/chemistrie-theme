@@ -96,7 +96,7 @@
           "type": "note",
           "settings": {
             "heading": "Order Issues",
-            "body": "<p>If your order arrives damaged, incorrect, or is missing an item, please contact us within 7 days of delivery and include your order number, a description of the issue, and photographs when applicable.</p><p>For returns and exchanges, please review our <a href=\"/pages/shipping-returns#returns\">Return &amp; Exchange Policy</a> before contacting our team.</p>"
+            "body": "<p>If your order arrives damaged, incorrect, or is missing an item, please contact us within 7 days of delivery and include your order number, a description of the issue, and photographs when applicable.</p><p>For returns and exchanges, please review our <a href=\"/pages/refund-and-exchange-policy\">Return &amp; Exchange Policy</a> before contacting our team.</p>"
           }
         }
       },

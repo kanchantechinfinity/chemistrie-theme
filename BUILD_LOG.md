@@ -6,6 +6,30 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - Shipping Information and Refund & Exchange Policy templates
+
+**Task:** the user created two separate pages; wire them up.
+
+**Shipped.**
+
+| Item | File |
+| --- | --- |
+| Shipping Information page template | `templates/page.shipping-information.json` |
+| Refund & Exchange Policy page template | `templates/page.refund-and-exchange-policy.json` |
+| `show_title` setting on the policy block | `sections/policy-content.liquid` |
+| Footer: Shipping Information + Refund & Exchange Policy links | `sections/footer.liquid` |
+| Policy links in the FAQ and Contact copy repointed | `templates/page.faq.json`, `templates/page.contact.json` |
+| Combined Shipping & Returns template removed | - |
+
+**Action needed from the user:** in each page's editor, set Theme template
+to `shipping-information` / `refund-and-exchange-policy`. A theme cannot do
+this itself.
+
+**Verified:** 57 schemas and 19 templates cross-checked, no problems; no links
+to the removed page remain.
+
+---
+
 ## 2026-10-07 - One-screen finder layout UNDONE
 
 Restored `sections/gift-ritual-finder.liquid` to `f90eb22` at the user's

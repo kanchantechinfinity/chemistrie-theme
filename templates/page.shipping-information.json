@@ -3,23 +3,19 @@
     "page-hero": {
       "type": "page-hero",
       "settings": {
-        "eyebrow": "— Help —",
-        "heading": "Shipping &amp;<br/><em>returns.</em>",
+        "heading": "Shipping<br/><em>Information.</em>",
         "show_visual": true,
-        "hero_fallback_asset": "hero-collection.jpg",
-        "cta_label": "Shipping Information",
-        "cta_url": "#shipping",
-        "cta2_label": "Return & Exchange Policy",
-        "cta2_url": "#returns"
+        "hero_fallback_asset": "hero-collection.jpg"
       }
     },
-    "shipping": {
+    "policy": {
       "type": "policy-content",
       "settings": {
         "anchor": "shipping",
         "tone": "cream",
         "title": "Shipping Information",
-        "intro": "<p>We carefully prepare every Chemistrie order to ensure your products arrive ready to become part of your ritual.</p>"
+        "intro": "<p>We carefully prepare every Chemistrie order to ensure your products arrive ready to become part of your ritual.</p>",
+        "show_title": false
       },
       "blocks": {
         "part_1": {
@@ -97,57 +93,10 @@
         "part_8",
         "part_9"
       ]
-    },
-    "returns": {
-      "type": "policy-content",
-      "settings": {
-        "anchor": "returns",
-        "tone": "paper",
-        "title": "Return & Exchange Policy",
-        "intro": "<p>At Chemistrie, we want you to feel confident in every purchase. Because skincare products require careful handling and product integrity is important to us, we have established the following return and exchange policy.</p>",
-        "meta": "Last Updated: October 2026"
-      },
-      "blocks": {
-        "part_1": {
-          "type": "part",
-          "settings": {
-            "heading": "Returns & Exchanges",
-            "body": "<p>Eligible products may be returned within 15 days of delivery for either:</p><ul><li>An exchange for another Chemistrie product, or</li><li>Chemistrie store credit.</li></ul><p>Chemistrie does not issue refunds to the original form of payment for standard returns.</p><p>To be eligible for a return or exchange, the product must be:</p><ul><li>Unopened</li><li>Unused</li><li>In its original packaging</li><li>In the same condition in which it was received</li></ul><p>We reserve the right to decline a return if the product does not meet these eligibility requirements.</p>"
-          }
-        },
-        "part_2": {
-          "type": "part",
-          "settings": {
-            "heading": "Opened or Used Products",
-            "body": "<p>For safety, quality, and product-integrity reasons, we cannot accept standard returns or exchanges for products that have been opened or used.</p><p>If you believe your product arrived damaged, defective, incorrect, or otherwise compromised, please contact us as described below rather than submitting it as a standard return.</p>"
-          }
-        },
-        "part_3": {
-          "type": "part",
-          "settings": {
-            "heading": "How to Start a Return or Exchange",
-            "body": "<p>To request a return or exchange, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> within 15 days of delivery.</p><p>Please include:</p><ul><li>Your name</li><li>Order number</li><li>Product you would like to return or exchange</li><li>Reason for the request</li></ul><p>Please do not send products back without first contacting Chemistrie.</p><p>If your return is approved, our team will provide instructions for returning your product.</p><p>Approved returns must be shipped back within 30 days of the original delivery date.</p>"
-          }
-        },
-        "part_4": {
-          "type": "part",
-          "settings": {
-            "heading": "Return Shipping",
-            "body": "<p>Customers are responsible for return shipping costs associated with standard returns and exchanges.</p><p>Original shipping charges are not eligible for store credit.</p><p>If the return is the result of an error by Chemistrie, such as receiving an incorrect or damaged product, Chemistrie will cover the appropriate shipping costs.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "part_1",
-        "part_2",
-        "part_3",
-        "part_4"
-      ]
     }
   },
   "order": [
     "page-hero",
-    "shipping",
-    "returns"
+    "policy"
   ]
 }
