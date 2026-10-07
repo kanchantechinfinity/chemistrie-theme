@@ -171,25 +171,31 @@
 
       {%- comment -%} Result {%- endcomment -%}
       <div class="gfinder__result" data-gf-result hidden>
-        <span class="gfinder__result-eyebrow" data-gf-result-eyebrow>Your ritual</span>
-        <h3 class="display-h gfinder__result-title" data-gf-result-title></h3>
         {%- comment -%}
-          The lineup shot and the list of what is in the set, side by side. The
-          photo alone never said which five bottles the visitor was agreeing to
-          buy - the names were only legible to someone who already knew them.
+          Laid out to fit one desktop screen: title and the add-to-cart action
+          share the top row; photo, ritual list and the "why we chose this"
+          card share the middle row; the remaining cards sit in one row below.
+          Stacks on narrower screens.
         {%- endcomment -%}
+        <div class="gfinder__result-head">
+          <div class="gfinder__result-heading">
+            <span class="gfinder__result-eyebrow" data-gf-result-eyebrow>Your ritual</span>
+            <h3 class="display-h gfinder__result-title" data-gf-result-title></h3>
+          </div>
+          <div class="gfinder__result-actions">
+            <button type="button" class="btn btn--primary" data-gf-add>Add the ritual to cart</button>
+            <a class="gfinder__restart" href="#" data-gf-restart>Start again</a>
+          </div>
+        </div>
         <div class="gfinder__result-grid">
           <div class="gfinder__shot" data-gf-shot hidden></div>
           <div class="gfinder__includes" data-gf-includes hidden>
             <span class="gfinder__includes-label">Your ritual</span>
             <ol class="gfinder__includes-list" data-gf-includes-list></ol>
           </div>
+          <div class="gfinder__why" data-gf-why hidden></div>
         </div>
         <div class="gfinder__explain" data-gf-explain hidden></div>
-        <div class="gfinder__result-actions">
-          <button type="button" class="btn btn--primary" data-gf-add>Add the ritual to cart</button>
-          <a class="gfinder__restart" href="#" data-gf-restart>Start again</a>
-        </div>
         <p class="gfinder__secondary" data-gf-secondary hidden></p>
       </div>
     </div>
@@ -552,14 +558,20 @@
 
   function renderExplain(res) {
     var box = root.querySelector('[data-gf-explain]');
+    var why = root.querySelector('[data-gf-why]');
     if (!box) return;
     box.innerHTML = '';
+    if (why) { why.innerHTML = ''; why.hidden = true; }
 
     var core = (CORE_COPY[res.matrixName] || []).slice();
     if (core.length && res.ritual === 'Refining' && REFINING_GOAL[answers.improve]) {
       core[0] = core[0].replace('skin refinement is your primary goal', REFINING_GOAL[answers.improve]);
     }
-    if (core.length) box.appendChild(explainBlock('Why we chose this ritual for you', core));
+    if (core.length) {
+      // the core card sits beside the photo and list; the rest go in the row below
+      var coreCard = explainBlock('Why we chose this ritual for you', core);
+      if (why) { why.appendChild(coreCard); why.hidden = false; } else { box.appendChild(coreCard); }
+    }
 
     var sec = SECONDARY_COPY[answers.secondary];
     var samePrimary = PRIMARY_KEY[answers.improve] && PRIMARY_KEY[answers.improve] === SECONDARY_KEY[answers.secondary];
@@ -638,6 +650,12 @@
     if (progress) progress.hidden = true;
     if (nav) nav.hidden = true;
     result.hidden = false;
+    var cardEl = root.querySelector('.gfinder__card');
+    if (cardEl) {
+      var header = document.querySelector('.nav');
+      var offset = header ? header.getBoundingClientRect().height : 0;
+      window.scrollTo({ top: cardEl.getBoundingClientRect().top + window.pageYOffset - offset - 12, behavior: 'smooth' });
+    }
   }
 
   var submitBtn = root.querySelector('[data-gf-submit]');
@@ -737,6 +755,10 @@
   padding: clamp(40px, 5vw, 72px) clamp(16px, 3vw, 40px) clamp(48px, 6vw, 88px);
 }
 .gfinder__inner { max-width: 1240px; margin: 0 auto; }
+/* Several classes here set their own display, which overrides the browser's
+   [hidden] rule - that is how "Question 6 of 6" stayed on screen under the
+   result even though the script hides it. One guard for the whole section. */
+.gfinder [hidden] { display: none !important; }
 .gfinder__head { text-align: center; margin-bottom: clamp(22px, 2.8vw, 36px); }
 .gfinder__title { margin: 12px 0 0; }
 .display-h.gfinder__title { color: var(--c-forest); }
@@ -800,43 +822,49 @@
 /* compound selector so this wins over .display-h's own margin: 16px 0 0
    regardless of stylesheet order — otherwise the top gap was whichever of
    the two loaded last. */
-.display-h.gfinder__result-title { margin: 2px 0 clamp(18px, 2.2vw, 26px); }
+.display-h.gfinder__result-title { margin: 2px 0 0; font-size: clamp(30px, 3vw, 42px); line-height: 1.05; }
 /* Sources are 2080px, so this can be raised again without losing sharpness —
    2x holds up to 1040px. width/height auto means it scales whole, never crops. */
 .gfinder__shot {
-  max-width: 680px; margin: 0 auto clamp(18px, 2.2vw, 26px);
+  max-width: 680px; margin: 0 auto;
   border-radius: 18px; overflow: hidden; background: var(--c-cream);
 }
 .gfinder__shot img { display: block; width: 100%; height: auto; }
 
+.gfinder__result-head {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap;
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+.gfinder__result-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; }
+.gfinder__restart { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); border-bottom: 1px solid var(--c-line); padding-bottom: 3px; }
+.gfinder__restart:hover { color: var(--c-forest); border-color: var(--c-forest); }
+
+/* photo | ritual list | why-we-chose card */
 .gfinder__result-grid {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: clamp(20px, 3vw, 40px);
-  /* start, not center: the list is shorter than the photo, and centring left its
-     first line floating well below the photo's top edge. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, .9fr) minmax(0, 1.25fr);
+  gap: clamp(18px, 2.2vw, 30px);
   align-items: start;
 }
-.gfinder__includes-label { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin-bottom: 12px; }
+.gfinder__result-grid .gfinder__shot { max-width: none; margin: 0; }
+.gfinder__includes-label { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin-bottom: 10px; }
 .gfinder__includes-list { list-style: none; margin: 0; padding: 0; }
 /* A ruled column, not cards: these are the contents of one set, so they should
    read as rows of a single object rather than five things to choose between. */
-.gfinder__includes-item { display: flex; align-items: flex-start; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--c-line-soft); }
-.gfinder__includes-num { flex: 0 0 auto; min-width: 18px; font-family: var(--ff-display); font-style: italic; font-size: 17px; line-height: 1.25; color: var(--c-tan-2); }
-.gfinder__includes-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.gfinder__includes-item { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--c-line-soft); }
+.gfinder__includes-num { flex: 0 0 auto; min-width: 16px; font-family: var(--ff-display); font-style: italic; font-size: 16px; line-height: 1.25; color: var(--c-tan-2); }
+.gfinder__includes-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .gfinder__includes-item:first-child { padding-top: 0; }
 .gfinder__includes-item:last-child { border-bottom: 0; padding-bottom: 0; }
-.gfinder__includes-name { font-family: var(--ff-display); font-size: clamp(17px, 1.6vw, 20px); color: var(--c-forest); line-height: 1.2; }
-.gfinder__includes-sub { font-size: 13.5px; line-height: 1.5; color: var(--c-ink-soft); }
-/* The personalised explanation as cards, all on one row. The core "why we
-   chose this ritual" card gets the larger share of the width because it
-   carries three paragraphs; the others split the rest evenly. Stretch keeps
-   every card the height of the tallest. One column on narrow screens. */
+.gfinder__includes-name { font-family: var(--ff-display); font-size: clamp(16px, 1.4vw, 18px); color: var(--c-forest); line-height: 1.2; }
+.gfinder__includes-sub { font-size: 13px; line-height: 1.45; color: var(--c-ink-soft); }
+
+/* Cards: the why-we-chose card in the middle row, the rest in one row below. */
 .gfinder__explain {
-  margin-top: clamp(28px, 3.6vw, 44px);
+  margin-top: clamp(16px, 2vw, 22px);
   display: flex;
   align-items: stretch;
-  gap: clamp(14px, 1.8vw, 22px);
+  gap: clamp(12px, 1.6vw, 20px);
 }
 .gfinder__ex {
   flex: 1 1 0;
@@ -844,32 +872,32 @@
   background: var(--c-cream);
   border: 1px solid var(--c-line-soft);
   border-radius: 16px;
-  padding: clamp(20px, 2.2vw, 28px);
+  padding: clamp(16px, 1.8vw, 22px);
   box-shadow: 0 22px 44px -32px rgba(26, 58, 45, .38);
 }
-.gfinder__ex:first-child {
-  flex-grow: 1.7;
-  border-top: 3px solid var(--c-tan);
-}
-@media (max-width: 900px) {
-  .gfinder__explain { flex-direction: column; }
-}
-.gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 12px; }
-.gfinder__ex-p { font-size: 15px; line-height: 1.7; color: var(--c-ink-soft); margin: 0 0 10px; }
+.gfinder__why .gfinder__ex { border-top: 3px solid var(--c-tan); }
+.gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 8px; }
+.gfinder__ex-p { font-size: 14px; line-height: 1.6; color: var(--c-ink-soft); margin: 0 0 8px; }
 .gfinder__ex-p:last-child { margin-bottom: 0; }
-/* the opening "You told us..." sentence is the headline of the core card */
-.gfinder__ex:first-child .gfinder__ex-p:first-of-type {
+/* the opening "You told us..." sentence is the headline of the why card */
+.gfinder__why .gfinder__ex-p:first-of-type {
   font-family: var(--ff-display); font-style: italic;
-  font-size: clamp(19px, 1.9vw, 23px); line-height: 1.4; color: var(--c-forest);
-  margin-bottom: 14px;
+  font-size: clamp(17px, 1.5vw, 19px); line-height: 1.35; color: var(--c-forest);
+  margin-bottom: 10px;
+}
+.gfinder__secondary { margin: 12px 0 0; font-size: 13.5px; color: var(--c-ink-soft); font-style: italic; }
+
+/* Below desktop the three columns get too narrow: photo and list side by side,
+   the why card full width under them; then one column on phones. */
+@media (max-width: 1024px) {
+  .gfinder__result-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .gfinder__why { grid-column: 1 / -1; }
+  .gfinder__explain { flex-direction: column; }
 }
 @media (max-width: 760px) {
   .gfinder__result-grid { grid-template-columns: 1fr; }
+  .gfinder__result-head { flex-direction: column; align-items: flex-start; }
 }
-.gfinder__result-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: clamp(22px, 2.6vw, 32px); }
-.gfinder__restart { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); border-bottom: 1px solid var(--c-line); padding-bottom: 3px; }
-.gfinder__restart:hover { color: var(--c-forest); border-color: var(--c-forest); }
-.gfinder__secondary { margin: 16px 0 0; font-size: 13.5px; color: var(--c-ink-soft); font-style: italic; }
 
 @media (max-width: 760px) {
   /* single column below the two-up breakpoint, for options and the name/email
