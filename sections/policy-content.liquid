@@ -4,6 +4,14 @@
   one document each; the page hero carries the title, so show_title is off
   there. Self-contained for the same reason as faq-groups.
 {%- endcomment -%}
+{%- comment -%}
+  only_on_handle: when set, the section renders only on the page with that
+  handle. That lets it live in the default page template and show the right
+  document on /pages/<handle> without anyone having to pick a theme template
+  for the page in admin.
+{%- endcomment -%}
+{%- assign only_on = section.settings.only_on_handle | strip -%}
+{%- if only_on == blank or only_on == page.handle -%}
 <section class="pol pol--{{ section.settings.tone }}" id="{{ section.settings.anchor | default: 'policy' }}" data-screen-label="{{ section.settings.title | escape }}">
   <div class="pol__inner">
     <header class="pol__head">
@@ -22,6 +30,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 
 {% stylesheet %}
 .pol { padding: clamp(36px, 5vw, 72px) var(--pad-x); scroll-margin-top: clamp(84px, 11vh, 120px); }
@@ -52,6 +61,7 @@
 {
   "name": "Policy block",
   "settings": [
+    { "type": "text", "id": "only_on_handle", "label": "Only show on page (handle)", "info": "Leave blank to always show. Set to a page handle, e.g. shipping-information, to show this only on that page." },
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "policy", "info": "Used for #links into this block." },
     { "type": "select", "id": "tone", "label": "Background", "default": "cream", "options": [
       { "value": "cream", "label": "Cream" },

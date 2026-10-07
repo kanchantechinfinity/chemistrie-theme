@@ -5,6 +5,14 @@
   Same visual language (display-serif questions, hairline rows, plus/minus
   icon), its own class names.
 {%- endcomment -%}
+{%- comment -%}
+  only_on_handle: when set, the section renders only on the page with that
+  handle. That lets it live in the default page template and show the right
+  document on /pages/<handle> without anyone having to pick a theme template
+  for the page in admin.
+{%- endcomment -%}
+{%- assign only_on = section.settings.only_on_handle | strip -%}
+{%- if only_on == blank or only_on == page.handle -%}
 <section class="fq" data-screen-label="FAQ">
   <div class="fq__inner">
     {%- assign open_list = false -%}
@@ -44,6 +52,7 @@
   </div>
 </section>
 <noscript><style>.fq__a { grid-template-rows: 1fr !important; }</style></noscript>
+{%- endif -%}
 
 {% stylesheet %}
 .fq { background: var(--c-cream); padding: clamp(36px, 5vw, 72px) var(--pad-x) clamp(48px, 6vw, 88px); }
@@ -106,6 +115,7 @@
 {
   "name": "FAQ groups",
   "settings": [
+    { "type": "text", "id": "only_on_handle", "label": "Only show on page (handle)", "info": "Leave blank to always show. Set to a page handle, e.g. shipping-information, to show this only on that page." },
     { "type": "text", "id": "closing_heading", "label": "Closing heading", "default": "Still have a question?" },
     { "type": "richtext", "id": "closing_text", "label": "Closing text", "default": "<p>We're here to help.</p>" },
     { "type": "text", "id": "closing_prompt", "label": "Closing prompt", "default": "Not sure where to begin?" },

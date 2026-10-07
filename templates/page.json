@@ -1,6 +1,444 @@
 {
   "sections": {
-    "main-page": { "type": "main-page" }
+    "main-page": {
+      "type": "main-page"
+    },
+    "shipping-information": {
+      "type": "policy-content",
+      "settings": {
+        "anchor": "shipping",
+        "tone": "cream",
+        "title": "Shipping Information",
+        "intro": "<p>We carefully prepare every Chemistrie order to ensure your products arrive ready to become part of your ritual.</p>",
+        "show_title": false,
+        "only_on_handle": "shipping-information"
+      },
+      "blocks": {
+        "part_1": {
+          "type": "part",
+          "settings": {
+            "heading": "Where We Ship",
+            "body": "<p>Chemistrie currently ships within the United States only.</p><p>International shipping is not available at this time.</p>"
+          }
+        },
+        "part_2": {
+          "type": "part",
+          "settings": {
+            "heading": "Processing Time",
+            "body": "<p>Orders are typically processed and shipped within 1–2 business days after your order is placed.</p><p>Business days do not include weekends or holidays.</p><p>During periods of unusually high order volume, processing may take longer. If there is a significant delay affecting your order, our team will contact you.</p>"
+          }
+        },
+        "part_3": {
+          "type": "part",
+          "settings": {
+            "heading": "Shipping Rates",
+            "body": "<p>All Chemistrie Rituals receive complimentary shipping.</p><p>Shipping charges for individual-product orders are calculated and displayed at checkout before your purchase is completed.</p>"
+          }
+        },
+        "part_4": {
+          "type": "part",
+          "settings": {
+            "heading": "Delivery Time",
+            "body": "<p>Estimated delivery times shown at checkout begin after your order has been processed and transferred to the shipping carrier.</p><p>Carrier delivery estimates are provided for convenience but are not guaranteed by Chemistrie. Weather, carrier disruptions, holidays, and other circumstances outside our control may affect delivery.</p>"
+          }
+        },
+        "part_5": {
+          "type": "part",
+          "settings": {
+            "heading": "Order Tracking",
+            "body": "<p>Once your order ships, you will receive a shipping confirmation with tracking information so you can follow your package's progress.</p><p>Please allow time for the carrier to update tracking information after your shipping confirmation is received.</p>"
+          }
+        },
+        "part_6": {
+          "type": "part",
+          "settings": {
+            "heading": "Shipping Address",
+            "body": "<p>Please review your shipping address carefully before completing your order.</p><p>If you notice an error after placing your order, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> as soon as possible.</p><p>Order changes and cancellations may be requested within 24 hours of placing your order. We will make reasonable efforts to accommodate your request, but once an order has entered fulfillment or shipped, we may no longer be able to change the shipping address.</p>"
+          }
+        },
+        "part_7": {
+          "type": "part",
+          "settings": {
+            "heading": "Damaged or Incorrect Orders",
+            "body": "<p>If your order arrives damaged or you receive an incorrect item, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> within 7 days of delivery.</p><p>Please include your order number, a description of the issue, and photos of the product and packaging when applicable.</p><p>Our team will review the issue and determine the appropriate resolution. If an error is ours, Chemistrie will cover the appropriate costs associated with correcting the order.</p>"
+          }
+        },
+        "part_8": {
+          "type": "part",
+          "settings": {
+            "heading": "Missing Packages",
+            "body": "<p>If your tracking information shows that your package has not been delivered within the expected timeframe, contact us and we can help review the shipment.</p><p>If tracking shows your package as delivered but you cannot locate it, please first:</p><ul><li>Check around the delivery location.</li><li>Confirm the shipping address on your order.</li><li>Check with household members or neighbors when appropriate.</li><li>Review any delivery information or photographs provided by the carrier.</li></ul><p>If you still cannot locate your package, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> and our team will help determine the appropriate next steps.</p>"
+          }
+        },
+        "part_9": {
+          "type": "part",
+          "settings": {
+            "heading": "Questions About Your Shipment?",
+            "body": "<p>For questions about an order or shipment, contact:</p><p><a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "part_1",
+        "part_2",
+        "part_3",
+        "part_4",
+        "part_5",
+        "part_6",
+        "part_7",
+        "part_8",
+        "part_9"
+      ]
+    },
+    "refund-and-exchange-policy": {
+      "type": "policy-content",
+      "settings": {
+        "anchor": "returns",
+        "tone": "paper",
+        "title": "Return & Exchange Policy",
+        "intro": "<p>At Chemistrie, we want you to feel confident in every purchase. Because skincare products require careful handling and product integrity is important to us, we have established the following return and exchange policy.</p>",
+        "meta": "Last Updated: October 2026",
+        "show_title": false,
+        "only_on_handle": "refund-and-exchange-policy"
+      },
+      "blocks": {
+        "part_1": {
+          "type": "part",
+          "settings": {
+            "heading": "Returns & Exchanges",
+            "body": "<p>Eligible products may be returned within 15 days of delivery for either:</p><ul><li>An exchange for another Chemistrie product, or</li><li>Chemistrie store credit.</li></ul><p>Chemistrie does not issue refunds to the original form of payment for standard returns.</p><p>To be eligible for a return or exchange, the product must be:</p><ul><li>Unopened</li><li>Unused</li><li>In its original packaging</li><li>In the same condition in which it was received</li></ul><p>We reserve the right to decline a return if the product does not meet these eligibility requirements.</p>"
+          }
+        },
+        "part_2": {
+          "type": "part",
+          "settings": {
+            "heading": "Opened or Used Products",
+            "body": "<p>For safety, quality, and product-integrity reasons, we cannot accept standard returns or exchanges for products that have been opened or used.</p><p>If you believe your product arrived damaged, defective, incorrect, or otherwise compromised, please contact us as described below rather than submitting it as a standard return.</p>"
+          }
+        },
+        "part_3": {
+          "type": "part",
+          "settings": {
+            "heading": "How to Start a Return or Exchange",
+            "body": "<p>To request a return or exchange, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> within 15 days of delivery.</p><p>Please include:</p><ul><li>Your name</li><li>Order number</li><li>Product you would like to return or exchange</li><li>Reason for the request</li></ul><p>Please do not send products back without first contacting Chemistrie.</p><p>If your return is approved, our team will provide instructions for returning your product.</p><p>Approved returns must be shipped back within 30 days of the original delivery date.</p>"
+          }
+        },
+        "part_4": {
+          "type": "part",
+          "settings": {
+            "heading": "Return Shipping",
+            "body": "<p>Customers are responsible for return shipping costs associated with standard returns and exchanges.</p><p>Original shipping charges are not eligible for store credit.</p><p>If the return is the result of an error by Chemistrie, such as receiving an incorrect or damaged product, Chemistrie will cover the appropriate shipping costs.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "part_1",
+        "part_2",
+        "part_3",
+        "part_4"
+      ]
+    },
+    "faq": {
+      "type": "faq-groups",
+      "blocks": {
+        "group_1": {
+          "type": "group",
+          "settings": {
+            "heading": "About Chemistrie"
+          }
+        },
+        "faq_01": {
+          "type": "faq",
+          "settings": {
+            "question": "What is Chemistrie?",
+            "answer": "<p>Chemistrie is a pharmacist-formulated skincare collection built around purposeful formulas and a simplified approach to skincare. Each product has a defined role and is designed to work beautifully on its own or as part of a complete Chemistrie Ritual.</p>"
+          }
+        },
+        "faq_02": {
+          "type": "faq",
+          "settings": {
+            "question": "What does pharmacist-formulated mean?",
+            "answer": "<p>Our approach to skincare is shaped by the principles pharmacists bring to formulation: careful ingredient selection, compatibility, consistency, and attention to detail.</p><p>We believe an effective skincare ritual doesn't need to be unnecessarily complicated. Chemistrie focuses on purposeful formulas and helping you understand exactly where each product belongs in your routine.</p>"
+          }
+        },
+        "faq_03": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need to use the entire Chemistrie collection?",
+            "answer": "<p>No. Every Chemistrie product can stand on its own.</p><p>You can begin with a single product, build a focused ritual around your skincare goals, or use the complete collection. If you're not sure where to begin, our Ritual Finder can help you find the right starting point.</p>"
+          }
+        },
+        "faq_04": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I know which Chemistrie products are right for me?",
+            "answer": "<p>Start with our Ritual Finder. Answer a few questions about your skin and your goals, and we'll recommend a Chemistrie Ritual designed around your needs.</p><p><a href=\"/pages/the-ritual\">Find Your Ritual</a></p>"
+          }
+        },
+        "group_2": {
+          "type": "group",
+          "settings": {
+            "heading": "Products & Your Ritual"
+          }
+        },
+        "faq_05": {
+          "type": "faq",
+          "settings": {
+            "question": "What products are in the Chemistrie collection?",
+            "answer": "<p>The collection includes five purposeful formulas:</p><p><strong>Velvet — Foaming Facial Cleanser</strong><br>A daily cleanser that gently cleanses the skin and prepares it for the rest of your ritual.</p><p><strong>Veil — Serum</strong><br>A lightweight serum designed to support hydration and the appearance of healthy-looking skin.</p><p><strong>Aura — Advanced Renewal Cream</strong><br>Our advanced renewal formula and the centerpiece of many Chemistrie Rituals.</p><p><strong>Silken — Skin Refining Gel</strong><br>A targeted formula designed to improve the appearance and feel of fully healed areas of skin where refinement is desired.</p><p><strong>Cashmere — Lightweight Lotion</strong><br>An everyday moisturizer designed to leave skin feeling hydrated, soft, and comfortable.</p>"
+          }
+        },
+        "faq_06": {
+          "type": "faq",
+          "settings": {
+            "question": "In what order should I use my Chemistrie products?",
+            "answer": "<p>Your individual ritual may vary, but a typical Chemistrie routine looks like:</p><p><strong>Morning:</strong><br>Velvet → Veil → Cashmere → SPF</p><p><strong>Evening:</strong><br>Velvet → Veil → Aura</p><p>Silken is a targeted product rather than a universal daily step and should be incorporated where appropriate.</p><p>Always follow the directions provided with each individual product.</p>"
+          }
+        },
+        "faq_07": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I still need sunscreen?",
+            "answer": "<p>Yes. Sunscreen remains an important part of a complete daytime skincare routine. Apply your preferred broad-spectrum SPF as the final step of your morning ritual.</p>"
+          }
+        },
+        "faq_08": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the difference between Aura and Cashmere?",
+            "answer": "<p>Cashmere is our lightweight everyday moisturizer, designed to support hydration while leaving skin feeling soft and comfortable.</p><p>Aura is our Advanced Renewal Cream and serves a different role within your ritual. Depending on your routine, Aura may replace or complement your usual nighttime moisturizer.</p>"
+          }
+        },
+        "faq_09": {
+          "type": "faq",
+          "settings": {
+            "question": "Where does Silken fit into my ritual?",
+            "answer": "<p>Silken is intended for targeted use rather than as a required full-face step. Apply it to the appropriate fully healed area according to the product directions, then continue with the remaining steps of your ritual as appropriate.</p>"
+          }
+        },
+        "faq_10": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use Chemistrie with skincare products I already own?",
+            "answer": "<p>Yes. You don't have to replace your entire skincare routine to use Chemistrie.</p><p>Because skincare formulas and active ingredients vary considerably, introduce new products thoughtfully and pay attention to how your skin responds. If you're unsure how a prescription product, active ingredient, or treatment fits into your Chemistrie Ritual, consult your healthcare professional.</p>"
+          }
+        },
+        "faq_11": {
+          "type": "faq",
+          "settings": {
+            "question": "Are Chemistrie products fragrance-free?",
+            "answer": "<p>Chemistrie products are formulated without added fragrance.</p>"
+          }
+        },
+        "faq_12": {
+          "type": "faq",
+          "settings": {
+            "question": "Where can I find the ingredients for each product?",
+            "answer": "<p>The complete ingredient list for each formula is available on its individual product page and product packaging.</p><p>If you have a known allergy or sensitivity, review the ingredient list carefully before use.</p>"
+          }
+        },
+        "group_3": {
+          "type": "group",
+          "settings": {
+            "heading": "Using Chemistrie"
+          }
+        },
+        "faq_13": {
+          "type": "faq",
+          "settings": {
+            "question": "How much product should I use?",
+            "answer": "<p>Follow the directions provided with each individual product. More isn't necessarily better. Using the recommended amount helps you get the intended experience from your formula.</p>"
+          }
+        },
+        "faq_14": {
+          "type": "faq",
+          "settings": {
+            "question": "How quickly should I expect to see results?",
+            "answer": "<p>Skincare takes consistency. Your experience will depend on the product, your skin, your existing routine, and how consistently you use it.</p><p>Some benefits, such as how hydrated or soft your skin feels, may be noticeable sooner than visible changes in your skin's overall appearance. Give your ritual time and evaluate your results consistently rather than expecting an overnight transformation.</p>"
+          }
+        },
+        "faq_15": {
+          "type": "faq",
+          "settings": {
+            "question": "Should I introduce all of my Chemistrie products at once?",
+            "answer": "<p>If your skin tends to be sensitive or you're making a significant change to your current routine, introducing products gradually can make it easier to understand how your skin responds to each formula.</p>"
+          }
+        },
+        "faq_16": {
+          "type": "faq",
+          "settings": {
+            "question": "What should I do if a product irritates my skin?",
+            "answer": "<p>Discontinue use if irritation occurs. Chemistrie products are for external use only, and contact with the eyes should be avoided.</p><p>If irritation is significant, persistent, or concerning, consult an appropriate healthcare professional.</p>"
+          }
+        },
+        "faq_17": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use Chemistrie while pregnant or breastfeeding?",
+            "answer": "<p>Pregnancy and breastfeeding may change which skincare ingredients are appropriate for you. We recommend reviewing the ingredients in your Chemistrie products with your physician or other qualified healthcare professional before use during pregnancy or while breastfeeding.</p>"
+          }
+        },
+        "faq_18": {
+          "type": "faq",
+          "settings": {
+            "question": "Are Chemistrie products medications?",
+            "answer": "<p>No. Chemistrie skincare products are cosmetics. Depending on the individual product, they are intended to cleanse, moisturize, refine, or improve the appearance and feel of the skin.</p><p>They are not intended to diagnose, treat, cure, or prevent disease.</p>"
+          }
+        },
+        "faq_19": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I store my Chemistrie products?",
+            "answer": "<p>Follow any storage instructions provided with the individual product. In general, keep products securely closed and avoid unnecessary exposure to excessive heat or direct sunlight.</p>"
+          }
+        },
+        "group_4": {
+          "type": "group",
+          "settings": {
+            "heading": "Orders & Shipping"
+          }
+        },
+        "faq_20": {
+          "type": "faq",
+          "settings": {
+            "question": "Where does Chemistrie ship?",
+            "answer": "<p>Chemistrie currently ships within the United States.</p>"
+          }
+        },
+        "faq_21": {
+          "type": "faq",
+          "settings": {
+            "question": "How quickly will my order ship?",
+            "answer": "<p>Orders are typically processed and shipped within 1–2 business days.</p><p>Once your order has been transferred to the carrier, delivery timing is determined by the shipping service and destination. Carrier delivery dates are estimates and are not guaranteed by Chemistrie.</p>"
+          }
+        },
+        "faq_22": {
+          "type": "faq",
+          "settings": {
+            "question": "Do Chemistrie Rituals ship free?",
+            "answer": "<p>Yes. Every Chemistrie Ritual receives complimentary shipping.</p><p>Standard shipping rates apply to individual-product orders.</p>"
+          }
+        },
+        "faq_23": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I change or cancel my order?",
+            "answer": "<p>If you need to change or cancel an order, contact us within 24 hours of placing your order.</p><p>We'll do our best to accommodate your request. Once an order has entered fulfillment or shipped, we may no longer be able to modify or cancel it.</p>"
+          }
+        },
+        "faq_24": {
+          "type": "faq",
+          "settings": {
+            "question": "What if my order arrives damaged, incorrect, or is missing an item?",
+            "answer": "<p>Contact us at <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> within 7 days of delivery.</p><p>Please include your order information, a description of the issue, and photos of the product and packaging when applicable. Our team will review the issue and make it right.</p>"
+          }
+        },
+        "group_5": {
+          "type": "group",
+          "settings": {
+            "heading": "Returns & Exchanges"
+          }
+        },
+        "faq_25": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>Eligible products may be returned within 15 days of delivery for an exchange or Chemistrie store credit.</p><p>We do not issue refunds to the original form of payment.</p><p>To qualify for a standard return, products must be unopened, unused, and in their original packaging.</p>"
+          }
+        },
+        "faq_26": {
+          "type": "faq",
+          "settings": {
+            "question": "Who pays for return shipping?",
+            "answer": "<p>Customers are responsible for return shipping costs for standard returns and exchanges.</p><p>If you received a damaged or incorrect product because of an error on our part, Chemistrie will cover the appropriate shipping costs.</p>"
+          }
+        },
+        "faq_27": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I return an opened or used product?",
+            "answer": "<p>For safety and product-integrity reasons, we cannot accept standard returns of products that have been opened or used.</p><p>If you believe there is a problem with your product or it arrived damaged or compromised, contact us within 7 days of delivery so our team can review the situation.</p>"
+          }
+        },
+        "faq_28": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer refunds?",
+            "answer": "<p>We offer exchanges or Chemistrie store credit on eligible returns rather than refunds to the original payment method.</p><p>For complete eligibility requirements and return instructions, please review our <a href=\"/pages/refund-and-exchange-policy\">Return &amp; Exchange Policy</a>.</p>"
+          }
+        },
+        "group_6": {
+          "type": "group",
+          "settings": {
+            "heading": "Samples & Professional Inquiries"
+          }
+        },
+        "faq_29": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer samples?",
+            "answer": "<p>We do not currently offer a formal sample program.</p><p>From time to time, samples or promotional sizes may be available through select Chemistrie experiences, events, orders, or professional partners.</p>"
+          }
+        },
+        "faq_30": {
+          "type": "faq",
+          "settings": {
+            "question": "Can clinics, med spas, or other professionals carry Chemistrie?",
+            "answer": "<p>Yes. We're developing opportunities for select professional partners interested in offering Chemistrie to their clients and patients.</p><p>For professional inquiries, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "group_1",
+        "faq_01",
+        "faq_02",
+        "faq_03",
+        "faq_04",
+        "group_2",
+        "faq_05",
+        "faq_06",
+        "faq_07",
+        "faq_08",
+        "faq_09",
+        "faq_10",
+        "faq_11",
+        "faq_12",
+        "group_3",
+        "faq_13",
+        "faq_14",
+        "faq_15",
+        "faq_16",
+        "faq_17",
+        "faq_18",
+        "faq_19",
+        "group_4",
+        "faq_20",
+        "faq_21",
+        "faq_22",
+        "faq_23",
+        "faq_24",
+        "group_5",
+        "faq_25",
+        "faq_26",
+        "faq_27",
+        "faq_28",
+        "group_6",
+        "faq_29",
+        "faq_30"
+      ],
+      "settings": {
+        "closing_heading": "Still Have a Question?",
+        "closing_text": "<p>We're here to help.</p><p>For questions about your products, ritual, or order, contact us at <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a>.</p>",
+        "closing_prompt": "Not sure where to begin?",
+        "cta_label": "Find Your Ritual",
+        "only_on_handle": "faq"
+      }
+    }
   },
-  "order": ["main-page"]
+  "order": [
+    "main-page",
+    "shipping-information",
+    "refund-and-exchange-policy",
+    "faq"
+  ]
 }

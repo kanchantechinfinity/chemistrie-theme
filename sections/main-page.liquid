@@ -5,6 +5,13 @@
   </div>
 </section>
 
+{%- comment -%}
+  Skipped when the page has no body in admin, so a page whose content comes
+  from a section below (Shipping Information, Refund & Exchange Policy, FAQ)
+  does not open with an empty padded band.
+{%- endcomment -%}
+{%- assign page_body = page.content | strip -%}
+{%- if page_body != blank -%}
 <section class="page-section page-section--paper">
   <div class="page-section__inner mpage__wrap">
     <div class="mpage__body rte">
@@ -12,6 +19,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 
 {% stylesheet %}
 .mpage__hero-inner { text-align: center; }
