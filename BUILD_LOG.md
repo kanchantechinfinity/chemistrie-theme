@@ -6,6 +6,13 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - Finder result: smaller numbers, lighter shadows
+
+`sections/gift-ritual-finder.liquid`: step numbers 17px -> 15px; explanation
+card shadow opacity .38 -> .22. Verified live.
+
+---
+
 ## 2026-10-07 - Policy and FAQ pages work without a template step
 
 **Problem:** the new pages showed no content - the Theme template had not been
