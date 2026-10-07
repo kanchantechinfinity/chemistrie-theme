@@ -13,8 +13,8 @@
       "type": "page-hero",
       "settings": {
         "eyebrow": "— Get in touch —",
-        "heading": "The pharmacist<br/><em>is on the line.</em>",
-        "deck": "Questions about ingredients, your ritual, or an order? We're here to help. Your message goes directly to the Chemistrie team, with pharmacists behind the products you use.",
+        "heading": "Contact us.<br/><em>We're here to help.</em>",
+        "deck": "Whether you have a question about your Chemistrie Ritual, an existing order, or our products, our team is happy to assist.",
         "hero_fallback_asset": "hero-contact.jpg"
       }
     },
@@ -78,13 +78,38 @@
             "label": "Customer Care",
             "value": "Monday–Friday"
           }
+        },
+        "note_1": {
+          "type": "note",
+          "settings": {
+            "body": "<p>For questions about an existing order, please include your order number so we can assist you more efficiently.</p>"
+          }
+        },
+        "note_2": {
+          "type": "note",
+          "settings": {
+            "heading": "Professional Inquiries",
+            "body": "<p>Interested in offering Chemistrie through your clinic, med spa, or practice?</p><p>Contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> and include Professional Inquiry in your message.</p>"
+          }
+        },
+        "note_3": {
+          "type": "note",
+          "settings": {
+            "heading": "Order Issues",
+            "body": "<p>If your order arrives damaged, incorrect, or is missing an item, please contact us within 7 days of delivery and include your order number, a description of the issue, and photographs when applicable.</p><p>For returns and exchanges, please review our <a href=\"/pages/shipping-returns#returns\">Return &amp; Exchange Policy</a> before contacting our team.</p>"
+          }
         }
       },
       "block_order": [
         "item_1",
-        "item_2"
+        "item_2",
+        "note_1",
+        "note_2",
+        "note_3"
       ],
-      "settings": {}
+      "settings": {
+        "left_intro": "<p>For the fastest assistance, use the contact form below. You may also reach our team at:</p>"
+      }
     },
     "contact-steps": {
       "type": "contact-steps",

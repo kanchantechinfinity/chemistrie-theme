@@ -5,6 +5,9 @@
     <div class="contact-main__col contact-main__col--left">
       <span class="eyebrow">{{ section.settings.left_eyebrow }}</span>
       <h2 class="display-h contact-main__heading">{{ section.settings.left_heading }}</h2>
+      {%- if section.settings.left_intro != blank -%}
+        <div class="cinfo__intro">{{ section.settings.left_intro }}</div>
+      {%- endif -%}
 
       <ul class="cinfo">
         {%- for block in section.blocks -%}
@@ -32,6 +35,15 @@
           {%- endif -%}
         {%- endfor -%}
       </ul>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'note' -%}
+          <div class="cnote{% if block.settings.heading == blank %} cnote--plain{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}<h3 class="cnote__h">{{ block.settings.heading }}</h3>{%- endif -%}
+            <div class="cnote__text">{{ block.settings.body }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
 
     <div class="contact-main__col contact-main__col--right">
@@ -59,6 +71,7 @@
               <option value="Ritual Finder">Ritual Finder</option>
               <option value="Ingredients &amp; Formulation">Ingredients &amp; Formulation</option>
               <option value="Shipping &amp; Returns">Shipping &amp; Returns</option>
+              <option value="Professional Inquiry">Professional Inquiry</option>
               <option value="Partnerships &amp; Wholesale">Partnerships &amp; Wholesale</option>
               <option value="Other">Other</option>
             </select>
@@ -89,6 +102,15 @@
    otherwise sets this heading in from the eyebrow above it and the icon
    column below. */
 .contact-main__heading { margin: 14px 0 34px -0.045em; }
+.cinfo__intro { margin: -16px 0 6px; max-width: 46ch; font-size: 15.5px; line-height: 1.7; color: var(--c-ink-soft); }
+.cinfo__intro p { margin: 0 0 10px; }
+.cnote { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--c-line-soft); max-width: 46ch; }
+.cnote--plain { margin-top: 20px; padding-top: 0; border-top: 0; }
+.cnote__h { font-family: var(--ff-display); font-weight: 500; font-size: clamp(19px, 1.8vw, 22px); color: var(--c-forest); margin: 0 0 8px; }
+.cnote__text { font-size: 15px; line-height: 1.7; color: var(--c-ink-soft); }
+.cnote__text p { margin: 0 0 10px; }
+.cnote__text p:last-child { margin-bottom: 0; }
+.cnote__text a, .cinfo__intro a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
 .cinfo { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 26px; }
 /* center, not flex-start: the 42px icon is shorter than the label+value block
    beside it, so top-aligning left it riding high against its own text. */
@@ -134,9 +156,18 @@
   "name": "Contact Main",
   "settings": [
     { "type": "text", "id": "left_eyebrow", "label": "Left eyebrow", "default": "— Direct line —" },
-    { "type": "text", "id": "left_heading", "label": "Left heading", "default": "Reach Us" }
+    { "type": "text", "id": "left_heading", "label": "Left heading", "default": "Reach Us" },
+    { "type": "richtext", "id": "left_intro", "label": "Intro under the heading" }
   ],
   "blocks": [
+    {
+      "type": "note",
+      "name": "Note",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "info": "Leave blank for a plain paragraph." },
+        { "type": "richtext", "id": "body", "label": "Text", "default": "<p>Text.</p>" }
+      ]
+    },
     {
       "type": "item",
       "name": "Contact item",

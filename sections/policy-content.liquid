@@ -1,0 +1,76 @@
+{%- comment -%}
+  A policy / information block: title and intro on the left, titled parts on
+  the right. Used twice on /pages/shipping-returns - once for shipping, once
+  for returns - each with its own anchor so the page can be jumped into.
+  Self-contained for the same reason as faq-groups.
+{%- endcomment -%}
+<section class="pol pol--{{ section.settings.tone }}" id="{{ section.settings.anchor | default: 'policy' }}" data-screen-label="{{ section.settings.title | escape }}">
+  <div class="pol__inner">
+    <header class="pol__head">
+      <h2 class="pol__title">{{ section.settings.title }}</h2>
+      {%- assign meta = section.settings.meta | strip -%}
+      {%- if meta != blank -%}<p class="pol__meta">{{ meta }}</p>{%- endif -%}
+      <div class="pol__intro">{{ section.settings.intro }}</div>
+    </header>
+    <div class="pol__body">
+      {%- for block in section.blocks -%}
+        <div class="pol__part" {{ block.shopify_attributes }}>
+          <h3 class="pol__h">{{ block.settings.heading }}</h3>
+          <div class="pol__text">{{ block.settings.body }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.pol { padding: clamp(36px, 5vw, 72px) var(--pad-x); scroll-margin-top: clamp(84px, 11vh, 120px); }
+.pol--cream { background: var(--c-cream); }
+.pol--paper { background: var(--c-paper); }
+.pol__inner { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: minmax(220px, 340px) 1fr; gap: clamp(28px, 6vw, 96px); align-items: start; }
+.pol__head { position: sticky; top: clamp(90px, 12vh, 130px); }
+.pol__title { font-family: var(--ff-display); font-weight: 400; font-size: clamp(30px, 3.6vw, 48px); line-height: 1.05; color: var(--c-forest); margin: 0 0 10px; }
+.pol__meta { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 16px; }
+.pol__intro { font-family: var(--ff-display); font-style: italic; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; color: var(--c-ink-soft); }
+.pol__intro p { margin: 0 0 12px; }
+.pol__part { padding: clamp(18px, 2.4vw, 28px) 0; border-top: 1px solid var(--c-line); }
+.pol__part:first-child { border-top: 0; padding-top: 0; }
+.pol__h { font-family: var(--ff-display); font-weight: 500; font-size: clamp(20px, 2vw, 25px); line-height: 1.2; color: var(--c-forest); margin: 0 0 10px; }
+.pol__text { font-size: 15.5px; line-height: 1.75; color: var(--c-ink-soft); }
+.pol__text p { margin: 0 0 12px; }
+.pol__text p:last-child, .pol__text ul:last-child { margin-bottom: 0; }
+.pol__text ul { margin: 0 0 12px; padding-left: 20px; }
+.pol__text li { margin: 0 0 6px; }
+.pol__text a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
+@media (max-width: 860px) {
+  .pol__inner { grid-template-columns: 1fr; }
+  .pol__head { position: static; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Policy block",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "policy", "info": "Used for #links into this block." },
+    { "type": "select", "id": "tone", "label": "Background", "default": "cream", "options": [
+      { "value": "cream", "label": "Cream" },
+      { "value": "paper", "label": "Paper" }
+    ] },
+    { "type": "text", "id": "title", "label": "Title", "default": "Policy" },
+    { "type": "text", "id": "meta", "label": "Small line under the title", "info": "For example: Last Updated: October 2026. Leave blank for none." },
+    { "type": "richtext", "id": "intro", "label": "Introduction", "default": "<p>Introduction.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "part",
+      "name": "Part",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Heading" },
+        { "type": "richtext", "id": "body", "label": "Text", "default": "<p>Text.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Policy block" }]
+}
+{% endschema %}

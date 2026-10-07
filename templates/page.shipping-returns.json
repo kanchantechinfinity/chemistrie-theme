@@ -1,0 +1,154 @@
+{
+  "sections": {
+    "page-hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "— Help —",
+        "heading": "Shipping &amp;<br/><em>returns.</em>",
+        "deck": "How Chemistrie orders ship, and how returns and exchanges work.",
+        "show_visual": true,
+        "hero_fallback_asset": "hero-collection.jpg",
+        "cta_label": "Shipping Information",
+        "cta_url": "#shipping",
+        "cta2_label": "Return & Exchange Policy",
+        "cta2_url": "#returns"
+      }
+    },
+    "shipping": {
+      "type": "policy-content",
+      "settings": {
+        "anchor": "shipping",
+        "tone": "cream",
+        "title": "Shipping Information",
+        "intro": "<p>We carefully prepare every Chemistrie order to ensure your products arrive ready to become part of your ritual.</p>"
+      },
+      "blocks": {
+        "part_1": {
+          "type": "part",
+          "settings": {
+            "heading": "Where We Ship",
+            "body": "<p>Chemistrie currently ships within the United States only.</p><p>International shipping is not available at this time.</p>"
+          }
+        },
+        "part_2": {
+          "type": "part",
+          "settings": {
+            "heading": "Processing Time",
+            "body": "<p>Orders are typically processed and shipped within 1–2 business days after your order is placed.</p><p>Business days do not include weekends or holidays.</p><p>During periods of unusually high order volume, processing may take longer. If there is a significant delay affecting your order, our team will contact you.</p>"
+          }
+        },
+        "part_3": {
+          "type": "part",
+          "settings": {
+            "heading": "Shipping Rates",
+            "body": "<p>All Chemistrie Rituals receive complimentary shipping.</p><p>Shipping charges for individual-product orders are calculated and displayed at checkout before your purchase is completed.</p>"
+          }
+        },
+        "part_4": {
+          "type": "part",
+          "settings": {
+            "heading": "Delivery Time",
+            "body": "<p>Estimated delivery times shown at checkout begin after your order has been processed and transferred to the shipping carrier.</p><p>Carrier delivery estimates are provided for convenience but are not guaranteed by Chemistrie. Weather, carrier disruptions, holidays, and other circumstances outside our control may affect delivery.</p>"
+          }
+        },
+        "part_5": {
+          "type": "part",
+          "settings": {
+            "heading": "Order Tracking",
+            "body": "<p>Once your order ships, you will receive a shipping confirmation with tracking information so you can follow your package's progress.</p><p>Please allow time for the carrier to update tracking information after your shipping confirmation is received.</p>"
+          }
+        },
+        "part_6": {
+          "type": "part",
+          "settings": {
+            "heading": "Shipping Address",
+            "body": "<p>Please review your shipping address carefully before completing your order.</p><p>If you notice an error after placing your order, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> as soon as possible.</p><p>Order changes and cancellations may be requested within 24 hours of placing your order. We will make reasonable efforts to accommodate your request, but once an order has entered fulfillment or shipped, we may no longer be able to change the shipping address.</p>"
+          }
+        },
+        "part_7": {
+          "type": "part",
+          "settings": {
+            "heading": "Damaged or Incorrect Orders",
+            "body": "<p>If your order arrives damaged or you receive an incorrect item, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> within 7 days of delivery.</p><p>Please include your order number, a description of the issue, and photos of the product and packaging when applicable.</p><p>Our team will review the issue and determine the appropriate resolution. If an error is ours, Chemistrie will cover the appropriate costs associated with correcting the order.</p>"
+          }
+        },
+        "part_8": {
+          "type": "part",
+          "settings": {
+            "heading": "Missing Packages",
+            "body": "<p>If your tracking information shows that your package has not been delivered within the expected timeframe, contact us and we can help review the shipment.</p><p>If tracking shows your package as delivered but you cannot locate it, please first:</p><ul><li>Check around the delivery location.</li><li>Confirm the shipping address on your order.</li><li>Check with household members or neighbors when appropriate.</li><li>Review any delivery information or photographs provided by the carrier.</li></ul><p>If you still cannot locate your package, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> and our team will help determine the appropriate next steps.</p>"
+          }
+        },
+        "part_9": {
+          "type": "part",
+          "settings": {
+            "heading": "Questions About Your Shipment?",
+            "body": "<p>For questions about an order or shipment, contact:</p><p><a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "part_1",
+        "part_2",
+        "part_3",
+        "part_4",
+        "part_5",
+        "part_6",
+        "part_7",
+        "part_8",
+        "part_9"
+      ]
+    },
+    "returns": {
+      "type": "policy-content",
+      "settings": {
+        "anchor": "returns",
+        "tone": "paper",
+        "title": "Return & Exchange Policy",
+        "intro": "<p>At Chemistrie, we want you to feel confident in every purchase. Because skincare products require careful handling and product integrity is important to us, we have established the following return and exchange policy.</p>",
+        "meta": "Last Updated: October 2026"
+      },
+      "blocks": {
+        "part_1": {
+          "type": "part",
+          "settings": {
+            "heading": "Returns & Exchanges",
+            "body": "<p>Eligible products may be returned within 15 days of delivery for either:</p><ul><li>An exchange for another Chemistrie product, or</li><li>Chemistrie store credit.</li></ul><p>Chemistrie does not issue refunds to the original form of payment for standard returns.</p><p>To be eligible for a return or exchange, the product must be:</p><ul><li>Unopened</li><li>Unused</li><li>In its original packaging</li><li>In the same condition in which it was received</li></ul><p>We reserve the right to decline a return if the product does not meet these eligibility requirements.</p>"
+          }
+        },
+        "part_2": {
+          "type": "part",
+          "settings": {
+            "heading": "Opened or Used Products",
+            "body": "<p>For safety, quality, and product-integrity reasons, we cannot accept standard returns or exchanges for products that have been opened or used.</p><p>If you believe your product arrived damaged, defective, incorrect, or otherwise compromised, please contact us as described below rather than submitting it as a standard return.</p>"
+          }
+        },
+        "part_3": {
+          "type": "part",
+          "settings": {
+            "heading": "How to Start a Return or Exchange",
+            "body": "<p>To request a return or exchange, contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> within 15 days of delivery.</p><p>Please include:</p><ul><li>Your name</li><li>Order number</li><li>Product you would like to return or exchange</li><li>Reason for the request</li></ul><p>Please do not send products back without first contacting Chemistrie.</p><p>If your return is approved, our team will provide instructions for returning your product.</p><p>Approved returns must be shipped back within 30 days of the original delivery date.</p>"
+          }
+        },
+        "part_4": {
+          "type": "part",
+          "settings": {
+            "heading": "Return Shipping",
+            "body": "<p>Customers are responsible for return shipping costs associated with standard returns and exchanges.</p><p>Original shipping charges are not eligible for store credit.</p><p>If the return is the result of an error by Chemistrie, such as receiving an incorrect or damaged product, Chemistrie will cover the appropriate shipping costs.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "part_1",
+        "part_2",
+        "part_3",
+        "part_4"
+      ]
+    }
+  },
+  "order": [
+    "page-hero",
+    "shipping",
+    "returns"
+  ]
+}

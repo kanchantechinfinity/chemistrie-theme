@@ -6,6 +6,43 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - Client documents applied (FAQ, Shipping & Returns, Contact, Ritual Finder results)
+
+**Source:** five Word documents supplied by the client.
+
+**Shipped (theme side).**
+
+| Item | Files |
+| --- | --- |
+| FAQ page: 6 groups, 30 questions, closing CTA | `sections/faq-groups.liquid`, `templates/page.faq.json` |
+| Shipping & Returns page: shipping (9 parts), returns (4 parts) | `sections/policy-content.liquid`, `templates/page.shipping-returns.json` |
+| Contact page: hero, intro, 3 notes, Professional Inquiry option | `sections/contact-main.liquid`, `templates/page.contact.json` |
+| Ritual Finder: personalised "why", secondary, skin note, starting point; ordered ritual list | `sections/gift-ritual-finder.liquid` |
+| Claims aligned to the policy: proof stat, 2 product badges | `sections/proof.liquid`, `templates/index.json`, `sections/main-product.liquid` |
+
+**Action needed from the user.** Create two pages in Shopify admin (FAQ,
+handle `faq`; Shipping & Returns, handle `shipping-returns`) and assign the
+matching templates. Both URLs are in the footer and were 404 before this.
+
+**Footer.** Unchanged. The FAQ and Shipping & Returns buttons already point at
+`/pages/faq` and `/pages/shipping-returns`; the user is creating those pages in
+admin before anything else.
+
+**Verified:** all 57 section schemas and 18 templates pass a cross-check (no
+unknown settings, no empty defaults, block orders match); every source line is
+present in the generated pages; 12,600 quiz answer combinations tested in node
+with no empty output.
+
+**Omitted on purpose:** chat mentions (no chat on the site); a dangling "We"
+at the end of the returns document (the source is cut off).
+
+**Open for the client:** Overall-skin-maintenance secondary line (not in the
+brief), the rest of the returns policy, Cashmere/Aura order of use, cart
+free-shipping threshold, product naming (Silken/Veil), pre-order wording on
+the shipping page.
+
+---
+
 ## 2026-10-06 — Pre-order stays on; ship-date tag removed
 
 **Task:** show just "Pre-order" until the merchant changes it; fix the

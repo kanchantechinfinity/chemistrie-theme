@@ -171,7 +171,7 @@
 
       {%- comment -%} Result {%- endcomment -%}
       <div class="gfinder__result" data-gf-result hidden>
-        <span class="gfinder__result-eyebrow">Your ritual</span>
+        <span class="gfinder__result-eyebrow" data-gf-result-eyebrow>Your ritual</span>
         <h3 class="display-h gfinder__result-title" data-gf-result-title></h3>
         {%- comment -%}
           The lineup shot and the list of what is in the set, side by side. The
@@ -181,10 +181,11 @@
         <div class="gfinder__result-grid">
           <div class="gfinder__shot" data-gf-shot hidden></div>
           <div class="gfinder__includes" data-gf-includes hidden>
-            <span class="gfinder__includes-label">In this ritual</span>
-            <ul class="gfinder__includes-list" data-gf-includes-list></ul>
+            <span class="gfinder__includes-label">Your ritual, in order</span>
+            <ol class="gfinder__includes-list" data-gf-includes-list></ol>
           </div>
         </div>
+        <div class="gfinder__explain" data-gf-explain hidden></div>
         <div class="gfinder__result-actions">
           <button type="button" class="btn btn--primary" data-gf-add>Add the ritual to cart</button>
           <a class="gfinder__restart" href="#" data-gf-restart>Start again</a>
@@ -412,8 +413,177 @@
     };
   }
 
+
+  // ---- Personalised explanation ---------------------------------------------
+  // Copy comes from the "Ritual Finder: Personalized Results & Explanation
+  // Brief". Built from modules, as its section 14 asks, not one page per answer
+  // combination: configuration -> core explanation, secondary goal -> supporting
+  // line, skin type and sensitivity -> a note, current routine -> a starting
+  // point. Only primary goal and routine preference change the bundle; the
+  // rest is acknowledged, never presented as a reason a product was chosen.
+  var CORE_COPY = {
+      "Essential Core": [
+          "You told us you're focused on maintaining your skin rather than addressing one specific concern, and you prefer to keep your routine simple.",
+          "So we built your ritual around the essentials: cleansing and hydration. Velvet gives your ritual its daily cleansing foundation, while Cashmere provides lightweight moisture to complete the routine.",
+          "Nothing unnecessary. Just two purposeful steps designed for someone who wants a consistent skincare foundation without a complicated routine."
+      ],
+      "Essential Plus": [
+          "You told us your priority is overall skin maintenance and that you're comfortable with a balanced routine.",
+          "Rather than focusing heavily on one concern, we built your ritual to support several parts of a well-rounded skincare routine. Velvet provides the cleansing foundation, Veil adds a targeted serum step, Aura introduces advanced renewal, and Cashmere completes the ritual with lightweight hydration.",
+          "The result is a more complete approach to everyday skincare without requiring every step in the Chemistrie collection."
+      ],
+      "Complete Core": [
+          "You told us you're focused on overall skin maintenance and you're comfortable with a complete skincare ritual.",
+          "We built your recommendation around the Chemistrie products that make sense for broad, everyday support: Velvet for cleansing, Veil as your serum step, Aura for advanced renewal, and Cashmere for lightweight hydration.",
+          "You asked for a complete approach, but we still follow one important rule: more products aren't automatically better. We recommend only what belongs in your ritual."
+      ],
+      "Hydration Essential": [
+          "You told us hydration is your priority, but you don't want an overly complicated routine.",
+          "So we kept your ritual intentionally focused. Velvet provides the cleansing foundation, followed by Cashmere for lightweight hydration and moisture support.",
+          "It's a streamlined ritual built around the concern you identified as most important, without adding steps you didn't ask for."
+      ],
+      "Hydration Balanced": [
+          "You told us hydration is your primary goal and that a balanced routine fits your lifestyle.",
+          "We started with a cleansing and hydration foundation, then added complementary steps for a more complete ritual. Velvet cleanses, Veil adds a weightless hydrating serum step, Aura provides advanced renewal, and Cashmere finishes the ritual with lightweight moisture.",
+          "The result keeps hydration at the center while giving you a more comprehensive routine."
+      ],
+      "Hydration Complete": [
+          "You told us hydration matters most and that you're comfortable with a more complete skincare ritual.",
+          "Your recommendation layers complementary steps around hydration: Velvet as your cleansing foundation, Veil as a weightless hydrating serum, Aura for advanced renewal, and Cashmere for lightweight moisture.",
+          "Although you're comfortable with a full routine, we haven't added products simply to create more steps. Your ritual stays focused on what best supports the priorities you shared with us."
+      ],
+      "Refining Essential": [
+          "You told us skin refinement is your primary goal, but you'd rather keep your routine simple.",
+          "That led us to a focused two-step ritual. Velvet provides your daily cleansing foundation, while Silken gives your routine a targeted refining step.",
+          "Instead of surrounding that goal with a larger routine, we've kept the recommendation intentionally streamlined around the priority you identified."
+      ],
+      "Refining Balanced": [
+          "You told us skin refinement is your primary goal and that you're comfortable with a balanced routine.",
+          "So we built your ritual around targeted refinement without stopping there. Velvet provides your cleansing foundation, Silken supplies the targeted refining step, Aura adds advanced renewal, and Cashmere provides lightweight moisture.",
+          "Together, those steps give your primary concern a clear place in the ritual while surrounding it with the foundational care of a more balanced routine."
+      ],
+      "Refining Complete": [
+          "You told us skin refinement is your primary goal and that you want the most complete Chemistrie ritual.",
+          "Your recommendation brings together all five steps: Velvet to cleanse, Veil as your serum step, Silken for targeted refinement, Aura for advanced renewal, and Cashmere for lightweight hydration.",
+          "It's our most comprehensive ritual, built around your refining priority while giving each product a distinct role rather than adding steps without purpose."
+      ],
+      "Renewal Essential": [
+          "You told us the appearance of fine lines is your primary concern and that you'd rather keep your skincare routine simple.",
+          "That made Aura the natural focus of your ritual. Velvet provides your cleansing foundation, while Aura introduces the advanced renewal step most closely aligned with the goal you identified.",
+          "Two intentional steps keep the routine manageable while staying centered on what matters most to you."
+      ],
+      "Renewal Balanced": [
+          "You told us the appearance of fine lines is your primary concern and that a balanced routine fits your lifestyle.",
+          "We centered your ritual around Aura, our advanced renewal cream, then surrounded it with complementary foundational steps. Velvet cleanses, Veil provides your serum step, and Cashmere adds lightweight hydration.",
+          "This gives renewal a central role without turning your daily skincare into an unnecessarily complicated routine."
+      ],
+      "Renewal Complete": [
+          "You told us renewal is your priority and that you're comfortable with a complete skincare ritual.",
+          "So we've built your recommendation around Aura and surrounded it with the full Chemistrie system: Velvet to cleanse, Veil as your serum step, Silken for targeted refinement, Aura for advanced renewal, and Cashmere for lightweight hydration.",
+          "It's the most comprehensive version of the Renewal Ritual, designed for someone who wants multiple complementary skincare steps rather than a minimalist routine."
+      ]
+  };
+  var SECONDARY_COPY = {
+      "Hydration": "You also told us hydration matters to you, so we kept moisture support in mind when considering your overall ritual.",
+      "Texture": "You also identified texture as something you'd like to focus on, giving us another signal that refinement matters to you.",
+      "Appearance of fine lines": "The appearance of fine lines is also on your mind, so renewal is an important consideration within your overall skincare approach.",
+      "Uneven tone": "You also told us you'd like to focus on a more even-looking complexion, giving us another consideration as we shaped your ritual.",
+      "Appearance of scars": "You also identified the appearance of a fully healed scar as a secondary priority, which we consider a targeted refinement goal.",
+      "Nothing else, just my primary goal": "You told us you'd rather stay focused on your primary goal, so we haven't tried to solve concerns you didn't ask us to address."
+  };
+  var SKIN_COPY = {
+      "Dry": "You described your skin as typically dry, which gives us useful context for how hydration fits into your overall ritual.",
+      "Normal": "You described your skin as typically balanced, so your recommendation remains centered on the goals you identified rather than correcting for a specific skin-type concern.",
+      "Combination": "You described your skin as combination, which is helpful context as you introduce and adjust the different steps in your ritual.",
+      "Oily": "You described your skin as typically oily, so we've kept that context in mind without assuming that oily skin doesn't also benefit from thoughtful hydration.",
+      "Not Sure": "Not sure of your skin type? That's completely fine. Your recommendation is primarily built around the goals and routine preferences you told us about."
+  };
+  var SENS_COPY = {
+      "Rarely reacts": "You told us your skin rarely reacts to new skincare products, so you can introduce your ritual normally while still paying attention to how your skin responds.",
+      "Occasionally becomes irritated or sensitive": "Because your skin can occasionally become irritated or sensitive, consider introducing your ritual gradually rather than starting every new step at once.",
+      "Frequently becomes irritated or sensitive": "You told us your skin frequently becomes irritated or sensitive. Your ritual recommendation remains based on your goals, but we recommend introducing new products gradually and patch testing before incorporating the full ritual.",
+      "I'm not sure": "If you're unsure how your skin responds to new products, introducing your ritual gradually can help you understand how your skin responds to each step."
+  };
+  var START_COPY = {
+      "Cleanser only or very minimal": "Because you're coming from a simpler routine, don't feel like you need to introduce every step at once. Building consistency matters more than adding everything on day one.",
+      "I don't currently have a consistent routine": "Because you're coming from a simpler routine, don't feel like you need to introduce every step at once. Building consistency matters more than adding everything on day one.",
+      "Cleanser + moisturizer": "You already have the foundation of a routine. Your Chemistrie ritual builds from that familiar structure by introducing more targeted steps around the goals you identified.",
+      "A few targeted products": "You're already comfortable using targeted skincare, so your ritual gives those steps a clearer structure and order around your primary goal.",
+      "Full multi-step routine": "You're already comfortable with a multi-step routine. Your recommendation is designed to give those steps a more intentional structure around the priorities you shared."
+  };
+
+  // Brief section 7: the Refining family opens with the customer's own goal
+  // instead of the generic "skin refinement".
+  var REFINING_GOAL = {
+    'Texture': "improving the look and feel of your skin's texture is your primary goal",
+    'Uneven Tones': 'a more even-looking complexion is your primary goal',
+    'Appearance of Scars': "you'd like to focus on the appearance of a fully healed scar"
+  };
+
+  // The brief has no line for "Overall skin maintenance" as a SECONDARY goal
+  // (it is only covered as a primary one). This one is not from the brief -
+  // it follows the register of its siblings and makes no product claim - and
+  // is flagged for the client to approve or replace.
+  SECONDARY_COPY['Overall skin maintenance'] = 'You also told us overall skin maintenance matters to you, so we kept a steady, everyday foundation in mind when considering your ritual.';
+
+  // Same goal named twice (primary and secondary) is not worth a second line.
+  var PRIMARY_KEY = { 'Hydration': 'h', 'Texture': 't', 'Appearance of Fine Lines': 'l', 'Uneven Tones': 'u', 'Appearance of Scars': 's', 'Overall Skin Maintenance': 'm' };
+  var SECONDARY_KEY = { 'Hydration': 'h', 'Texture': 't', 'Appearance of fine lines': 'l', 'Uneven tone': 'u', 'Appearance of scars': 's', 'Overall skin maintenance': 'm' };
+
+  // Brief section 5 and its worked example: what each product does in a ritual.
+  var ROLE = {
+    velvet:   ['Cleanse',  'Your daily cleansing foundation.'],
+    veil:     ['Treat',    'A weightless hydrating serum step.'],
+    silken:   ['Refine',   'Targeted refinement step when texture, uneven appearance, or fully healed scars are important.'],
+    aura:     ['Renew',    'Your advanced renewal step.'],
+    cashmere: ['Moisturize', 'Lightweight hydration to complete your ritual.']
+  };
+
+  function explainBlock(heading, paragraphs) {
+    var wrap = document.createElement('div');
+    wrap.className = 'gfinder__ex';
+    var h = document.createElement('h4');
+    h.className = 'gfinder__ex-h';
+    h.textContent = heading;
+    wrap.appendChild(h);
+    paragraphs.forEach(function (t) {
+      if (!t) return;
+      var p = document.createElement('p');
+      p.className = 'gfinder__ex-p';
+      p.textContent = t;
+      wrap.appendChild(p);
+    });
+    return wrap;
+  }
+
+  function renderExplain(res) {
+    var box = root.querySelector('[data-gf-explain]');
+    if (!box) return;
+    box.innerHTML = '';
+
+    var core = (CORE_COPY[res.matrixName] || []).slice();
+    if (core.length && res.ritual === 'Refining' && REFINING_GOAL[answers.improve]) {
+      core[0] = core[0].replace('skin refinement is your primary goal', REFINING_GOAL[answers.improve]);
+    }
+    if (core.length) box.appendChild(explainBlock('Why we chose this ritual for you', core));
+
+    var sec = SECONDARY_COPY[answers.secondary];
+    var samePrimary = PRIMARY_KEY[answers.improve] && PRIMARY_KEY[answers.improve] === SECONDARY_KEY[answers.secondary];
+    if (sec && !samePrimary) box.appendChild(explainBlock('You also told us\u2026', [sec]));
+
+    var note = [SKIN_COPY[answers.skin_type], SENS_COPY[answers.sensitivity]].filter(Boolean);
+    if (note.length) box.appendChild(explainBlock('A note about your skin', note));
+
+    var start = START_COPY[answers.current_routine];
+    if (start) box.appendChild(explainBlock('Your starting point', [start]));
+
+    box.hidden = box.children.length === 0;
+  }
+
   function render(res) {
     root.querySelector('[data-gf-result-title]').textContent = res.name;
+    var eyebrow = root.querySelector('[data-gf-result-eyebrow]');
+    if (eyebrow) eyebrow.textContent = (res.matrixName && res.matrixName !== res.name) ? 'Your ' + res.matrixName + ' ritual' : 'Your ritual';
 
     var shot = root.querySelector('[data-gf-shot]');
     if (res.image) {
@@ -426,28 +596,40 @@
     }
 
     /* Built from res.items, the same array the add-to-cart call uses, so the
-       list can never disagree with what actually goes in the bag. */
+       list can never disagree with what actually goes in the bag. Order is the
+       order of use, as the configuration lists it. */
     var incWrap = root.querySelector('[data-gf-includes]');
     var incList = root.querySelector('[data-gf-includes-list]');
     if (incList) {
       incList.innerHTML = '';
-      (res.items || []).forEach(function (key) {
+      (res.items || []).forEach(function (key, i) {
         var p = PRODUCTS[key];
         if (!p) return;
+        var role = ROLE[key] || ['', ''];
         var li = document.createElement('li');
         li.className = 'gfinder__includes-item';
+        var num = document.createElement('span');
+        num.className = 'gfinder__includes-num';
+        num.setAttribute('aria-hidden', 'true');
+        num.textContent = String(i + 1);
+        var body = document.createElement('span');
+        body.className = 'gfinder__includes-body';
         var name = document.createElement('span');
         name.className = 'gfinder__includes-name';
-        name.textContent = p.title;
+        name.textContent = p.title + (role[0] ? ' \u00b7 ' + role[0] : '');
         var sub = document.createElement('span');
         sub.className = 'gfinder__includes-sub';
-        sub.textContent = p.subtitle || '';
-        li.appendChild(name);
-        li.appendChild(sub);
+        sub.textContent = role[1] || p.subtitle || '';
+        body.appendChild(name);
+        body.appendChild(sub);
+        li.appendChild(num);
+        li.appendChild(body);
         incList.appendChild(li);
       });
       if (incWrap) incWrap.hidden = incList.children.length === 0;
     }
+
+    renderExplain(res);
 
     var secEl = root.querySelector('[data-gf-secondary]');
     if (res.secondary && PRODUCTS[res.secondary]) {
@@ -643,11 +825,17 @@
 .gfinder__includes-list { list-style: none; margin: 0; padding: 0; }
 /* A ruled column, not cards: these are the contents of one set, so they should
    read as rows of a single object rather than five things to choose between. */
-.gfinder__includes-item { display: flex; flex-direction: column; gap: 2px; padding: 11px 0; border-bottom: 1px solid var(--c-line-soft); }
+.gfinder__includes-item { display: flex; align-items: flex-start; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--c-line-soft); }
+.gfinder__includes-num { flex: 0 0 auto; min-width: 18px; font-family: var(--ff-display); font-style: italic; font-size: 17px; line-height: 1.25; color: var(--c-tan-2); }
+.gfinder__includes-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .gfinder__includes-item:first-child { padding-top: 0; }
 .gfinder__includes-item:last-child { border-bottom: 0; padding-bottom: 0; }
 .gfinder__includes-name { font-family: var(--ff-display); font-size: clamp(17px, 1.6vw, 20px); color: var(--c-forest); line-height: 1.2; }
-.gfinder__includes-sub { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-ink-mute); }
+.gfinder__includes-sub { font-size: 13.5px; line-height: 1.5; color: var(--c-ink-soft); }
+.gfinder__explain { margin-top: clamp(26px, 3.4vw, 40px); display: grid; gap: clamp(18px, 2.4vw, 28px); max-width: 760px; }
+.gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 8px; }
+.gfinder__ex-p { font-size: 15.5px; line-height: 1.7; color: var(--c-ink-soft); margin: 0 0 10px; }
+.gfinder__ex-p:last-child { margin-bottom: 0; }
 @media (max-width: 760px) {
   .gfinder__result-grid { grid-template-columns: 1fr; }
 }

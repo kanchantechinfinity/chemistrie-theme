@@ -1,0 +1,134 @@
+{%- comment -%}
+  Grouped FAQ accordion for /pages/faq. Self-contained on purpose: this theme
+  compiles section CSS and JS per page, so borrowing the .rfaq-* classes from
+  the Ritual FAQ would work only while that section happened to be present.
+  Same visual language (display-serif questions, hairline rows, plus/minus
+  icon), its own class names.
+{%- endcomment -%}
+<section class="fq" data-screen-label="FAQ">
+  <div class="fq__inner">
+    {%- assign open_list = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'group' -%}
+        {%- if open_list -%}</div>{%- endif -%}
+        <h2 class="fq__group" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+        <div class="fq__list">
+        {%- assign open_list = true -%}
+      {%- elsif block.type == 'faq' -%}
+        {%- unless open_list -%}<div class="fq__list">{%- assign open_list = true -%}{%- endunless -%}
+        <div class="fq__item" {{ block.shopify_attributes }}>
+          <button class="fq__q" type="button" aria-expanded="false" aria-controls="fq-a-{{ block.id }}">
+            <span class="fq__question">{{ block.settings.question }}</span>
+            <span class="fq__icon" aria-hidden="true"><span class="fq__bar fq__bar--h"></span><span class="fq__bar fq__bar--v"></span></span>
+          </button>
+          <div class="fq__a" id="fq-a-{{ block.id }}" role="region">
+            <div class="fq__a-inner">{{ block.settings.answer }}</div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if open_list -%}</div>{%- endif -%}
+
+    {%- assign closing_heading = section.settings.closing_heading | strip -%}
+    {%- if closing_heading != blank -%}
+      <div class="fq__closing">
+        <h2 class="fq__closing-h">{{ closing_heading }}</h2>
+        <div class="fq__closing-text">{{ section.settings.closing_text }}</div>
+        {%- assign cta_label = section.settings.cta_label | strip -%}
+        {%- if cta_label != blank -%}
+          <p class="fq__closing-prompt">{{ section.settings.closing_prompt }}</p>
+          <a class="btn btn--primary" href="{{ section.settings.cta_url | default: '/pages/the-ritual' }}">{{ cta_label }} <span aria-hidden="true">&rarr;</span></a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+<noscript><style>.fq__a { grid-template-rows: 1fr !important; }</style></noscript>
+
+{% stylesheet %}
+.fq { background: var(--c-cream); padding: clamp(36px, 5vw, 72px) var(--pad-x) clamp(48px, 6vw, 88px); }
+.fq__inner { max-width: 820px; margin: 0 auto; }
+.fq__group {
+  font-family: var(--ff-display); font-weight: 400; font-style: italic;
+  font-size: clamp(24px, 3vw, 34px); line-height: 1.15; color: var(--c-forest);
+  margin: clamp(36px, 5vw, 60px) 0 clamp(8px, 1.2vw, 14px);
+}
+.fq__group:first-child { margin-top: 0; }
+.fq__list { display: flex; flex-direction: column; }
+.fq__item { border-bottom: 1px solid var(--c-line); }
+.fq__item:first-child { border-top: 1px solid var(--c-line); }
+.fq__q {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: clamp(16px, 3vw, 32px);
+  padding: clamp(16px, 2.2vw, 24px) 2px; background: none; border: 0; cursor: pointer; text-align: left;
+}
+.fq__question {
+  font-family: var(--ff-display); font-weight: 400; font-size: clamp(17px, 1.9vw, 21px);
+  line-height: 1.35; color: var(--c-forest);
+}
+.fq__icon { position: relative; flex: 0 0 auto; width: 24px; height: 24px; }
+.fq__bar { position: absolute; top: 50%; left: 50%; background: var(--c-forest); transition: transform .35s var(--ease-out), opacity .35s var(--ease-out); }
+.fq__bar--h { width: 15px; height: 1px; transform: translate(-50%, -50%); }
+.fq__bar--v { width: 1px; height: 15px; transform: translate(-50%, -50%); }
+.fq__q[aria-expanded="true"] .fq__bar--v { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+/* grid-template-rows 0fr -> 1fr animates to the content's own height without
+   measuring it in script */
+.fq__a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--ease-out); }
+.fq__a.is-open { grid-template-rows: 1fr; }
+.fq__a-inner { overflow: hidden; min-height: 0; padding: 0 2px; font-size: 15.5px; line-height: 1.75; color: var(--c-ink-soft); }
+.fq__a-inner > :first-child { margin-top: 0; }
+.fq__a-inner > :last-child { margin-bottom: clamp(18px, 2.4vw, 26px); }
+.fq__a-inner p { margin: 0 0 12px; }
+.fq__a-inner strong { color: var(--c-forest); font-weight: 600; }
+.fq__a-inner a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
+.fq__closing { margin-top: clamp(44px, 6vw, 76px); padding-top: clamp(28px, 4vw, 44px); border-top: 1px solid var(--c-line); text-align: center; }
+.fq__closing-h { font-family: var(--ff-display); font-weight: 400; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.1; color: var(--c-forest); margin: 0 0 12px; }
+.fq__closing-text { color: var(--c-ink-soft); line-height: 1.7; max-width: 52ch; margin: 0 auto; }
+.fq__closing-text p { margin: 0 0 10px; }
+.fq__closing-text a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
+.fq__closing-prompt { font-family: var(--ff-display); font-style: italic; font-size: 19px; color: var(--c-forest); margin: 24px 0 14px; }
+@media (prefers-reduced-motion: reduce) { .fq__a, .fq__bar { transition: none; } }
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.fq__q') : null;
+    if (!btn) return;
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    var panel = btn.nextElementSibling;
+    if (panel) panel.classList.toggle('is-open', !open);
+  });
+}());
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "FAQ groups",
+  "settings": [
+    { "type": "text", "id": "closing_heading", "label": "Closing heading", "default": "Still have a question?" },
+    { "type": "richtext", "id": "closing_text", "label": "Closing text", "default": "<p>We're here to help.</p>" },
+    { "type": "text", "id": "closing_prompt", "label": "Closing prompt", "default": "Not sure where to begin?" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Find Your Ritual", "info": "Clear to hide the prompt and button." },
+    { "type": "url", "id": "cta_url", "label": "Button link", "info": "Leave blank to use /pages/the-ritual." }
+  ],
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Group heading",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Group" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ groups" }]
+}
+{% endschema %}
