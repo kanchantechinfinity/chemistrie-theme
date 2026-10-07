@@ -22,7 +22,12 @@
 {%- endif -%}
 
 {% stylesheet %}
-.mpage__hero-inner { text-align: center; }
+/* Compound selector: .page-hero__inner is a two-column grid built for text
+   plus a photo. This hero has no photo, so the grid put the eyebrow in one
+   column and the title in the other. Doubled class so it wins over
+   page-hero's rule whichever stylesheet loads last. */
+.page-hero__inner.mpage__hero-inner { display: block; text-align: center; }
+.mpage__hero-inner .eyebrow { display: inline-block; }
 .mpage__hero-inner .page-hero__title { max-width: none; }
 .mpage__wrap { display: flex; justify-content: center; }
 .mpage__body { max-width: 72ch; width: 100%; font-size: clamp(16px, 1.3vw, 18px); line-height: 1.8; color: var(--c-ink); }
