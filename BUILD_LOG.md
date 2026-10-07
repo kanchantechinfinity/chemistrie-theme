@@ -6,6 +6,24 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - Finder cards on one row; non-document content removed
+
+**Task:** all explanation cards on one line; remove anything not in the
+client documents.
+
+**Shipped.**
+
+| Change | File |
+| --- | --- |
+| Cards on one flex row, core card wider, stacked under 900px | `sections/gift-ritual-finder.liquid` |
+| Removed my "Overall skin maintenance" secondary line | same |
+| List label "Your ritual, in order" -> "Your ritual" (brief wording) | same |
+| Removed my Shipping & Returns hero sentence | `templates/page.shipping-returns.json` |
+
+**Verified:** finder JS syntax; 12,600 answer combinations, no problems.
+
+---
+
 ## 2026-10-07 - Ritual Finder result: cards and list alignment
 
 **Task:** show the personalised explanation as cards for every result, and

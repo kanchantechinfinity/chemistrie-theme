@@ -5,7 +5,6 @@
       "settings": {
         "eyebrow": "— Help —",
         "heading": "Shipping &amp;<br/><em>returns.</em>",
-        "deck": "How Chemistrie orders ship, and how returns and exchanges work.",
         "show_visual": true,
         "hero_fallback_asset": "hero-collection.jpg",
         "cta_label": "Shipping Information",

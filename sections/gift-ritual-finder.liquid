@@ -181,7 +181,7 @@
         <div class="gfinder__result-grid">
           <div class="gfinder__shot" data-gf-shot hidden></div>
           <div class="gfinder__includes" data-gf-includes hidden>
-            <span class="gfinder__includes-label">Your ritual, in order</span>
+            <span class="gfinder__includes-label">Your ritual</span>
             <ol class="gfinder__includes-list" data-gf-includes-list></ol>
           </div>
         </div>
@@ -520,12 +520,6 @@
     'Appearance of Scars': "you'd like to focus on the appearance of a fully healed scar"
   };
 
-  // The brief has no line for "Overall skin maintenance" as a SECONDARY goal
-  // (it is only covered as a primary one). This one is not from the brief -
-  // it follows the register of its siblings and makes no product claim - and
-  // is flagged for the client to approve or replace.
-  SECONDARY_COPY['Overall skin maintenance'] = 'You also told us overall skin maintenance matters to you, so we kept a steady, everyday foundation in mind when considering your ritual.';
-
   // Same goal named twice (primary and secondary) is not worth a second line.
   var PRIMARY_KEY = { 'Hydration': 'h', 'Texture': 't', 'Appearance of Fine Lines': 'l', 'Uneven Tones': 'u', 'Appearance of Scars': 's', 'Overall Skin Maintenance': 'm' };
   var SECONDARY_KEY = { 'Hydration': 'h', 'Texture': 't', 'Appearance of fine lines': 'l', 'Uneven tone': 'u', 'Appearance of scars': 's', 'Overall skin maintenance': 'm' };
@@ -834,26 +828,31 @@
 .gfinder__includes-item:last-child { border-bottom: 0; padding-bottom: 0; }
 .gfinder__includes-name { font-family: var(--ff-display); font-size: clamp(17px, 1.6vw, 20px); color: var(--c-forest); line-height: 1.2; }
 .gfinder__includes-sub { font-size: 13.5px; line-height: 1.5; color: var(--c-ink-soft); }
-/* The personalised explanation as cards. The first card is always the core
-   "why we chose this" and spans the row; the rest (secondary goal, skin note,
-   starting point) share the row below it, and auto-fit means two of them split
-   the width instead of leaving a gap where a third would have been. */
+/* The personalised explanation as cards, all on one row. The core "why we
+   chose this ritual" card gets the larger share of the width because it
+   carries three paragraphs; the others split the rest evenly. Stretch keeps
+   every card the height of the tallest. One column on narrow screens. */
 .gfinder__explain {
   margin-top: clamp(28px, 3.6vw, 44px);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  display: flex;
+  align-items: stretch;
   gap: clamp(14px, 1.8vw, 22px);
 }
 .gfinder__ex {
+  flex: 1 1 0;
+  min-width: 0;
   background: var(--c-cream);
   border: 1px solid var(--c-line-soft);
   border-radius: 16px;
-  padding: clamp(20px, 2.4vw, 30px);
+  padding: clamp(20px, 2.2vw, 28px);
   box-shadow: 0 22px 44px -32px rgba(26, 58, 45, .38);
 }
 .gfinder__ex:first-child {
-  grid-column: 1 / -1;
+  flex-grow: 1.7;
   border-top: 3px solid var(--c-tan);
+}
+@media (max-width: 900px) {
+  .gfinder__explain { flex-direction: column; }
 }
 .gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 12px; }
 .gfinder__ex-p { font-size: 15px; line-height: 1.7; color: var(--c-ink-soft); margin: 0 0 10px; }
