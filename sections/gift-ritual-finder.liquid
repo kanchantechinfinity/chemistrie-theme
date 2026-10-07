@@ -890,6 +890,24 @@
 }
 .gfinder__secondary { margin: 10px 0 0; font-size: 13.5px; color: var(--c-ink-soft); font-style: italic; }
 
+/* Short desktop screens (laptops at 1536x864 and below): same layout, tighter
+   rhythm, so the fullest result - five products and four cards - still fits
+   above the fold. Only height-limited desktops get this; tall screens keep the
+   roomier spacing. */
+@media (min-width: 1025px) and (max-height: 900px) {
+  .gfinder__result-head { margin-bottom: 12px; }
+  .display-h.gfinder__result-title { font-size: clamp(28px, 2.4vw, 34px); }
+  .gfinder__includes-label { margin-bottom: 6px; }
+  .gfinder__includes-item { padding: 5px 0; }
+  .gfinder__includes-name { font-size: 16px; }
+  .gfinder__includes-sub { font-size: 12.5px; line-height: 1.4; }
+  .gfinder__explain { margin-top: 12px; }
+  .gfinder__ex { padding: 13px 16px; }
+  .gfinder__ex-h { margin-bottom: 6px; }
+  .gfinder__ex-p { font-size: 13px; line-height: 1.5; margin-bottom: 6px; }
+  .gfinder__why .gfinder__ex-p:first-of-type { font-size: 17px; margin-bottom: 8px; }
+  .gfinder__secondary { margin-top: 8px; }
+}
 /* Below desktop the three columns get too narrow: photo and list side by side,
    the why card full width under them; then one column on phones. */
 @media (max-width: 1024px) {
