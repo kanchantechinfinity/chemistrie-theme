@@ -6,6 +6,23 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - Ritual Finder result: cards and list alignment
+
+**Task:** show the personalised explanation as cards for every result, and
+align the top of the ritual list with the top of the photo.
+
+**Shipped.** `sections/gift-ritual-finder.liquid`, CSS only:
+
+- `.gfinder__ex` is now a card (cream fill, hairline border, 16px radius, soft
+  shadow). The first card, "Why we chose this ritual", spans the row with a tan
+  top rule and a display-italic opening line; the other cards share the row
+  below it (`auto-fit`, so two cards split the width instead of leaving a gap).
+- `.gfinder__result-grid` `align-items: center` -> `start`.
+
+Applies to all 12 results: the markup was already one block per module.
+
+---
+
 ## 2026-10-07 - Client documents applied (FAQ, Shipping & Returns, Contact, Ritual Finder results)
 
 **Source:** five Word documents supplied by the client.

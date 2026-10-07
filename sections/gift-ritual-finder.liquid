@@ -819,7 +819,9 @@
   display: grid;
   grid-template-columns: 1.25fr 1fr;
   gap: clamp(20px, 3vw, 40px);
-  align-items: center;
+  /* start, not center: the list is shorter than the photo, and centring left its
+     first line floating well below the photo's top edge. */
+  align-items: start;
 }
 .gfinder__includes-label { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin-bottom: 12px; }
 .gfinder__includes-list { list-style: none; margin: 0; padding: 0; }
@@ -832,10 +834,36 @@
 .gfinder__includes-item:last-child { border-bottom: 0; padding-bottom: 0; }
 .gfinder__includes-name { font-family: var(--ff-display); font-size: clamp(17px, 1.6vw, 20px); color: var(--c-forest); line-height: 1.2; }
 .gfinder__includes-sub { font-size: 13.5px; line-height: 1.5; color: var(--c-ink-soft); }
-.gfinder__explain { margin-top: clamp(26px, 3.4vw, 40px); display: grid; gap: clamp(18px, 2.4vw, 28px); max-width: 760px; }
-.gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 8px; }
-.gfinder__ex-p { font-size: 15.5px; line-height: 1.7; color: var(--c-ink-soft); margin: 0 0 10px; }
+/* The personalised explanation as cards. The first card is always the core
+   "why we chose this" and spans the row; the rest (secondary goal, skin note,
+   starting point) share the row below it, and auto-fit means two of them split
+   the width instead of leaving a gap where a third would have been. */
+.gfinder__explain {
+  margin-top: clamp(28px, 3.6vw, 44px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+}
+.gfinder__ex {
+  background: var(--c-cream);
+  border: 1px solid var(--c-line-soft);
+  border-radius: 16px;
+  padding: clamp(20px, 2.4vw, 30px);
+  box-shadow: 0 22px 44px -32px rgba(26, 58, 45, .38);
+}
+.gfinder__ex:first-child {
+  grid-column: 1 / -1;
+  border-top: 3px solid var(--c-tan);
+}
+.gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 12px; }
+.gfinder__ex-p { font-size: 15px; line-height: 1.7; color: var(--c-ink-soft); margin: 0 0 10px; }
 .gfinder__ex-p:last-child { margin-bottom: 0; }
+/* the opening "You told us..." sentence is the headline of the core card */
+.gfinder__ex:first-child .gfinder__ex-p:first-of-type {
+  font-family: var(--ff-display); font-style: italic;
+  font-size: clamp(19px, 1.9vw, 23px); line-height: 1.4; color: var(--c-forest);
+  margin-bottom: 14px;
+}
 @media (max-width: 760px) {
   .gfinder__result-grid { grid-template-columns: 1fr; }
 }
