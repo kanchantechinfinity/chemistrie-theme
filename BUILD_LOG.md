@@ -6,6 +6,17 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-07 - Ritual list numbers and gold labels
+
+**Shipped** (`sections/gift-ritual-finder.liquid`): step numbers use lining
+figures, so 1-5 share a height; gold labels 11px -> 12.5px. Verified in a
+close-up screenshot from the live page.
+
+**Note:** the first push (78ae393) was missed by Shopify's sync and never went
+live; re-touching the file (a04d6ee) deployed it.
+
+---
+
 ## 2026-10-07 - Shipping Information and Refund & Exchange Policy templates
 
 **Task:** the user created two separate pages; wire them up.
