@@ -800,7 +800,7 @@
 }
 .gfinder__back:hover { color: var(--c-forest); }
 
-.gfinder__result-eyebrow { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); }
+.gfinder__result-eyebrow { font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); }
 /* compound selector so this wins over .display-h's own margin: 16px 0 0
    regardless of stylesheet order — otherwise the top gap was whichever of
    the two loaded last. */
@@ -821,12 +821,15 @@
      first line floating well below the photo's top edge. */
   align-items: start;
 }
-.gfinder__includes-label { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin-bottom: 12px; }
+.gfinder__includes-label { display: block; font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin-bottom: 12px; }
 .gfinder__includes-list { list-style: none; margin: 0; padding: 0; }
 /* A ruled column, not cards: these are the contents of one set, so they should
    read as rows of a single object rather than five things to choose between. */
 .gfinder__includes-item { display: flex; align-items: flex-start; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--c-line-soft); }
-.gfinder__includes-num { flex: 0 0 auto; min-width: 18px; font-family: var(--ff-display); font-style: italic; font-size: 17px; line-height: 1.25; color: var(--c-tan-2); }
+/* lining, not old-style, figures: the display serif defaults to old-style,
+   where 1 and 2 sit at lowercase height and 3-5 drop below the line, so the
+   five numbers looked like five different sizes. */
+.gfinder__includes-num { flex: 0 0 auto; min-width: 18px; font-family: var(--ff-display); font-style: italic; font-size: 17px; line-height: 1.25; color: var(--c-tan-2); font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1; }
 .gfinder__includes-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .gfinder__includes-item:first-child { padding-top: 0; }
 .gfinder__includes-item:last-child { border-bottom: 0; padding-bottom: 0; }
@@ -858,7 +861,7 @@
 @media (max-width: 900px) {
   .gfinder__explain { flex-direction: column; }
 }
-.gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 12px; }
+.gfinder__ex-h { font-family: var(--ff-body); font-weight: 500; font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-tan-2); margin: 0 0 12px; }
 .gfinder__ex-p { font-size: 15px; line-height: 1.7; color: var(--c-ink-soft); margin: 0 0 10px; }
 .gfinder__ex-p:last-child { margin-bottom: 0; }
 /* the opening "You told us..." sentence is the headline of the core card */
