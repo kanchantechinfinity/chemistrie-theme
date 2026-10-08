@@ -6,6 +6,30 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-08 - Policy pages: introduction in the hero, full-width parts
+
+**Task:** on Refund & Exchange Policy and Shipping Information, move the
+introduction into the hero (right-aligned) and run the parts full width.
+
+**Shipped.**
+
+| Change | File |
+| --- | --- |
+| `as_page_header` mode: block draws its own hero, intro right | `sections/policy-content.liquid` |
+| Parts full width from the left (`pol--wide`) | same |
+| `hide_header_on` setting to skip the default hero on those pages | `sections/main-page.liquid` |
+| Both policy sections set to page-header mode | `templates/page.json` |
+
+Title stays on one line on desktop; phones stack with the intro left-aligned.
+
+**Verified:** screenshots of both pages at 1440 and at 390 (device emulation).
+
+**Found, not fixed (reported):** the closed mobile menu drawer widens every
+page's mobile layout to 710px; closed drawers' shadow shows as a dark strip on
+the right edge of every page.
+
+---
+
 ## 2026-10-07 - Finder result: smaller numbers, lighter shadows
 
 `sections/gift-ritual-finder.liquid`: step numbers 17px -> 15px; explanation
