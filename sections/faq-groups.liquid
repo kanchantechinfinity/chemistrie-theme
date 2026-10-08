@@ -13,6 +13,23 @@
 {%- endcomment -%}
 {%- assign only_on = section.settings.only_on_handle | strip -%}
 {%- if only_on == blank or only_on == page.handle -%}
+{%- comment -%}
+  as_page_header: draws the page hero - title left, introduction right, the same
+  masthead the Shipping Information and Refund & Exchange Policy pages use - so
+  the three help pages read as one family. Own class names and CSS: this
+  section's styles are compiled per page and must not lean on policy-content.
+{%- endcomment -%}
+{%- if section.settings.as_page_header -%}
+<section class="page-hero fq-hero" data-screen-label="{{ page.title | default: section.settings.title | strip }}">
+  <div class="page-hero__inner fq-hero__inner">
+    <div class="fq-hero__main">
+      <span class="eyebrow eyebrow--light">&mdash; Chemistrie &mdash;</span>
+      <h1 class="display-h display-h--light page-hero__title">{{ section.settings.title }}</h1>
+    </div>
+    <div class="fq-hero__aside">{{ section.settings.intro }}</div>
+  </div>
+</section>
+{%- endif -%}
 <section class="fq" data-screen-label="FAQ">
   <div class="fq__inner">
     {%- assign open_list = false -%}
@@ -95,6 +112,22 @@
 .fq__closing-text p { margin: 0 0 10px; }
 .fq__closing-text a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
 .fq__closing-prompt { font-family: var(--ff-display); font-style: italic; font-size: 19px; color: var(--c-forest); margin: 24px 0 14px; }
+/* page-header mode: same masthead as the policy pages */
+.page-hero__inner.fq-hero__inner {
+  display: grid; grid-template-columns: auto minmax(0, 460px); justify-content: space-between;
+  gap: clamp(24px, 5vw, 80px); align-items: start;
+}
+.page-hero.fq-hero { padding-bottom: clamp(24px, 3vw, 40px); }
+.fq-hero__main .eyebrow { display: block; margin: 0 0 16px; font-size: 11px; line-height: 1.4; letter-spacing: .28em; color: var(--c-tan); }
+.fq-hero__main .page-hero__title { white-space: nowrap; margin: 0; }
+.fq-hero__aside { text-align: right; padding-top: 37px; font-family: var(--ff-display); font-style: italic; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; color: rgba(240, 232, 219, .78); }
+.fq-hero__aside p { margin: 0; }
+.fq-hero + .fq { padding-top: clamp(28px, 3.2vw, 44px); }
+@media (max-width: 760px) {
+  .page-hero__inner.fq-hero__inner { grid-template-columns: 1fr; }
+  .fq-hero__main .page-hero__title { white-space: normal; }
+  .fq-hero__aside { text-align: left; padding-top: 0; }
+}
 @media (prefers-reduced-motion: reduce) { .fq__a, .fq__bar { transition: none; } }
 {% endstylesheet %}
 
@@ -115,6 +148,9 @@
 {
   "name": "FAQ groups",
   "settings": [
+    { "type": "checkbox", "id": "as_page_header", "label": "Use as the page header", "default": false, "info": "Draws the page hero itself (title left, introduction right). Hide the default page hero for this page in the Page section settings." },
+    { "type": "text", "id": "title", "label": "Page title", "default": "Frequently asked questions", "info": "Shown in the hero when used as the page header." },
+    { "type": "richtext", "id": "intro", "label": "Introduction", "info": "Shown on the right of the hero when used as the page header." },
     { "type": "text", "id": "only_on_handle", "label": "Only show on page (handle)", "info": "Leave blank to always show. Set to a page handle, e.g. shipping-information, to show this only on that page." },
     { "type": "text", "id": "closing_heading", "label": "Closing heading", "default": "Still have a question?" },
     { "type": "richtext", "id": "closing_text", "label": "Closing text", "default": "<p>We're here to help.</p>" },

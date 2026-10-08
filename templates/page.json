@@ -3,7 +3,7 @@
     "main-page": {
       "type": "main-page",
       "settings": {
-        "hide_header_on": "shipping-information,refund-and-exchange-policy"
+        "hide_header_on": "shipping-information,refund-and-exchange-policy,faq"
       }
     },
     "shipping-information": {
@@ -436,7 +436,10 @@
         "closing_text": "<p>We're here to help.</p><p>For questions about your products, ritual, or order, contact us at <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a>.</p>",
         "closing_prompt": "Not sure where to begin?",
         "cta_label": "Find Your Ritual",
-        "only_on_handle": "faq"
+        "only_on_handle": "faq",
+        "as_page_header": true,
+        "title": "Frequently Asked Questions",
+        "intro": "<p>Thoughtful skincare should feel simple. Find answers about Chemistrie, your ritual, our products, and your order below.</p>"
       }
     }
   },
