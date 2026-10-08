@@ -6,6 +6,22 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-08 - Policy hero alignment; FAQ masthead
+
+**Shipped.**
+
+| Change | File |
+| --- | --- |
+| Hero columns top-aligned; "last updated" shares the eyebrow's line | `sections/policy-content.liquid` |
+| Shipping intro level with its title (no label) | same |
+| Hero-to-first-section gap ~108px -> 36px | same |
+| FAQ uses the shared masthead (title left, intro right) | `sections/faq-groups.liquid`, `templates/page.json` |
+
+**Verified live:** measured positions at three desktop widths on both policy
+pages; FAQ screenshot and a click test (opens to full answer, closes again).
+
+---
+
 ## 2026-10-08 - Policy pages: introduction in the hero, full-width parts
 
 **Task:** on Refund & Exchange Policy and Shipping Information, move the
