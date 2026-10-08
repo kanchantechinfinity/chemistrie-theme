@@ -26,7 +26,7 @@
       <span class="eyebrow eyebrow--light">&mdash; Chemistrie &mdash;</span>
       <h1 class="display-h display-h--light page-hero__title">{{ page.title | default: section.settings.title }}</h1>
     </div>
-    <div class="pol-hero__aside">
+    <div class="pol-hero__aside{% if meta == blank %} pol-hero__aside--nolabel{% endif %}">
       {%- if meta != blank -%}<p class="eyebrow eyebrow--light pol__meta">{{ meta }}</p>{%- endif -%}
       <div class="pol__intro">{{ section.settings.intro }}</div>
     </div>
@@ -88,6 +88,9 @@
   display: block; margin: 0 0 16px; font-size: 11px; line-height: 1.4; letter-spacing: .28em; color: var(--c-tan);
 }
 .pol-hero__aside .pol__meta { text-align: right; }
+/* no "last updated" line (Shipping Information): reserve its height so the
+   introduction still starts level with the title, as it does on the refund page */
+.pol-hero__aside--nolabel { padding-top: 31px; }
 /* one line, like every other page hero heading; the intro column gives way */
 .pol-hero__main .page-hero__title { white-space: nowrap; margin: 0; }
 .pol-hero__aside { text-align: right; }
@@ -99,6 +102,7 @@
   .page-hero__inner.pol-hero__inner { grid-template-columns: 1fr; }
   .pol-hero__main .page-hero__title { white-space: normal; }
   .pol-hero__aside { text-align: left; }
+  .pol-hero__aside--nolabel { padding-top: 0; }
 }
 @media (max-width: 860px) {
   .pol__inner { grid-template-columns: 1fr; }
