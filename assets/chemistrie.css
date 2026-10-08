@@ -2079,6 +2079,11 @@ body.template-product::-webkit-scrollbar { display: none; }
   padding-bottom: 56px;
   border-bottom: 1px solid rgba(249,244,237,.1);
 }
+/* The monogram sits flush to the same left edge as the wordmark under it: the
+   file is cropped to the glyph, so there is no transparent padding pushing it
+   in. Fixed height, auto width, so it can never stretch. */
+.footer__monogram { display: block; height: 64px; width: auto; margin: 0 0 18px; }
+@media (max-width: 640px) { .footer__monogram { height: 52px; margin-bottom: 14px; } }
 .footer__wordmark {
   font-family: var(--ff-display);
   font-size: 24px;
