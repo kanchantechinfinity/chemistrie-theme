@@ -22,8 +22,10 @@
   <div class="footer__top">
     <div class="footer__brand">
       {%- comment -%}Decorative: the wordmark right below names the brand, so the monogram has no alt text.{%- endcomment -%}
-      <img class="footer__monogram" src="{{ 'footer-monogram.png' | asset_url }}" alt="" width="61" height="64" loading="lazy" decoding="async">
-      <span class="footer__wordmark">CHEMISTRIE</span>
+      <div class="footer__logo">
+        <img class="footer__monogram" src="{{ 'footer-monogram.png' | asset_url }}" alt="" width="61" height="64" loading="lazy" decoding="async">
+        <span class="footer__wordmark">CHEMISTRIE</span>
+      </div>
       <p class="footer__tag">{{ section.settings.brand_line }}</p>
       <div class="footer__seal">
         <span>Rx</span>

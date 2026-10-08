@@ -2082,6 +2082,14 @@ body.template-product::-webkit-scrollbar { display: none; }
 /* The monogram sits flush to the same left edge as the wordmark under it: the
    file is cropped to the glyph, so there is no transparent padding pushing it
    in. Fixed height, auto width, so it can never stretch. */
+/* The monogram is centred over the wordmark, not over the whole column: the
+   logo block shrinks to the wordmark's width and centres its two children.
+   The wordmark's letter-spacing leaves .42em of empty space after the final
+   letter, which would pull the visual centre ~5px left of the true middle of
+   the visible text, so that trailing space is cancelled with a matching
+   negative margin. */
+.footer__logo { display: flex; flex-direction: column; align-items: center; width: fit-content; max-width: 100%; }
+.footer__logo .footer__wordmark { margin-right: -.42em; }
 .footer__monogram { display: block; height: 64px; width: auto; margin: 0 0 18px; }
 @media (max-width: 640px) { .footer__monogram { height: 52px; margin-bottom: 14px; } }
 .footer__wordmark {
