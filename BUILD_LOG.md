@@ -6,6 +6,15 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-08 - Footer monogram centred over the wordmark
+
+`sections/footer.liquid` + `assets/chemistrie.css`: monogram and wordmark sit in
+a `.footer__logo` block; the monogram centres over the wordmark. The wordmark's
+trailing letter-spacing is cancelled so the centre is the middle of the visible
+letters. Measured live: 0px offset at 1440 and 1280, -0.6px at 390.
+
+---
+
 ## 2026-10-08 - FAQ left-aligned; footer monogram
 
 **Shipped.**
