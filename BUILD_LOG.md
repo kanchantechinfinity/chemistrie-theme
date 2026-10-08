@@ -6,6 +6,23 @@ what-shipped-when summary.
 
 ---
 
+## 2026-10-08 - FAQ left-aligned; footer monogram
+
+**Shipped.**
+
+| Change | File |
+| --- | --- |
+| FAQ on the hero's container, left-aligned, answers capped at 80ch | `sections/faq-groups.liquid` |
+| Gold C monogram above the footer wordmark, cropped to the glyph | `assets/footer-monogram.png`, `sections/footer.liquid`, `assets/chemistrie.css` |
+
+Monogram: 64px tall (52px on phones), flush with the wordmark's left edge
+(measured 0px difference), present on every page.
+
+Also delivered (no files changed): a replication prompt for the homepage
+pillars carousel.
+
+---
+
 ## 2026-10-08 - Policy hero alignment; FAQ masthead
 
 **Shipped.**
