@@ -1,9 +1,21 @@
+{%- comment -%}
+  hide_header_on: page handles whose hero is drawn by a section further down
+  (the policy pages), so the page does not get two heroes.
+{%- endcomment -%}
+{%- assign hide_header = false -%}
+{%- assign hide_list = section.settings.hide_header_on | split: ',' -%}
+{%- for h in hide_list -%}
+  {%- assign hh = h | strip -%}
+  {%- if hh == page.handle -%}{%- assign hide_header = true -%}{%- endif -%}
+{%- endfor -%}
+{%- unless hide_header -%}
 <section class="page-hero" data-screen-label="{{ page.title | strip }}">
   <div class="page-hero__inner mpage__hero-inner">
     <span class="eyebrow eyebrow--light">— Chemistrie —</span>
     <h1 class="display-h display-h--light page-hero__title">{{ page.title }}</h1>
   </div>
 </section>
+{%- endunless -%}
 
 {%- comment -%}
   Skipped when the page has no body in admin, so a page whose content comes
@@ -52,7 +64,9 @@
 {% schema %}
 {
   "name": "Page",
-  "settings": [],
+  "settings": [
+    { "type": "text", "id": "hide_header_on", "label": "Hide this hero on pages (handles)", "info": "Comma-separated page handles whose hero is drawn by another section, e.g. shipping-information,refund-and-exchange-policy." }
+  ],
   "presets": [{ "name": "Page" }]
 }
 {% endschema %}

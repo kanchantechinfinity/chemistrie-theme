@@ -12,14 +12,36 @@
 {%- endcomment -%}
 {%- assign only_on = section.settings.only_on_handle | strip -%}
 {%- if only_on == blank or only_on == page.handle -%}
-<section class="pol pol--{{ section.settings.tone }}" id="{{ section.settings.anchor | default: 'policy' }}" data-screen-label="{{ section.settings.title | escape }}">
+{%- assign meta = section.settings.meta | strip -%}
+{%- comment -%}
+  as_page_header: the block draws the page's own hero - title on the left,
+  the "last updated" line and the introduction on the right - and the parts
+  below run the full width of the page from the left edge. The default page
+  hero is switched off for these handles (main-page's hide_header_on).
+{%- endcomment -%}
+{%- if section.settings.as_page_header -%}
+<section class="page-hero pol-hero" data-screen-label="{{ page.title | default: section.settings.title | strip }}">
+  <div class="page-hero__inner pol-hero__inner">
+    <div class="pol-hero__main">
+      <span class="eyebrow eyebrow--light">&mdash; Chemistrie &mdash;</span>
+      <h1 class="display-h display-h--light page-hero__title">{{ page.title | default: section.settings.title }}</h1>
+    </div>
+    <div class="pol-hero__aside">
+      {%- if meta != blank -%}<p class="pol__meta">{{ meta }}</p>{%- endif -%}
+      <div class="pol__intro">{{ section.settings.intro }}</div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+<section class="pol pol--{{ section.settings.tone }}{% if section.settings.as_page_header %} pol--wide{% endif %}" id="{{ section.settings.anchor | default: 'policy' }}" data-screen-label="{{ section.settings.title | escape }}">
   <div class="pol__inner">
+    {%- unless section.settings.as_page_header -%}
     <header class="pol__head">
       {%- if section.settings.show_title -%}<h2 class="pol__title">{{ section.settings.title }}</h2>{%- endif -%}
-      {%- assign meta = section.settings.meta | strip -%}
       {%- if meta != blank -%}<p class="pol__meta">{{ meta }}</p>{%- endif -%}
       <div class="pol__intro">{{ section.settings.intro }}</div>
     </header>
+    {%- endunless -%}
     <div class="pol__body">
       {%- for block in section.blocks -%}
         <div class="pol__part" {{ block.shopify_attributes }}>
@@ -51,6 +73,20 @@
 .pol__text ul { margin: 0 0 12px; padding-left: 20px; }
 .pol__text li { margin: 0 0 6px; }
 .pol__text a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
+/* page-header mode: hero with the introduction on the right, parts full width */
+.page-hero__inner.pol-hero__inner {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 500px);
+  gap: clamp(24px, 5vw, 80px); align-items: end;
+}
+.pol-hero__aside { text-align: right; }
+.pol-hero__aside .pol__meta { color: var(--c-tan); margin-bottom: 12px; }
+.pol-hero__aside .pol__intro { color: rgba(240, 232, 219, .78); }
+.pol-hero__aside .pol__intro p:last-child { margin-bottom: 0; }
+.pol--wide .pol__inner { display: block; }
+@media (max-width: 760px) {
+  .page-hero__inner.pol-hero__inner { grid-template-columns: 1fr; }
+  .pol-hero__aside { text-align: left; }
+}
 @media (max-width: 860px) {
   .pol__inner { grid-template-columns: 1fr; }
   .pol__head { position: static; }
@@ -68,6 +104,7 @@
       { "value": "paper", "label": "Paper" }
     ] },
     { "type": "text", "id": "title", "label": "Title", "default": "Policy" },
+    { "type": "checkbox", "id": "as_page_header", "label": "Use as the page header", "default": false, "info": "Draws the page hero itself, with the introduction on the right, and runs the parts full width below it. Hide the default page hero for this page in the Page section settings." },
     { "type": "checkbox", "id": "show_title", "label": "Show title", "default": true, "info": "Turn off when the page heading above already says it." },
     { "type": "text", "id": "meta", "label": "Small line under the title", "info": "For example: Last Updated: October 2026. Leave blank for none." },
     { "type": "richtext", "id": "intro", "label": "Introduction", "default": "<p>Introduction.</p>" }

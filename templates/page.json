@@ -1,7 +1,10 @@
 {
   "sections": {
     "main-page": {
-      "type": "main-page"
+      "type": "main-page",
+      "settings": {
+        "hide_header_on": "shipping-information,refund-and-exchange-policy"
+      }
     },
     "shipping-information": {
       "type": "policy-content",
@@ -11,7 +14,8 @@
         "title": "Shipping Information",
         "intro": "<p>We carefully prepare every Chemistrie order to ensure your products arrive ready to become part of your ritual.</p>",
         "show_title": false,
-        "only_on_handle": "shipping-information"
+        "only_on_handle": "shipping-information",
+        "as_page_header": true
       },
       "blocks": {
         "part_1": {
@@ -99,7 +103,8 @@
         "intro": "<p>At Chemistrie, we want you to feel confident in every purchase. Because skincare products require careful handling and product integrity is important to us, we have established the following return and exchange policy.</p>",
         "meta": "Last Updated: October 2026",
         "show_title": false,
-        "only_on_handle": "refund-and-exchange-policy"
+        "only_on_handle": "refund-and-exchange-policy",
+        "as_page_header": true
       },
       "blocks": {
         "part_1": {
