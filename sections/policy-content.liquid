@@ -27,7 +27,7 @@
       <h1 class="display-h display-h--light page-hero__title">{{ page.title | default: section.settings.title }}</h1>
     </div>
     <div class="pol-hero__aside">
-      {%- if meta != blank -%}<p class="pol__meta">{{ meta }}</p>{%- endif -%}
+      {%- if meta != blank -%}<p class="eyebrow eyebrow--light pol__meta">{{ meta }}</p>{%- endif -%}
       <div class="pol__intro">{{ section.settings.intro }}</div>
     </div>
   </div>
@@ -73,17 +73,27 @@
 .pol__text ul { margin: 0 0 12px; padding-left: 20px; }
 .pol__text li { margin: 0 0 6px; }
 .pol__text a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
-/* page-header mode: hero with the introduction on the right, parts full width */
+/* page-header mode: hero with the introduction on the right, parts full width.
+   Both columns are stacked from the same top edge - a small label line, then
+   the large content - so the eyebrow and the "last updated" line share a line
+   and the title and the introduction start together. Bottom-aligning them (as
+   before) left the shorter column floating at a different height on each
+   page, depending on how long the introduction happened to be. */
 .page-hero__inner.pol-hero__inner {
   display: grid; grid-template-columns: auto minmax(0, 460px); justify-content: space-between;
-  gap: clamp(24px, 5vw, 80px); align-items: end;
+  gap: clamp(24px, 5vw, 80px); align-items: start;
 }
+.page-hero.pol-hero { padding-bottom: clamp(24px, 3vw, 40px); }
+.pol-hero__main .eyebrow, .pol-hero__aside .pol__meta {
+  display: block; margin: 0 0 16px; font-size: 11px; line-height: 1.4; letter-spacing: .28em; color: var(--c-tan);
+}
+.pol-hero__aside .pol__meta { text-align: right; }
 /* one line, like every other page hero heading; the intro column gives way */
-.pol-hero__main .page-hero__title { white-space: nowrap; }
+.pol-hero__main .page-hero__title { white-space: nowrap; margin: 0; }
 .pol-hero__aside { text-align: right; }
-.pol-hero__aside .pol__meta { color: var(--c-tan); margin-bottom: 12px; }
-.pol-hero__aside .pol__intro { color: rgba(240, 232, 219, .78); }
-.pol-hero__aside .pol__intro p:last-child { margin-bottom: 0; }
+.pol-hero__aside .pol__intro { color: rgba(240, 232, 219, .78); padding-top: 6px; }
+.pol-hero__aside .pol__intro p { margin: 0; }
+.pol--wide { padding-top: clamp(24px, 2.8vw, 36px); padding-bottom: clamp(28px, 3.4vw, 52px); }
 .pol--wide .pol__inner { display: block; }
 @media (max-width: 760px) {
   .page-hero__inner.pol-hero__inner { grid-template-columns: 1fr; }
