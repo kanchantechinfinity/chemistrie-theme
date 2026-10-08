@@ -75,9 +75,11 @@
 .pol__text a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
 /* page-header mode: hero with the introduction on the right, parts full width */
 .page-hero__inner.pol-hero__inner {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 500px);
+  display: grid; grid-template-columns: auto minmax(0, 460px); justify-content: space-between;
   gap: clamp(24px, 5vw, 80px); align-items: end;
 }
+/* one line, like every other page hero heading; the intro column gives way */
+.pol-hero__main .page-hero__title { white-space: nowrap; }
 .pol-hero__aside { text-align: right; }
 .pol-hero__aside .pol__meta { color: var(--c-tan); margin-bottom: 12px; }
 .pol-hero__aside .pol__intro { color: rgba(240, 232, 219, .78); }
@@ -85,6 +87,7 @@
 .pol--wide .pol__inner { display: block; }
 @media (max-width: 760px) {
   .page-hero__inner.pol-hero__inner { grid-template-columns: 1fr; }
+  .pol-hero__main .page-hero__title { white-space: normal; }
   .pol-hero__aside { text-align: left; }
 }
 @media (max-width: 860px) {
