@@ -89,14 +89,16 @@
           "type": "note",
           "settings": {
             "heading": "Professional Inquiries",
-            "body": "<p>Interested in offering Chemistrie through your clinic, med spa, or practice?</p><p>Contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> and include Professional Inquiry in your message.</p>"
+            "body": "<p>Interested in offering Chemistrie through your clinic, med spa, or practice?</p><p>Contact <a href=\"mailto:support@chemistrieco.com\">support@chemistrieco.com</a> and include Professional Inquiry in your message.</p>",
+            "icon": "briefcase"
           }
         },
         "note_3": {
           "type": "note",
           "settings": {
             "heading": "Order Issues",
-            "body": "<p>If your order arrives damaged, incorrect, or is missing an item, please contact us within 7 days of delivery and include your order number, a description of the issue, and photographs when applicable.</p><p>For returns and exchanges, please review our <a href=\"/pages/refund-and-exchange-policy\">Return &amp; Exchange Policy</a> before contacting our team.</p>"
+            "body": "<p>If your order arrives damaged, incorrect, or is missing an item, please contact us within 7 days of delivery and include your order number, a description of the issue, and photographs when applicable.</p><p>For returns and exchanges, please review our <a href=\"/pages/refund-and-exchange-policy\">Return &amp; Exchange Policy</a> before contacting our team.</p>",
+            "icon": "package"
           }
         }
       },

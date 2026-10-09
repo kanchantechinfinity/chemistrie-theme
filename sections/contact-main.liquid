@@ -6,7 +6,7 @@
       <span class="eyebrow">{{ section.settings.left_eyebrow }}</span>
       <h2 class="display-h contact-main__heading">{{ section.settings.left_heading }}</h2>
       {%- if section.settings.left_intro != blank -%}
-        <div class="cinfo__intro">{{ section.settings.left_intro }}</div>
+        <div class="cm-intro">{{ section.settings.left_intro }}</div>
       {%- endif -%}
 
       <ul class="cinfo">
@@ -36,12 +36,14 @@
         {%- endfor -%}
       </ul>
 
+      {%- comment -%}
+        Notes with no heading are plain paragraphs and stay here, under the
+        contact rows. Notes with a heading are cards in a row of their own
+        below the form (see .cm-notes).
+      {%- endcomment -%}
       {%- for block in section.blocks -%}
-        {%- if block.type == 'note' -%}
-          <div class="cnote{% if block.settings.heading == blank %} cnote--plain{% endif %}" {{ block.shopify_attributes }}>
-            {%- if block.settings.heading != blank -%}<h3 class="cnote__h">{{ block.settings.heading }}</h3>{%- endif -%}
-            <div class="cnote__text">{{ block.settings.body }}</div>
-          </div>
+        {%- if block.type == 'note' and block.settings.heading == blank -%}
+          <div class="cm-plain" {{ block.shopify_attributes }}>{{ block.settings.body }}</div>
         {%- endif -%}
       {%- endfor -%}
     </div>
@@ -87,6 +89,37 @@
     </div>
 
   </div>
+
+  {%- assign has_cards = false -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'note' and block.settings.heading != blank -%}{%- assign has_cards = true -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if has_cards -%}
+  <div class="page-section__inner cm-notes">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'note' and block.settings.heading != blank -%}
+        <article class="cm-card" {{ block.shopify_attributes }}>
+          <header class="cm-card__head">
+            {%- if block.settings.icon != 'none' -%}
+              <span class="cm-card__icon" aria-hidden="true">
+                {%- case block.settings.icon -%}
+                  {%- when 'briefcase' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></svg>
+                  {%- when 'package' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".6" fill="currentColor"/></svg>
+                {%- endcase -%}
+              </span>
+            {%- endif -%}
+            <h3 class="cm-card__h">{{ block.settings.heading }}</h3>
+          </header>
+          <div class="cm-card__text">{{ block.settings.body }}</div>
+        </article>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- endif -%}
   <div style="height: clamp(32px, 4.5vw, 64px);" aria-hidden="true"></div>
 </section>
 
@@ -101,16 +134,30 @@
 /* Same optical pull as .mprod__title — the display serif's left side bearing
    otherwise sets this heading in from the eyebrow above it and the icon
    column below. */
-.contact-main__heading { margin: 14px 0 34px -0.045em; }
-.cinfo__intro { margin: -16px 0 6px; max-width: 46ch; font-size: 15.5px; line-height: 1.7; color: var(--c-ink-soft); }
-.cinfo__intro p { margin: 0 0 10px; }
-.cnote { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--c-line-soft); max-width: 46ch; }
-.cnote--plain { margin-top: 20px; padding-top: 0; border-top: 0; }
-.cnote__h { font-family: var(--ff-display); font-weight: 500; font-size: clamp(19px, 1.8vw, 22px); color: var(--c-forest); margin: 0 0 8px; }
-.cnote__text { font-size: 15px; line-height: 1.7; color: var(--c-ink-soft); }
-.cnote__text p { margin: 0 0 10px; }
-.cnote__text p:last-child { margin-bottom: 0; }
-.cnote__text a, .cinfo__intro a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
+.contact-main__heading { margin: 14px 0 22px -0.045em; }
+/* Own prefix (cm-): section CSS in this theme is compiled into one global
+   stylesheet, and the .cnote / .cnote__quote names are already used by the
+   testimonial cards in collection-notes. Reusing them made these notes pick up
+   that card styling by accident, with a cut-off top edge. */
+.cm-intro { margin: 0 0 8px; max-width: 46ch; font-size: 15.5px; line-height: 1.7; color: var(--c-ink-soft); }
+.cm-intro p, .cm-plain p { margin: 0 0 10px; }
+.cm-intro p:last-child, .cm-plain p:last-child { margin-bottom: 0; }
+.cm-plain { margin-top: 28px; padding-left: 16px; border-left: 2px solid var(--c-tan); max-width: 46ch; font-size: 15px; line-height: 1.7; color: var(--c-ink-soft); }
+.cm-intro a, .cm-plain a, .cm-card__text a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
+/* the two headed notes: a row of cards under the form, so the left column no
+   longer runs twice the height of the form beside it */
+.cm-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); margin-top: clamp(28px, 3.4vw, 48px); }
+.cm-card {
+  background: var(--c-paper); border: 1px solid var(--c-line-soft); border-radius: 18px;
+  padding: clamp(22px, 2.4vw, 32px); box-shadow: 0 22px 44px -34px rgba(26, 58, 45, .28);
+}
+.cm-card__head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.cm-card__icon { flex: 0 0 auto; width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center; background: var(--c-forest); color: var(--c-cream); }
+.cm-card__icon svg { width: 20px; height: 20px; }
+.cm-card__h { margin: 0; font-family: var(--ff-display); font-weight: 500; font-size: clamp(21px, 2vw, 26px); line-height: 1.15; color: var(--c-forest); }
+.cm-card__text { font-size: 15.5px; line-height: 1.7; color: var(--c-ink-soft); }
+.cm-card__text p { margin: 0 0 10px; }
+.cm-card__text p:last-child { margin-bottom: 0; }
 .cinfo { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 26px; }
 /* center, not flex-start: the 42px icon is shorter than the label+value block
    beside it, so top-aligning left it riding high against its own text. */
@@ -148,6 +195,7 @@
 .cform__error { background: rgba(180,60,50,.12); color: #8a2e26; }
 @media (max-width: 820px) {
   .contact-main__grid { grid-template-columns: 1fr; }
+  .cm-notes { grid-template-columns: 1fr; }
 }
 {% endstylesheet %}
 
@@ -164,7 +212,13 @@
       "type": "note",
       "name": "Note",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "info": "Leave blank for a plain paragraph." },
+        { "type": "text", "id": "heading", "label": "Heading", "info": "Leave blank for a plain paragraph under the contact rows; with a heading it becomes a card below the form." },
+        { "type": "select", "id": "icon", "label": "Card icon", "default": "none", "options": [
+          { "value": "none", "label": "None" },
+          { "value": "briefcase", "label": "Briefcase" },
+          { "value": "package", "label": "Package" },
+          { "value": "info", "label": "Info" }
+        ] },
         { "type": "richtext", "id": "body", "label": "Text", "default": "<p>Text.</p>" }
       ]
     },
