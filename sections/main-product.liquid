@@ -562,7 +562,11 @@
    own intended top spacing due to equal specificity + later file load order — pin it down with
    a compound selector so it always wins regardless of stylesheet order. */
 .page-section.mprod { padding-top: clamp(20px, 3vw, 40px); padding-bottom: clamp(20px, 3vw, 40px); }
-.mprod__layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
+/* minmax(0, 1fr), not 1fr: 1fr is minmax(auto, 1fr), so a column grows to its
+   content's minimum width. The photo strip made the single phone column 512px
+   wide on a 390px screen, cropping the photo, quantity box and buttons. */
+.mprod__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.mprod__layout > * { min-width: 0; }
 /* No inset frame: the photos are shot on their own background, so the
    paper-coloured padding that used to sit behind them read as a second,
    mismatched border around the shot. The image fills the box.
@@ -823,7 +827,7 @@
 }
 
 @media (max-width: 860px) {
-  .mprod__layout { grid-template-columns: 1fr; }
+  .mprod__layout { grid-template-columns: minmax(0, 1fr); }
   .mprod__gallery { position: static; }
 }
 

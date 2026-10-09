@@ -168,12 +168,20 @@
   /* mobile menu panel */
   .nav__links {
     display: flex !important; flex-direction: column; gap: 0;
-    position: fixed; inset: 0 0 0 auto; top: 0; width: min(82vw, 340px); height: 100vh;
+    position: fixed; inset: 0 0 0 auto; top: 0; width: min(82vw, 340px); height: 100vh; height: 100dvh; overflow-y: auto;
     background: var(--c-cream); padding: 96px 32px 32px;
-    transform: translateX(100%); transition: transform .45s var(--ease-out);
-    box-shadow: -30px 0 80px -40px rgba(26,58,45,.5); z-index: 120;
+    /* Closed = hidden, with no shadow. The shadow used to bleed in from the right
+       edge of every page as a dark strip, and the hidden links were still
+       reachable with the keyboard. Visibility and shadow switch only after the
+       slide finishes, so closing still animates. */
+    transform: translateX(100%); visibility: hidden; box-shadow: none;
+    transition: transform .45s var(--ease-out), visibility 0s linear .45s, box-shadow 0s linear .45s;
+    z-index: 120;
   }
-  .nav--open .nav__links { transform: translateX(0); }
+  .nav--open .nav__links {
+    transform: translateX(0); visibility: visible; box-shadow: -30px 0 80px -40px rgba(26,58,45,.5);
+    transition: transform .45s var(--ease-out), visibility 0s, box-shadow 0s;
+  }
   .nav__links-close {
     display: flex; align-items: center; justify-content: center;
     position: absolute; top: 28px; right: 24px; width: 36px; height: 36px;

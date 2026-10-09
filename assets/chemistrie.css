@@ -44,6 +44,12 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: auto; scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
+/* Off-canvas panels (the menu, the cart and wishlist drawers) are parked just
+   past the right edge when closed. Phones size the page to include them, so
+   every page came out ~710px wide on a 390px screen and could be dragged
+   sideways. clip, not hidden: hidden would turn html/body into scroll
+   containers and break the sticky header. */
+@supports (overflow: clip) { html, body { overflow-x: clip; } }
 body {
   margin: 0;
   font-family: var(--ff-body);
