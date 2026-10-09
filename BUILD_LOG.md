@@ -1165,3 +1165,7 @@ browser's early connections across images nobody has scrolled to.
 - File: sections/product-details.liquid (CSS after line ~874).
 - Added 900px/600px media queries; verified via injected CSS at 375px on chemistrieco.com velvet product page.
 - Needs theme push/deploy to go live.
+
+## 2026-10-09 Founder names
+- assets/chemistrie.css: .founders__who-name font-weight 600; Harin caption margin-top 10px -> 0 (Zach unchanged at 44px).
+- Verified by injected CSS on live home page; not yet committed/pushed.

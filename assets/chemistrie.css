@@ -1348,10 +1348,11 @@ body.template-product::-webkit-scrollbar { display: none; }
 .founders__who { margin: 26px 0 0; text-align: center; max-width: 100%; }
 /* Per-name nudges: Harin's sits closer to his photo, Zach's further from his.
    Only the caption moves - the portraits stay level. */
-.founders__fig--a .founders__who { margin-top: 10px; }
+.founders__fig--a .founders__who { margin-top: 0; }
 .founders__fig--b .founders__who { margin-top: 44px; }
 .founders__who-name {
   font-family: var(--ff-display); font-size: clamp(18px, 1.6vw, 23px);
+  font-weight: 600;
   color: var(--c-forest); line-height: 1.2;
 }
 .founders__photo {
