@@ -15,6 +15,31 @@ letters. Measured live: 0px offset at 1440 and 1280, -0.6px at 390.
 
 ---
 
+## 2026-10-09 - Contact page revamp
+
+**Task:** make the Contact page's left side look more presentable.
+
+**Found and fixed (both mine):** the notes inherited the testimonial-card
+styling from `collection-notes` through a shared `.cnote` class name; the
+"Reach Us" heading overlapped the sentence below it.
+
+**Shipped** (`sections/contact-main.liquid`, `templates/page.contact.json`):
+
+| Change | Detail |
+| --- | --- |
+| Own `cm-` class names | no collision with other sections |
+| Order-number sentence | paragraph with a tan left rule under the contact rows |
+| Professional Inquiries, Order Issues | two matching cards below the form, with icons |
+| Card icon setting | none / briefcase / package / info |
+| Phones | cards stack to one column |
+
+No copy changed. Verified live at 1440 and 390.
+
+**Also:** merged shopify[bot]'s commit carrying the user's Meta Pixel;
+confirmed it sits inside `<head>` once.
+
+---
+
 ## 2026-10-08 - FAQ left-aligned; footer monogram
 
 **Shipped.**
