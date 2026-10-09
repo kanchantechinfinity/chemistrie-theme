@@ -1351,8 +1351,7 @@ body.template-product::-webkit-scrollbar { display: none; }
 .founders__fig--a .founders__who { margin-top: 0; }
 .founders__fig--b .founders__who { margin-top: 44px; }
 .founders__who-name {
-  font-family: var(--ff-display); font-size: clamp(18px, 1.6vw, 23px);
-  font-weight: 600;
+  font-family: var(--ff-display); font-size: clamp(21px, 1.9vw, 27px);
   color: var(--c-forest); line-height: 1.2;
 }
 .founders__photo {
@@ -3005,7 +3004,10 @@ body.template-product::-webkit-scrollbar { display: none; }
 
   /* Instagram slider */
   .insta__intro { flex-direction: column; align-items: flex-start; gap: 18px; }
-  .insta__intro-right { width: 100%; justify-content: space-between; align-items: center; }
+  .insta__intro-right { width: 100%; flex-direction: column; align-items: stretch; gap: 16px; }
+  .insta__social { width: 100%; justify-content: flex-start; }
+  .insta__social .insta__handle { flex: 1 1 auto; justify-content: center; }
+  .insta__nav { align-self: flex-start; }
   .insta__slider .reel { flex: 0 0 70vw; }
 
   /* Newsletter card */

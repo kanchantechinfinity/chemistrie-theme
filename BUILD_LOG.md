@@ -1169,3 +1169,13 @@ browser's early connections across images nobody has scrolled to.
 ## 2026-10-09 Founder names
 - assets/chemistrie.css: .founders__who-name font-weight 600; Harin caption margin-top 10px -> 0 (Zach unchanged at 44px).
 - Verified by injected CSS on live home page; not yet committed/pushed.
+
+## 2026-10-09 Founder names (revision)
+- Reverted font-weight 600 (it only darkened the colour). Size now clamp(21px,1.9vw,27px). Harin caption margin-top stays 0.
+- Measured name vs photo centre at 375/600/1024/1440px: identical, so no centring change made.
+- Not yet committed/pushed.
+
+## 2026-10-09 Hero spacing + Instagram mobile CTA
+- sections/hero.liquid: whitespace-stripping Liquid dropped the space between "formulated" and italic "by pharmacists." -> now outputs a space.
+- assets/chemistrie.css (<=700px block): .insta__intro-right stacks; social pills left-aligned/full width; arrows left. Was flex-end wrapped pills = staggered.
+- Verified via injected CSS at 375px (pills x=20 w=335, arrows x=20). Not yet pushed.
