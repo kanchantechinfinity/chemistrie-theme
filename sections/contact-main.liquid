@@ -134,7 +134,7 @@
 /* Same optical pull as .mprod__title — the display serif's left side bearing
    otherwise sets this heading in from the eyebrow above it and the icon
    column below. */
-.contact-main__heading { margin: 14px 0 22px -0.045em; }
+.contact-main__heading { margin: 14px 0 26px -0.045em; }
 /* Own prefix (cm-): section CSS in this theme is compiled into one global
    stylesheet, and the .cnote / .cnote__quote names are already used by the
    testimonial cards in collection-notes. Reusing them made these notes pick up
@@ -146,7 +146,10 @@
 .cm-intro a, .cm-plain a, .cm-card__text a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-tan); }
 /* the two headed notes: a row of cards under the form, so the left column no
    longer runs twice the height of the form beside it */
-.cm-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); margin-top: clamp(28px, 3.4vw, 48px); }
+/* doubled with .page-section__inner: that rule sets margin: 0 auto on this same
+   element and, at equal specificity, was zeroing the top margin - the cards sat
+   flush against the Send button */
+.page-section__inner.cm-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); margin: clamp(32px, 3.6vw, 52px) auto 0; }
 .cm-card {
   background: var(--c-paper); border: 1px solid var(--c-line-soft); border-radius: 18px;
   padding: clamp(22px, 2.4vw, 32px); box-shadow: 0 22px 44px -34px rgba(26, 58, 45, .28);
