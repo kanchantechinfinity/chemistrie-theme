@@ -1144,3 +1144,19 @@ browser's early connections across images nobody has scrolled to.
 - Upload approved images to the bundle products in Shopify admin — the
   theme-side fix covers the storefront only; checkout, emails and admin
   still show Shopify's placeholders.
+
+## 2026-10-09 - Mobile: pages 710px wide, cropped product page, hamburger menu
+**Request:** optimise the phone view - collection, product page and side menu getting cropped.
+**Commits:** 3e51f9d (overflow clip, closed-panel hiding, product grid), 89c1668 (quantity block height, menu top alignment). Both pushed; live.
+**Changed:** `assets/chemistrie.css`, `assets/pages.css`, `assets/shop-ux.css`, `sections/main-product.liquid`.
+**Found and fixed:**
+| Problem (390px phone) | Cause | Fix |
+|---|---|---|
+| Every page 710px wide, drags sideways | closed menu + drawers parked past right edge | `overflow-x: clip` on html/body |
+| Dark strip down right edge | shadows of closed panels | closed = `visibility:hidden`, no shadow |
+| Product page cropped (gallery 512px) | `1fr` grid column grew to content | `minmax(0,1fr)` + `min-width:0` |
+| 86px empty gap above buy button | qty block 140px tall (flex-basis as height) | override repeats base selector, `flex:0 0 auto` -> 62px |
+| Menu logo ~200px below close button | vertical centring | `justify-content:flex-start`, `100dvh` |
+**Verified:** headless-Chrome phone emulation on the live site - width 390 = scroll width 390 on home, collection, product, contact and FAQ; menu opens full height with 5 tappable links; product screenshot shows photo, tags, price, quantity and button all inside the screen.
+**Not verified:** real devices (Safari iOS address-bar behaviour); other widths such as 360px and tablets were not re-measured.
+**Open:** purchase tracking (Customer Events pixel) not built; privacy-policy email `admin@chemsitrieco.com` needs fixing in Shopify admin.
