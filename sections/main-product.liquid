@@ -801,7 +801,11 @@
 
 @media (max-width: 480px) {
   .mprod__row--options, .mprod__row--actions { flex-direction: column; align-items: stretch; }
-  .mprod__row--options .mprod__qty { flex: 1 1 auto; }
+  /* Same selector as the base rule that sets flex: 0 0 140px, or this loses to it
+     on specificity. In a column, a flex-basis of 140px is a HEIGHT: it made the
+     54px quantity field a 140px block with ~86px of empty space under it. */
+  .mprod__row--options .mprod__qty,
+  .mprod__row--options input[type="hidden"] ~ .mprod__qty { flex: 0 0 auto; }
   .mprod__row--actions .mprod__wish { justify-content: center; }
 }
 
