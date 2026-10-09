@@ -872,6 +872,16 @@
 .pdet__ing-row strong { color: var(--c-forest); font-weight: 600; }
 .pdet__ing-cred { font-size: 12px; font-style: italic; color: var(--c-ink-mute); }
 .pdet__ing-grid--spotlight .pdet__ing-card { background: var(--c-paper); }
+@media (max-width: 900px) {
+  .pdet__ing-grid--spotlight .pdet__ing-card { flex: 0 0 calc((100% - clamp(20px, 2.4vw, 32px)) / 2); }
+}
+@media (max-width: 600px) {
+  .pdet__ing-grid--spotlight { gap: 14px; scroll-padding-left: 4px; }
+  .pdet__ing-grid--spotlight .pdet__ing-card { flex: 0 0 84%; padding: 20px 18px; }
+  .pdet__ing-grid--spotlight .pdet__ing-row { font-size: 15px; line-height: 1.6; }
+  .pdet__ing-grid--spotlight .pdet__ing-name { font-size: 19px; }
+  .pdet__ing-rail-wrap { mask-image: none; -webkit-mask-image: none; }
+}
 
 /* Routine Placement — Morning/Evening tabs + bento-stairs step boxes.
    Namespaced rtabs__/rbento__: sections/ritual-steps.liquid already owns

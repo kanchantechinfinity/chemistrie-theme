@@ -1160,3 +1160,8 @@ browser's early connections across images nobody has scrolled to.
 **Verified:** headless-Chrome phone emulation on the live site - width 390 = scroll width 390 on home, collection, product, contact and FAQ; menu opens full height with 5 tappable links; product screenshot shows photo, tags, price, quantity and button all inside the screen.
 **Not verified:** real devices (Safari iOS address-bar behaviour); other widths such as 360px and tablets were not re-measured.
 **Open:** purchase tracking (Customer Events pixel) not built; privacy-policy email `admin@chemsitrieco.com` needs fixing in Shopify admin.
+
+## 2026-10-09 Mobile fix: ingredient spotlight cards
+- File: sections/product-details.liquid (CSS after line ~874).
+- Added 900px/600px media queries; verified via injected CSS at 375px on chemistrieco.com velvet product page.
+- Needs theme push/deploy to go live.

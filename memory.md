@@ -4007,3 +4007,6 @@ User: "optimize the mobile view first the collection and product its getting cro
 - Hamburger menu: logo sat ~200px below the close button because the desktop `justify-content: center` centred the links vertically. Now `flex-start`; panel height 100dvh and scrolls.
 **Verified live:** layout width 390 and scroll width 390 on /, /collections/all, an Aura product page, /pages/contact, /pages/faq. Menu opened in emulation: slides in full height, right edge = screen edge, backdrop on, page scroll locked, 5 links with ~57px rows; closed state is hidden with no shadow. The collection cards already fitted once the page width was fixed.
 **Rule:** a fixed off-canvas panel parked off-screen still enlarges the mobile layout width - always pair it with `overflow-x: clip` and `visibility: hidden` when closed.
+
+## Mobile ingredient spotlight (2026-10-09)
+- Cards in `.pdet__ing-grid--spotlight` (sections/product-details.liquid) were sized to 1/3 of row on all screens -> ~100px wide on phones. Fixed with <=900px (2 per view) and <=600px (84% width) overrides.
