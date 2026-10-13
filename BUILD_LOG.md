@@ -1179,3 +1179,9 @@ browser's early connections across images nobody has scrolled to.
 - sections/hero.liquid: whitespace-stripping Liquid dropped the space between "formulated" and italic "by pharmacists." -> now outputs a space.
 - assets/chemistrie.css (<=700px block): .insta__intro-right stacks; social pills left-aligned/full width; arrows left. Was flex-end wrapped pills = staggered.
 - Verified via injected CSS at 375px (pills x=20 w=335, arrows x=20). Not yet pushed.
+
+## 2026-10-13 - Collection photo link + phone ingredient cards
+**Commit:** ac79f4b. **Files:** `sections/main-collection.liquid`, `assets/shop-ux.js`, `assets/pages.css`, `sections/product-details.liquid`.
+**Done:** collection card photo goes to the product page (cart-on-photo removed); ingredient cards widened on phones (208px -> 257px, height 736 -> 616px).
+**Verified:** live site, phone emulation at 330px (screenshot) and DOM check of the card link.
+**Not verified:** a real phone; other product pages' ingredient cards use the same markup but were not each opened.

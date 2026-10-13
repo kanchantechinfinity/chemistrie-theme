@@ -4010,3 +4010,7 @@ User: "optimize the mobile view first the collection and product its getting cro
 
 ## Mobile ingredient spotlight (2026-10-09)
 - Cards in `.pdet__ing-grid--spotlight` (sections/product-details.liquid) were sized to 1/3 of row on all screens -> ~100px wide on phones. Fixed with <=900px (2 per view) and <=600px (84% width) overrides.
+
+## 2026-10-13 - Collection card photo opens the product; ingredient cards on phones
+**Photo click.** The earlier "photo = buy now" behaviour (JS on `[data-card-buy]` in `assets/shop-ux.js`, set on `.pcard__media` in `sections/main-collection.liquid`) was removed on request: the photo is now a plain link to the product page. The Buy now *button* still adds the variant and goes to /cart. Verified live: `.pcard__media` has the product href, no `data-card-buy`, click not intercepted.
+**Ingredient cards (product page, `sections/product-details.liquid`).** On a ~330px phone the dark band's side padding left a ~250px rail, cards were 208px wide and 736px tall with 1-2 words per line. At <=600px the band (`pdet__visual-band--ing`, new modifier so the benefits/routine bands are untouched) now has zero side padding, the rail pads 16px itself, cards are `min(78vw, 320px)`: 257px wide, 616px tall, text reads in normal lines. The bottom of the user's screenshot was hidden by the phone browser's own toolbar, not by the site.
