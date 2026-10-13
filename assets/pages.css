@@ -105,7 +105,6 @@
 /* The photo is a buy target now, so say so with the cursor, and give the tap
    an acknowledgement - the request goes to the network before the page moves,
    and a photo that does nothing for half a second reads as a dead click. */
-.pcard__media[data-card-buy] { cursor: pointer; }
 .pcard__media.is-adding { opacity: .62; transition: opacity .2s ease; }
 .pcard__btn--buy.is-adding { opacity: .6; }
 /* Below this the two labels cannot share a line without truncating the

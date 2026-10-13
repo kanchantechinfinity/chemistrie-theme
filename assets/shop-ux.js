@@ -147,7 +147,7 @@
       });
   });
 
-  /* Buy now on a product card, from either the button or the photo: add the
+  /* Buy now on a product card button: add the
      single variant, then go to the cart. Deliberately a full page move to
      /cart rather than the drawer used above - these exist for someone who has
      decided, and the cart page is the one that leads to checkout. The ordinary
@@ -186,17 +186,6 @@
       });
       return;
     }
-
-    var media = e.target.closest("[data-card-buy]");
-    if (!media) return;
-    /* Leave every click that means "open this somewhere else" alone: a
-       modified click, a middle click, or anything but the primary button.
-       Only a plain left click is treated as intent to buy. */
-    if (e.defaultPrevented) return;
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    if (typeof e.button === "number" && e.button !== 0) return;
-    e.preventDefault();
-    cardBuy(media, null);
   });
 
   /* Remove line item */
