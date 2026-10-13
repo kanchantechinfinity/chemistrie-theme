@@ -1185,3 +1185,9 @@ browser's early connections across images nobody has scrolled to.
 **Done:** collection card photo goes to the product page (cart-on-photo removed); ingredient cards widened on phones (208px -> 257px, height 736 -> 616px).
 **Verified:** live site, phone emulation at 330px (screenshot) and DOM check of the card link.
 **Not verified:** a real phone; other product pages' ingredient cards use the same markup but were not each opened.
+
+## 2026-10-13 - Chemistrie Tracking app scaffolded (not yet deployed)
+**Where:** `C:/Users/vedant/OneDrive/Desktop/chemistrie-tracking` (separate git repo, 1 commit). **Built:** shopify.app.toml, App Home UI extension (`AppHome.jsx`, `lib.js`), README.
+**Verified:** 16 unit checks on `lib.js` pass (source bucketing: found and fixed one bug, a joined label string let Google beat an explicit `fb` UTM); JSX bundles with esbuild to 32 KB raw / 12 KB gzip (cap 64 KB).
+**Not verified:** rendering in Shopify admin, the ShopifyQL column names against the real store, and `customerJourneySummary` data - all need the user's login + install.
+**Next (user):** `npm install`, `shopify app deploy`, install via Dev Dashboard custom distribution, request protected customer data Level 2.
