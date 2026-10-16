@@ -2939,7 +2939,8 @@ body.template-product::-webkit-scrollbar { display: none; }
 
   /* Founders */
   .founders__media { max-width: 100%; }
-  .founders__caption { font-size: 11.5px; }
+  .founders__caption { font-size: 15px; line-height: 1.5; }
+  .founders__who-name { font-size: 26px; }
   /* Two ovals stop fitting side by side here. */
   .founders__media { grid-template-columns: 1fr; }
 

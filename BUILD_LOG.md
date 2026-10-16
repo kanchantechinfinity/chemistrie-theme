@@ -1194,3 +1194,6 @@ browser's early connections across images nobody has scrolled to.
 
 ## 2026-10-14 - Tracking app: layout like the reference + any-date range
 User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shopify-hosted App Home extensions cannot use custom CSS/fonts, so the user chose "copy layout, Shopify look" (the Chemistrie-themed version would need a self-hosted app). Rebuilt `AppHome.jsx`: pill tabs, range card, KPI cards, source table in the reference column order, coloured source badges. Added From/To date boxes + Apply (any date; orders/coupons still limited to the last 60 days). 24 unit checks pass; bundle 13 KB gzip. Deploy needed: `shopify app deploy` (first deploy hit a JSX-runtime error, fixed with extensions/tracking/tsconfig.json; link had reset scopes, restored read_orders,read_reports). Not yet verified in Shopify admin.
+
+## 2026-10-16 Founders mobile text
+- <=700px: .founders__who-name 26px; .founders__caption 11.5px -> 15px (was too small).
