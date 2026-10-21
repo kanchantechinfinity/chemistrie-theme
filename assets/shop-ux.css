@@ -52,6 +52,7 @@ body.drawer-locked { overflow: hidden; }
   align-items: center; text-align: center; padding: 40px 0;
   font-family: var(--ff-body); color: var(--c-forest);
 }
+.drawer__empty[hidden] { display: none; }
 
 /* Line items */
 .drawer-item {

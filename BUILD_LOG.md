@@ -1203,3 +1203,6 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 - assets/shop-ux.css: .drawer-item__stepper/.drawer-item__step.
 - Checkout order summary (first screenshot) is Shopify-hosted: no +/- possible without Plus checkout extensibility.
 - Not pushed.
+
+## 2026-10-21 Cart drawer shows "Your bag is empty" with items
+- Cause: .drawer__empty {display:flex} overrode the hidden attribute (assets/shop-ux.css). Added .drawer__empty[hidden]{display:none} (also fixes wishlist drawer).
