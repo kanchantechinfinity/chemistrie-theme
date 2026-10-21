@@ -465,17 +465,93 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%} ───── Lifestyle photo — the ritual in use ───── {%- endcomment -%}
-    <div class="pdet__block pdet__feel">
-      <div class="pdet__feel-copy">
-        <h2 class="pdet__h">{{ pd_benefit_headline | default: product.title | append: ', made to feel as good as it works.' }}</h2>
-        <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-        {%- if pd_overview != blank -%}<p>{{ pd_overview }}</p>{%- endif -%}
+    {%- comment -%} ───── How to Use (left) beside What's Inside / Texture & Experience / Who It's For tabs (right) ───── {%- endcomment -%}
+    <div class="pdet__block pdet__tabs">
+      <div class="pdet__tabs-nav" role="tablist">
+        <button type="button" class="pdet__tab is-active" role="tab" aria-selected="true" aria-controls="pdet-tab-inside">What's Inside</button>
+        <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-texture">Texture &amp; Experience</button>
+        <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-who">Who It's For</button>
+        <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-howto">How to Use</button>
       </div>
-      <div class="pdet__feel-photo">
-        <img src="{{ 'howto-cleanse.jpg' | asset_url }}" alt="Applying {{ product.title | escape }}" loading="lazy">
+
+      <div class="pdet__tab-panel is-active" id="pdet-tab-inside" role="tabpanel">
+        <div class="pdet__ing-card">
+          {%- if mf.whats_inside != blank -%}
+            <div class="rte">{{ mf.whats_inside | replace: '—', ',' }}</div>
+          {%- elsif pd_whats_inside != blank -%}
+            <p>{{ pd_whats_inside }}</p>
+          {%- else -%}
+            <p>Every batch centers on a single pharmacist-selected active, supported by a minimal base chosen to carry it cleanly into the skin.</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="pdet__tab-panel" id="pdet-tab-texture" role="tabpanel">
+        <div class="pdet__ing-card">
+          <p>
+            {%- if mf.feeling != blank -%}{{ mf.feeling | replace: '—', ',' }}{%- else -%}{{ pd_feeling }}{%- endif -%}
+          </p>
+          {%- if pd_texture_tags != blank -%}
+            <div class="pdet__tagrow">
+              {%- for tag in pd_texture_tags -%}
+                <span class="pdet__tag">{{ tag | strip }}</span>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="pdet__tab-panel" id="pdet-tab-who" role="tabpanel">
+        <div class="pdet__ing-card">
+          <p>
+            {%- if mf.who_its_for != blank -%}{{ mf.who_its_for | replace: '—', ',' }}{%- else -%}{{ pd_who }}{%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="pdet__tab-panel" id="pdet-tab-howto" role="tabpanel">
+        <div class="pdet__ing-card">
+          <div class="pdet__howto-visual">
+            {%- if mf.how_to_use != blank -%}
+              {%- comment -%} Build the same icon + numbered-circle list used by the hardcoded pd_how_to_use, instead of flat text, so every product matches (Veil's steps, driven by pd_how_to_use, were the reference). {%- endcomment -%}
+              {% capture nl %}
+{% endcapture %}
+              <ol class="pdet__list pdet__list--ol">
+                {%- assign howto_lines = mf.how_to_use | replace: '—', ',' | split: nl -%}
+                {%- assign step_num = 0 -%}
+                {%- for line in howto_lines -%}
+                  {%- assign trimmed = line | strip -%}
+                  {%- if trimmed != blank -%}
+                    {%- assign step_num = step_num | plus: 1 -%}
+                    {%- assign marker = step_num | append: '. ' -%}
+                    {%- assign clean_line = trimmed | replace_first: marker, '' -%}
+                    <li>{{ clean_line }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ol>
+            {%- elsif pd_how_to_use != blank -%}
+              {{ pd_how_to_use }}
+            {%- else -%}
+              <ol class="pdet__list pdet__list--ol">
+                <li>Apply a small amount to clean skin, morning and evening.</li>
+                <li>Follow with your next ritual step.</li>
+                <li>Introduce gradually if your skin is new to active formulas.</li>
+              </ol>
+            {%- endif -%}
+          </div>
+        </div>
       </div>
     </div>
+
+    {%- comment -%} ───── FAQ ───── {%- endcomment -%}
+    {%- if pd_faq != blank -%}
+      <div class="pdet__block pdet__faq">
+        <h2 class="pdet__h pdet__h--center">What You'll Want to Know</h2>
+        <div class="pfaq">
+          {{ pd_faq }}
+        </div>
+      </div>
+    {%- endif -%}
 
     {%- comment -%} ───── Customer Reviews ───── {%- endcomment -%}
     <div class="pdet__block pdet__reviews" id="mprod-reviews">
@@ -580,93 +656,17 @@
       </div>
     </div>
 
-    {%- comment -%} ───── How to Use (left) beside What's Inside / Texture & Experience / Who It's For tabs (right) ───── {%- endcomment -%}
-    <div class="pdet__block pdet__tabs">
-      <div class="pdet__tabs-nav" role="tablist">
-        <button type="button" class="pdet__tab is-active" role="tab" aria-selected="true" aria-controls="pdet-tab-inside">What's Inside</button>
-        <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-texture">Texture &amp; Experience</button>
-        <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-who">Who It's For</button>
-        <button type="button" class="pdet__tab" role="tab" aria-selected="false" aria-controls="pdet-tab-howto">How to Use</button>
+    {%- comment -%} ───── Lifestyle photo — the ritual in use ───── {%- endcomment -%}
+    <div class="pdet__block pdet__feel">
+      <div class="pdet__feel-copy">
+        <h2 class="pdet__h">{{ pd_benefit_headline | default: product.title | append: ', made to feel as good as it works.' }}</h2>
+        <svg class="pdet__squiggle" viewBox="0 0 60 10" width="52" height="10" aria-hidden="true"><path d="M2 6 Q10 2 18 6 T34 6 T50 6" stroke="var(--c-tan-2)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        {%- if pd_overview != blank -%}<p>{{ pd_overview }}</p>{%- endif -%}
       </div>
-
-      <div class="pdet__tab-panel is-active" id="pdet-tab-inside" role="tabpanel">
-        <div class="pdet__ing-card">
-          {%- if mf.whats_inside != blank -%}
-            <div class="rte">{{ mf.whats_inside | replace: '—', ',' }}</div>
-          {%- elsif pd_whats_inside != blank -%}
-            <p>{{ pd_whats_inside }}</p>
-          {%- else -%}
-            <p>Every batch centers on a single pharmacist-selected active, supported by a minimal base chosen to carry it cleanly into the skin.</p>
-          {%- endif -%}
-        </div>
-      </div>
-
-      <div class="pdet__tab-panel" id="pdet-tab-texture" role="tabpanel">
-        <div class="pdet__ing-card">
-          <p>
-            {%- if mf.feeling != blank -%}{{ mf.feeling | replace: '—', ',' }}{%- else -%}{{ pd_feeling }}{%- endif -%}
-          </p>
-          {%- if pd_texture_tags != blank -%}
-            <div class="pdet__tagrow">
-              {%- for tag in pd_texture_tags -%}
-                <span class="pdet__tag">{{ tag | strip }}</span>
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
-        </div>
-      </div>
-
-      <div class="pdet__tab-panel" id="pdet-tab-who" role="tabpanel">
-        <div class="pdet__ing-card">
-          <p>
-            {%- if mf.who_its_for != blank -%}{{ mf.who_its_for | replace: '—', ',' }}{%- else -%}{{ pd_who }}{%- endif -%}
-          </p>
-        </div>
-      </div>
-
-      <div class="pdet__tab-panel" id="pdet-tab-howto" role="tabpanel">
-        <div class="pdet__ing-card">
-          <div class="pdet__howto-visual">
-            {%- if mf.how_to_use != blank -%}
-              {%- comment -%} Build the same icon + numbered-circle list used by the hardcoded pd_how_to_use, instead of flat text, so every product matches (Veil's steps, driven by pd_how_to_use, were the reference). {%- endcomment -%}
-              {% capture nl %}
-{% endcapture %}
-              <ol class="pdet__list pdet__list--ol">
-                {%- assign howto_lines = mf.how_to_use | replace: '—', ',' | split: nl -%}
-                {%- assign step_num = 0 -%}
-                {%- for line in howto_lines -%}
-                  {%- assign trimmed = line | strip -%}
-                  {%- if trimmed != blank -%}
-                    {%- assign step_num = step_num | plus: 1 -%}
-                    {%- assign marker = step_num | append: '. ' -%}
-                    {%- assign clean_line = trimmed | replace_first: marker, '' -%}
-                    <li>{{ clean_line }}</li>
-                  {%- endif -%}
-                {%- endfor -%}
-              </ol>
-            {%- elsif pd_how_to_use != blank -%}
-              {{ pd_how_to_use }}
-            {%- else -%}
-              <ol class="pdet__list pdet__list--ol">
-                <li>Apply a small amount to clean skin, morning and evening.</li>
-                <li>Follow with your next ritual step.</li>
-                <li>Introduce gradually if your skin is new to active formulas.</li>
-              </ol>
-            {%- endif -%}
-          </div>
-        </div>
+      <div class="pdet__feel-photo">
+        <img src="{{ 'howto-cleanse.jpg' | asset_url }}" alt="Applying {{ product.title | escape }}" loading="lazy">
       </div>
     </div>
-
-    {%- comment -%} ───── FAQ ───── {%- endcomment -%}
-    {%- if pd_faq != blank -%}
-      <div class="pdet__block pdet__faq">
-        <h2 class="pdet__h pdet__h--center">What You'll Want to Know</h2>
-        <div class="pfaq">
-          {{ pd_faq }}
-        </div>
-      </div>
-    {%- endif -%}
 
     {%- comment -%} ───── You May Also Love ───── {%- endcomment -%}
     {%- assign related = product.collections.first.products -%}
