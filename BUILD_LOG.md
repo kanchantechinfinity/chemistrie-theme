@@ -1224,3 +1224,7 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 
 ## 2026-10-21 Reviews moved below feel section
 - sections/product-details.liquid: Customer Reviews block now directly after the Deep hydration (feel) section, before You May Also Love. Order: spotlight > tabs > FAQ > routine > founder > feel > reviews > related. #mprod-reviews anchor unchanged. Not pushed.
+
+## 2026-10-21 Aura lead image
+- snippets/product-gallery-images.liquid: Aura gallery order now gallery-aura-4.jpg first (open jar, beaker, lid).
+- snippets/product-image-asset.liquid: Aura card/collection thumbnail -> gallery-aura-4.jpg. Home hero card (index.json) and ritual finder still use product-aura.jpg. Not pushed.
