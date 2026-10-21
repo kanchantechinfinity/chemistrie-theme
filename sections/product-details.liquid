@@ -553,51 +553,6 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%} ───── Customer Reviews ───── {%- endcomment -%}
-    <div class="pdet__block pdet__reviews" id="mprod-reviews">
-      <h2 class="pdet__h pdet__h--center">Customer Reviews</h2>
-      {%- if product.metafields.reviews.rating != blank -%}
-        <div class="pdet__rating">
-          <span class="pdet__rating-stars">★★★★★</span>
-          <span class="pdet__rating-val">{{ product.metafields.reviews.rating.value }} / 5</span>
-          {%- if product.metafields.reviews.rating_count != blank -%}
-            <span class="pdet__rating-count">({{ product.metafields.reviews.rating_count }} reviews)</span>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-      {%- if section.settings.show_demo_reviews -%}
-        <div class="pdet__review-grid">
-          <article class="pdet__review-card">
-            <div class="pdet__review-top">
-              <span class="pdet__review-stars">★★★★★</span>
-              <span class="pdet__verified">Verified Purchase</span>
-            </div>
-            <p class="pdet__review-copy">&ldquo;Eight weeks in and my skin genuinely looks different, calmer, less reactive, and the dull patch on my cheeks has faded. First routine I've actually stuck with, because it feels good to use, not just good on paper.&rdquo;</p>
-            <span class="pdet__review-name">Eleanor R.</span>
-          </article>
-          <article class="pdet__review-card">
-            <div class="pdet__review-top">
-              <span class="pdet__review-stars">★★★★★</span>
-              <span class="pdet__verified">Verified Purchase</span>
-            </div>
-            <p class="pdet__review-copy">&ldquo;I was skeptical of another skincare brand promising more than it delivers, but the formulation here is real. No burning, no purging, just steady, visible improvement over about a month.&rdquo;</p>
-            <span class="pdet__review-name">Priya S.</span>
-          </article>
-          <article class="pdet__review-card">
-            <div class="pdet__review-top">
-              <span class="pdet__review-stars">★★★★★</span>
-              <span class="pdet__verified">Verified Purchase</span>
-            </div>
-            <p class="pdet__review-copy">&ldquo;Reordered before I'd even finished the bottle. The texture is beautiful and a little goes such a long way, worth every dollar, and it arrived hand-numbered, which felt like a nice touch.&rdquo;</p>
-            <span class="pdet__review-name">Camille D.</span>
-          </article>
-        </div>
-      {%- else -%}
-        <p class="pdet__empty">Be the first to share your experience with {{ product.title }}.</p>
-        <a href="/pages/contact?subject=Review:%20{{ product.title | url_encode }}" class="btn btn--ghost pdet__review-cta">Write a Review</a>
-      {%- endif -%}
-    </div>
-
     {%- comment -%} ───── Routine Placement — Morning/Evening tabs, bento-stairs step boxes ───── {%- endcomment -%}
     {%- if pd_routine_am != blank or pd_routine_pm != blank -%}
       {%- comment -%} Tabs only make sense with two periods to switch between; a single-period routine (Aura, evening-only) just shows its one panel with no toggle. {%- endcomment -%}
@@ -666,6 +621,51 @@
       <div class="pdet__feel-photo">
         <img src="{{ 'howto-cleanse.jpg' | asset_url }}" alt="Applying {{ product.title | escape }}" loading="lazy">
       </div>
+    </div>
+
+    {%- comment -%} ───── Customer Reviews ───── {%- endcomment -%}
+    <div class="pdet__block pdet__reviews" id="mprod-reviews">
+      <h2 class="pdet__h pdet__h--center">Customer Reviews</h2>
+      {%- if product.metafields.reviews.rating != blank -%}
+        <div class="pdet__rating">
+          <span class="pdet__rating-stars">★★★★★</span>
+          <span class="pdet__rating-val">{{ product.metafields.reviews.rating.value }} / 5</span>
+          {%- if product.metafields.reviews.rating_count != blank -%}
+            <span class="pdet__rating-count">({{ product.metafields.reviews.rating_count }} reviews)</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.show_demo_reviews -%}
+        <div class="pdet__review-grid">
+          <article class="pdet__review-card">
+            <div class="pdet__review-top">
+              <span class="pdet__review-stars">★★★★★</span>
+              <span class="pdet__verified">Verified Purchase</span>
+            </div>
+            <p class="pdet__review-copy">&ldquo;Eight weeks in and my skin genuinely looks different, calmer, less reactive, and the dull patch on my cheeks has faded. First routine I've actually stuck with, because it feels good to use, not just good on paper.&rdquo;</p>
+            <span class="pdet__review-name">Eleanor R.</span>
+          </article>
+          <article class="pdet__review-card">
+            <div class="pdet__review-top">
+              <span class="pdet__review-stars">★★★★★</span>
+              <span class="pdet__verified">Verified Purchase</span>
+            </div>
+            <p class="pdet__review-copy">&ldquo;I was skeptical of another skincare brand promising more than it delivers, but the formulation here is real. No burning, no purging, just steady, visible improvement over about a month.&rdquo;</p>
+            <span class="pdet__review-name">Priya S.</span>
+          </article>
+          <article class="pdet__review-card">
+            <div class="pdet__review-top">
+              <span class="pdet__review-stars">★★★★★</span>
+              <span class="pdet__verified">Verified Purchase</span>
+            </div>
+            <p class="pdet__review-copy">&ldquo;Reordered before I'd even finished the bottle. The texture is beautiful and a little goes such a long way, worth every dollar, and it arrived hand-numbered, which felt like a nice touch.&rdquo;</p>
+            <span class="pdet__review-name">Camille D.</span>
+          </article>
+        </div>
+      {%- else -%}
+        <p class="pdet__empty">Be the first to share your experience with {{ product.title }}.</p>
+        <a href="/pages/contact?subject=Review:%20{{ product.title | url_encode }}" class="btn btn--ghost pdet__review-cta">Write a Review</a>
+      {%- endif -%}
     </div>
 
     {%- comment -%} ───── You May Also Love ───── {%- endcomment -%}

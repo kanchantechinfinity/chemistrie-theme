@@ -1221,3 +1221,6 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 
 ## 2026-10-21 Removed "28 people are viewing" line
 - sections/main-product.liquid: removed .mprod__viewers markup + CSS + pulse keyframes; .mprod__price margin-bottom 20 -> 24px so no empty gap. All products.
+
+## 2026-10-21 Reviews moved below feel section
+- sections/product-details.liquid: Customer Reviews block now directly after the Deep hydration (feel) section, before You May Also Love. Order: spotlight > tabs > FAQ > routine > founder > feel > reviews > related. #mprod-reviews anchor unchanged. Not pushed.
