@@ -1218,3 +1218,6 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 ## 2026-10-21 Product page section order
 - sections/product-details.liquid (shared by all products): tabs block + FAQ moved to directly after the ingredient spotlight; lifestyle "feel" photo block moved to after the founder note. Reviews/visual band/founder keep relative order.
 - New order: spotlight > tabs > FAQ > reviews > band > founder > feel photo > related. Not pushed.
+
+## 2026-10-21 Removed "28 people are viewing" line
+- sections/main-product.liquid: removed .mprod__viewers markup + CSS + pulse keyframes; .mprod__price margin-bottom 20 -> 24px so no empty gap. All products.
