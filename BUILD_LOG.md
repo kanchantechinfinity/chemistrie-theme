@@ -1206,3 +1206,6 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 
 ## 2026-10-21 Cart drawer shows "Your bag is empty" with items
 - Cause: .drawer__empty {display:flex} overrode the hidden attribute (assets/shop-ux.css). Added .drawer__empty[hidden]{display:none} (also fixes wishlist drawer).
+
+## 2026-10-21 Product pill tags
+- sections/main-product.liquid .mprod__tag background var(--c-tan-3) -> var(--c-tan) (same as .utility-strip announcement bar). Applies to all products.
