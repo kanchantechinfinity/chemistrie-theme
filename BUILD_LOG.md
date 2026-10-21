@@ -1209,3 +1209,8 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 
 ## 2026-10-21 Product pill tags
 - sections/main-product.liquid .mprod__tag background var(--c-tan-3) -> var(--c-tan) (same as .utility-strip announcement bar). Applies to all products.
+
+## 2026-10-21 Aura gallery + sticky buy bar
+- snippets/product-gallery-images.liquid: removed product-aura.jpg from Aura gallery only (file still used on grid/home).
+- sections/main-product.liquid: fixed bottom sticky bar (thumb, name, price, button) on all product pages; shows after main buy button scrolls out of view; button proxies main button click (same AJAX/pre-order logic); price mirrors via MutationObserver.
+- Not browser-tested; not pushed.
