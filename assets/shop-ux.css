@@ -66,7 +66,18 @@ body.drawer-locked { overflow: hidden; }
 .drawer-item__info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .drawer-item__title { font-family: var(--ff-display); font-size: 17px; color: var(--c-forest); line-height: 1.2; }
 .drawer-item__variant { font-family: var(--ff-body); font-size: 12px; color: var(--c-tan-2); }
-.drawer-item__qty { font-family: var(--ff-body); font-size: 12px; color: rgba(26, 58, 45, .7); }
+.drawer-item__qty { font-family: var(--ff-body); font-size: 13px; color: var(--c-forest); min-width: 24px; text-align: center; }
+.drawer-item__stepper {
+  display: inline-flex; align-items: center; align-self: flex-start;
+  border: 1px solid rgba(26, 58, 45, .25); border-radius: 999px; margin-top: 4px;
+}
+.drawer-item__step {
+  width: 30px; height: 30px; border: 0; background: none; cursor: pointer;
+  font-size: 16px; line-height: 1; color: var(--c-forest); border-radius: 999px;
+  transition: background .2s var(--ease-out);
+}
+.drawer-item__step:hover { background: rgba(26, 58, 45, .08); }
+.drawer-item__step:disabled { opacity: .4; cursor: default; }
 .drawer-item__right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 .drawer-item__price { font-family: var(--ff-body); font-size: 14px; color: var(--c-forest); }
 .drawer-item__remove {

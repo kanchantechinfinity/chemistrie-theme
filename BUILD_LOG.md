@@ -1197,3 +1197,9 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 
 ## 2026-10-16 Founders mobile text
 - <=700px: .founders__who-name 26px; .founders__caption 11.5px -> 15px (was too small).
+
+## 2026-10-21 Cart drawer qty stepper
+- assets/shop-ux.js renderCart: Qty text -> - / + stepper (data-qty, /cart/change.js then refetch cart). - at 1 removes the line.
+- assets/shop-ux.css: .drawer-item__stepper/.drawer-item__step.
+- Checkout order summary (first screenshot) is Shopify-hosted: no +/- possible without Plus checkout extensibility.
+- Not pushed.

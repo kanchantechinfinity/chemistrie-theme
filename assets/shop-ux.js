@@ -69,7 +69,11 @@
           '<div class="drawer-item__info">' +
             '<a class="drawer-item__title" href="' + item.url + '">' + escapeHtml(item.product_title || item.title) + "</a>" +
             variant +
-            '<span class="drawer-item__qty">Qty ' + item.quantity + "</span>" +
+            '<div class="drawer-item__stepper" role="group" aria-label="Quantity">' +
+              '<button type="button" class="drawer-item__step" data-line-key="' + item.key + '" data-qty="' + (item.quantity - 1) + '" aria-label="Decrease quantity">&minus;</button>' +
+              '<span class="drawer-item__qty">' + item.quantity + "</span>" +
+              '<button type="button" class="drawer-item__step" data-line-key="' + item.key + '" data-qty="' + (item.quantity + 1) + '" aria-label="Increase quantity">+</button>' +
+            "</div>" +
           "</div>" +
           '<div class="drawer-item__right">' +
             '<span class="drawer-item__price">' + money(item.line_price) + "</span>" +
@@ -191,6 +195,16 @@
   /* Remove line item */
   if (cartItemsEl) {
     cartItemsEl.addEventListener("click", function (e) {
+      var step = e.target.closest(".drawer-item__step");
+      if (step) {
+        if (step.disabled) return;
+        step.disabled = true;
+        changeCart(step.getAttribute("data-line-key"), parseInt(step.getAttribute("data-qty"), 10))
+          .then(fetchCart)
+          .then(renderCart)
+          .catch(function () { step.disabled = false; });
+        return;
+      }
       var rm = e.target.closest(".drawer-item__remove");
       if (!rm) return;
       var key = rm.getAttribute("data-line-key");
