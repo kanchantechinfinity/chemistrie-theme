@@ -17,6 +17,29 @@
   assign cashmere_prod = all_products['cashmere']
   assign aura_prod = all_products['aura']
   assign silken_prod = all_products['silken']
+
+  comment
+    Same fallback the Ritual Finder uses: the single products' handles are not
+    exactly velvet / veil / ..., so find them by a handle that contains the name.
+  endcomment
+  if velvet_prod == blank or veil_prod == blank or cashmere_prod == blank or aura_prod == blank or silken_prod == blank
+    for col in collections
+      for p in col.products
+        assign ph = p.handle | downcase
+        if velvet_prod == blank and ph contains 'velvet'
+          assign velvet_prod = p
+        elsif veil_prod == blank and ph contains 'veil'
+          assign veil_prod = p
+        elsif cashmere_prod == blank and ph contains 'cashmere'
+          assign cashmere_prod = p
+        elsif aura_prod == blank and ph contains 'aura'
+          assign aura_prod = p
+        elsif silken_prod == blank and ph contains 'silken'
+          assign silken_prod = p
+        endif
+      endfor
+    endfor
+  endif
 -%}
 <section class="page-section page-section--paper cset" id="curated-sets" data-screen-label="Curated Sets">
   <div class="page-section__inner">
