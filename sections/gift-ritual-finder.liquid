@@ -673,6 +673,11 @@
 
       // The recommendation shows either way — the handoff is best-effort so a
       // failing endpoint never costs the visitor their result.
+      // Email a copy to support (helper lives in shop-ux.js); best-effort.
+      if (window.chemFormCopy) {
+        window.chemFormCopy('Ritual finder result', payload);
+      }
+
       var endpoint = root.getAttribute('data-endpoint');
       if (endpoint) {
         try {

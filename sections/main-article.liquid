@@ -45,7 +45,7 @@
           </ul>
         {%- endif -%}
 
-        {%- form 'new_comment', article, class: 'art__comment-form' -%}
+        {%- form 'new_comment', article, class: 'art__comment-form', 'data-form-copy': 'New journal comment' -%}
           <h3 class="art__comment-formtitle">Leave a comment</h3>
           {%- if form.errors -%}
             <p class="art__form-error">{{ form.errors | default_errors }}</p>
@@ -68,7 +68,7 @@
       <span class="eyebrow eyebrow--light">— Letters from the bench —</span>
       <h2 class="display-h display-h--light art__capture-title">Keep reading <em>with us.</em></h2>
       <p class="art__capture-sub">Ingredient science and ritual notes, delivered occasionally. No noise.</p>
-      {%- form 'customer', class: 'art__form' -%}
+      {%- form 'customer', class: 'art__form', 'data-form-copy': 'Journal article newsletter signup' -%}
         {%- if form.posted_successfully? -%}
           <p class="art__form-ok">Thank you — you're on the list.</p>
         {%- endif -%}

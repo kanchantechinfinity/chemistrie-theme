@@ -362,6 +362,42 @@
     });
   }
 
+  /* Email a copy of a form submission to support. Used by forms marked
+     data-form-copy="<subject>" and by the ritual quiz. The form still submits to
+     Shopify as normal (customer records, comments), so this only adds an email.
+     keepalive lets the request finish while the page reloads after submit. */
+  var COPY_ENDPOINT = "https://formsubmit.co/ajax/support@chemistrieco.com";
+  var COPY_SKIP = { authenticity_token: 1, form_type: 1, utf8: 1, _honey: 1 };
+
+  function sendFormCopy(subject, fields) {
+    var body = { _subject: subject, _template: "table", _captcha: "false", page: window.location.href };
+    Object.keys(fields).forEach(function (k) {
+      var v = fields[k];
+      if (v === null || v === undefined || v === "") return;
+      body[k] = typeof v === "object" ? JSON.stringify(v) : String(v);
+    });
+    try {
+      fetch(COPY_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(body),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  window.chemFormCopy = sendFormCopy;
+
+  document.addEventListener("submit", function (e) {
+    var form = e.target;
+    if (!form || !form.getAttribute || !form.hasAttribute("data-form-copy")) return;
+    var fields = {};
+    new FormData(form).forEach(function (value, key) {
+      if (COPY_SKIP[key] || typeof value !== "string") return;
+      fields[key.replace(/^contact\[(.*)\]$/, "$1")] = value;
+    });
+    sendFormCopy(form.getAttribute("data-form-copy") || "Website form", fields);
+  });
+
   /* init */
   updateWishCount();
   syncWishButtons();
