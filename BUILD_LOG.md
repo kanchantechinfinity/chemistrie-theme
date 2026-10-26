@@ -1228,3 +1228,6 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 ## 2026-10-21 Aura lead image
 - snippets/product-gallery-images.liquid: Aura gallery order now gallery-aura-4.jpg first (open jar, beaker, lid).
 - snippets/product-image-asset.liquid: Aura card/collection thumbnail -> gallery-aura-4.jpg. Home hero card (index.json) and ritual finder still use product-aura.jpg. Not pushed.
+
+## 2026-10-26 - Form copies to support@
+Commits e6d3e21, 6b07711. Files: assets/shop-ux.js, sections/newsletter-cta, journal-grid, main-article, gift-ritual-finder (.liquid). Verified markup + stubbed POST on the live homepage; real email delivery and FormSubmit activation still to be confirmed by the user.
