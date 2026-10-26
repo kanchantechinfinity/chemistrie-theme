@@ -370,12 +370,27 @@
   var COPY_SKIP = { authenticity_token: 1, form_type: 1, utf8: 1, _honey: 1 };
 
   function sendFormCopy(subject, fields) {
-    var body = { _subject: subject, _template: "table", _captcha: "false", page: window.location.href };
+    var who = String(fields.first_name || fields.name || fields.author || "");
+    var email = String(fields.email || "");
+    /* Subject carries the form and who sent it; Reply goes to the sender. */
+    var body = {
+      _subject: subject + (who || email ? " - " + (who ? who + (email ? " <" + email + ">" : "") : email) : ""),
+      _template: "table",
+      _captcha: "false"
+    };
+    if (email) body._replyto = email;
+    /* Who first, then the rest of what they filled in, then where and when. */
+    ["first_name", "name", "author", "email"].forEach(function (k) {
+      if (fields[k]) body[k] = String(fields[k]);
+    });
     Object.keys(fields).forEach(function (k) {
       var v = fields[k];
-      if (v === null || v === undefined || v === "") return;
+      if (k in body || v === null || v === undefined || v === "") return;
       body[k] = typeof v === "object" ? JSON.stringify(v) : String(v);
     });
+    body.form = subject;
+    body.page = window.location.href;
+    body.submitted_at = new Date().toISOString() + " (UTC)";
     try {
       fetch(COPY_ENDPOINT, {
         method: "POST",
@@ -393,7 +408,7 @@
     var fields = {};
     new FormData(form).forEach(function (value, key) {
       if (COPY_SKIP[key] || typeof value !== "string") return;
-      fields[key.replace(/^contact\[(.*)\]$/, "$1")] = value;
+      fields[key.replace(/^[a-z_]+\[(.*)\]$/, "$1")] = value;
     });
     sendFormCopy(form.getAttribute("data-form-copy") || "Website form", fields);
   });
