@@ -1231,3 +1231,6 @@ User sent the WooCommerce reference again ("this UI but Chemistrie theme"). Shop
 
 ## 2026-10-26 - Form copies to support@
 Commits e6d3e21, 6b07711. Files: assets/shop-ux.js, sections/newsletter-cta, journal-grid, main-article, gift-ritual-finder (.liquid). Verified markup + stubbed POST on the live homepage; real email delivery and FormSubmit activation still to be confirmed by the user.
+
+## 2026-10-26 (later) - Contact + invitation forms also copied via FormSubmit
+User asked to connect ALL forms to FormSubmit. Tagged `data-form-copy` on contact-main (Contact page message) and founders-circle-invite (Founders Circle invitation request). Their native Shopify email to the store email still fires, so expect two emails per submission. Commit c117597. Verified live: stubbed submit on /pages/contact posts name/email/subject/body to FormSubmit. FormSubmit still needs the one-time activation click (FormSubmit API reply on 2026-10-26: "This form needs Activation"). Remaining untagged forms are account/cart/search/sort (not enquiries).
