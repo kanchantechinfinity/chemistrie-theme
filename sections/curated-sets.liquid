@@ -1,0 +1,229 @@
+{%- comment -%}
+  Curated Sets — every bundle the Ritual Finder can recommend, laid out as
+  cards. Each card is the lineup photo of the set (same approved shots the
+  finder shows), what is in it, the price, and one action: add the bundle
+  product to the cart and go to the cart page. The add itself is the shared
+  [data-buy-now] handler in assets/shop-ux.js, the same path as "Buy now" on
+  the collection cards, so stock refusals are handled the same way.
+
+  Contents per set come from the bundle product's handle - the same mapping
+  snippets/product-image-asset.liquid uses for the photo - so the two can
+  never disagree. A bundle with an unknown handle just shows no list.
+  Own cset- prefix: section CSS is compiled into one global sheet.
+{%- endcomment -%}
+{%- liquid
+  assign velvet_prod = all_products['velvet']
+  assign veil_prod = all_products['veil']
+  assign cashmere_prod = all_products['cashmere']
+  assign aura_prod = all_products['aura']
+  assign silken_prod = all_products['silken']
+-%}
+<section class="page-section page-section--paper cset" id="curated-sets" data-screen-label="Curated Sets">
+  <div class="page-section__inner">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <div class="page-section__head cset__head">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="display-h">{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.intro != blank -%}<p class="cset__intro">{{ section.settings.intro }}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="cset__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign bp = block.settings.product
+          if bp == blank
+            continue
+          endif
+          assign _h = bp.handle | downcase
+          assign parts = ''
+          if _h == 'essential-core' or _h == 'hydration-essential'
+            assign parts = 'velvet,cashmere'
+          elsif _h == 'renewal-essential'
+            assign parts = 'velvet,aura'
+          elsif _h == 'refining-essential'
+            assign parts = 'velvet,silken'
+          elsif _h == 'essential-complete'
+            assign parts = 'velvet,veil,aura,cashmere'
+          elsif _h == 'refining-balanced'
+            assign parts = 'velvet,silken,aura,cashmere'
+          elsif _h == 'master-ritual'
+            assign parts = 'velvet,veil,silken,aura,cashmere'
+          endif
+          assign part_list = parts | split: ','
+          capture set_asset
+            render 'product-image-asset', product: bp
+          endcapture
+          assign set_asset = set_asset | strip
+          assign variant = bp.selected_or_first_available_variant
+        -%}
+        <article class="cset__card{% unless bp.available %} cset__card--soldout{% endunless %}" {{ block.shopify_attributes }} data-cset-card>
+          <div class="cset__media">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', class: 'cset__img', alt: bp.title }}
+            {%- elsif set_asset != blank -%}
+              <img class="cset__img" src="{{ set_asset | asset_url }}" alt="{{ bp.title | escape }}" loading="lazy" decoding="async">
+            {%- elsif bp.featured_image -%}
+              {{ bp.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', class: 'cset__img', alt: bp.title }}
+            {%- endif -%}
+            {%- if part_list.size > 0 -%}
+              <span class="cset__count">{{ part_list.size }} formulas</span>
+            {%- endif -%}
+          </div>
+          <div class="cset__body">
+            <div class="cset__row">
+              <h3 class="cset__name">{{ bp.title }}</h3>
+              <span class="cset__price">{{ bp.price | money }}</span>
+            </div>
+            {%- if part_list.size > 0 -%}
+              <ol class="cset__list">
+                {%- for key in part_list -%}
+                  {%- liquid
+                    case key
+                      when 'velvet'
+                        assign cp = velvet_prod
+                      when 'veil'
+                        assign cp = veil_prod
+                      when 'cashmere'
+                        assign cp = cashmere_prod
+                      when 'aura'
+                        assign cp = aura_prod
+                      when 'silken'
+                        assign cp = silken_prod
+                    endcase
+                    assign cp_name = key | capitalize
+                    assign cp_sub = ''
+                    if cp != blank
+                      assign cp_name = cp.title | split: '—' | first | strip
+                      capture cp_sub
+                        render 'product-descriptor', product: cp
+                      endcapture
+                      assign cp_sub = cp_sub | strip
+                    endif
+                  -%}
+                  <li class="cset__item">
+                    <span class="cset__num">{{ forloop.index }}</span>
+                    <span class="cset__item-body">
+                      <span class="cset__item-name">{{ cp_name }}</span>
+                      {%- if cp_sub != blank -%}<span class="cset__item-sub">{{ cp_sub }}</span>{%- endif -%}
+                    </span>
+                  </li>
+                {%- endfor -%}
+              </ol>
+            {%- endif -%}
+            <div class="cset__actions">
+              {%- if bp.available and variant != blank and variant.available -%}
+                <button type="button" class="btn btn--primary cset__add" data-buy-now data-variant-id="{{ variant.id }}">{{ section.settings.button_label | default: 'Add to cart' }}</button>
+              {%- else -%}
+                <span class="cset__soldout">Sold out</span>
+              {%- endif -%}
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  /* The whole card is the bundle: a click anywhere on it that is not already
+     on the button presses the button, which adds the set and goes to /cart. */
+  (function () {
+    document.querySelectorAll('[data-cset-card]').forEach(function (card) {
+      var btn = card.querySelector('[data-buy-now]');
+      if (!btn) return;
+      card.classList.add('cset__card--clickable');
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('[data-buy-now], a')) return;
+        btn.click();
+      });
+    });
+  })();
+</script>
+
+{% stylesheet %}
+.cset__head { max-width: 760px; }
+.cset__intro { margin: 18px 0 0; font-size: 16px; line-height: 1.7; color: var(--c-ink-soft); max-width: 60ch; }
+
+.cset__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2.2vw, 30px);
+}
+.cset__card {
+  display: flex; flex-direction: column; min-width: 0;
+  background: var(--c-cream);
+  border: 1px solid var(--c-line-soft);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 22px 44px -32px rgba(26, 58, 45, .22);
+  transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+}
+.cset__card--clickable { cursor: pointer; }
+.cset__card--clickable:hover { transform: translateY(-4px); box-shadow: 0 28px 56px -30px rgba(26, 58, 45, .32); }
+
+.cset__media { position: relative; background: var(--c-paper); }
+.cset__img { display: block; width: 100%; height: auto; }
+.cset__count {
+  position: absolute; left: 14px; top: 14px;
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--c-tan); color: var(--c-forest);
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500;
+}
+
+.cset__body { display: flex; flex-direction: column; flex: 1 1 auto; padding: clamp(18px, 2vw, 26px); }
+.cset__row { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+.cset__name { margin: 0; font-family: var(--ff-display); font-weight: 500; font-size: clamp(22px, 2vw, 27px); line-height: 1.15; color: var(--c-forest); }
+.cset__price { flex: 0 0 auto; font-size: 16px; font-weight: 500; color: var(--c-forest); font-variant-numeric: lining-nums tabular-nums; }
+
+/* Same ruled list as the finder's "Your ritual" column: rows of one object,
+   not things to pick between. */
+.cset__list { list-style: none; margin: 0; padding: 0; }
+.cset__item { display: flex; align-items: flex-start; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--c-line-soft); }
+.cset__item:first-child { padding-top: 0; }
+.cset__item:last-child { border-bottom: 0; }
+.cset__num { flex: 0 0 auto; min-width: 16px; font-family: var(--ff-display); font-style: italic; font-size: 15px; line-height: 1.35; color: var(--c-tan-2); font-variant-numeric: lining-nums; }
+.cset__item-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cset__item-name { font-family: var(--ff-display); font-size: 18px; line-height: 1.2; color: var(--c-forest); }
+.cset__item-sub { font-size: 13px; line-height: 1.5; color: var(--c-ink-soft); }
+
+.cset__actions { margin-top: auto; padding-top: 20px; }
+.cset__add { width: 100%; justify-content: center; }
+.cset__add.is-adding { opacity: .7; }
+.cset__soldout { display: inline-block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-mute); }
+.cset__card--soldout .cset__media { opacity: .6; }
+
+@media (max-width: 1000px) {
+  .cset__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .cset__grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .cset__body { padding: 18px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Curated Sets",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "— Curated Sets —" },
+    { "type": "html", "id": "heading", "label": "Heading (supports <em>/<br>)", "default": "Every ritual,<br/><em>ready to give.</em>" },
+    { "type": "textarea", "id": "intro", "label": "Intro paragraph (optional)" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" }
+  ],
+  "blocks": [
+    {
+      "type": "set",
+      "name": "Set",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Bundle product", "info": "The bundle product sold as one line item. Contents and photo follow its handle (essential-core, essential-complete, hydration-essential, refining-essential, refining-balanced, renewal-essential, master-ritual)." },
+        { "type": "image_picker", "id": "image", "label": "Photo (optional)", "info": "Overrides the lineup photo for this set." }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    { "name": "Curated Sets" }
+  ]
+}
+{% endschema %}
