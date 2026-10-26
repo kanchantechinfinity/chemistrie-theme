@@ -17,7 +17,7 @@
       </div>
 
       <div class="circle__panel">
-        {% form 'customer', id: 'founders-circle-form', class: 'circle__form', 'data-form-copy': 'Founders Circle signup (homepage)' %}
+        {% form 'customer', id: 'founders-circle-form', class: 'circle__form', data-form-copy: 'Founders Circle signup (homepage)' %}
           <input type="hidden" name="contact[tags]" value="founders-circle">
 
           {% if form.errors and form.errors.size > 0 %}
