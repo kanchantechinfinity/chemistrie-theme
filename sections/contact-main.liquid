@@ -49,7 +49,7 @@
     </div>
 
     <div class="contact-main__col contact-main__col--right">
-      {%- form 'contact' -%}
+      {%- form 'contact', data-form-copy: 'Contact page message' -%}
         {%- if form.posted_successfully? -%}
           <p class="cform__success">Thank you. Your message has been received, and the Chemistrie team will follow up soon.</p>
         {%- endif -%}

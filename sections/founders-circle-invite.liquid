@@ -7,7 +7,7 @@
     </div>
 
     <div class="finvite__form-wrap">
-      {%- form 'contact', id: 'FoundersCircleForm' -%}
+      {%- form 'contact', id: 'FoundersCircleForm', data-form-copy: 'Founders Circle invitation request' -%}
         {%- if form.posted_successfully? -%}
           <p class="finvite__success">{{ section.settings.success_message }}</p>
         {%- else -%}
