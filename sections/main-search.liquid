@@ -48,7 +48,7 @@
                   </a>
                   <div class="pcard__body">
                     <div class="pcard__row">
-                      <a class="pcard__name" href="{{ item.url }}">{{ item.title }}</a>
+                      <a class="pcard__name" href="{{ item.url }}">{{ item.title | split: '—' | first | strip }}</a>
                       <span class="pcard__price">{{ item.price | money }}</span>
                     </div>
                     {%- if item.type != blank -%}<span class="pcard__type">{{ item.type }}</span>{%- endif -%}

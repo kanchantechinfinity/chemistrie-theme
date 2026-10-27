@@ -6,6 +6,12 @@
     return "$" + (Number(cents) / 100).toFixed(2);
   }
 
+  /* Product titles are "Name — Descriptor" in Shopify; the bag shows the name only,
+     like the cart page and the product cards. */
+  function shortName(title) {
+    return String(title || "").split("—")[0].trim();
+  }
+
   function lockBody() { document.body.classList.add("drawer-locked"); }
   function maybeUnlock() {
     var anyOpen = document.querySelector(".drawer.is-open");
@@ -67,7 +73,7 @@
         '<div class="drawer-item">' +
           '<a class="drawer-item__link" href="' + item.url + '">' + img + '</a>' +
           '<div class="drawer-item__info">' +
-            '<a class="drawer-item__title" href="' + item.url + '">' + escapeHtml(item.product_title || item.title) + "</a>" +
+            '<a class="drawer-item__title" href="' + item.url + '">' + escapeHtml(shortName(item.product_title || item.title)) + "</a>" +
             variant +
             '<div class="drawer-item__stepper" role="group" aria-label="Quantity">' +
               '<button type="button" class="drawer-item__step" data-line-key="' + item.key + '" data-qty="' + (item.quantity - 1) + '" aria-label="Decrease quantity">&minus;</button>' +
@@ -289,7 +295,7 @@
       var img = item.image
         ? '<img class="drawer-item__img" src="' + item.image + '" alt="' + escapeHtml(item.title) + '">'
         : '<span class="drawer-item__img"></span>';
-      var titleInner = escapeHtml(item.title);
+      var titleInner = escapeHtml(shortName(item.title));
       var titleEl = item.url && item.url !== "#"
         ? '<a class="drawer-item__title" href="' + item.url + '">' + titleInner + "</a>"
         : '<span class="drawer-item__title">' + titleInner + "</span>";
