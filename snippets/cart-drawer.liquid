@@ -28,3 +28,21 @@
     <span class="drawer__code-hint">Discount codes apply at checkout</span>
   </div>
 </aside>
+
+{%- comment -%}
+  Approved product photos by handle, for the bag and wishlist drawers. Those are
+  drawn in JS from /cart.js, which only knows Shopify's own product image - not the
+  approved theme asset the cart page and cards use, and nothing at all for the
+  bundles. shop-ux.js looks the handle up here first.
+{%- endcomment -%}
+<script>
+  window.chemProductImages = {
+  {%- for product in collections.all.products limit: 100 -%}
+    {%- capture _asset -%}{%- render 'product-image-asset', product: product -%}{%- endcapture -%}
+    {%- assign _asset = _asset | strip -%}
+    {%- if _asset != blank -%}
+    {{ product.handle | json }}: {{ _asset | asset_url | json }},
+    {%- endif -%}
+  {%- endfor -%}
+  };
+</script>

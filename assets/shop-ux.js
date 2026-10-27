@@ -6,6 +6,13 @@
     return "$" + (Number(cents) / 100).toFixed(2);
   }
 
+  /* Approved photo for a product handle (map printed by snippets/cart-drawer.liquid),
+     falling back to whatever image the caller has. */
+  function productImage(handle, fallback) {
+    var map = window.chemProductImages || {};
+    return (handle && map[handle]) || fallback || "";
+  }
+
   function lockBody() { document.body.classList.add("drawer-locked"); }
   function maybeUnlock() {
     var anyOpen = document.querySelector(".drawer.is-open");
@@ -57,8 +64,9 @@
 
     var html = "";
     cart.items.forEach(function (item) {
-      var img = item.image
-        ? '<img class="drawer-item__img" src="' + item.image + '" alt="' + escapeHtml(item.title) + '">'
+      var imgSrc = productImage(item.handle, item.image);
+      var img = imgSrc
+        ? '<img class="drawer-item__img" src="' + imgSrc + '" alt="' + escapeHtml(item.title) + '">'
         : '<span class="drawer-item__img"></span>';
       var variant = item.variant_title && item.variant_title !== "Default Title"
         ? '<span class="drawer-item__variant">' + escapeHtml(item.variant_title) + "</span>"
@@ -286,8 +294,9 @@
     if (wishEmptyEl) wishEmptyEl.hidden = true;
     var html = "";
     list.forEach(function (item) {
-      var img = item.image
-        ? '<img class="drawer-item__img" src="' + item.image + '" alt="' + escapeHtml(item.title) + '">'
+      var imgSrc = productImage(item.handle, item.image);
+      var img = imgSrc
+        ? '<img class="drawer-item__img" src="' + imgSrc + '" alt="' + escapeHtml(item.title) + '">'
         : '<span class="drawer-item__img"></span>';
       var titleInner = escapeHtml(item.title);
       var titleEl = item.url && item.url !== "#"
