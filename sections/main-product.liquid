@@ -325,7 +325,18 @@
           both ends, so the name repeats in small caps beneath itself, which is
           the intended treatment there.
         {%- endcomment -%}
+        {%- comment -%}
+          If the title has been shortened to just the name (no em dash), the
+          descriptor comes from the same snippet the product cards use, so the
+          product page keeps its small-caps line either way. Bundles have no
+          descriptor, so they fall through to the repeat described above.
+        {%- endcomment -%}
         {%- assign pd_subheadline = mf.subheadline | default: product.title | split: '—' | last | strip -%}
+        {%- unless product.title contains '—' or mf.subheadline != blank -%}
+          {%- capture pd_desc_snip -%}{%- render 'product-descriptor', product: product -%}{%- endcapture -%}
+          {%- assign pd_desc_snip = pd_desc_snip | strip -%}
+          {%- if pd_desc_snip != blank -%}{%- assign pd_subheadline = pd_desc_snip -%}{%- endif -%}
+        {%- endunless -%}
         {%- if pd_subheadline != blank -%}
           <p class="mprod__subhead">{{ pd_subheadline }}</p>
         {%- endif -%}
