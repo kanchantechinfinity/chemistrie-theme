@@ -1264,3 +1264,6 @@ User wants: visitor allows push -> adds to cart -> leaves -> a push a few hours 
 - Checkout loads: express (Shop Pay/Apple Pay/PayPal), card, discount box. No payment entered/tested.
 - Not tested: discount link, shipping rates (need address), real payment.
 - Fix committed locally; not pushed.
+
+## 2026-11-03 Founders caption
+- .founders__caption: 14px -> clamp(16px,1.4vw,19px); max-width 28ch -> none; centered under both portraits (was left, 4 lines). Tablet range 12px -> 15px. Not pushed.
