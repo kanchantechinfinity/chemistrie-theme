@@ -1256,3 +1256,11 @@ User: bundle buyers should be able to add a note at checkout, emailed to admin a
 
 ## 2026-10-30 - Web push for abandoned carts (planning, no code)
 User wants: visitor allows push -> adds to cart -> leaves -> a push a few hours later reopens the cart. Decision: cannot be built in the theme (needs a root-scope service worker, a subscription store and a scheduler) - use a Shopify App Store push app, or a custom backend (not chosen). Free plans per app listings on 2026-10-30 (unverified in the store): Uppush Free = 500 web push impressions + 100 emails, unlimited subscribers, abandoned cart recovery; Meeri Basic = free, 300 push (~100 cart recoveries) + 100 emails, unlimited subscribers, abandoned cart campaign included; Web Push Notifications Easy Basic = free, 500 notifications, 100 subscribers, but abandoned cart recovery only on paid Growth (14-day trial). Limits: push only reaches the same browser/device that clicked Allow; iPhone needs the site added to the home screen. App embeds write to config/settings_data.json so Shopify will push a bot commit - git pull --no-rebase before the next push. Notification wording and any discount amount are the user decision.
+
+## 2026-11-03 Site audit (links, cart, checkout)
+- Crawled 37 sitemap pages + ~125 links on chemistrieco.com. Real broken link: /blogs/journal (footer fallback + home Pillars CTA). Blog handle is "news". Root cause: footer/header loops used b[1].url (blog drop is not a pair) -> empty -> fallback to dead URL. Fixed to b.url; index.json cta_link -> /blogs/news.
+- Not broken: all other pages 200 (429s were rate limiting). /policies/refund|terms|shipping 404 but not linked by theme.
+- Cart flow OK: add, qty steppers, totals, Checkout button. Pre-order Add button on product page sends straight to checkout (by design, preorder_enabled).
+- Checkout loads: express (Shop Pay/Apple Pay/PayPal), card, discount box. No payment entered/tested.
+- Not tested: discount link, shipping rates (need address), real payment.
+- Fix committed locally; not pushed.

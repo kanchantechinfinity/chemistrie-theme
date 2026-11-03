@@ -3,7 +3,7 @@
   assign journal_url = blogs.journal.url
   if journal_url == blank
     for b in blogs
-      assign journal_url = b[1].url
+      assign journal_url = b.url
       break
     endfor
   endif
