@@ -42,11 +42,12 @@
     </button>
 
     <div class="bfp__media">
-      <img class="bfp__img" data-src="{{ bfp_img }}" alt="" width="900" height="900" decoding="async">
+      <img class="bfp__img" data-src="{{ bfp_img }}" alt="" width="900" height="900" decoding="async" fetchpriority="low">
     </div>
 
     <div class="bfp__body">
       <img class="bfp__logo" src="{{ 'footer-monogram.png' | asset_url }}" alt="" width="40" height="42" loading="lazy">
+      {%- if section.settings.eyebrow != blank -%}<span class="bfp__tag">{{ section.settings.eyebrow }}</span>{%- endif -%}
       <h2 class="bfp__title" id="bfp-title">{{ section.settings.headline }}</h2>
       <p class="bfp__sub">{{ section.settings.sub }}</p>
 
@@ -97,7 +98,7 @@
   function sget(s, k) { try { return window[s].getItem(k); } catch (e) { return null; } }
   function sset(s, k, v) { try { window[s].setItem(k, v); } catch (e) {} }
 
-  var delay = (parseInt(root.getAttribute('data-delay'), 10) || 15) * 1000;
+  var delay = (parseInt(root.getAttribute('data-delay'), 10) || 3) * 1000;
   var snooze = (parseInt(root.getAttribute('data-snooze'), 10) || 3) * 864e5;
   var card = root.querySelector('.bfp__card');
   var form = root.querySelector('#bfp-form');
@@ -264,7 +265,8 @@ body.bfp-locked { overflow: hidden; }
 
 .bfp__body { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(28px, 3.6vw, 48px); gap: 0; }
 .bfp__logo { height: 44px; width: auto; margin: 0 0 20px; }
-.bfp__title { margin: 0 0 14px; font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.12; color: var(--c-forest); text-wrap: balance; }
+.bfp__tag { display: inline-block; margin: 0 0 14px; padding: 8px 18px; border-radius: 999px; background: linear-gradient(135deg, var(--c-tan-3), var(--c-tan)); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
+.bfp__title { margin: 0 0 14px; font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1; color: var(--c-forest); text-wrap: balance; }
 .bfp__sub { margin: 0 0 26px; font-size: 15.5px; line-height: 1.65; color: var(--c-ink-soft); max-width: 38ch; }
 
 /* Price lines are blank for now; styled so they can come back from the theme editor. */
@@ -328,10 +330,10 @@ body.bfp-locked { overflow: hidden; }
       "type": "range",
       "id": "delay_seconds",
       "label": "Show after (seconds on the site)",
-      "min": 5,
+      "min": 1,
       "max": 60,
       "step": 1,
-      "default": 15
+      "default": 3
     },
     {
       "type": "range",
@@ -355,15 +357,22 @@ body.bfp-locked { overflow: hidden; }
     },
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Highlight tag",
+      "info": "The gold tag above the headline. Blank = not shown.",
+      "default": "Black Friday"
+    },
+    {
+      "type": "text",
       "id": "headline",
       "label": "Headline",
-      "default": "Still building your skincare routine?"
+      "default": "Our Black Friday sale is coming next week."
     },
     {
       "type": "textarea",
       "id": "sub",
       "label": "Supporting text",
-      "default": "Start with the Essential Ritual. Two foundational products, thoughtfully paired."
+      "default": "Subscribe to get email promotions for the Black Friday sale."
     },
     {
       "type": "text",
