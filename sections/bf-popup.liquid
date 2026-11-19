@@ -1,15 +1,16 @@
 {%- comment -%}
   Black Friday popup. Rendered once, site-wide, from layout/theme.liquid.
 
-  Shows after the visitor has been on the site for `delay_seconds` (15 by default),
-  counted across pages for the whole visit, not per page. It holds the sale details
-  and an email signup. The signup is Shopify's own `customer` form (creates a
-  customer tagged "newsletter, black-friday", the same mechanism as the other
-  signups) and the shared data-form-copy handler in assets/shop-ux.js also emails
-  a copy to support.
+  Layout follows the approved Black Friday creative (a portrait poster card): brand
+  mark at the top, a headline and a line of text, the product photo, and one pill
+  button sitting on the photo. Colours are the site's own (cream card, forest text).
+  No prices or discounts are shown: the only message is to subscribe.
 
-  Default texts are the wording from the approved Black Friday creative. Prices
-  here are TEXT: the real sale price still has to be set in Shopify.
+  Behaviour: opens after `delay_seconds` on the site (counted across pages for the
+  whole visit). Only the Subscribe button shows at first; clicking it reveals the
+  email box. The signup is Shopify's own `customer` form (customer tagged
+  "newsletter, black-friday") and the shared data-form-copy handler in
+  assets/shop-ux.js also emails a copy to support.
   Own bfp- prefix: section CSS is compiled into one global stylesheet.
 {%- endcomment -%}
 {%- liquid
@@ -29,7 +30,6 @@
       assign bfp_img = 'ritual-set-velvet-cashmere.jpg' | asset_url
     endif
   endif
-  assign bfp_explore = section.settings.explore_url | default: routes.all_products_collection_url
   assign bfp_privacy = shop.privacy_policy.url
 -%}
 {%- if bfp_show -%}
@@ -41,69 +41,36 @@
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
 
-    <div class="bfp__media">
-      <img class="bfp__img" data-src="{{ bfp_img }}" alt="" width="900" height="900" decoding="async" fetchpriority="low">
-    </div>
-
-    <div class="bfp__body">
-      <img class="bfp__logo" src="{{ 'footer-monogram.png' | asset_url }}" alt="" width="40" height="42" loading="lazy">
-      {%- if section.settings.eyebrow != blank -%}<span class="bfp__tag">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    <div class="bfp__top">
+      <img class="bfp__logo" src="{{ 'footer-monogram.png' | asset_url }}" alt="" width="44" height="46" loading="lazy">
+      <span class="bfp__brand">Chemistrie</span>
       <h2 class="bfp__title" id="bfp-title">{{ section.settings.headline }}</h2>
       <p class="bfp__sub">{{ section.settings.sub }}</p>
+    </div>
 
-      {%- comment -%} Price / discount lines only show when filled in (blank for now). {%- endcomment -%}
-      {%- if section.settings.regular_label != blank or section.settings.sale_label != blank -%}
-        <div class="bfp__price">
-          {%- if section.settings.regular_label != blank -%}<span class="bfp__was">{{ section.settings.regular_label }}</span>{%- endif -%}
-          {%- if section.settings.sale_label != blank -%}<span class="bfp__now">{{ section.settings.sale_label }}</span>{%- endif -%}
-        </div>
-      {%- endif -%}
-      {%- if section.settings.save_label != blank -%}<p class="bfp__save">{{ section.settings.save_label }}</p>{%- endif -%}
-
-      <div class="bfp__signup">
+    <div class="bfp__stage">
+      <img class="bfp__img" data-src="{{ bfp_img }}" alt="" width="900" height="720" decoding="async" fetchpriority="low">
+      <div class="bfp__cta">
         {%- form 'customer', id: 'bfp-form', class: 'bfp__form', data-form-copy: 'Black Friday sale updates' -%}
           {%- if form.posted_successfully? -%}<span data-bfp-posted hidden></span>{%- endif -%}
           {%- if form.errors -%}<span data-bfp-error hidden></span>{%- endif -%}
           <input type="hidden" name="contact[tags]" value="newsletter, black-friday">
-          {%- if section.settings.lead != blank -%}<p class="bfp__lead">{{ section.settings.lead }}</p>{%- endif -%}
           <div class="bfp__row">
             <div class="bfp__field">
               <label class="visually-hidden" for="bfp-email">Email address</label>
               <input class="bfp__input" id="bfp-email" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | escape }}" required maxlength="100" autocomplete="email">
             </div>
-            {%- comment -%} Starts as a plain button; the first click reveals the email box and the button then becomes the submit. {%- endcomment -%}
-            <span class="bfp__gift" data-bfp-gift>
-              <button type="button" class="bfp__btn" data-bfp-reveal>{{ section.settings.button_label }}</button>
-              <span class="bfp__ribbon" aria-hidden="true">
-                <span class="bfp__rib bfp__rib--top"></span>
-                <span class="bfp__rib bfp__rib--bot"></span>
-                <svg class="bfp__bow" viewBox="0 0 64 42" focusable="false">
-                  <defs><linearGradient id="bfpGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8d9bf"/><stop offset="1" stop-color="#a78a5e"/></linearGradient></defs>
-                  <path d="M32 27C18 38 4 31 6 17C8 4 24 8 32 24Z" fill="url(#bfpGold)" stroke="#a78a5e" stroke-width=".8"/>
-                  <path d="M32 27C46 38 60 31 58 17C56 4 40 8 32 24Z" fill="url(#bfpGold)" stroke="#a78a5e" stroke-width=".8"/>
-                  <path d="M29.5 28L19 41L28 38.5L32 30Z" fill="#c8aa7a" stroke="#a78a5e" stroke-width=".8"/>
-                  <path d="M34.5 28L45 41L36 38.5L32 30Z" fill="#c8aa7a" stroke="#a78a5e" stroke-width=".8"/>
-                  <ellipse cx="32" cy="26" rx="6" ry="5" fill="url(#bfpGold)" stroke="#a78a5e" stroke-width=".8"/>
-                </svg>
-                <svg class="bfp__scissors" viewBox="0 0 44 44" focusable="false">
-                  <g class="bfp__bl bfp__bl--a" fill="none" stroke="#1a3a2d" stroke-width="2" stroke-linecap="round"><path d="M4 12L30 22"/><circle cx="35" cy="30" r="5"/></g>
-                  <g class="bfp__bl bfp__bl--b" fill="none" stroke="#1a3a2d" stroke-width="2" stroke-linecap="round"><path d="M4 32L30 22"/><circle cx="35" cy="14" r="5"/></g>
-                </svg>
-              </span>
-            </span>
+            <button type="button" class="bfp__btn" data-bfp-reveal>{{ section.settings.button_label }}</button>
           </div>
-          <p class="bfp__msg bfp__msg--error" data-bfp-msg hidden role="alert"></p>
-          {%- if section.settings.consent_text != blank -%}
-            <p class="bfp__consent bfp__reveal">{{ section.settings.consent_text }}{%- if bfp_privacy != blank %} <a href="{{ bfp_privacy }}">Privacy Policy</a>.{%- endif -%}</p>
-          {%- endif -%}
+          <p class="bfp__msg" data-bfp-msg hidden role="alert"></p>
         {%- endform -%}
         <p class="bfp__thanks" data-bfp-thanks hidden>{{ section.settings.success_message }}</p>
       </div>
-
-      {%- if section.settings.explore_label != blank -%}
-        <a class="bfp__explore" href="{{ bfp_explore }}">{{ section.settings.explore_label }} <span aria-hidden="true">&rarr;</span></a>
-      {%- endif -%}
     </div>
+
+    {%- if section.settings.consent_text != blank -%}
+      <p class="bfp__consent">{{ section.settings.consent_text }}{%- if bfp_privacy != blank %} <a href="{{ bfp_privacy }}">Privacy Policy</a>.{%- endif -%}</p>
+    {%- endif -%}
   </div>
 </div>
 
@@ -128,28 +95,6 @@
   var lastFocus = null;
   var shown = false;
 
-  // Only the Subscribe button is visible at first; clicking it reveals the email box.
-  form.classList.add('is-collapsed');
-  var gift = root.querySelector('[data-bfp-gift]');
-  var cutting = false;
-  function revealField() {
-    if (gift) gift.classList.add('is-cut');
-    form.classList.remove('is-collapsed');
-    subBtn.type = 'submit';
-    emailInput.focus();
-  }
-  subBtn.addEventListener('click', function (e) {
-    if (!form.classList.contains('is-collapsed')) return;
-    e.preventDefault();
-    if (cutting) return;
-    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!gift || calm) { revealField(); return; }
-    // The scissors snip the ribbon, the pieces fall away, then the email box appears.
-    cutting = true;
-    gift.classList.add('is-cutting');
-    setTimeout(revealField, 720);
-  });
-
   var force = /[?&]bf_popup=1/.test(location.search) || (window.Shopify && window.Shopify.designMode);
   var postedBack = !!root.querySelector('[data-bfp-posted]');
   var path = location.pathname;
@@ -163,6 +108,18 @@
     var d = parseInt(sget('localStorage', K_DISMISS), 10);
     if (d && Date.now() - d < snooze) return;
   }
+
+  // Only the Subscribe button is visible at first; clicking it reveals the email box.
+  root.classList.add('is-collapsed');
+  form.classList.add('is-collapsed');
+  subBtn.addEventListener('click', function (e) {
+    if (!form.classList.contains('is-collapsed')) return;
+    e.preventDefault();
+    root.classList.remove('is-collapsed');
+    form.classList.remove('is-collapsed');
+    subBtn.type = 'submit';
+    emailInput.focus();
+  });
 
   function loadImage() {
     if (img && !img.getAttribute('src')) img.setAttribute('src', img.getAttribute('data-src'));
@@ -210,6 +167,7 @@
   function showThanks() {
     form.hidden = true;
     thanks.hidden = false;
+    root.classList.remove('is-collapsed');
     sset('localStorage', K_SUB, '1');
   }
 
@@ -271,11 +229,12 @@ body.bfp-locked { overflow: hidden; }
 .bfp__backdrop { position: absolute; inset: 0; background: rgba(14, 33, 24, .6); opacity: 0; transition: opacity .4s var(--ease-out); }
 .bfp.is-open .bfp__backdrop { opacity: 1; }
 
+/* One portrait card, like the approved creative: brand, headline, text, photo with the button on it. */
 .bfp__card {
-  position: relative; width: min(920px, 100%); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
-  overflow: auto; display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  position: relative; width: min(500px, 100%); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+  overflow: auto; text-align: center;
   background: var(--c-cream); color: var(--c-forest);
-  border-radius: 22px; box-shadow: 0 44px 90px -30px rgba(0, 0, 0, .55);
+  border-radius: 24px; box-shadow: 0 44px 90px -30px rgba(0, 0, 0, .55);
   opacity: 0; transform: translateY(20px) scale(.985);
   transition: opacity .45s var(--ease-out), transform .45s var(--ease-out);
   outline: none;
@@ -283,103 +242,61 @@ body.bfp-locked { overflow: hidden; }
 .bfp.is-open .bfp__card { opacity: 1; transform: none; }
 
 .bfp__close {
-  position: absolute; top: 12px; right: 12px; z-index: 2; width: 38px; height: 38px;
+  position: absolute; top: 12px; right: 12px; z-index: 3; width: 38px; height: 38px;
   display: grid; place-items: center; border-radius: 50%; cursor: pointer;
-  background: rgba(245, 237, 217, .9); color: var(--c-forest); border: 1px solid var(--c-line);
+  background: rgba(245, 237, 217, .92); color: var(--c-forest); border: 1px solid var(--c-line);
   transition: background .25s var(--ease-out);
 }
 .bfp__close:hover { background: var(--c-paper); }
 
-.bfp__media { position: relative; background: var(--c-cream-2); min-height: 100%; }
+.bfp__top { display: flex; flex-direction: column; align-items: center; padding: 30px 32px 0; }
+.bfp__logo { height: 46px; width: auto; }
+.bfp__brand { margin: 6px 0 18px; font-family: var(--ff-display); font-size: 13px; font-weight: 500; letter-spacing: .38em; text-indent: .38em; text-transform: uppercase; color: var(--c-forest); }
+.bfp__title { margin: 0 0 12px; font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: clamp(32px, 6.4vw, 42px); line-height: 1.08; color: var(--c-forest); text-wrap: balance; }
+.bfp__sub { margin: 0; font-size: 16.5px; font-weight: 600; line-height: 1.5; color: var(--c-forest); max-width: 34ch; text-wrap: balance; }
+
+.bfp__stage { position: relative; margin: 22px 16px 0; border-radius: 18px; overflow: hidden; background: var(--c-cream-2); aspect-ratio: 5 / 4; }
 .bfp__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.bfp__body { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(28px, 3.6vw, 48px); gap: 0; }
-.bfp__logo { height: 44px; width: auto; margin: 0 0 20px; }
-.bfp__tag { display: inline-block; margin: 0 0 14px; padding: 8px 18px; border-radius: 999px; background: linear-gradient(135deg, var(--c-tan-3), var(--c-tan)); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
-.bfp__title { margin: 0 0 14px; font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1; color: var(--c-forest); text-wrap: balance; }
-.bfp__sub { margin: 0 0 22px; font-size: 18px; font-weight: 600; line-height: 1.5; color: var(--c-forest); max-width: 34ch; }
-
-/* Price lines are blank for now; styled so they can come back from the theme editor. */
-.bfp__price { display: inline-flex; align-items: stretch; max-width: 100%; margin-bottom: 8px; border: 1px solid var(--c-line); border-radius: 999px; overflow: hidden; }
-.bfp__was { display: flex; align-items: center; padding: 10px 18px; font-size: 14px; text-decoration: line-through; color: var(--c-ink-soft); white-space: nowrap; }
-.bfp__now { display: flex; align-items: center; padding: 10px 20px; font-family: var(--ff-display); font-style: italic; font-weight: 600; font-size: 19px; color: var(--c-forest); background: linear-gradient(135deg, var(--c-tan-3), var(--c-tan)); white-space: nowrap; }
-.bfp__save { margin: 0 0 18px; font-size: 14px; letter-spacing: .04em; color: var(--c-tan-2); }
-
-.bfp__signup { width: 100%; }
-.bfp__lead { margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--c-forest); }
-.bfp__row { display: flex; align-items: stretch; gap: 8px; }
+/* The Subscribe pill sits on the photo; after the first click it becomes the email bar. */
+.bfp__cta { position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; justify-content: center; }
+.bfp__form { width: 100%; display: flex; flex-direction: column; align-items: center; margin: 0; }
+.bfp__row { display: flex; align-items: stretch; justify-content: center; gap: 6px; max-width: 100%; }
 .bfp__field { flex: 1 1 auto; min-width: 0; }
-.bfp__input { width: 100%; height: 100%; min-height: 50px; padding: 14px 18px; border: 1px solid var(--c-line); border-radius: 999px; background: var(--c-paper); color: var(--c-forest); font: inherit; font-size: 15px; }
+.bfp__input { width: 100%; height: 100%; min-height: 48px; padding: 12px 18px; border: 0; border-radius: 999px; background: transparent; color: var(--c-forest); font: inherit; font-size: 15px; }
 .bfp__input::placeholder { color: var(--c-ink-mute); }
-.bfp__input:focus-visible { outline: 2px solid var(--c-forest); outline-offset: 2px; }
-.bfp__btn { flex: 0 0 auto; padding: 15px 30px; border: 0; border-radius: 999px; cursor: pointer; background: var(--c-forest); color: var(--c-cream); font: inherit; font-size: 12.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; transition: background .25s var(--ease-out), transform .25s var(--ease-out); }
-.bfp__btn:hover { background: var(--c-forest-2); }
-.bfp__btn:focus-visible { outline: 2px solid var(--c-tan-2); outline-offset: 3px; }
-.bfp__btn:disabled { opacity: .6; cursor: default; }
-.bfp__msg { margin: 8px 0 0; font-size: 13px; color: #9a3b1f; }
-.bfp__consent { margin: 12px 0 0; font-size: 11.5px; line-height: 1.5; color: var(--c-ink-mute); }
+.bfp__input:focus-visible { outline: 2px solid var(--c-forest); outline-offset: -2px; }
+.bfp__btn { flex: 0 0 auto; padding: 16px 38px; border: 0; border-radius: 999px; cursor: pointer; background: var(--c-forest); color: var(--c-cream); font: inherit; font-size: 12.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; box-shadow: 0 10px 26px -8px rgba(14, 33, 24, .6); transition: background .25s var(--ease-out), transform .25s var(--ease-out); }
+.bfp__btn:hover { background: var(--c-forest-2); transform: translateY(-1px); }
+.bfp__btn:focus-visible { outline: 2px solid var(--c-tan); outline-offset: 3px; }
+.bfp__btn:disabled { opacity: .6; cursor: default; transform: none; }
+.bfp__form:not(.is-collapsed) .bfp__row { width: 100%; padding: 6px; border-radius: 999px; background: var(--c-paper); box-shadow: 0 14px 30px -12px rgba(14, 33, 24, .55); animation: bfpReveal .35s var(--ease-out); }
+.bfp__form:not(.is-collapsed) .bfp__btn { padding: 14px 26px; box-shadow: none; }
+.bfp__form.is-collapsed .bfp__field { display: none; }
+.bfp__msg { margin: 8px 0 0; padding: 6px 12px; border-radius: 10px; background: var(--c-paper); font-size: 13px; color: #9a3b1f; }
+.bfp__thanks { margin: 0; padding: 14px 26px; border-radius: 999px; background: var(--c-paper); font-family: var(--ff-display); font-style: italic; font-size: 22px; line-height: 1.25; color: var(--c-forest); box-shadow: 0 14px 30px -12px rgba(14, 33, 24, .55); }
+@keyframes bfpReveal { from { opacity: 0; transform: translateY(8px) scale(.97); } to { opacity: 1; transform: none; } }
+
+.bfp__consent { margin: 0; padding: 14px 28px 20px; font-size: 11.5px; line-height: 1.5; color: var(--c-ink-mute); }
 .bfp__consent a { color: var(--c-ink-soft); text-decoration: underline; }
-.bfp__thanks { margin: 0; font-family: var(--ff-display); font-style: italic; font-size: 24px; line-height: 1.3; color: var(--c-forest); }
+.bfp.is-collapsed .bfp__consent { display: none; }
+.bfp.is-collapsed .bfp__stage { margin-bottom: 16px; }
 
-/* Collapsed: just the Subscribe button. The email box and consent line appear after the first click. */
-.bfp__form.is-collapsed .bfp__field,
-.bfp__form.is-collapsed .bfp__reveal { display: none; }
-.bfp__form:not(.is-collapsed) .bfp__field,
-.bfp__form:not(.is-collapsed) .bfp__reveal { animation: bfpReveal .35s var(--ease-out); }
-@keyframes bfpReveal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-.bfp__explore { margin-top: 20px; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-soft); border-bottom: 1px solid var(--c-line); padding-bottom: 3px; }
-.bfp__explore:hover { color: var(--c-forest); border-color: var(--c-forest); }
-
-/* ---- Gift ribbon on the Subscribe button. Clicking it: scissors snip, ribbon falls away, email box appears. ---- */
-.bfp__gift { position: relative; display: flex; margin-top: 30px; }
-.bfp__gift.is-cut { margin-top: 0; }
-.bfp__gift .bfp__btn { height: 100%; transition: padding .35s var(--ease-out), background .25s var(--ease-out); }
-.bfp__gift:not(.is-cut) .bfp__btn { padding-left: 84px; padding-right: 34px; }
-.bfp__ribbon { position: absolute; inset: 0; pointer-events: none; }
-.bfp__gift.is-cut .bfp__ribbon { display: none; }
-.bfp__rib {
-  position: absolute; left: 26px; width: 26px;
-  background: linear-gradient(90deg, var(--c-tan-2), var(--c-tan-3) 42%, var(--c-tan) 68%, var(--c-tan-2));
-  box-shadow: 0 1px 3px rgba(14, 33, 24, .35);
-}
-.bfp__rib--top { top: -8px; height: calc(50% + 8px); border-radius: 3px 3px 0 0; transform-origin: 50% 100%; }
-.bfp__rib--bot { bottom: -8px; height: calc(50% + 8px); border-radius: 0 0 3px 3px; transform-origin: 50% 0; }
-.bfp__bow { position: absolute; left: 11px; top: -34px; width: 56px; height: auto; overflow: visible; transform-origin: 50% 90%; filter: drop-shadow(0 2px 2px rgba(14, 33, 24, .3)); }
-.bfp__scissors { position: absolute; left: 30px; top: 50%; width: 40px; height: 40px; margin-top: -20px; opacity: 0; overflow: visible; }
-.bfp__scissors { filter: drop-shadow(0 0 1.5px rgba(14, 33, 24, .9)) drop-shadow(0 1px 2px rgba(14, 33, 24, .5)); }
-.bfp__bl { transform-box: view-box; transform-origin: 30px 22px; stroke: var(--c-paper); stroke-width: 2.6; }
-
-.bfp__gift.is-cutting .bfp__scissors { animation: bfpScIn .26s var(--ease-out) forwards, bfpScOut .2s ease-in .5s forwards; }
-.bfp__gift.is-cutting .bfp__bl--a { animation: bfpBladeA .22s ease-in .26s forwards; }
-.bfp__gift.is-cutting .bfp__bl--b { animation: bfpBladeB .22s ease-in .26s forwards; }
-.bfp__gift.is-cutting .bfp__rib--top { animation: bfpRibTop .45s ease-in .46s forwards; }
-.bfp__gift.is-cutting .bfp__rib--bot { animation: bfpRibBot .45s ease-in .46s forwards; }
-.bfp__gift.is-cutting .bfp__bow { animation: bfpBow .5s ease-in .46s forwards; }
-.bfp__gift:not(.is-cutting) .bfp__bow { animation: bfpWiggle 2.8s ease-in-out 1.2s infinite; }
-@keyframes bfpScIn { from { opacity: 0; transform: translateX(64px) rotate(10deg); } to { opacity: 1; transform: none; } }
-@keyframes bfpScOut { to { opacity: 0; transform: translateX(34px); } }
-@keyframes bfpBladeA { from { transform: rotate(-26deg); } to { transform: rotate(0); } }
-@keyframes bfpBladeB { from { transform: rotate(26deg); } to { transform: rotate(0); } }
-@keyframes bfpRibTop { to { opacity: 0; transform: translate(-10px, -26px) rotate(-16deg); } }
-@keyframes bfpRibBot { to { opacity: 0; transform: translate(12px, 30px) rotate(14deg); } }
-@keyframes bfpBow { to { opacity: 0; transform: translateY(-34px) rotate(26deg); } }
-@keyframes bfpWiggle { 0%, 88%, 100% { transform: none; } 92% { transform: rotate(-4deg); } 96% { transform: rotate(4deg); } }
-
-@media (max-width: 760px) {
+@media (max-width: 520px) {
   .bfp { padding: 12px; align-items: end; }
-  .bfp__card { grid-template-columns: minmax(0, 1fr); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); border-radius: 20px; }
-  .bfp__media { min-height: 0; aspect-ratio: 16 / 9; }
-  .bfp__body { padding: 22px 20px 26px; justify-content: flex-start; }
-  .bfp__logo { height: 36px; margin-bottom: 12px; }
-  .bfp__row { flex-direction: column; }
-  .bfp__gift { width: 100%; }
-  .bfp__btn { width: 100%; }
+  .bfp__card { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); border-radius: 22px; }
+  .bfp__top { padding: 24px 22px 0; }
+  .bfp__logo { height: 40px; }
+  .bfp__brand { margin-bottom: 14px; }
+  .bfp__stage { margin: 18px 12px 0; }
+  .bfp__cta { left: 10px; right: 10px; bottom: 10px; }
+  .bfp__btn { padding: 15px 34px; }
+  .bfp__form:not(.is-collapsed) .bfp__btn { padding: 13px 18px; }
+  .bfp__consent { padding: 12px 22px 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bfp__backdrop, .bfp__card { transition: none; }
-  .bfp__bow { animation: none !important; }
-  .bfp__form:not(.is-collapsed) .bfp__field, .bfp__form:not(.is-collapsed) .bfp__reveal { animation: none; }
+  .bfp__form:not(.is-collapsed) .bfp__row { animation: none; }
 }
 {% endstylesheet %}
 
@@ -387,139 +304,22 @@ body.bfp-locked { overflow: hidden; }
 {
   "name": "Black Friday popup",
   "settings": [
-    {
-      "type": "checkbox",
-      "id": "enabled",
-      "label": "Show the popup",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "delay_seconds",
-      "label": "Show after (seconds on the site)",
-      "min": 1,
-      "max": 60,
-      "step": 1,
-      "default": 3
-    },
-    {
-      "type": "range",
-      "id": "snooze_days",
-      "label": "After it is closed, stay hidden for (days)",
-      "min": 1,
-      "max": 30,
-      "step": 1,
-      "default": 3
-    },
-    {
-      "type": "text",
-      "id": "hide_after",
-      "label": "Stop showing after (YYYY-MM-DD)",
-      "info": "So it does not linger past the sale. Clear the field to show it with no end date.",
-      "default": "2026-12-01"
-    },
-    {
-      "type": "header",
-      "content": "Offer"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Highlight tag",
-      "info": "Optional tag above the headline. Off for now (blank = not shown)."
-    },
-    {
-      "type": "text",
-      "id": "headline",
-      "label": "Headline",
-      "default": "Black Friday is almost here."
-    },
-    {
-      "type": "textarea",
-      "id": "sub",
-      "label": "Supporting text",
-      "default": "Subscribe and we'll email you our Black Friday offers next week."
-    },
-    {
-      "type": "text",
-      "id": "regular_label",
-      "label": "Regular price (struck through)",
-      "info": "Leave blank for now."
-    },
-    {
-      "type": "text",
-      "id": "sale_label",
-      "label": "Sale price",
-      "info": "Leave blank for now. Text only; set the real sale price in Shopify."
-    },
-    {
-      "type": "text",
-      "id": "save_label",
-      "label": "Savings line",
-      "info": "Leave blank for now."
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Photo",
-      "info": "Optional. Shows the Velvet + Cashmere lineup photo when empty."
-    },
-    {
-      "type": "header",
-      "content": "Subscribe"
-    },
-    {
-      "type": "text",
-      "id": "lead",
-      "label": "Line above the email box",
-      "info": "Optional line above the Subscribe button. Blank = not shown."
-    },
-    {
-      "type": "text",
-      "id": "placeholder",
-      "label": "Email placeholder",
-      "default": "Enter your email"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button label",
-      "default": "Subscribe"
-    },
-    {
-      "type": "text",
-      "id": "success_message",
-      "label": "Success message",
-      "default": "Thank you — you're on the list."
-    },
-    {
-      "type": "textarea",
-      "id": "consent_text",
-      "label": "Consent / privacy line",
-      "info": "The Privacy Policy link is added automatically when one is set in Settings > Policies.",
-      "default": "By subscribing, you agree to receive marketing emails from Chemistrie. Unsubscribe anytime. See our"
-    },
-    {
-      "type": "header",
-      "content": "Link"
-    },
-    {
-      "type": "text",
-      "id": "explore_label",
-      "label": "Link text",
-      "info": "Optional link under the button. Blank = not shown."
-    },
-    {
-      "type": "url",
-      "id": "explore_url",
-      "label": "Link destination",
-      "info": "Leave blank to use the all-products collection."
-    }
+    { "type": "checkbox", "id": "enabled", "label": "Show the popup", "default": true },
+    { "type": "range", "id": "delay_seconds", "label": "Show after (seconds on the site)", "min": 1, "max": 60, "step": 1, "default": 3 },
+    { "type": "range", "id": "snooze_days", "label": "After it is closed, stay hidden for (days)", "min": 1, "max": 30, "step": 1, "default": 3 },
+    { "type": "text", "id": "hide_after", "label": "Stop showing after (YYYY-MM-DD)", "info": "So it does not linger past the sale. Clear the field to show it with no end date.", "default": "2026-12-01" },
+    { "type": "header", "content": "Message" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Black Friday is almost here." },
+    { "type": "textarea", "id": "sub", "label": "Supporting text", "default": "Subscribe to know about the upcoming discounts for our Black Friday sale." },
+    { "type": "image_picker", "id": "image", "label": "Photo", "info": "Optional. Shows the Velvet + Cashmere lineup photo when empty." },
+    { "type": "header", "content": "Subscribe" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
+    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "Enter your email" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you — you're on the list." },
+    { "type": "textarea", "id": "consent_text", "label": "Consent / privacy line", "info": "The Privacy Policy link is added automatically when one is set in Settings > Policies.", "default": "By subscribing, you agree to receive marketing emails from Chemistrie. Unsubscribe anytime. See our" }
   ],
   "presets": [
-    {
-      "name": "Black Friday popup"
-    }
+    { "name": "Black Friday popup" }
   ]
 }
 {% endschema %}
