@@ -72,7 +72,25 @@
               <input class="bfp__input" id="bfp-email" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | escape }}" required maxlength="100" autocomplete="email">
             </div>
             {%- comment -%} Starts as a plain button; the first click reveals the email box and the button then becomes the submit. {%- endcomment -%}
-            <button type="button" class="bfp__btn" data-bfp-reveal>{{ section.settings.button_label }}</button>
+            <span class="bfp__gift" data-bfp-gift>
+              <button type="button" class="bfp__btn" data-bfp-reveal>{{ section.settings.button_label }}</button>
+              <span class="bfp__ribbon" aria-hidden="true">
+                <span class="bfp__rib bfp__rib--top"></span>
+                <span class="bfp__rib bfp__rib--bot"></span>
+                <svg class="bfp__bow" viewBox="0 0 64 42" focusable="false">
+                  <defs><linearGradient id="bfpGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8d9bf"/><stop offset="1" stop-color="#a78a5e"/></linearGradient></defs>
+                  <path d="M32 27C18 38 4 31 6 17C8 4 24 8 32 24Z" fill="url(#bfpGold)" stroke="#a78a5e" stroke-width=".8"/>
+                  <path d="M32 27C46 38 60 31 58 17C56 4 40 8 32 24Z" fill="url(#bfpGold)" stroke="#a78a5e" stroke-width=".8"/>
+                  <path d="M29.5 28L19 41L28 38.5L32 30Z" fill="#c8aa7a" stroke="#a78a5e" stroke-width=".8"/>
+                  <path d="M34.5 28L45 41L36 38.5L32 30Z" fill="#c8aa7a" stroke="#a78a5e" stroke-width=".8"/>
+                  <ellipse cx="32" cy="26" rx="6" ry="5" fill="url(#bfpGold)" stroke="#a78a5e" stroke-width=".8"/>
+                </svg>
+                <svg class="bfp__scissors" viewBox="0 0 44 44" focusable="false">
+                  <g class="bfp__bl bfp__bl--a" fill="none" stroke="#1a3a2d" stroke-width="2" stroke-linecap="round"><path d="M4 12L30 22"/><circle cx="35" cy="30" r="5"/></g>
+                  <g class="bfp__bl bfp__bl--b" fill="none" stroke="#1a3a2d" stroke-width="2" stroke-linecap="round"><path d="M4 32L30 22"/><circle cx="35" cy="14" r="5"/></g>
+                </svg>
+              </span>
+            </span>
           </div>
           <p class="bfp__msg bfp__msg--error" data-bfp-msg hidden role="alert"></p>
           {%- if section.settings.consent_text != blank -%}
@@ -112,12 +130,24 @@
 
   // Only the Subscribe button is visible at first; clicking it reveals the email box.
   form.classList.add('is-collapsed');
-  subBtn.addEventListener('click', function (e) {
-    if (!form.classList.contains('is-collapsed')) return;
-    e.preventDefault();
+  var gift = root.querySelector('[data-bfp-gift]');
+  var cutting = false;
+  function revealField() {
+    if (gift) gift.classList.add('is-cut');
     form.classList.remove('is-collapsed');
     subBtn.type = 'submit';
     emailInput.focus();
+  }
+  subBtn.addEventListener('click', function (e) {
+    if (!form.classList.contains('is-collapsed')) return;
+    e.preventDefault();
+    if (cutting) return;
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!gift || calm) { revealField(); return; }
+    // The scissors snip the ribbon, the pieces fall away, then the email box appears.
+    cutting = true;
+    gift.classList.add('is-cutting');
+    setTimeout(revealField, 720);
   });
 
   var force = /[?&]bf_popup=1/.test(location.search) || (window.Shopify && window.Shopify.designMode);
@@ -267,7 +297,7 @@ body.bfp-locked { overflow: hidden; }
 .bfp__logo { height: 44px; width: auto; margin: 0 0 20px; }
 .bfp__tag { display: inline-block; margin: 0 0 14px; padding: 8px 18px; border-radius: 999px; background: linear-gradient(135deg, var(--c-tan-3), var(--c-tan)); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
 .bfp__title { margin: 0 0 14px; font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1; color: var(--c-forest); text-wrap: balance; }
-.bfp__sub { margin: 0 0 26px; font-size: 15.5px; line-height: 1.65; color: var(--c-ink-soft); max-width: 38ch; }
+.bfp__sub { margin: 0 0 22px; font-size: 18px; font-weight: 600; line-height: 1.5; color: var(--c-forest); max-width: 34ch; }
 
 /* Price lines are blank for now; styled so they can come back from the theme editor. */
 .bfp__price { display: inline-flex; align-items: stretch; max-width: 100%; margin-bottom: 8px; border: 1px solid var(--c-line); border-radius: 999px; overflow: hidden; }
@@ -301,6 +331,40 @@ body.bfp-locked { overflow: hidden; }
 .bfp__explore { margin-top: 20px; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-soft); border-bottom: 1px solid var(--c-line); padding-bottom: 3px; }
 .bfp__explore:hover { color: var(--c-forest); border-color: var(--c-forest); }
 
+/* ---- Gift ribbon on the Subscribe button. Clicking it: scissors snip, ribbon falls away, email box appears. ---- */
+.bfp__gift { position: relative; display: flex; margin-top: 30px; }
+.bfp__gift.is-cut { margin-top: 0; }
+.bfp__gift .bfp__btn { height: 100%; transition: padding .35s var(--ease-out), background .25s var(--ease-out); }
+.bfp__gift:not(.is-cut) .bfp__btn { padding-left: 84px; padding-right: 34px; }
+.bfp__ribbon { position: absolute; inset: 0; pointer-events: none; }
+.bfp__gift.is-cut .bfp__ribbon { display: none; }
+.bfp__rib {
+  position: absolute; left: 26px; width: 26px;
+  background: linear-gradient(90deg, var(--c-tan-2), var(--c-tan-3) 42%, var(--c-tan) 68%, var(--c-tan-2));
+  box-shadow: 0 1px 3px rgba(14, 33, 24, .35);
+}
+.bfp__rib--top { top: -8px; height: calc(50% + 8px); border-radius: 3px 3px 0 0; transform-origin: 50% 100%; }
+.bfp__rib--bot { bottom: -8px; height: calc(50% + 8px); border-radius: 0 0 3px 3px; transform-origin: 50% 0; }
+.bfp__bow { position: absolute; left: 11px; top: -34px; width: 56px; height: auto; overflow: visible; transform-origin: 50% 90%; filter: drop-shadow(0 2px 2px rgba(14, 33, 24, .3)); }
+.bfp__scissors { position: absolute; left: 36px; top: 50%; width: 46px; height: 46px; margin-top: -23px; opacity: 0; overflow: visible; }
+.bfp__bl { transform-box: view-box; transform-origin: 30px 22px; }
+
+.bfp__gift.is-cutting .bfp__scissors { animation: bfpScIn .26s var(--ease-out) forwards, bfpScOut .2s ease-in .5s forwards; }
+.bfp__gift.is-cutting .bfp__bl--a { animation: bfpBladeA .22s ease-in .26s forwards; }
+.bfp__gift.is-cutting .bfp__bl--b { animation: bfpBladeB .22s ease-in .26s forwards; }
+.bfp__gift.is-cutting .bfp__rib--top { animation: bfpRibTop .45s ease-in .46s forwards; }
+.bfp__gift.is-cutting .bfp__rib--bot { animation: bfpRibBot .45s ease-in .46s forwards; }
+.bfp__gift.is-cutting .bfp__bow { animation: bfpBow .5s ease-in .46s forwards; }
+.bfp__gift:not(.is-cutting) .bfp__bow { animation: bfpWiggle 2.8s ease-in-out 1.2s infinite; }
+@keyframes bfpScIn { from { opacity: 0; transform: translateX(64px) rotate(10deg); } to { opacity: 1; transform: none; } }
+@keyframes bfpScOut { to { opacity: 0; transform: translateX(34px); } }
+@keyframes bfpBladeA { from { transform: rotate(-26deg); } to { transform: rotate(0); } }
+@keyframes bfpBladeB { from { transform: rotate(26deg); } to { transform: rotate(0); } }
+@keyframes bfpRibTop { to { opacity: 0; transform: translate(-10px, -26px) rotate(-16deg); } }
+@keyframes bfpRibBot { to { opacity: 0; transform: translate(12px, 30px) rotate(14deg); } }
+@keyframes bfpBow { to { opacity: 0; transform: translateY(-34px) rotate(26deg); } }
+@keyframes bfpWiggle { 0%, 88%, 100% { transform: none; } 92% { transform: rotate(-4deg); } 96% { transform: rotate(4deg); } }
+
 @media (max-width: 760px) {
   .bfp { padding: 12px; align-items: end; }
   .bfp__card { grid-template-columns: minmax(0, 1fr); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); border-radius: 20px; }
@@ -308,10 +372,12 @@ body.bfp-locked { overflow: hidden; }
   .bfp__body { padding: 22px 20px 26px; justify-content: flex-start; }
   .bfp__logo { height: 36px; margin-bottom: 12px; }
   .bfp__row { flex-direction: column; }
+  .bfp__gift { width: 100%; }
   .bfp__btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bfp__backdrop, .bfp__card { transition: none; }
+  .bfp__bow { animation: none !important; }
   .bfp__form:not(.is-collapsed) .bfp__field, .bfp__form:not(.is-collapsed) .bfp__reveal { animation: none; }
 }
 {% endstylesheet %}
@@ -359,20 +425,19 @@ body.bfp-locked { overflow: hidden; }
       "type": "text",
       "id": "eyebrow",
       "label": "Highlight tag",
-      "info": "The gold tag above the headline. Blank = not shown.",
-      "default": "Black Friday"
+      "info": "Optional tag above the headline. Off for now (blank = not shown)."
     },
     {
       "type": "text",
       "id": "headline",
       "label": "Headline",
-      "default": "Our Black Friday sale is coming next week."
+      "default": "Black Friday is almost here."
     },
     {
       "type": "textarea",
       "id": "sub",
       "label": "Supporting text",
-      "default": "Subscribe to get email promotions for the Black Friday sale."
+      "default": "Subscribe and we'll email you our Black Friday offers next week."
     },
     {
       "type": "text",
