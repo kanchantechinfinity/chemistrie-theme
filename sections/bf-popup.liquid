@@ -50,10 +50,12 @@
       <h2 class="bfp__title" id="bfp-title">{{ section.settings.headline }}</h2>
       <p class="bfp__sub">{{ section.settings.sub }}</p>
 
-      <div class="bfp__price">
-        <span class="bfp__was">{{ section.settings.regular_label }}</span>
-        <span class="bfp__now">{{ section.settings.sale_label }}</span>
-      </div>
+      {%- if section.settings.regular_label != blank or section.settings.sale_label != blank -%}
+        <div class="bfp__price">
+          {%- if section.settings.regular_label != blank -%}<span class="bfp__was">{{ section.settings.regular_label }}</span>{%- endif -%}
+          {%- if section.settings.sale_label != blank -%}<span class="bfp__now">{{ section.settings.sale_label }}</span>{%- endif -%}
+        </div>
+      {%- endif -%}
       {%- if section.settings.save_label != blank -%}<p class="bfp__save">{{ section.settings.save_label }}</p>{%- endif -%}
 
       <div class="bfp__signup">
@@ -61,7 +63,7 @@
           {%- if form.posted_successfully? -%}<span data-bfp-posted hidden></span>{%- endif -%}
           {%- if form.errors -%}<span data-bfp-error hidden></span>{%- endif -%}
           <input type="hidden" name="contact[tags]" value="newsletter, black-friday">
-          <p class="bfp__lead">{{ section.settings.lead }}</p>
+          {%- if section.settings.lead != blank -%}<p class="bfp__lead">{{ section.settings.lead }}</p>{%- endif -%}
           <div class="bfp__row">
             <label class="visually-hidden" for="bfp-email">Email address</label>
             <input class="bfp__input" id="bfp-email" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | escape }}" required maxlength="100" autocomplete="email">
@@ -251,7 +253,7 @@ body.bfp-locked { overflow: hidden; }
 
 .bfp__price { display: inline-flex; align-items: stretch; max-width: 100%; border: 1px solid rgba(240, 232, 219, .42); border-radius: 999px; overflow: hidden; }
 .bfp__was { display: flex; align-items: center; padding: 10px 18px; font-size: 14px; text-decoration: line-through; color: rgba(240, 232, 219, .85); white-space: nowrap; }
-.bfp__now { display: flex; align-items: center; padding: 10px 20px; font-family: var(--ff-display); font-style: italic; font-weight: 600; font-size: 19px; color: var(--c-forest); background: linear-gradient(135deg, var(--c-tan-3), var(--c-tan)); white-space: nowrap; }
+.bfp__now { display: flex; align-items: center; padding: 12px 28px; font-family: var(--ff-display); font-style: italic; font-weight: 600; font-size: 25px; color: var(--c-forest); background: linear-gradient(135deg, var(--c-tan-3), var(--c-tan)); white-space: nowrap; }
 .bfp__save { margin: 10px 0 0; font-size: 14px; letter-spacing: .04em; color: var(--c-tan); }
 
 .bfp__signup { width: 100%; margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(240, 232, 219, .16); }
@@ -289,29 +291,134 @@ body.bfp-locked { overflow: hidden; }
 {
   "name": "Black Friday popup",
   "settings": [
-    { "type": "checkbox", "id": "enabled", "label": "Show the popup", "default": true },
-    { "type": "range", "id": "delay_seconds", "label": "Show after (seconds on the site)", "min": 5, "max": 60, "step": 1, "default": 15 },
-    { "type": "range", "id": "snooze_days", "label": "After it is closed, stay hidden for (days)", "min": 1, "max": 30, "step": 1, "default": 3 },
-    { "type": "text", "id": "hide_after", "label": "Stop showing after (YYYY-MM-DD)", "info": "So it does not linger past the sale. Clear the field to show it with no end date.", "default": "2026-12-01" },
-    { "type": "header", "content": "Offer" },
-    { "type": "text", "id": "headline", "label": "Headline", "default": "Still building your skincare routine?" },
-    { "type": "textarea", "id": "sub", "label": "Supporting text", "default": "Start with the Essential Ritual. Two foundational products, thoughtfully paired." },
-    { "type": "text", "id": "regular_label", "label": "Regular price (struck through)", "default": "Regularly $180" },
-    { "type": "text", "id": "sale_label", "label": "Sale price", "info": "Text only. Set the real sale price in Shopify.", "default": "Black Friday · $153" },
-    { "type": "text", "id": "save_label", "label": "Savings line", "default": "Save $27" },
-    { "type": "image_picker", "id": "image", "label": "Photo", "info": "Optional. Shows the Velvet + Cashmere lineup photo when empty." },
-    { "type": "header", "content": "Subscribe" },
-    { "type": "text", "id": "lead", "label": "Line above the email box", "default": "Get updates on the sales coming next week." },
-    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "Your email address" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
-    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you — you're on the list." },
-    { "type": "textarea", "id": "consent_text", "label": "Consent / privacy line", "info": "The Privacy Policy link is added automatically when one is set in Settings > Policies.", "default": "By subscribing, you agree to receive marketing emails from Chemistrie. Unsubscribe anytime. See our" },
-    { "type": "header", "content": "Link" },
-    { "type": "text", "id": "explore_label", "label": "Link text", "default": "Explore products" },
-    { "type": "url", "id": "explore_url", "label": "Link destination", "info": "Leave blank to use the all-products collection." }
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Show the popup",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "delay_seconds",
+      "label": "Show after (seconds on the site)",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "snooze_days",
+      "label": "After it is closed, stay hidden for (days)",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "hide_after",
+      "label": "Stop showing after (YYYY-MM-DD)",
+      "info": "So it does not linger past the sale. Clear the field to show it with no end date.",
+      "default": "2026-12-01"
+    },
+    {
+      "type": "header",
+      "content": "Offer"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Don't miss our Black Friday sale."
+    },
+    {
+      "type": "textarea",
+      "id": "sub",
+      "label": "Supporting text",
+      "default": "Subscribe for emails, promotions and updates on the upcoming Black Friday sale."
+    },
+    {
+      "type": "text",
+      "id": "regular_label",
+      "label": "Struck-through text (optional)",
+      "info": "Optional. Blank = not shown."
+    },
+    {
+      "type": "text",
+      "id": "sale_label",
+      "label": "Highlight (gold pill)",
+      "info": "The gold pill that highlights the sale. Blank = not shown.",
+      "default": "Black Friday Sale"
+    },
+    {
+      "type": "text",
+      "id": "save_label",
+      "label": "Savings line",
+      "info": "Optional. Blank = not shown."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo",
+      "info": "Optional. Shows the Velvet + Cashmere lineup photo when empty."
+    },
+    {
+      "type": "header",
+      "content": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "lead",
+      "label": "Line above the email box",
+      "default": "Enter your email to subscribe."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you — you're on the list."
+    },
+    {
+      "type": "textarea",
+      "id": "consent_text",
+      "label": "Consent / privacy line",
+      "info": "The Privacy Policy link is added automatically when one is set in Settings > Policies.",
+      "default": "By subscribing, you agree to receive marketing emails from Chemistrie. Unsubscribe anytime. See our"
+    },
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "text",
+      "id": "explore_label",
+      "label": "Link text",
+      "info": "Optional. Blank = not shown."
+    },
+    {
+      "type": "url",
+      "id": "explore_url",
+      "label": "Link destination",
+      "info": "Leave blank to use the all-products collection."
+    }
   ],
   "presets": [
-    { "name": "Black Friday popup" }
+    {
+      "name": "Black Friday popup"
+    }
   ]
 }
 {% endschema %}
