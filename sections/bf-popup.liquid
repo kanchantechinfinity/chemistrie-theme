@@ -68,7 +68,7 @@
         {%- form 'customer', id: 'bfp-form', class: 'bfp__form', data-form-copy: 'Black Friday sale updates' -%}
           {%- if form.posted_successfully? -%}<span data-bfp-posted hidden></span>{%- endif -%}
           {%- if form.errors -%}<span data-bfp-error hidden></span>{%- endif -%}
-          <input type="hidden" name="contact[tags]" value="Login with Shop, Shop, black-friday, founders-circle, newsletter">
+          <input type="hidden" name="contact[tags]" value="newsletter, black-friday, founders-circle">
           {%- if section.settings.lead != blank -%}<p class="bfp__lead">{{ section.settings.lead }}</p>{%- endif -%}
           <div class="bfp__row">
             <label class="visually-hidden" for="bfp-email">Email address</label>
