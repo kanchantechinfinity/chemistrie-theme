@@ -59,10 +59,16 @@
         {%- assign bfp_phrases = section.settings.sale_label | split: '|' -%}
         <div class="bfp__marquee" role="note" aria-label="{{ section.settings.sale_label | replace: '|', ',' | escape }}">
           <span class="bfp__marquee-track" aria-hidden="true">
-            {%- for round in (1..3) -%}
-              {%- for ph in bfp_phrases -%}
-                <span class="bfp__mq-item">{{ ph | strip }}</span><i class="bfp__mq-dot"></i>
-              {%- endfor -%}
+            {%- comment -%}
+              Five phrases, arranged so the FIRST phrase is the one in the middle (index
+              (i - 3) mod count): it sits fully visible in the centre and its neighbours
+              are cropped by the fade at both ends.
+            {%- endcomment -%}
+            {%- assign bfp_n = bfp_phrases.size -%}
+            {%- for i in (1..5) -%}
+              {%- assign bfp_idx = i | minus: 3 | modulo: bfp_n -%}
+              <span class="bfp__mq-item">{{ bfp_phrases[bfp_idx] | strip }}</span>
+              {%- unless forloop.last -%}<i class="bfp__mq-dot"></i>{%- endunless -%}
             {%- endfor -%}
           </span>
         </div>
@@ -300,6 +306,8 @@ body.bfp-locked { overflow: hidden; }
   .bfp__logo { height: 34px; margin-bottom: 12px; }
   .bfp__row { flex-direction: column; }
   .bfp__btn { width: 100%; }
+  .bfp__mq-item { font-size: 11.5px; letter-spacing: .16em; }
+  .bfp__marquee-track { gap: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bfp__backdrop, .bfp__card { transition: none; }
