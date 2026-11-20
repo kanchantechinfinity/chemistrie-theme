@@ -4080,3 +4080,5 @@ User asked for a themed popup shown after 15 s on the site with the upcoming Bla
 **Popup update 13 (2026-11-20):** user: the pill text was a copy of their example phrase, they wanted it refined. Pill now "Exclusive savings, reserved for Ritual sets" (my wording, same display font/green pill; commit below). Must match the real sale.
 
 **Popup update 14 (2026-11-20):** user picked pill option 1: "Exclusively for Ritual sets" (my wording). Logo contrast fix (gold monogram on cream) offered as A green circle badge / B dark logo / C green wordmark - user has not chosen yet.
+
+**Form tags (2026-11-20):** user: every email-collecting form must give the customer ALL tags used in the theme. The 4 `customer` forms (bf-popup, journal-grid, main-article, newsletter-cta) now all send `newsletter, black-friday, founders-circle`. NOT tagged: contact page + Founders Circle invite (Shopify `contact` form type creates no customer and ignores contact[tags]), gift finder (FormSubmit only), login/register (Shopify account forms, no tag field). Side effect: every subscriber carries all three tags, so tags no longer show which form they came from.
