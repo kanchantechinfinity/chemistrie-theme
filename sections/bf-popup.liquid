@@ -233,7 +233,7 @@ body.bfp-locked { overflow: hidden; }
 .bfp__card {
   position: relative; width: min(920px, 100%); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
   overflow: auto; display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
-  background: var(--c-cream); color: var(--c-forest);
+  background: var(--c-cream); color: var(--c-forest); font-family: var(--ff-body);
   border-radius: 22px; box-shadow: 0 44px 90px -30px rgba(0, 0, 0, .6);
   opacity: 0; transform: translateY(20px) scale(.985);
   transition: opacity .45s var(--ease-out), transform .45s var(--ease-out);
@@ -259,7 +259,7 @@ body.bfp-locked { overflow: hidden; }
 
 /* Solid green pills with cream text. */
 .bfp__pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.bfp__pill { padding: 12px 22px; border-radius: 999px; background: var(--c-forest); color: var(--c-cream); font-size: 12.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; line-height: 1.2; }
+.bfp__pill { padding: 12px 26px 13px; border-radius: 999px; background: var(--c-forest); color: var(--c-cream); font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: 22px; letter-spacing: .01em; line-height: 1.15; }
 .bfp__save { margin: 10px 0 0; font-size: 14px; letter-spacing: .04em; color: var(--c-tan-2); }
 
 .bfp__signup { width: 100%; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--c-line); }
@@ -288,7 +288,7 @@ body.bfp-locked { overflow: hidden; }
   .bfp__logo { height: 34px; margin-bottom: 12px; }
   .bfp__row { flex-direction: column; }
   .bfp__btn { width: 100%; }
-  .bfp__pill { padding: 11px 18px; font-size: 12px; letter-spacing: .16em; }
+  .bfp__pill { padding: 10px 20px 11px; font-size: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bfp__backdrop, .bfp__card { transition: none; }
@@ -351,7 +351,7 @@ body.bfp-locked { overflow: hidden; }
       "id": "sale_label",
       "label": "Green pill(s)",
       "info": "Short highlight in a green pill. Add more pills by separating phrases with | . Blank = not shown.",
-      "default": "Rituals-only discounts"
+      "default": "Exclusive discounts on Ritual sets"
     },
     {
       "type": "text",
