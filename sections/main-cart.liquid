@@ -360,7 +360,7 @@
       return;
     }
     if (hint) { hint.textContent = 'Applying at checkout…'; hint.classList.remove('is-error'); hint.hidden = false; }
-    window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent('/checkout');
+    window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(window.chemCheckoutUrl ? window.chemCheckoutUrl() : '/checkout');
   });
   input.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') { e.preventDefault(); btn.click(); }

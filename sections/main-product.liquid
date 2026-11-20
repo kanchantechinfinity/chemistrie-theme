@@ -1204,7 +1204,7 @@
           // Pre-order behaves like a Buy Now: straight to payment rather than
           // leaving the customer on the page wondering what happened.
           if (addBtn.hasAttribute('data-preorder')) {
-            window.location.href = '/checkout';
+            window.location.href = window.chemCheckoutUrl ? window.chemCheckoutUrl() : '/checkout';
             return;
           }
 

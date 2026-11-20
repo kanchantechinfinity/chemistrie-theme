@@ -420,6 +420,30 @@
       fields[key.replace(/^[a-z_]+\[(.*)\]$/, "$1")] = value;
     });
     sendFormCopy(form.getAttribute("data-form-copy") || "Website form", fields);
+    rememberEmail(fields.email);
+  });
+
+  /* Email a shopper gave to any signup form is remembered in this browser and
+     handed to checkout as ?checkout[email]=, so the field arrives filled in.
+     Checkout still lets them change it; nothing is sent anywhere else. */
+  var EMAIL_KEY = "chem_email";
+  function rememberEmail(v) {
+    v = (v || "").trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) return;
+    try { window.localStorage.setItem(EMAIL_KEY, v); } catch (e) {}
+  }
+  function savedEmail() {
+    try { return window.localStorage.getItem(EMAIL_KEY) || ""; } catch (e) { return ""; }
+  }
+  window.chemCheckoutUrl = function () {
+    var em = savedEmail();
+    return "/checkout" + (em ? "?checkout%5Bemail%5D=" + encodeURIComponent(em) : "");
+  };
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest('button[name="checkout"]');
+    if (!b || !savedEmail()) return;
+    e.preventDefault();
+    window.location.href = window.chemCheckoutUrl();
   });
 
   /* init */
