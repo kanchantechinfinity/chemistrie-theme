@@ -51,27 +51,16 @@
       <p class="bfp__sub">{{ section.settings.sub }}</p>
 
       {%- comment -%}
-        Static ticker strip (it does not scroll). The setting holds one or more phrases
-        separated by "|"; they repeat with a small diamond between and fade out at both
-        ends, so it reads like a marquee frozen mid-run.
+        Pills in the theme's dark green. The setting holds one or more phrases separated
+        by "|"; each becomes its own pill.
       {%- endcomment -%}
       {%- if section.settings.sale_label != blank -%}
-        {%- assign bfp_phrases = section.settings.sale_label | split: '|' -%}
-        <div class="bfp__marquee" role="note" aria-label="{{ section.settings.sale_label | replace: '|', ',' | escape }}">
-          <span class="bfp__marquee-track" aria-hidden="true">
-            {%- comment -%}
-              Five phrases, arranged so the FIRST phrase is the one in the middle (index
-              (i - 3) mod count): it sits fully visible in the centre and its neighbours
-              are cropped by the fade at both ends.
-            {%- endcomment -%}
-            {%- assign bfp_n = bfp_phrases.size -%}
-            {%- for i in (1..5) -%}
-              {%- assign bfp_idx = i | minus: 3 | modulo: bfp_n -%}
-              <span class="bfp__mq-item">{{ bfp_phrases[bfp_idx] | strip }}</span>
-              {%- unless forloop.last -%}<i class="bfp__mq-dot"></i>{%- endunless -%}
-            {%- endfor -%}
-          </span>
-        </div>
+        <ul class="bfp__pills">
+          {%- assign bfp_phrases = section.settings.sale_label | split: '|' -%}
+          {%- for ph in bfp_phrases -%}
+            <li class="bfp__pill">{{ ph | strip }}</li>
+          {%- endfor -%}
+        </ul>
       {%- endif -%}
       {%- if section.settings.save_label != blank -%}<p class="bfp__save">{{ section.settings.save_label }}</p>{%- endif -%}
 
@@ -268,16 +257,9 @@ body.bfp-locked { overflow: hidden; }
 .bfp__title { margin: 0 0 12px; font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: clamp(30px, 3.5vw, 44px); line-height: 1.1; color: var(--c-forest); text-wrap: balance; }
 .bfp__sub { margin: 0 0 22px; font-size: 17px; font-weight: 600; line-height: 1.5; color: var(--c-forest); max-width: 36ch; }
 
-/* Static ticker strip: frozen marquee, faded at both ends. */
-.bfp__marquee {
-  position: relative; width: 100%; overflow: hidden; box-sizing: border-box;
-  padding: 13px 0; border: 1px solid var(--c-tan); border-radius: 999px; background: var(--c-tan-3);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
-}
-.bfp__marquee-track { display: flex; align-items: center; gap: 18px; width: max-content; position: relative; left: 50%; transform: translateX(-50%); white-space: nowrap; }
-.bfp__mq-item { font-size: 12.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--c-forest); }
-.bfp__mq-dot { flex: 0 0 auto; width: 6px; height: 6px; background: var(--c-tan-2); transform: rotate(45deg); }
+/* Solid green pills with cream text. */
+.bfp__pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.bfp__pill { padding: 12px 22px; border-radius: 999px; background: var(--c-forest); color: var(--c-cream); font-size: 12.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; line-height: 1.2; }
 .bfp__save { margin: 10px 0 0; font-size: 14px; letter-spacing: .04em; color: var(--c-tan-2); }
 
 .bfp__signup { width: 100%; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--c-line); }
@@ -306,8 +288,7 @@ body.bfp-locked { overflow: hidden; }
   .bfp__logo { height: 34px; margin-bottom: 12px; }
   .bfp__row { flex-direction: column; }
   .bfp__btn { width: 100%; }
-  .bfp__mq-item { font-size: 11.5px; letter-spacing: .16em; }
-  .bfp__marquee-track { gap: 14px; }
+  .bfp__pill { padding: 11px 18px; font-size: 12px; letter-spacing: .16em; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bfp__backdrop, .bfp__card { transition: none; }
@@ -368,9 +349,9 @@ body.bfp-locked { overflow: hidden; }
     {
       "type": "text",
       "id": "sale_label",
-      "label": "Highlight strip",
-      "info": "A frozen ticker strip. Separate phrases with | ; they repeat across the strip. Blank = not shown.",
-      "default": "Rituals-only discounts | Subscribe for updates"
+      "label": "Green pill(s)",
+      "info": "Short highlight in a green pill. Add more pills by separating phrases with | . Blank = not shown.",
+      "default": "Rituals-only discounts"
     },
     {
       "type": "text",
