@@ -113,7 +113,6 @@
             {%- endfor -%}
             <div class="cart__actions">
               <a href="{{ routes.all_products_collection_url }}" class="cart__continue">&larr; Continue shopping</a>
-              <button type="submit" name="update" class="btn btn--ghost btn--dark">Update cart</button>
             </div>
           </div>
 
@@ -399,7 +398,35 @@
   });
 
   form.addEventListener('change', function (e) {
-    if (e.target.classList.contains('cart__qty-input')) syncDisabled();
+    var t = e.target;
+    if (t.classList.contains('cart__qty-input')) {
+      /* A typed quantity saves itself now that there is no Update cart button.
+         0 removes the line, so the page is redrawn by the server. */
+      var row = t.closest('[data-line-key]');
+      var qty = Math.max(0, parseInt(t.value, 10) || 0);
+      syncDisabled();
+      if (!row) return;
+      setBusy(true);
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ id: row.getAttribute('data-line-key'), quantity: qty })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          if (!cart || typeof cart.item_count !== 'number') throw new Error('bad cart');
+          if (qty === 0) { window.location.reload(); return; }
+          paint(cart);
+          setBusy(false);
+        })
+        .catch(function () { window.location.reload(); });
+    } else if (t.id === 'cart-note') {
+      fetch('/cart/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ note: t.value })
+      }).catch(function () {});
+    }
   });
 
   syncDisabled();
