@@ -1,15 +1,13 @@
 {%- comment -%}
   Black Friday popup. Rendered once, site-wide, from layout/theme.liquid.
 
-  Shows after the visitor has been on the site for `delay_seconds` (15 by default),
-  counted across pages for the whole visit, not per page. It holds the sale details
-  and an email signup. The signup is Shopify's own `customer` form (creates a
-  customer tagged "newsletter, black-friday", the same mechanism as the other
-  signups) and the shared data-form-copy handler in assets/shop-ux.js also emails
-  a copy to support.
+  Shows after the visitor has been on the site for `delay_seconds`, counted across
+  pages for the whole visit, not per page. It announces the two Black Friday Rituals
+  (15% off each) and links to their product pages. No email signup and no prices:
+  the real discount is set up in Shopify, this is only the announcement.
 
-  Default texts are the wording from the approved Black Friday creative. Prices
-  here are TEXT: the real sale price still has to be set in Shopify.
+  Wording comes from the Black Friday campaign brief. The one phrase that is not in
+  the brief is the small "Our first" line (from "first Black Friday").
   Own bfp- prefix: section CSS is compiled into one global stylesheet.
 {%- endcomment -%}
 {%- liquid
@@ -29,8 +27,8 @@
       assign bfp_img = 'ritual-set-velvet-cashmere.jpg' | asset_url
     endif
   endif
-  assign bfp_explore = section.settings.explore_url | default: routes.all_products_collection_url
-  assign bfp_privacy = shop.privacy_policy.url
+  assign bfp_url_1 = section.settings.essential_url | default: '/products/essential-core'
+  assign bfp_url_2 = section.settings.master_url | default: '/products/master-ritual'
 -%}
 {%- if bfp_show -%}
 <div class="bfp" id="bfp" role="dialog" aria-modal="true" aria-labelledby="bfp-title" hidden
@@ -43,49 +41,28 @@
 
     <div class="bfp__media">
       <img class="bfp__img" data-src="{{ bfp_img }}" alt="" width="900" height="900" decoding="async">
+      {%- if section.settings.tagline != blank -%}<p class="bfp__tag">{{ section.settings.tagline | newline_to_br }}</p>{%- endif -%}
     </div>
 
     <div class="bfp__body">
-      <img class="bfp__logo" src="{{ 'footer-monogram.png' | asset_url }}" alt="" width="40" height="42" loading="lazy">
+      {%- if section.settings.eyebrow != blank -%}<p class="bfp__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
       <h2 class="bfp__title" id="bfp-title">{{ section.settings.headline }}</h2>
-      <p class="bfp__sub">{{ section.settings.sub }}</p>
 
-      {%- comment -%}
-        Pills in the theme's dark green. The setting holds one or more phrases separated
-        by "|"; each becomes its own pill.
-      {%- endcomment -%}
-      {%- if section.settings.sale_label != blank -%}
-        <ul class="bfp__pills">
-          {%- assign bfp_phrases = section.settings.sale_label | split: '|' -%}
-          {%- for ph in bfp_phrases -%}
-            <li class="bfp__pill">{{ ph | strip }}</li>
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
-      {%- if section.settings.save_label != blank -%}<p class="bfp__save">{{ section.settings.save_label }}</p>{%- endif -%}
-
-      <div class="bfp__signup">
-        {%- form 'customer', id: 'bfp-form', class: 'bfp__form', data-form-copy: 'Black Friday sale updates' -%}
-          {%- if form.posted_successfully? -%}<span data-bfp-posted hidden></span>{%- endif -%}
-          {%- if form.errors -%}<span data-bfp-error hidden></span>{%- endif -%}
-          <input type="hidden" name="contact[tags]" value="newsletter, black-friday, founders-circle">
-          {%- if section.settings.lead != blank -%}<p class="bfp__lead">{{ section.settings.lead }}</p>{%- endif -%}
-          <div class="bfp__row">
-            <label class="visually-hidden" for="bfp-email">Email address</label>
-            <input class="bfp__input" id="bfp-email" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | escape }}" required maxlength="100" autocomplete="email">
-            <button type="submit" class="bfp__btn">{{ section.settings.button_label }}</button>
-          </div>
-          <p class="bfp__msg bfp__msg--error" data-bfp-msg hidden role="alert"></p>
-          {%- if section.settings.consent_text != blank -%}
-            <p class="bfp__consent">{{ section.settings.consent_text }}{%- if bfp_privacy != blank %} <a href="{{ bfp_privacy }}">Privacy Policy</a>.{%- endif -%}</p>
-          {%- endif -%}
-        {%- endform -%}
-        <p class="bfp__thanks" data-bfp-thanks hidden>{{ section.settings.success_message }}</p>
+      <div class="bfp__tile bfp__tile--main">
+        <p class="bfp__pct"><span class="bfp__pct-n">{{ section.settings.discount }}</span><small>{{ section.settings.off_label }}</small></p>
+        <p class="bfp__name">{{ section.settings.essential_name }}</p>
+        <p class="bfp__line">{{ section.settings.essential_line }}</p>
+        {%- if section.settings.essential_contains != blank -%}<p class="bfp__incl">{{ section.settings.essential_contains }}</p>{%- endif -%}
+        <a class="bfp__cta" href="{{ bfp_url_1 }}">{{ section.settings.essential_button }}</a>
       </div>
 
-      {%- if section.settings.explore_label != blank -%}
-        <a class="bfp__explore" href="{{ bfp_explore }}">{{ section.settings.explore_label }} <span aria-hidden="true">&rarr;</span></a>
-      {%- endif -%}
+      <div class="bfp__tile bfp__tile--alt">
+        <p class="bfp__pct"><span class="bfp__pct-n">{{ section.settings.discount }}</span><small>{{ section.settings.off_label }}</small></p>
+        <p class="bfp__name">{{ section.settings.master_name }}</p>
+        <p class="bfp__line">{{ section.settings.master_line }}</p>
+        {%- if section.settings.master_contains != blank -%}<p class="bfp__incl">{{ section.settings.master_contains }}</p>{%- endif -%}
+        <a class="bfp__link" href="{{ bfp_url_2 }}">{{ section.settings.master_button }} <span aria-hidden="true">&rarr;</span></a>
+      </div>
     </div>
   </div>
 </div>
@@ -95,30 +72,23 @@
   var root = document.getElementById('bfp');
   if (!root) return;
 
-  var K_START = 'bfp_start', K_DISMISS = 'bfp_dismissed', K_SUB = 'bfp_subscribed';
+  var K_START = 'bfp_start', K_DISMISS = 'bfp_dismissed';
   function sget(s, k) { try { return window[s].getItem(k); } catch (e) { return null; } }
   function sset(s, k, v) { try { window[s].setItem(k, v); } catch (e) {} }
 
-  var delay = (parseInt(root.getAttribute('data-delay'), 10) || 15) * 1000;
+  var delay = (parseInt(root.getAttribute('data-delay'), 10) || 3) * 1000;
   var snooze = (parseInt(root.getAttribute('data-snooze'), 10) || 3) * 864e5;
   var card = root.querySelector('.bfp__card');
-  var form = root.querySelector('#bfp-form');
-  var msg = root.querySelector('[data-bfp-msg]');
-  var thanks = root.querySelector('[data-bfp-thanks]');
   var img = root.querySelector('.bfp__img');
   var lastFocus = null;
   var shown = false;
 
   var force = /[?&]bf_popup=1/.test(location.search) || (window.Shopify && window.Shopify.designMode);
-  var postedBack = !!root.querySelector('[data-bfp-posted]');
-  var path = location.pathname;
-  var skipPage = /^\/(cart|checkout|account|challenge)/.test(path);
+  var skipPage = /^\/(cart|checkout|account|challenge)/.test(location.pathname);
 
-  if (postedBack) sset('localStorage', K_SUB, '1');
-
-  // Never again once subscribed; stay quiet for a few days after a dismissal.
-  if (!force && !postedBack) {
-    if (skipPage || sget('localStorage', K_SUB)) return;
+  // Stay quiet for a few days after a dismissal; never on cart / checkout / account pages.
+  if (!force) {
+    if (skipPage) return;
     var d = parseInt(sget('localStorage', K_DISMISS), 10);
     if (d && Date.now() - d < snooze) return;
   }
@@ -128,7 +98,7 @@
   }
 
   function focusables() {
-    return card.querySelectorAll('a[href], button:not([disabled]), input:not([type=hidden]):not([disabled])');
+    return card.querySelectorAll('a[href], button:not([disabled])');
   }
 
   function onKey(e) {
@@ -152,7 +122,6 @@
       requestAnimationFrame(function () { root.classList.add('is-open'); card.focus(); });
     });
     document.addEventListener('keydown', onKey);
-    if (postedBack) showThanks();
   }
 
   function close() {
@@ -166,45 +135,14 @@
     if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
   }
 
-  function showThanks() {
-    form.hidden = true;
-    thanks.hidden = false;
-    sset('localStorage', K_SUB, '1');
-  }
-
   root.addEventListener('click', function (e) {
     if (e.target.closest('[data-bfp-close]')) close();
-  });
-
-  // Submit without leaving the page. Falls back to a normal submit if the request fails.
-  form.addEventListener('submit', function (e) {
-    var email = (form.elements['contact[email]'].value || '').trim();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      e.preventDefault();
-      e.stopPropagation(); // do not let the site-wide form-copy handler email an invalid entry
-      msg.textContent = 'Please enter a valid email address.';
-      msg.hidden = false;
-      return;
-    }
-    e.preventDefault();
-    msg.hidden = true;
-    var btn = form.querySelector('.bfp__btn');
-    btn.disabled = true;
-    fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new FormData(form), credentials: 'same-origin' })
-      .then(function (res) { return res.text().then(function (t) { return { ok: res.ok, text: t }; }); })
-      .then(function (r) {
-        if (r.ok && r.text.indexOf('data-bfp-error') === -1) { showThanks(); }
-        else if (r.ok) { msg.textContent = 'Please check the email address and try again.'; msg.hidden = false; btn.disabled = false; }
-        else { throw new Error('bad status'); }
-      })
-      .catch(function () { form.submit(); });
   });
 
   // Timing: counted from the first page of the visit, so moving between pages does not restart it.
   var start = parseInt(sget('sessionStorage', K_START), 10);
   if (!start) { start = Date.now(); sset('sessionStorage', K_START, String(start)); }
   var wait = force ? 0 : Math.max(0, delay - (Date.now() - start));
-  if (postedBack) wait = 0;
 
   if (wait > 4000) setTimeout(loadImage, wait - 4000); // have the photo ready when it opens
   else loadImage();
@@ -231,67 +169,83 @@ body.bfp-locked { overflow: hidden; }
 .bfp.is-open .bfp__backdrop { opacity: 1; }
 
 .bfp__card {
-  position: relative; width: min(920px, 100%); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
-  overflow: auto; display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  position: relative; width: min(980px, 100%); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+  overflow: auto; display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
   background: var(--c-cream); color: var(--c-forest); font-family: var(--ff-body);
-  border-radius: 22px; box-shadow: 0 44px 90px -30px rgba(0, 0, 0, .6);
+  border-radius: 24px; box-shadow: 0 44px 90px -30px rgba(0, 0, 0, .65);
   opacity: 0; transform: translateY(20px) scale(.985);
   transition: opacity .45s var(--ease-out), transform .45s var(--ease-out);
   outline: none;
 }
 .bfp.is-open .bfp__card { opacity: 1; transform: none; }
+.bfp__card p { margin: 0; }
 
 .bfp__close {
-  position: absolute; top: 12px; right: 12px; z-index: 2; width: 38px; height: 38px;
+  position: absolute; top: 14px; right: 14px; z-index: 3; width: 36px; height: 36px;
   display: grid; place-items: center; border-radius: 50%; cursor: pointer;
-  background: rgba(245, 237, 217, .92); color: var(--c-forest); border: 1px solid var(--c-line);
+  background: rgba(245, 237, 217, .95); color: var(--c-forest); border: 1px solid var(--c-line);
   transition: background .25s var(--ease-out);
 }
 .bfp__close:hover { background: var(--c-paper); }
 
 .bfp__media { position: relative; background: var(--c-cream-2); min-height: 100%; }
 .bfp__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.bfp__media::after { content: ""; position: absolute; inset: auto 0 0 0; height: 42%; background: linear-gradient(0deg, rgba(15, 42, 32, .82), transparent); pointer-events: none; }
+.bfp__tag { position: absolute; z-index: 2; left: 22px; right: 22px; bottom: 22px; color: var(--c-cream); font-family: var(--ff-display); font-style: italic; font-size: 24px; line-height: 1.15; }
 
-.bfp__body { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(26px, 3.4vw, 44px); gap: 0; min-width: 0; }
-.bfp__logo { height: 42px; width: auto; margin: 0 0 18px; }
-.bfp__title { margin: 0 0 12px; font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: clamp(30px, 3.5vw, 44px); line-height: 1.1; color: var(--c-forest); text-wrap: balance; }
-.bfp__sub { margin: 0 0 22px; font-size: 17px; font-weight: 600; line-height: 1.5; color: var(--c-forest); max-width: 36ch; }
+.bfp__body { display: flex; flex-direction: column; gap: 14px; padding: 30px 34px; min-width: 0; justify-content: center; }
+.bfp__eyebrow { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; }
+.bfp__eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--c-line); margin-right: 48px; }
+.bfp__title { margin: -4px 0 4px; font-family: var(--ff-display); font-style: italic; font-weight: 600; font-size: clamp(52px, 6vw, 76px); line-height: .92; letter-spacing: -.01em; color: var(--c-forest); }
 
-/* Solid green pills with cream text. */
-.bfp__pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.bfp__pill { padding: 12px 26px 13px; border-radius: 999px; background: var(--c-forest); color: var(--c-cream); font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: 22px; letter-spacing: .01em; line-height: 1.15; }
-.bfp__save { margin: 10px 0 0; font-size: 14px; letter-spacing: .04em; color: var(--c-tan-2); }
+.bfp__tile { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 26px; align-items: center; border-radius: 18px; }
+.bfp__tile--main {
+  padding: 26px 28px; color: var(--c-cream);
+  background: radial-gradient(120% 140% at 0% 0%, var(--c-forest-2) 0%, var(--c-forest) 55%, #0f2a20 100%);
+  box-shadow: 0 18px 40px -22px rgba(15, 42, 32, .9);
+  outline: 1px solid var(--c-tan); outline-offset: -7px;
+}
+.bfp__tile--alt { padding: 18px 24px; background: var(--c-cream-2); border: 1px solid var(--c-line); }
 
-.bfp__signup { width: 100%; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--c-line); }
-.bfp__lead { margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--c-forest); }
-.bfp__row { display: flex; gap: 8px; }
-.bfp__input { flex: 1 1 auto; min-width: 0; padding: 14px 18px; border: 1px solid var(--c-line); border-radius: 999px; background: var(--c-paper); color: var(--c-forest); font: inherit; font-size: 15px; }
-.bfp__input::placeholder { color: var(--c-ink-mute); }
-.bfp__input:focus-visible { outline: 2px solid var(--c-forest); outline-offset: 2px; }
-.bfp__btn { flex: 0 0 auto; padding: 14px 26px; border: 0; border-radius: 999px; cursor: pointer; background: var(--c-forest); color: var(--c-cream); font: inherit; font-size: 12.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; transition: background .25s var(--ease-out); }
-.bfp__btn:hover { background: var(--c-forest-2); }
-.bfp__btn:focus-visible { outline: 2px solid var(--c-tan-2); outline-offset: 3px; }
-.bfp__btn:disabled { opacity: .6; cursor: default; }
-.bfp__msg { margin: 8px 0 0; font-size: 13px; color: #9a3b1f; }
-.bfp__consent { margin: 10px 0 0; font-size: 11.5px; line-height: 1.5; color: var(--c-ink-mute); }
-.bfp__consent a { color: var(--c-ink-soft); text-decoration: underline; }
-.bfp__thanks { margin: 0; font-family: var(--ff-display); font-style: italic; font-size: 24px; line-height: 1.3; color: var(--c-forest); }
+.bfp__pct { grid-row: 1 / 5; text-align: center; font-family: var(--ff-display); font-style: italic; font-weight: 700; line-height: .8; }
+.bfp__pct small { display: block; font-family: var(--ff-body); font-style: normal; font-size: 14px; font-weight: 600; letter-spacing: .42em; padding-left: .42em; }
+.bfp__tile--main .bfp__pct-n { font-size: 116px; color: var(--c-tan); }
+.bfp__tile--main .bfp__pct small { margin-top: 30px; color: var(--c-tan); }
+.bfp__tile--alt .bfp__pct-n { font-size: 64px; color: var(--c-forest); }
+.bfp__tile--alt .bfp__pct small { margin-top: 22px; color: var(--c-forest); }
 
-.bfp__explore { margin-top: 18px; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-ink-soft); border-bottom: 1px solid var(--c-line); padding-bottom: 3px; }
-.bfp__explore:hover { color: var(--c-forest); border-color: var(--c-forest); }
+.bfp__name { font-size: 12px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; opacity: .9; }
+.bfp__line { font-family: var(--ff-display); font-style: italic; font-weight: 500; font-size: 32px; line-height: 1.05; }
+.bfp__tile--alt .bfp__line { font-size: 24px; }
+.bfp__incl { font-size: 13px; line-height: 1.45; opacity: .82; }
+
+.bfp__cta { justify-self: start; margin-top: 10px; padding: 15px 28px; border-radius: 999px; background: var(--c-cream); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; transition: background .25s var(--ease-out), transform .25s var(--ease-out); }
+.bfp__cta:hover { background: var(--c-paper); transform: translateY(-1px); }
+.bfp__cta:focus-visible, .bfp__link:focus-visible { outline: 2px solid var(--c-tan); outline-offset: 3px; }
+.bfp__link { justify-self: start; margin-top: 8px; padding-bottom: 3px; border-bottom: 1.5px solid var(--c-forest); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
+.bfp__link:hover { opacity: .75; }
 
 @media (max-width: 760px) {
   .bfp { padding: 12px; align-items: end; }
   .bfp__card { grid-template-columns: minmax(0, 1fr); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); border-radius: 20px; }
-  .bfp__media { min-height: 0; aspect-ratio: 16 / 9; }
-  .bfp__body { padding: 22px 20px 24px; justify-content: flex-start; }
-  .bfp__logo { height: 34px; margin-bottom: 12px; }
-  .bfp__row { flex-direction: column; }
-  .bfp__btn { width: 100%; }
-  .bfp__pill { padding: 10px 20px 11px; font-size: 20px; }
+  .bfp__media { min-height: 0; aspect-ratio: 16 / 7; }
+  .bfp__tag { left: 18px; bottom: 14px; font-size: 20px; }
+  .bfp__body { padding: 20px 18px 22px; gap: 12px; justify-content: flex-start; }
+  .bfp__eyebrow::after { margin-right: 0; }
+  .bfp__title { font-size: 52px; }
+  .bfp__tile { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .bfp__tile--main { padding: 20px 20px 22px; }
+  .bfp__tile--alt { padding: 16px 20px; }
+  .bfp__pct { grid-row: auto; display: flex; align-items: baseline; justify-content: flex-start; gap: 12px; text-align: left; margin-bottom: 4px; }
+  .bfp__pct small { margin-top: 0 !important; padding-left: 0; }
+  .bfp__tile--main .bfp__pct-n { font-size: 84px; }
+  .bfp__tile--alt .bfp__pct-n { font-size: 54px; }
+  .bfp__line { font-size: 28px; }
+  .bfp__tile--alt .bfp__line { font-size: 22px; }
+  .bfp__cta { justify-self: stretch; text-align: center; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bfp__backdrop, .bfp__card { transition: none; }
+  .bfp__backdrop, .bfp__card, .bfp__cta { transition: none; }
 }
 {% endstylesheet %}
 
@@ -331,90 +285,114 @@ body.bfp-locked { overflow: hidden; }
       "default": "2026-12-01"
     },
     {
-      "type": "header",
-      "content": "Offer"
-    },
-    {
-      "type": "text",
-      "id": "headline",
-      "label": "Headline",
-      "default": "Black Friday is almost here."
-    },
-    {
-      "type": "textarea",
-      "id": "sub",
-      "label": "Supporting text",
-      "default": "Subscribe for emails, promotions and updates on the upcoming sale."
-    },
-    {
-      "type": "text",
-      "id": "sale_label",
-      "label": "Green pill(s)",
-      "info": "Short highlight in a green pill. Add more pills by separating phrases with | . Blank = not shown.",
-      "default": "Exclusively for Ritual sets"
-    },
-    {
-      "type": "text",
-      "id": "save_label",
-      "label": "Savings line",
-      "info": "Optional. Blank = not shown."
-    },
-    {
       "type": "image_picker",
       "id": "image",
       "label": "Photo",
       "info": "Optional. Shows the Velvet + Cashmere lineup photo when empty."
     },
     {
-      "type": "header",
-      "content": "Subscribe"
-    },
-    {
-      "type": "text",
-      "id": "lead",
-      "label": "Line above the email box",
-      "default": "Enter your email to subscribe."
-    },
-    {
-      "type": "text",
-      "id": "placeholder",
-      "label": "Email placeholder",
-      "default": "Your email address"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button label",
-      "default": "Subscribe"
-    },
-    {
-      "type": "text",
-      "id": "success_message",
-      "label": "Success message",
-      "default": "Thank you — you're on the list."
-    },
-    {
       "type": "textarea",
-      "id": "consent_text",
-      "label": "Consent / privacy line",
-      "info": "The Privacy Policy link is added automatically when one is set in Settings > Policies.",
-      "default": "By subscribing, you agree to receive marketing emails from Chemistrie. Unsubscribe anytime. See our"
+      "id": "tagline",
+      "label": "Tagline on the photo",
+      "default": "Made by Pharmacists.\nMade with Love."
     },
     {
       "type": "header",
-      "content": "Link"
+      "content": "Top"
     },
     {
       "type": "text",
-      "id": "explore_label",
-      "label": "Link text",
-      "info": "Optional. Blank = not shown."
+      "id": "eyebrow",
+      "label": "Small line above the headline",
+      "default": "Our first"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Black Friday"
+    },
+    {
+      "type": "text",
+      "id": "discount",
+      "label": "Discount figure",
+      "default": "15%"
+    },
+    {
+      "type": "text",
+      "id": "off_label",
+      "label": "Word under the figure",
+      "default": "OFF"
+    },
+    {
+      "type": "header",
+      "content": "Main offer (green block)"
+    },
+    {
+      "type": "text",
+      "id": "essential_name",
+      "label": "Name",
+      "default": "The Essential Ritual"
+    },
+    {
+      "type": "text",
+      "id": "essential_line",
+      "label": "Headline",
+      "default": "Your Ritual Begins Here."
+    },
+    {
+      "type": "text",
+      "id": "essential_contains",
+      "label": "What it contains",
+      "info": "Product names only, no sizes. Blank = not shown.",
+      "default": "Velvet · Cashmere"
+    },
+    {
+      "type": "text",
+      "id": "essential_button",
+      "label": "Button text",
+      "default": "Discover the Essential Ritual"
     },
     {
       "type": "url",
-      "id": "explore_url",
-      "label": "Link destination",
-      "info": "Leave blank to use the all-products collection."
+      "id": "essential_url",
+      "label": "Button link",
+      "info": "Blank = the Essential Core product page."
+    },
+    {
+      "type": "header",
+      "content": "Premium offer (sand block)"
+    },
+    {
+      "type": "text",
+      "id": "master_name",
+      "label": "Name",
+      "default": "The Master Ritual"
+    },
+    {
+      "type": "text",
+      "id": "master_line",
+      "label": "Headline",
+      "default": "The Complete Chemistrie Experience."
+    },
+    {
+      "type": "text",
+      "id": "master_contains",
+      "label": "What it contains",
+      "info": "Product names only, no sizes. Blank = not shown.",
+      "default": "Velvet · Cashmere · Aura · Silken · Veil"
+    },
+    {
+      "type": "text",
+      "id": "master_button",
+      "label": "Link text",
+      "default": "Explore the Master Ritual"
+    },
+    {
+      "type": "url",
+      "id": "master_url",
+      "label": "Link",
+      "info": "Blank = the Master Ritual product page."
     }
   ],
   "presets": [
