@@ -63,6 +63,7 @@
         {%- if section.settings.master_contains != blank -%}<p class="bfp__incl">{{ section.settings.master_contains }}</p>{%- endif -%}
         <a class="bfp__link" href="{{ bfp_url_2 }}">{{ section.settings.master_button }} <span aria-hidden="true">&rarr;</span></a>
       </div>
+      {%- if section.settings.tagline != blank -%}<p class="bfp__foot">{{ section.settings.tagline | newline_to_br }}</p>{%- endif -%}
     </div>
   </div>
 </div>
@@ -224,19 +225,21 @@ body.bfp-locked { overflow: hidden; }
 .bfp__cta:focus-visible, .bfp__link:focus-visible { outline: 2px solid var(--c-tan); outline-offset: 3px; }
 .bfp__link { justify-self: start; margin-top: 8px; padding-bottom: 3px; border-bottom: 1.5px solid var(--c-forest); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
 .bfp__link:hover { opacity: .75; }
+.bfp__foot { display: none; }
 
 @media (max-width: 760px) {
   .bfp { padding: 12px; align-items: end; }
   .bfp__card { grid-template-columns: minmax(0, 1fr); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); border-radius: 20px; }
   .bfp__media { min-height: 0; aspect-ratio: 16 / 7; }
-  .bfp__tag { left: 18px; bottom: 14px; font-size: 20px; }
+  .bfp__tag, .bfp__media::after { display: none; }
+  .bfp__foot { display: block; text-align: center; font-family: var(--ff-display); font-style: italic; font-size: 19px; line-height: 1.25; opacity: .85; margin-top: 2px; }
   .bfp__body { padding: 20px 18px 22px; gap: 12px; justify-content: flex-start; }
   .bfp__eyebrow::after { margin-right: 0; }
   .bfp__title { font-size: 52px; }
   .bfp__tile { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .bfp__tile--main { padding: 20px 20px 22px; }
   .bfp__tile--alt { padding: 16px 20px; }
-  .bfp__pct { grid-row: auto; display: flex; align-items: baseline; justify-content: flex-start; gap: 12px; text-align: left; margin-bottom: 4px; }
+  .bfp__pct { grid-row: auto; display: flex; align-items: baseline; justify-content: flex-start; gap: 12px; text-align: left; line-height: 1; margin-bottom: 14px; }
   .bfp__pct small { margin-top: 0 !important; padding-left: 0; }
   .bfp__tile--main .bfp__pct-n { font-size: 84px; }
   .bfp__tile--alt .bfp__pct-n { font-size: 54px; }
