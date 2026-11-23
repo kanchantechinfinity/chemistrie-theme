@@ -1,8 +1,8 @@
 {%- comment -%}
   Black Friday popup. Rendered once, site-wide, from layout/theme.liquid.
 
-  Shows after the visitor has been on the site for `delay_seconds`, counted across
-  pages for the whole visit, not per page. It announces the two Black Friday Rituals
+  Shows ONCE per browser (the first visit): after the visitor has been on the site for
+  `delay_seconds`, counted across pages for the visit, and never again once it has opened. It announces the two Black Friday Rituals
   (15% off each) and links to their product pages. No email signup and no prices:
   the real discount is set up in Shopify, this is only the announcement.
 
@@ -32,7 +32,7 @@
 -%}
 {%- if bfp_show -%}
 <div class="bfp" id="bfp" role="dialog" aria-modal="true" aria-labelledby="bfp-title" hidden
-     data-delay="{{ section.settings.delay_seconds }}" data-snooze="{{ section.settings.snooze_days }}" {{ section.shopify_attributes }}>
+     data-delay="{{ section.settings.delay_seconds }}" {{ section.shopify_attributes }}>
   <div class="bfp__backdrop" data-bfp-close></div>
   <div class="bfp__card" tabindex="-1">
     <button type="button" class="bfp__close" data-bfp-close aria-label="Close">
@@ -73,12 +73,11 @@
   var root = document.getElementById('bfp');
   if (!root) return;
 
-  var K_START = 'bfp_start', K_DISMISS = 'bfp_dismissed';
+  var K_START = 'bfp_start', K_DISMISS = 'bfp_dismissed', K_SEEN = 'bfp_seen';
   function sget(s, k) { try { return window[s].getItem(k); } catch (e) { return null; } }
   function sset(s, k, v) { try { window[s].setItem(k, v); } catch (e) {} }
 
   var delay = (parseInt(root.getAttribute('data-delay'), 10) || 3) * 1000;
-  var snooze = (parseInt(root.getAttribute('data-snooze'), 10) || 3) * 864e5;
   var card = root.querySelector('.bfp__card');
   var img = root.querySelector('.bfp__img');
   var lastFocus = null;
@@ -87,11 +86,11 @@
   var force = /[?&]bf_popup=1/.test(location.search) || (window.Shopify && window.Shopify.designMode);
   var skipPage = /^\/(cart|checkout|account|challenge)/.test(location.pathname);
 
-  // Stay quiet for a few days after a dismissal; never on cart / checkout / account pages.
+  // One time only: once it has been shown (or was dismissed before this rule existed)
+  // it never opens again in this browser. Never on cart / checkout / account pages.
   if (!force) {
     if (skipPage) return;
-    var d = parseInt(sget('localStorage', K_DISMISS), 10);
-    if (d && Date.now() - d < snooze) return;
+    if (sget('localStorage', K_SEEN) || sget('localStorage', K_DISMISS)) return;
   }
 
   function loadImage() {
@@ -115,6 +114,7 @@
   function open() {
     if (shown) return;
     shown = true;
+    sset('localStorage', K_SEEN, '1'); // counted as seen the moment it opens, so a page change cannot bring it back
     loadImage();
     lastFocus = document.activeElement;
     root.hidden = false;
@@ -268,15 +268,6 @@ body.bfp-locked { overflow: hidden; }
       "label": "Show after (seconds on the site)",
       "min": 1,
       "max": 60,
-      "step": 1,
-      "default": 3
-    },
-    {
-      "type": "range",
-      "id": "snooze_days",
-      "label": "After it is closed, stay hidden for (days)",
-      "min": 1,
-      "max": 30,
       "step": 1,
       "default": 3
     },
