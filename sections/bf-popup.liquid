@@ -3,7 +3,7 @@
 
   Shows ONCE per browser (the first visit): after the visitor has been on the site for
   `delay_seconds`, counted across pages for the visit, and never again once it has opened. It announces the two Black Friday Rituals
-  (15% off each) and links to their product pages. No email signup and no prices:
+  (15% off each); each button adds that bundle to the cart and goes straight to /cart (shop-ux.js [data-buy-now]). No email signup and no prices:
   the real discount is set up in Shopify, this is only the announcement.
 
   Wording comes from the Black Friday campaign brief. The one phrase that is not in
@@ -27,8 +27,10 @@
       assign bfp_img = 'ritual-set-velvet-cashmere.jpg' | asset_url
     endif
   endif
-  assign bfp_url_1 = section.settings.essential_url | default: '/products/essential-core'
-  assign bfp_url_2 = section.settings.master_url | default: '/products/master-ritual'
+  assign bfp_p1 = section.settings.essential_product | default: all_products['essential-core']
+  assign bfp_p2 = section.settings.master_product | default: all_products['master-ritual']
+  assign bfp_v1 = bfp_p1.selected_or_first_available_variant
+  assign bfp_v2 = bfp_p2.selected_or_first_available_variant
 -%}
 {%- if bfp_show -%}
 <div class="bfp" id="bfp" role="dialog" aria-modal="true" aria-labelledby="bfp-title" hidden
@@ -53,7 +55,11 @@
         <p class="bfp__name">{{ section.settings.essential_name }}</p>
         <p class="bfp__line">{{ section.settings.essential_line }}</p>
         {%- if section.settings.essential_contains != blank -%}<p class="bfp__incl">{{ section.settings.essential_contains }}</p>{%- endif -%}
-        <a class="bfp__cta" href="{{ bfp_url_1 }}">{{ section.settings.essential_button }}</a>
+        {%- if bfp_v1 != blank and bfp_v1.available -%}
+          <button type="button" class="bfp__cta" data-buy-now data-variant-id="{{ bfp_v1.id }}">{{ section.settings.essential_button }}</button>
+        {%- else -%}
+          <a class="bfp__cta" href="/pages/curated-sets">{{ section.settings.essential_button }}</a>
+        {%- endif -%}
       </div>
 
       <div class="bfp__tile bfp__tile--alt">
@@ -61,7 +67,11 @@
         <p class="bfp__name">{{ section.settings.master_name }}</p>
         <p class="bfp__line">{{ section.settings.master_line }}</p>
         {%- if section.settings.master_contains != blank -%}<p class="bfp__incl">{{ section.settings.master_contains }}</p>{%- endif -%}
-        <a class="bfp__link" href="{{ bfp_url_2 }}">{{ section.settings.master_button }} <span aria-hidden="true">&rarr;</span></a>
+        {%- if bfp_v2 != blank and bfp_v2.available -%}
+          <button type="button" class="bfp__link" data-buy-now data-variant-id="{{ bfp_v2.id }}">{{ section.settings.master_button }} &rarr;</button>
+        {%- else -%}
+          <a class="bfp__link" href="/pages/curated-sets">{{ section.settings.master_button }} <span aria-hidden="true">&rarr;</span></a>
+        {%- endif -%}
       </div>
       {%- if section.settings.tagline != blank -%}<p class="bfp__foot">{{ section.settings.tagline | newline_to_br }}</p>{%- endif -%}
     </div>
@@ -220,10 +230,10 @@ body.bfp-locked { overflow: hidden; }
 .bfp__tile--alt .bfp__line { font-size: 24px; }
 .bfp__incl { font-size: 13px; line-height: 1.45; opacity: .82; }
 
-.bfp__cta { justify-self: start; margin-top: 10px; padding: 15px 28px; border-radius: 999px; background: var(--c-cream); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; transition: background .25s var(--ease-out), transform .25s var(--ease-out); }
+.bfp__cta { border: 0; cursor: pointer; font-family: inherit; justify-self: start; margin-top: 10px; padding: 15px 28px; border-radius: 999px; background: var(--c-cream); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; transition: background .25s var(--ease-out), transform .25s var(--ease-out); }
 .bfp__cta:hover { background: var(--c-paper); transform: translateY(-1px); }
 .bfp__cta:focus-visible, .bfp__link:focus-visible { outline: 2px solid var(--c-tan); outline-offset: 3px; }
-.bfp__link { justify-self: start; margin-top: 8px; padding-bottom: 3px; border-bottom: 1.5px solid var(--c-forest); color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
+.bfp__link { justify-self: start; margin-top: 8px; padding: 0 0 3px; background: none; border: 0; border-bottom: 1.5px solid var(--c-forest); cursor: pointer; font-family: inherit; text-align: left; color: var(--c-forest); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
 .bfp__link:hover { opacity: .75; }
 .bfp__foot { display: none; }
 
@@ -348,10 +358,10 @@ body.bfp-locked { overflow: hidden; }
       "default": "Discover the Essential Ritual"
     },
     {
-      "type": "url",
-      "id": "essential_url",
-      "label": "Button link",
-      "info": "Blank = the Essential Core product page."
+      "type": "product",
+      "id": "essential_product",
+      "label": "Bundle added to the bag",
+      "info": "The button adds this bundle and opens the bag. Blank = Essential Core."
     },
     {
       "type": "header",
@@ -383,10 +393,10 @@ body.bfp-locked { overflow: hidden; }
       "default": "Explore the Master Ritual"
     },
     {
-      "type": "url",
-      "id": "master_url",
-      "label": "Link",
-      "info": "Blank = the Master Ritual product page."
+      "type": "product",
+      "id": "master_product",
+      "label": "Bundle added to the bag",
+      "info": "The link adds this bundle and opens the bag. Blank = Master Ritual."
     }
   ],
   "presets": [
