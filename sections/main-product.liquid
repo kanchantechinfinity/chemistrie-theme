@@ -176,6 +176,21 @@
     </ol>{%- endcapture -%}
 {%- endcase -%}
 
+{%- comment -%}
+  Ritual bundles are sold from the Curated Sets page, so their own product pages are
+  not meant to be visited: anyone landing on one is sent to Curated Sets. Cart, checkout
+  and add-to-cart by variant are unaffected. Not applied inside the theme editor.
+{%- endcomment -%}
+{%- assign bundle_list = section.settings.bundle_handles | remove: ' ' | split: ',' -%}
+{%- if bundle_list contains product.handle -%}
+<script>
+  if (!(window.Shopify && window.Shopify.designMode)) {
+    document.documentElement.style.visibility = 'hidden';
+    setTimeout(function () { document.documentElement.style.visibility = ''; }, 4000);
+    window.location.replace('/pages/curated-sets');
+  }
+</script>
+{%- endif -%}
 <section class="page-section mprod">
   <div class="page-section__inner">
     <div class="mprod__layout">
@@ -1232,6 +1247,8 @@
 {
   "name": "Product Main",
   "settings": [
+    { "type": "header", "content": "Ritual bundles" },
+    { "type": "text", "id": "bundle_handles", "label": "Bundle pages that redirect to Curated Sets", "info": "Product handles, comma separated. Visiting these product pages sends the shopper to the Curated Sets page.", "default": "essential-core,essential-complete,hydration-essential,refining-essential,refining-balanced,renewal-essential,master-ritual" },
     { "type": "header", "content": "Review badge" },
     { "type": "paragraph", "content": "Shown beside the eyebrow on every product, linking down to the reviews section. A per-product rating from a reviews app is used instead whenever one exists. Clear the rating to hide the badge." },
     { "type": "text", "id": "fallback_rating", "label": "Rating", "default": "4.96" },
