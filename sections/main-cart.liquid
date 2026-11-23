@@ -25,6 +25,20 @@
         </div>
       {%- endif -%}
 
+      {%- comment -%}
+        Bundles carry a compare-at price in Shopify (the regular price). Where it is
+        higher than what is charged, the cart shows the regular price struck through,
+        the new price and the saving. save_total / orig_total are in cents.
+      {%- endcomment -%}
+      {%- assign save_total = 0 -%}
+      {%- for item in cart.items -%}
+        {%- assign cmp = item.variant.compare_at_price | default: 0 -%}
+        {%- if cmp > item.original_price -%}
+          {%- assign line_save = cmp | minus: item.original_price | times: item.quantity -%}
+          {%- assign save_total = save_total | plus: line_save -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign orig_total = cart.original_total_price | plus: save_total -%}
       <form action="{{ routes.cart_url }}" method="post" class="cart__form" novalidate>
         <div class="cart__grid">
           <div class="cart__items">
@@ -34,7 +48,10 @@
               <span class="cart__thead-price">Total</span>
             </div>
             {%- for item in cart.items -%}
-              <div class="cart__item" data-line-key="{{ item.key }}">
+              {%- assign cmp = item.variant.compare_at_price | default: 0 -%}
+              {%- assign on_offer = false -%}
+              {%- if cmp > item.original_price -%}{%- assign on_offer = true -%}{%- endif -%}
+              <div class="cart__item" data-line-key="{{ item.key }}" data-compare="{{ cmp }}">
                 <a class="cart__media" href="{{ item.url }}">
                   {%- comment -%}
                     Same approved theme asset the product card and product page
@@ -58,7 +75,7 @@
                   {%- unless item.variant.title contains 'Default' -%}
                     <span class="cart__variant">{{ item.variant.title }}</span>
                   {%- endunless -%}
-                  <span class="cart__unit">{{ item.original_price | money }} each</span>
+                  <span class="cart__unit">{%- if on_offer -%}<s class="cart__unit-was">{{ cmp | money }}</s> {%- endif -%}{{ item.original_price | money }} each</span>
                   {%- if item.line_level_discount_allocations != empty -%}
                     {%- for alloc in item.line_level_discount_allocations -%}
                       <span class="cart__discount">◆ {{ alloc.discount_application.title }} (−{{ alloc.amount | money }})</span>
@@ -81,10 +98,16 @@
                   </div>
                 </div>
                 <div class="cart__line-price" data-line-price>
-                  {%- if item.original_line_price != item.final_line_price -%}
+                  {%- if on_offer -%}
+                    <s class="cart__line-was">{{ cmp | times: item.quantity | money }}</s>
+                  {%- elsif item.original_line_price != item.final_line_price -%}
                     <s class="cart__line-was">{{ item.original_line_price | money }}</s>
                   {%- endif -%}
                   {{ item.final_line_price | money }}
+                  {%- if on_offer -%}
+                    {%- assign off_pct = cmp | minus: item.original_price | times: 100.0 | divided_by: cmp | round -%}
+                    <span class="cart__save">Save {{ cmp | minus: item.original_price | times: item.quantity | money }} &middot; {{ off_pct }}% off</span>
+                  {%- endif -%}
                 </div>
               </div>
             {%- endfor -%}
@@ -96,6 +119,8 @@
 
           <aside class="cart__summary">
             <h2 class="cart__summary-title">Order summary</h2>
+            <div class="cart__row cart__row--orig" data-orig-row {% if save_total == 0 %}hidden{% endif %}><span>Original price</span><s data-cart-orig>{{ orig_total | money }}</s></div>
+            <div class="cart__row cart__row--save" data-save-row {% if save_total == 0 %}hidden{% endif %}><span>You save <em data-cart-savepct>{% if save_total > 0 %}({{ save_total | times: 100.0 | divided_by: orig_total | round }}% off){% endif %}</em></span><span data-cart-save>&minus;{{ save_total | money }}</span></div>
             <div class="cart__row"><span>Subtotal</span><span data-cart-subtotal>{{ cart.original_total_price | money }}</span></div>
             {%- if cart.cart_level_discount_applications != empty -%}
               {%- for d in cart.cart_level_discount_applications -%}
@@ -192,6 +217,12 @@
 .cart__coupon-hint.is-error { color: #b5502e; }
 .cart__discount { font-size: 12px; color: var(--c-sage); letter-spacing: .02em; }
 .cart__line-was { color: var(--c-ink-mute); text-decoration: line-through; margin-right: 8px; font-size: 13px; }
+.cart__unit-was { color: var(--c-ink-mute); margin-right: 4px; }
+.cart__save { display: block; width: fit-content; margin: 8px 0 0 auto; padding: 4px 11px; border-radius: 999px; background: var(--c-forest); color: var(--c-cream); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.cart__row--orig s { color: var(--c-ink-mute); }
+.cart__row--save { color: var(--c-forest); font-weight: 600; }
+.cart__row--save em { font-style: normal; font-weight: 500; opacity: .8; }
+.cart__row[hidden] { display: none; }
 .cart__row--note { border-bottom: 1px solid var(--c-line-soft); }
 .cart__note-label { display: block; margin: 18px 0 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--c-ink-mute); }
 .cart__note { width: 100%; padding: 12px 14px; border: 1px solid var(--c-line); border-radius: 10px; background: var(--c-paper); font-family: var(--ff-body); font-size: 14px; color: var(--c-forest); resize: vertical; }
@@ -273,11 +304,36 @@
       if (!row) return;
       var cell = row.querySelector('[data-line-price]');
       if (!cell) return;
-      var was = item.original_line_price !== item.final_line_price
-        ? '<s class="cart__line-was">' + money(item.original_line_price) + '</s>'
+      var cmp = parseInt(row.getAttribute('data-compare'), 10) || 0;
+      var offer = cmp > item.original_price;
+      var was = offer
+        ? '<s class="cart__line-was">' + money(cmp * item.quantity) + '</s>'
+        : (item.original_line_price !== item.final_line_price
+          ? '<s class="cart__line-was">' + money(item.original_line_price) + '</s>'
+          : '');
+      var tag = offer
+        ? '<span class="cart__save">Save ' + money((cmp - item.original_price) * item.quantity) + ' &middot; ' + Math.round((cmp - item.original_price) * 100 / cmp) + '% off</span>'
         : '';
-      cell.innerHTML = was + money(item.final_line_price);
+      cell.innerHTML = was + money(item.final_line_price) + tag;
     });
+
+    /* original price / saving rows in the summary */
+    var saved = 0;
+    (cart.items || []).forEach(function (item) {
+      var r = form.querySelector('[data-line-key="' + (window.CSS && CSS.escape ? CSS.escape(item.key) : item.key) + '"]');
+      var c = r ? (parseInt(r.getAttribute('data-compare'), 10) || 0) : 0;
+      if (c > item.original_price) saved += (c - item.original_price) * item.quantity;
+    });
+    var origRow = document.querySelector('[data-orig-row]'), saveRow = document.querySelector('[data-save-row]');
+    if (origRow && saveRow) {
+      var origTotal = cart.original_total_price + saved;
+      origRow.hidden = saveRow.hidden = saved <= 0;
+      if (saved > 0) {
+        origRow.querySelector('[data-cart-orig]').textContent = money(origTotal);
+        saveRow.querySelector('[data-cart-save]').innerHTML = '&minus;' + money(saved);
+        saveRow.querySelector('[data-cart-savepct]').textContent = '(' + Math.round(saved * 100 / origTotal) + '% off)';
+      }
+    }
 
     var sub = document.querySelector('[data-cart-subtotal]');
     if (sub) sub.textContent = money(cart.original_total_price);
