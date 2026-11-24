@@ -19,6 +19,10 @@
   <div class="drawer__foot" id="cartDrawerFoot">
     <p class="drawer__shipping" id="cartDrawerShipping"></p>
     <p class="drawer__discount" id="cartDrawerDiscount" hidden></p>
+    <div class="drawer__savings" id="cartDrawerSavings" hidden>
+      <div class="drawer__savings-row"><span>Original price</span><s id="cartDrawerOrig"></s></div>
+      <div class="drawer__savings-row drawer__savings-row--save"><span id="cartDrawerSaveLabel">You save</span><span id="cartDrawerSaveAmt"></span></div>
+    </div>
     <div class="drawer__subtotal">
       <span>Subtotal</span>
       <span id="cartDrawerSubtotal">$0.00</span>
@@ -43,6 +47,21 @@
     {%- if _asset != blank -%}
     {{ product.handle | json }}: {{ _asset | asset_url | json }},
     {%- endif -%}
+  {%- endfor -%}
+  };
+</script>
+
+{%- comment -%}
+  Regular (compare-at) price in cents by variant id, only where it is higher than the
+  price charged. The bag drawer is drawn in JS from /cart.js, which does not carry
+  compare-at prices, so it looks them up here to show the struck price and the saving.
+{%- endcomment -%}
+<script>
+  window.chemCompare = {
+  {%- for product in collections.all.products limit: 100 -%}
+    {%- for v in product.variants -%}
+      {%- if v.compare_at_price > v.price -%}{{ v.id | json }}: {{ v.compare_at_price }},{%- endif -%}
+    {%- endfor -%}
   {%- endfor -%}
   };
 </script>

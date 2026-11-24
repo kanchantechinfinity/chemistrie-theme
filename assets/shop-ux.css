@@ -81,6 +81,15 @@ body.drawer-locked { overflow: hidden; }
 .drawer-item__step:disabled { opacity: .4; cursor: default; }
 .drawer-item__right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 .drawer-item__price { font-family: var(--ff-body); font-size: 14px; color: var(--c-forest); }
+.drawer-item__was { font-size: 12px; color: var(--c-ink-mute); text-decoration: line-through; margin-bottom: -4px; }
+.drawer-item__save { display: flex; flex-direction: column; align-items: center; padding: 4px 10px; border-radius: 12px; background: var(--c-forest); color: var(--c-cream); line-height: 1.25; text-align: center; }
+.drawer-item__save b { font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.drawer-item__save i { font-style: normal; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--c-tan); }
+.drawer__savings { display: grid; gap: 4px; margin: 0 0 8px; font-size: 13px; }
+.drawer__savings[hidden] { display: none; }
+.drawer__savings-row { display: flex; justify-content: space-between; gap: 12px; color: var(--c-ink-soft); }
+.drawer__savings-row s { color: var(--c-ink-mute); }
+.drawer__savings-row--save { color: var(--c-forest); font-weight: 600; }
 .drawer-item__remove {
   background: none; border: none; cursor: pointer;
   font-family: var(--ff-body); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;

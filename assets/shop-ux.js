@@ -63,7 +63,18 @@
     if (cartFootEl) cartFootEl.style.display = "";
 
     var html = "";
+    var savedTotal = 0;
+    var compareMap = window.chemCompare || {};
     cart.items.forEach(function (item) {
+      var cmp = compareMap[item.variant_id] || 0;
+      var offer = cmp > item.price;
+      var lineSave = offer ? (cmp - item.price) * item.quantity : 0;
+      savedTotal += lineSave;
+      var priceHtml = offer
+        ? '<s class="drawer-item__was">' + money(cmp * item.quantity) + "</s>" +
+          '<span class="drawer-item__price">' + money(item.line_price) + "</span>" +
+          '<span class="drawer-item__save"><b>Save ' + money(lineSave) + "</b><i>" + Math.round((cmp - item.price) * 100 / cmp) + "% off</i></span>"
+        : '<span class="drawer-item__price">' + money(item.line_price) + "</span>";
       var imgSrc = productImage(item.handle, item.image);
       var img = imgSrc
         ? '<img class="drawer-item__img" src="' + imgSrc + '" alt="' + escapeHtml(item.title) + '">'
@@ -84,7 +95,7 @@
             "</div>" +
           "</div>" +
           '<div class="drawer-item__right">' +
-            '<span class="drawer-item__price">' + money(item.line_price) + "</span>" +
+            priceHtml +
             '<button type="button" class="drawer-item__remove" data-line-key="' + item.key + '">Remove</button>' +
           "</div>" +
         "</div>";
@@ -92,6 +103,20 @@
     cartItemsEl.innerHTML = html;
 
     if (cartSubtotalEl) cartSubtotalEl.textContent = money(cart.total_price);
+
+    // original price / saving, from the regular prices set in Shopify
+    var savBox = document.getElementById("cartDrawerSavings");
+    if (savBox) {
+      if (savedTotal > 0) {
+        var origTotal = cart.original_total_price + savedTotal;
+        document.getElementById("cartDrawerOrig").textContent = money(origTotal);
+        document.getElementById("cartDrawerSaveAmt").textContent = "\u2212" + money(savedTotal);
+        document.getElementById("cartDrawerSaveLabel").textContent = "You save (" + Math.round(savedTotal * 100 / origTotal) + "% off)";
+        savBox.hidden = false;
+      } else {
+        savBox.hidden = true;
+      }
+    }
 
     // discount / savings display (Shopify automatic + code discounts)
     var discEl = document.getElementById("cartDrawerDiscount");

@@ -2,8 +2,15 @@
 {%- if section.settings.show_announcement -%}
 <div class="utility-strip" aria-label="{{ section.settings.announcement | escape }}">
   <div class="utility-strip__track">
+    {%- comment -%}
+      Text before the first " · " is the highlight (gold, bold); the rest is cream.
+      Without a " · " the whole line is shown plainly.
+    {%- endcomment -%}
+    {%- assign ann_parts = section.settings.announcement | split: ' · ' -%}
     {%- for i in (1..8) -%}
-      <span class="utility-strip__item"{% unless forloop.first %} aria-hidden="true"{% endunless %}>{{ section.settings.announcement }}</span>
+      <span class="utility-strip__item"{% unless forloop.first %} aria-hidden="true"{% endunless %}>
+        {%- if ann_parts.size > 1 -%}<b>{{ ann_parts.first }}</b><span>{{ section.settings.announcement | remove_first: ann_parts.first | remove_first: ' · ' }}</span>{%- else -%}{{ section.settings.announcement }}{%- endif -%}
+      </span>
     {%- endfor -%}
   </div>
 </div>
