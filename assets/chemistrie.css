@@ -161,19 +161,19 @@ body.template-product::-webkit-scrollbar { display: none; }
    read far too loud. Sage keeps the bar in the green family, stays
    distinct from the nav, and forest on --c-sage-3 measures ~8.4:1. */
 .utility-strip {
-  /* Black Friday strip: the theme's deep forest green with cream text, the gold only on
-     the highlight word and the diamonds between repeats. */
-  background: linear-gradient(90deg, var(--c-forest-2), var(--c-forest) 50%, var(--c-forest-2));
-  color: var(--c-cream);
+  /* Black Friday strip: the theme's gold (--c-tan to --c-tan-2) with forest text; the
+     highlight word sits in a cream pill and cream diamonds separate the repeats. */
+  background: linear-gradient(90deg, var(--c-tan), var(--c-tan-2) 50%, var(--c-tan));
+  color: var(--c-forest-2);
   font-size: 12px;
-  letter-spacing: .24em;
+  letter-spacing: .22em;
   text-transform: uppercase;
-  padding: 12px 0;
-  font-weight: 500;
+  padding: 10px 0;
+  font-weight: 600;
   position: relative;
   z-index: 50;
   overflow: hidden;
-  border-bottom: 1px solid var(--c-tan);
+  border-bottom: 1px solid rgba(14,33,24,.25);
 }
 .utility-strip__track {
   display: flex;
@@ -183,25 +183,28 @@ body.template-product::-webkit-scrollbar { display: none; }
 .utility-strip__item {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   white-space: nowrap;
 }
 .utility-strip__item b {
+  padding: 3px 16px 5px;
+  border-radius: 999px;
+  background: var(--c-cream);
+  color: var(--c-forest);
   font-family: var(--ff-display);
   font-style: italic;
   font-weight: 700;
-  font-size: 1.55em;
-  letter-spacing: .06em;
+  font-size: 1.6em;
+  letter-spacing: .04em;
   line-height: 1;
-  color: var(--c-tan);
 }
-/* Gold diamond between repeats. */
+/* Cream diamond between repeats. */
 .utility-strip__item::after {
   content: "";
   width: 7px;
   height: 7px;
   margin: 0 34px;
-  background: var(--c-tan);
+  background: var(--c-cream);
   transform: rotate(45deg);
 }
 @keyframes utilityStripMarquee {
